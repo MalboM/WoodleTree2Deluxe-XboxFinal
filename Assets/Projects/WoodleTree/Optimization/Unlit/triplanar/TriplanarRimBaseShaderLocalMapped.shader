@@ -1,0 +1,95 @@
+
+
+Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderLocalMapped"
+{
+    Properties
+    {
+        _MainTex ("Main Tex", 2D) = "gray" {}
+        [Header(Rimlight Settings)]
+        _RimColor("Rimlight Color", Color) = (1., 1., 1., 1.0)
+        _RimSharpnessF("Rimlight Sharpness", Range(0.0, 4.)) = 1.
+        _RimIntensityF("Rimlight Intensity", Range(0.0, 5.)) = 1.
+    }
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 100
+
+        Pass
+        {
+            CGPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+            // make fog work
+            #pragma multi_compile_fog
+
+            #include "UnityCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float3 normal: NORMAL;
+            };
+
+            struct v2f
+            {
+				  float4 objPosition : TEXCOORD0;
+                  float3 objNormal: NORMAL;
+                  UNITY_FOG_COORDS(1)
+                  float4 vertex : SV_POSITION;
+            };
+
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            float _RimSharpnessF;
+            float _RimIntensityF;
+            float4 _RimColor;
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+
+                o.objPosition = float4(v.vertex.xyz,clamp(dot(v.normal,normalize(ObjSpaceViewDir(v.vertex)))*_RimSharpnessF,0.,1.));
+	            o.vertex = UnityObjectToClipPos(v.vertex);
+                o.objNormal = v.normal;
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                return o;
+            }
+
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // sample the texture
+
+                half3 powNormal = abs(i.objNormal);
+
+                half3 blendWeights = powNormal/dot(1., powNormal);
+
+                fixed4 xaxis = tex2D(_MainTex, i.objPosition.yz * _MainTex_ST.xy + _MainTex_ST.zw);
+                fixed4 yaxis = tex2D(_MainTex, i.objPosition.xz * _MainTex_ST.xy + _MainTex_ST.zw);
+                fixed4 zaxis = tex2D(_MainTex, i.objPosition.xy * _MainTex_ST.xy + _MainTex_ST.zw);
+
+
+                fixed4 mainTexture = xaxis* blendWeights.x +
+                                yaxis* blendWeights.y +
+                                zaxis* blendWeights.z;
+
+                // interpolation factor for rim effect
+
+                float rim = (1. - i.objPosition.w)*_RimIntensityF;
+
+                fixed4 outColor = lerp(mainTexture, _RimColor, rim);
+
+                // apply fog
+                UNITY_APPLY_FOG(i.fogCoord, outColor);
+                return outColor;
+            }
+            ENDCG
+        }
+    }
+}
+/*
+
+*/
