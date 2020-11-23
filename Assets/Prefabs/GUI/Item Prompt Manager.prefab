@@ -1,0 +1,344 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1283160371618513663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2981484986611259464}
+  - component: {fileID: 2173354397774155407}
+  - component: {fileID: 1000518523}
+  m_Layer: 0
+  m_Name: Item Prompt Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2981484986611259464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283160371618513663}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2173354397774155407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283160371618513663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b47bc0d9f71d76459719e8f33a5007e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marketItems:
+  - itemID: 0
+    price: 200
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 1
+    price: 320
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 2
+    price: 750
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 3
+    price: 440
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 4
+    price: 350
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 5
+    price: 550
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 6
+    price: 650
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 7
+    price: 900
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 8
+    price: 600
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 9
+    price: 1000
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 10
+    price: 2500
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 11
+    price: 500
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 13
+    price: 300
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 14
+    price: 200
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 15
+    price: 250
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 18
+    price: 290
+    useBlueBerries: 1
+    textMesh: {fileID: 0}
+  - itemID: 19
+    price: 110
+    useBlueBerries: 1
+    textMesh: {fileID: 0}
+  - itemID: 20
+    price: 70
+    useBlueBerries: 1
+    textMesh: {fileID: 0}
+  - itemID: 21
+    price: 350
+    useBlueBerries: 1
+    textMesh: {fileID: 0}
+  - itemID: 22
+    price: 320
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 23
+    price: 240
+    useBlueBerries: 0
+    textMesh: {fileID: 0}
+  - itemID: 24
+    price: -1
+    useBlueBerries: 1
+    textMesh: {fileID: 0}
+  animator: {fileID: 0}
+  promptTitle: {fileID: 0}
+  promptInfo: {fileID: 0}
+  promptIcon: {fileID: 0}
+  yesText: {fileID: 0}
+  noText: {fileID: 0}
+  priceIcon: {fileID: 0}
+  redBerry: {fileID: 21300000, guid: b9a857424b023f44f94b7cba8b535f56, type: 3}
+  blueBerry: {fileID: 21300000, guid: 199ba303a4da54d44bf93abada5e5482, type: 3}
+  priceText: {fileID: 0}
+  itemPrompts:
+  - title: TRIPLE JUMP
+    information: You can now make three jumps in succession! Combine with gliding
+      and wall jumps to pull off some really cool tricks.
+    icon: {fileID: 21300000, guid: 4592c8a2584969648940b0366e25b8d7, type: 3}
+  - title: LEAF SLIDING
+    information: 'Your leaf can now be used as a super-fast skateboard! Hold down
+      the ZR button while on
+
+      ground to activate.'
+    icon: {fileID: 21300000, guid: 275b6e8e10325894caebd1804d771a97, type: 3}
+  - title: AUTO WINDBALL
+    information: You will automatically launch windballs from the third attack in
+      your basic attack combo.
+    icon: {fileID: 21300000, guid: 4a67b01f6662de647b20f7a6a3298b4a, type: 3}
+  - title: YELLOW LEAF
+    information: A slightly stronger leaf that can launch larger windballs and can
+      break both green and yellow leaf blocks.
+    icon: {fileID: 21300000, guid: e054a9eb490640b4db5d3f6674994639, type: 3}
+  - title: RED LEAF
+    information: A powerful leaf that can launch even larger windballs and can break
+      green, yellow and red leaf blocks.
+    icon: {fileID: 21300000, guid: b274506ab4154c64f89e27302b77333f, type: 3}
+  - title: WHITE LEAF
+    information: The ultimate leaf! It can launch the largest windballs with no charging
+      and can break all of the leaf boxes.
+    icon: {fileID: 21300000, guid: cb4baac5f9550c14fb6be907c9c865fc, type: 3}
+  - title: CHUBBY PIXEL MASK
+    information: The adorable mascot of the team that brought you this game can now
+      be stuck to your face. Neat!
+    icon: {fileID: 21300000, guid: bc90fa95aa9c72841a7cd4e73cd0e67c, type: 3}
+  - title: ELDER MASK
+    information: Wearing this mask will give you the appearance of an old and wise
+      tree.
+    icon: {fileID: 21300000, guid: 8753e20b13228814c9f1e7c6e49b7eb5, type: 3}
+  - title: GOOFY MASK
+    information: Mock your enemies by wearing this mask as you give them a whack with
+      your leaf.
+    icon: {fileID: 21300000, guid: 50dee264c65292747993f96807151217, type: 3}
+  - title: FLOWER
+    information: A boost flower that you can hold in your hand. It will allow you
+      to move a little faster than before!
+    icon: {fileID: 21300000, guid: 27dcbd228d2cf1741b6869f3e035ad17, type: 3}
+  - title: SHIELD
+    information: The mark of a true Woodle Warrior. Hold this between you and your
+      enemies for some protection!
+    icon: {fileID: 21300000, guid: 1e3c85a2de1a6c242930dc0d05f9819d, type: 3}
+  - title: UMBRELLA
+    information: It won't keep you dry but you will descend slower whenever you fall.
+    icon: {fileID: 21300000, guid: c45924df2541c0b4fa715c8d2dc37f82, type: 3}
+  - title: ACORN HAT
+    information: The hard acorn hat will make enemies bounce away if they hit you.
+      Use this time to escape and recover!
+    icon: {fileID: 21300000, guid: b99bc7e8a0c87e24e835e3c2e8023007, type: 3}
+  - title: ELF HAT
+    information: A pointy green hat that belonged to a legendary elf. Wearing this
+      will increase attack power!
+    icon: {fileID: 21300000, guid: 45ae13de3f77f4145a27a8a1c646cf48, type: 3}
+  - title: BANDANA
+    information: With this you can handle the extra exercise. You will bounce higher
+      from bouncy objects and speed boosts will last longer.
+    icon: {fileID: 21300000, guid: 40ec526acb6b0d548935c4a0b45ad866, type: 3}
+  - title: FESTIVE HAT
+    information: Maybe stop bringing pain to your enemies and instead bring some joy?
+      And presents?
+    icon: {fileID: 21300000, guid: 88458e64e27235545a07504b7e7bdfc1, type: 3}
+  - title: PUMPKIN COSTUME
+    information: You've been going around breaking these but now if you wear one you
+      might feel some sympathy for them.
+    icon: {fileID: 21300000, guid: 6b9e57dd8cd86154a80fe9b5595560a9, type: 3}
+  - title: GHOST COSTUME
+    information: While not THAT scary it is a feast for the eyes to see this costume
+      flap around in the wind as you run. Spooky indeed.
+    icon: {fileID: 21300000, guid: 74ef35eedbc48624d8b5a3f88eef37a7, type: 3}
+  - title: COLLECTABLE
+    information: You've found something really nice that would look good in your home.
+      Collect them all and view them back at your house.
+    icon: {fileID: 21300000, guid: f9c7a1a52100f774fb2036aed29ca180, type: 3}
+  - title: ULTRACHARGE
+    information: This will allow you to launch a windball with every single swing
+      of your leaf... have fun!
+    icon: {fileID: 21300000, guid: 0f65956861f0f0b4196ea525fce48508, type: 3}
+  - title: SCRUFFY BEARD
+    information: 'This haircut will make you look like the kind of dreamy Guy that
+      gets into accidents.
+
+'
+    icon: {fileID: 21300000, guid: 75d22e5eac9d2a446a9cefbbc2338955, type: 3}
+  - title: TEAPOT
+    information: Some fancy kitchen-ware you can wear around the world. Just pour
+      Woodle out when he gets all steamed up!
+    icon: {fileID: 21300000, guid: 6696d43e018605a458f95ff20ea6b98d, type: 3}
+  - title: BLUEBERRY SUIT
+    information: Sure it's a little expensive... but it can also cause any enemies
+      to bounce away from you leaving you completely unscratched.
+    icon: {fileID: 21300000, guid: 199ba303a4da54d44bf93abada5e5482, type: 3}
+  sound: {fileID: 1000518523}
+  openPromptClip: {fileID: 8300000, guid: a6c056f71d2fc164eab6a8b427aec71e, type: 3}
+  tooExpensiveClip: {fileID: 8300000, guid: d586678cfba0dbb4caa8faff65a1ba40, type: 3}
+  buyClip: {fileID: 8300000, guid: 35af5a7616a59d14682c5248286bffbe, type: 3}
+  declineClip: {fileID: 8300000, guid: 2aa03275ac007bc498a1b40479a9d441, type: 3}
+  equipClip: {fileID: 8300000, guid: e0fca080f90c7ed47aa6c4b3aa6f0285, type: 3}
+--- !u!82 &1000518523
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283160371618513663}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243206808097846298, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 2aa03275ac007bc498a1b40479a9d441, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
