@@ -1,0 +1,4 @@
+﻿#define DC_UVFREE_OCC
+#define DC_UVFREE_OCC_UP
+#define DC_UVFREE_OCC_DOWN
+#define DC_UVFREE_APPLY_OCC
