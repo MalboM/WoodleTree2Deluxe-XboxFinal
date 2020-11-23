@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TreeThinShakePink
+  m_Shader: {fileID: 4800000, guid: 5b1769cf0cd4b234182c61e8de4fd571, type: 3}
+  m_ShaderKeywords: TCP2_DISABLE_WRAPPED_LIGHT TCP2_RAMPTEXT TCP2_STYLIZED_FRESNEL
+    _EMISSION
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Illum:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3696290dac5599144be671a1438ebb8d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: e6e4d37fcac70f5419f48a2dd8eb94be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DampFactor: 0.33
+    - _DampRotFactor: 2
+    - _DampSlFactor: 2
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissionLM: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.057
+    - _GlossyReflections: 1
+    - _HeightDiffusion: 0.669
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _OscAmp: 0.132
+    - _OscRotAmp: 1.23
+    - _OscSlAmp: 0.169
+    - _Parallax: 0.02
+    - _RampSmooth: 0.2
+    - _RampSmoothAdd: 0.75
+    - _RampThreshold: 0.5
+    - _RimIntensityF: 0.677
+    - _RimMax: 0.85
+    - _RimMin: 0.194
+    - _RimPower: 2.43
+    - _RimSharpnessF: 1.52
+    - _RimStrength: 0.914
+    - _RotationSpeed: 0.11
+    - _Shininess: 0.078125
+    - _SlFreq: 2.5
+    - _SmoothnessTextureChannel: 0
+    - _SpecBlend: 1
+    - _SpecSmooth: 1
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Strength: 2.09
+    - _TCP2_DISABLE_WRAPPED_LIGHT: 1
+    - _TCP2_RAMPTEXT: 1
+    - _TCP2_SPEC_TOON: 0
+    - _TCP2_STYLIZED_FRESNEL: 1
+    - _Theta: 0
+    - _TimeAnimParam: 0
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0.53676474, g: 0.53676474, b: 0.53676474, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.9973631, g: 1, b: 0.8088235, a: 0}
+    - _SColor: {r: 0.38235295, g: 0.36975002, b: 0.19961073, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

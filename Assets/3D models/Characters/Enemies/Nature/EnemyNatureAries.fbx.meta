@@ -1,0 +1,605 @@
+fileFormatVersion: 2
+guid: 561363fe067388347a91d968292fa772
+timeCreated: 1462964534
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Aries
+    100002: Aries12
+    100004: Ass
+    100006: Body
+    100008: //RootNode
+    100010: Head
+    100012: Head1
+    100014: Horn1
+    100016: Horn2
+    100018: Horn3
+    100020: Horn4
+    100022: LegBack1
+    100024: LegBack2
+    100026: LegBack3
+    100028: LegBack4
+    100030: LegBack5
+    100032: LegBack6
+    100034: LegBack7
+    100036: LegFront1
+    100038: LegFront2
+    100040: LegFront3
+    100042: LegFront4
+    100044: LegFront5
+    100046: LegFront6
+    400000: Aries
+    400002: Aries12
+    400004: Ass
+    400006: Body
+    400008: //RootNode
+    400010: Head
+    400012: Head1
+    400014: Horn1
+    400016: Horn2
+    400018: Horn3
+    400020: Horn4
+    400022: LegBack1
+    400024: LegBack2
+    400026: LegBack3
+    400028: LegBack4
+    400030: LegBack5
+    400032: LegBack6
+    400034: LegBack7
+    400036: LegFront1
+    400038: LegFront2
+    400040: LegFront3
+    400042: LegFront4
+    400044: LegFront5
+    400046: LegFront6
+    4300000: Aries12
+    7400000: Idle
+    7400002: Run
+    7400004: Attack
+    7400006: Hit
+    7400008: Die
+    7400010: Still
+    9500000: //RootNode
+    13700000: Aries12
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NatureAries
+    second: {fileID: 2100000, guid: af6fa19875330e5498430cb2dd454294, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Attack
+      takeName: Take 001
+      firstFrame: 102
+      lastFrame: 125
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Hit
+      takeName: Take 001
+      firstFrame: 148
+      lastFrame: 170
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Die
+      takeName: Take 001
+      firstFrame: 199
+      lastFrame: 246
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Still
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aries
+        weight: 1
+      - path: Aries/Aries12
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Ass
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head1
+        weight: 1
+      - path: Body/Head1/Horn1
+        weight: 1
+      - path: Body/Head1/Horn1/Horn2
+        weight: 1
+      - path: Body/Head1/Horn3
+        weight: 1
+      - path: Body/Head1/Horn3/Horn4
+        weight: 1
+      - path: Body/LegBack7
+        weight: 1
+      - path: Body/LegBack7/LegBack3
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4
+        weight: 1
+      - path: Body/LegBack7/LegBack3/LegBack4/LegBack5
+        weight: 1
+      - path: Body/LegBack7/LegBack6
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1
+        weight: 1
+      - path: Body/LegBack7/LegBack6/LegBack1/LegBack2
+        weight: 1
+      - path: Body/LegBack7/LegFront1
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2
+        weight: 1
+      - path: Body/LegBack7/LegFront1/LegFront2/LegFront3
+        weight: 1
+      - path: Body/LegBack7/LegFront4
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5
+        weight: 1
+      - path: Body/LegBack7/LegFront4/LegFront5/LegFront6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 25
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

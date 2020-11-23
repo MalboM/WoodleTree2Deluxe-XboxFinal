@@ -1,0 +1,914 @@
+fileFormatVersion: 2
+guid: 938ecf73f7f17bb449f9ea38100bb4b9
+timeCreated: 1455559961
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: back
+    100002: Body
+    100004: Body5
+    100006: DayPack
+    100008: Daypack1
+    100010: Daypack2
+    100012: Daypack3
+    100014: Daypack4
+    100016: Daypack5
+    100018: Daypack6
+    100020: imagePlane2
+    100022: imagePlane3
+    100024: JointWoodleNew
+    100026: JointWoodleNew1
+    100028: JointWoodleNew10
+    100030: JointWoodleNew11
+    100032: JointWoodleNew12
+    100034: JointWoodleNew13
+    100036: JointWoodleNew14
+    100038: JointWoodleNew15
+    100040: JointWoodleNew16
+    100042: JointWoodleNew17
+    100044: JointWoodleNew18
+    100046: JointWoodleNew19
+    100048: JointWoodleNew2
+    100050: JointWoodleNew20
+    100052: JointWoodleNew21
+    100054: JointWoodleNew22
+    100056: JointWoodleNew23
+    100058: JointWoodleNew24
+    100060: JointWoodleNew25
+    100062: JointWoodleNew26
+    100064: JointWoodleNew27
+    100066: JointWoodleNew28
+    100068: JointWoodleNew29
+    100070: JointWoodleNew3
+    100072: JointWoodleNew30
+    100074: JointWoodleNew31
+    100076: JointWoodleNew32
+    100078: JointWoodleNew33
+    100080: JointWoodleNew34
+    100082: JointWoodleNew35
+    100084: JointWoodleNew36
+    100086: JointWoodleNew37
+    100088: JointWoodleNew38
+    100090: JointWoodleNew39
+    100092: JointWoodleNew4
+    100094: JointWoodleNew40
+    100096: JointWoodleNew41
+    100098: JointWoodleNew42
+    100100: JointWoodleNew43
+    100102: JointWoodleNew5
+    100104: JointWoodleNew6
+    100106: JointWoodleNew7
+    100108: JointWoodleNew8
+    100110: JointWoodleNew9
+    100112: Leaf
+    100114: left
+    100116: Legs1
+    100118: Legs2
+    100120: Legs3
+    100122: Sling
+    100124: sling
+    100126: sling1
+    100128: WoodleNewFinal2
+    100130: //RootNode
+    100132: joint41
+    100134: joint42
+    100136: joint43
+    100138: joint44
+    100140: joint45
+    100142: joint46
+    100144: joint47
+    400000: back
+    400002: Body
+    400004: Body5
+    400006: DayPack
+    400008: Daypack1
+    400010: Daypack2
+    400012: Daypack3
+    400014: Daypack4
+    400016: Daypack5
+    400018: Daypack6
+    400020: imagePlane2
+    400022: imagePlane3
+    400024: JointWoodleNew
+    400026: JointWoodleNew1
+    400028: JointWoodleNew10
+    400030: JointWoodleNew11
+    400032: JointWoodleNew12
+    400034: JointWoodleNew13
+    400036: JointWoodleNew14
+    400038: JointWoodleNew15
+    400040: JointWoodleNew16
+    400042: JointWoodleNew17
+    400044: JointWoodleNew18
+    400046: JointWoodleNew19
+    400048: JointWoodleNew2
+    400050: JointWoodleNew20
+    400052: JointWoodleNew21
+    400054: JointWoodleNew22
+    400056: JointWoodleNew23
+    400058: JointWoodleNew24
+    400060: JointWoodleNew25
+    400062: JointWoodleNew26
+    400064: JointWoodleNew27
+    400066: JointWoodleNew28
+    400068: JointWoodleNew29
+    400070: JointWoodleNew3
+    400072: JointWoodleNew30
+    400074: JointWoodleNew31
+    400076: JointWoodleNew32
+    400078: JointWoodleNew33
+    400080: JointWoodleNew34
+    400082: JointWoodleNew35
+    400084: JointWoodleNew36
+    400086: JointWoodleNew37
+    400088: JointWoodleNew38
+    400090: JointWoodleNew39
+    400092: JointWoodleNew4
+    400094: JointWoodleNew40
+    400096: JointWoodleNew41
+    400098: JointWoodleNew42
+    400100: JointWoodleNew43
+    400102: JointWoodleNew5
+    400104: JointWoodleNew6
+    400106: JointWoodleNew7
+    400108: JointWoodleNew8
+    400110: JointWoodleNew9
+    400112: Leaf
+    400114: left
+    400116: Legs1
+    400118: Legs2
+    400120: Legs3
+    400122: Sling
+    400124: sling
+    400126: sling1
+    400128: WoodleNewFinal2
+    400130: //RootNode
+    400132: joint41
+    400134: joint42
+    400136: joint43
+    400138: joint44
+    400140: joint45
+    400142: joint46
+    400144: joint47
+    4300000: Daypack2
+    4300002: Daypack3
+    4300004: Daypack5
+    4300006: Daypack6
+    4300008: sling1
+    4300010: sling
+    4300012: Leaf
+    4300014: Body5
+    4300016: Legs2
+    4300018: Legs3
+    7400000: Idle
+    7400002: Walk
+    7400004: Run
+    7400006: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Body5
+    13700002: Daypack2
+    13700004: Daypack3
+    13700006: Daypack5
+    13700008: Daypack6
+    13700010: Leaf
+    13700012: Legs2
+    13700014: Legs3
+    13700016: sling
+    13700018: sling1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye1
+    second: {fileID: 2100000, guid: aa31e421f2ca5e04c90f91973890deb8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WoodleNew1
+    second: {fileID: 2100000, guid: 83d84c9893ed37b4d9d5868e08e715b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WoodleNew2
+    second: {fileID: 2100000, guid: 0bd681183fced5840a433e16d3642082, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 47
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: imagePlane2
+        weight: 1
+      - path: imagePlane3
+        weight: 1
+      - path: JointWoodleNew
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7/JointWoodleNew8
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew5
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew6
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew9
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16/JointWoodleNew17
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20/JointWoodleNew21
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28/JointWoodleNew29
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34/JointWoodleNew35
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38/JointWoodleNew39
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42/JointWoodleNew43
+        weight: 1
+      - path: left
+        weight: 1
+      - path: WoodleNewFinal2
+        weight: 1
+      - path: WoodleNewFinal2/Body
+        weight: 1
+      - path: WoodleNewFinal2/Body/Body5
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs2
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack2
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack5
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack6
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling1
+        weight: 1
+      - path: WoodleNewFinal2/Leaf
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 96
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: imagePlane2
+        weight: 1
+      - path: imagePlane3
+        weight: 1
+      - path: JointWoodleNew
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7/JointWoodleNew8
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew5
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew6
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew9
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16/JointWoodleNew17
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20/JointWoodleNew21
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28/JointWoodleNew29
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34/JointWoodleNew35
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38/JointWoodleNew39
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42/JointWoodleNew43
+        weight: 1
+      - path: left
+        weight: 1
+      - path: WoodleNewFinal2
+        weight: 1
+      - path: WoodleNewFinal2/Body
+        weight: 1
+      - path: WoodleNewFinal2/Body/Body5
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs2
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack2
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack5
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack6
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling1
+        weight: 1
+      - path: WoodleNewFinal2/Leaf
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 99
+      lastFrame: 146
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: imagePlane2
+        weight: 1
+      - path: imagePlane3
+        weight: 1
+      - path: JointWoodleNew
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7/JointWoodleNew8
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew5
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew6
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew9
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16/JointWoodleNew17
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20/JointWoodleNew21
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28/JointWoodleNew29
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34/JointWoodleNew35
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38/JointWoodleNew39
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42/JointWoodleNew43
+        weight: 1
+      - path: left
+        weight: 1
+      - path: WoodleNewFinal2
+        weight: 1
+      - path: WoodleNewFinal2/Body
+        weight: 1
+      - path: WoodleNewFinal2/Body/Body5
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs2
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack2
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack5
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack6
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling1
+        weight: 1
+      - path: WoodleNewFinal2/Leaf
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: imagePlane2
+        weight: 1
+      - path: imagePlane3
+        weight: 1
+      - path: JointWoodleNew
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew2/JointWoodleNew7/JointWoodleNew8
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew5
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew3/JointWoodleNew4/JointWoodleNew6
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew9
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew15/JointWoodleNew16/JointWoodleNew17
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew10/JointWoodleNew11/JointWoodleNew12/JointWoodleNew13/JointWoodleNew14/JointWoodleNew18/JointWoodleNew19/JointWoodleNew20/JointWoodleNew21
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew23/JointWoodleNew24/JointWoodleNew25/JointWoodleNew26/JointWoodleNew27/JointWoodleNew28/JointWoodleNew29
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew1/JointWoodleNew22/JointWoodleNew30/JointWoodleNew31/JointWoodleNew32/JointWoodleNew33/JointWoodleNew34/JointWoodleNew35
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew36/JointWoodleNew37/JointWoodleNew38/JointWoodleNew39
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42
+        weight: 1
+      - path: JointWoodleNew/JointWoodleNew40/JointWoodleNew41/JointWoodleNew42/JointWoodleNew43
+        weight: 1
+      - path: left
+        weight: 1
+      - path: WoodleNewFinal2
+        weight: 1
+      - path: WoodleNewFinal2/Body
+        weight: 1
+      - path: WoodleNewFinal2/Body/Body5
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs2
+        weight: 1
+      - path: WoodleNewFinal2/Body/Legs1/Legs3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack2
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack3
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack5
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Daypack1/Daypack4/Daypack6
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling
+        weight: 1
+      - path: WoodleNewFinal2/DayPack/Sling/sling1
+        weight: 1
+      - path: WoodleNewFinal2/Leaf
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

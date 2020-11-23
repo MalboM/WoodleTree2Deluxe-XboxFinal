@@ -1,0 +1,268 @@
+fileFormatVersion: 2
+guid: 12d48d5d3b364534d93a3e84d657b66d
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Crocodile4
+    100002: Crocodile5
+    100004: //RootNode
+    100006: joint1
+    100008: joint10
+    100010: joint11
+    100012: joint12
+    100014: joint13
+    100016: joint14
+    100018: joint14 1
+    100020: joint15
+    100022: joint15 1
+    100024: joint16
+    100026: joint17
+    100028: joint17 1
+    100030: joint18
+    100032: joint18 1
+    100034: joint19
+    100036: joint2
+    100038: joint20
+    100040: joint21
+    100042: joint22
+    100044: joint23
+    100046: joint24
+    100048: joint3
+    100050: joint4
+    100052: joint5
+    100054: joint6
+    100056: joint7
+    100058: joint8
+    100060: joint9
+    400000: Crocodile4
+    400002: Crocodile5
+    400004: //RootNode
+    400006: joint1
+    400008: joint10
+    400010: joint11
+    400012: joint12
+    400014: joint13
+    400016: joint14
+    400018: joint14 1
+    400020: joint15
+    400022: joint15 1
+    400024: joint16
+    400026: joint17
+    400028: joint17 1
+    400030: joint18
+    400032: joint18 1
+    400034: joint19
+    400036: joint2
+    400038: joint20
+    400040: joint21
+    400042: joint22
+    400044: joint23
+    400046: joint24
+    400048: joint3
+    400050: joint4
+    400052: joint5
+    400054: joint6
+    400056: joint7
+    400058: joint8
+    400060: joint9
+    4300000: Crocodile5
+    7400000: Walk
+    9500000: //RootNode
+    13700000: Crocodile5
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crocodile
+    second: {fileID: 2100000, guid: dfd0d4af6c5b3e741ad0e942ee692174, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crocodile1
+    second: {fileID: 2100000, guid: 1a3e1af076ded4e4896b32e21b932dca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crocodile2
+    second: {fileID: 2100000, guid: 48a833c3290172d4299c36a7bacd1246, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crocodile3
+    second: {fileID: 2100000, guid: 5afe8a06d65e6954e9ca3b21e0695169, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crocodile6
+    second: {fileID: 2100000, guid: e9ef0d15b1a668442a9bbbad740dd96a, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Crocodile4
+        weight: 1
+      - path: Crocodile4/Crocodile5
+        weight: 1
+      - path: joint8
+        weight: 1
+      - path: joint8/joint9
+        weight: 1
+      - path: joint8/joint9/joint10
+        weight: 1
+      - path: joint8/joint9/joint10/joint11
+        weight: 1
+      - path: joint8/joint9/joint10/joint11/joint12
+        weight: 1
+      - path: joint8/joint24
+        weight: 1
+      - path: joint8/joint24/joint21
+        weight: 1
+      - path: joint8/joint24/joint21/joint19
+        weight: 1
+      - path: joint8/joint24/joint21/joint19/joint17
+        weight: 1
+      - path: joint8/joint24/joint21/joint19/joint17/joint18
+        weight: 1
+      - path: joint8/joint24/joint21/joint20
+        weight: 1
+      - path: joint8/joint24/joint21/joint20/joint14
+        weight: 1
+      - path: joint8/joint24/joint21/joint20/joint14/joint15
+        weight: 1
+      - path: joint8/joint24/joint23
+        weight: 1
+      - path: joint8/joint24/joint23/joint7
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint1
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint1/joint2
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint1/joint2/joint3
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint4
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint4/joint5
+        weight: 1
+      - path: joint8/joint24/joint23/joint7/joint4/joint5/joint6
+        weight: 1
+      - path: joint8/joint24/joint23/joint22
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint13
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint13/joint14 1
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint13/joint14 1/joint15 1
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint16
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint16/joint17 1
+        weight: 1
+      - path: joint8/joint24/joint23/joint22/joint16/joint17 1/joint18 1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 70
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 0
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

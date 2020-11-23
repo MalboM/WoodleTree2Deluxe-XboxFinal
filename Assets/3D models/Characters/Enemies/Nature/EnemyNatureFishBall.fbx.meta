@@ -1,0 +1,267 @@
+fileFormatVersion: 2
+guid: 1840f93acd0f0824eb7bb5e1b856cd1a
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: FishBall8
+    100004: FishBall9
+    100006: joint1
+    100008: joint2
+    100010: joint3
+    100012: joint4
+    100014: joint5
+    100016: joint6
+    100018: joint7
+    100020: joint8
+    100022: joint9
+    100024: polySurface1
+    100026: polySurface3
+    100028: polySurface5
+    100030: polySurface6
+    400000: //RootNode
+    400002: FishBall8
+    400004: FishBall9
+    400006: joint1
+    400008: joint2
+    400010: joint3
+    400012: joint4
+    400014: joint5
+    400016: joint6
+    400018: joint7
+    400020: joint8
+    400022: joint9
+    400024: polySurface1
+    400026: polySurface3
+    400028: polySurface5
+    400030: polySurface6
+    2300000: FishBall9
+    2300002: polySurface1
+    2300004: polySurface3
+    2300006: polySurface5
+    2300008: polySurface6
+    3300000: FishBall9
+    3300002: polySurface1
+    3300004: polySurface3
+    3300006: polySurface5
+    3300008: polySurface6
+    4300000: FishBall9
+    4300002: polySurface6
+    4300004: polySurface1
+    4300006: polySurface3
+    4300008: polySurface5
+    7400000: Walk
+    7400002: Die
+    9500000: //RootNode
+    13700000: FishBall9
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FishBall
+    second: {fileID: 2100000, guid: ab3fb85f722074a48a7a53d9f2120ef9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FishBall1
+    second: {fileID: 2100000, guid: 47c69081aa910fa48b9f92ffebb813ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FishBall3
+    second: {fileID: 2100000, guid: 25b91bd9f157d2f4291caf11537b29d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FishBall4
+    second: {fileID: 2100000, guid: 157614d5f50464d48bda45cb55358bff, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: FishBall8
+        weight: 1
+      - path: FishBall8/FishBall9
+        weight: 1
+      - path: joint7
+        weight: 1
+      - path: joint7/joint1
+        weight: 1
+      - path: joint7/joint1/joint2
+        weight: 1
+      - path: joint7/joint3
+        weight: 1
+      - path: joint7/joint3/joint4
+        weight: 1
+      - path: joint7/joint8
+        weight: 1
+      - path: joint7/joint9
+        weight: 1
+      - path: joint7/joint9/joint5
+        weight: 1
+      - path: joint7/joint9/joint5/joint6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Die
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: FishBall8
+        weight: 1
+      - path: FishBall8/FishBall9
+        weight: 1
+      - path: joint7
+        weight: 1
+      - path: joint7/joint1
+        weight: 1
+      - path: joint7/joint1/joint2
+        weight: 1
+      - path: joint7/joint3
+        weight: 1
+      - path: joint7/joint3/joint4
+        weight: 1
+      - path: joint7/joint8
+        weight: 1
+      - path: joint7/joint9
+        weight: 1
+      - path: joint7/joint9/joint5
+        weight: 1
+      - path: joint7/joint9/joint5/joint6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 69
+    meshCompression: 2
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.69
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

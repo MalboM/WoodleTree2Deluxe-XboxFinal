@@ -1,0 +1,447 @@
+fileFormatVersion: 2
+guid: 9e323f9fdc8d78844b1fd7dfdad47de1
+timeCreated: 1467565498
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Collider1
+    100002: Collider2
+    100004: joint1
+    100006: joint10
+    100008: joint11
+    100010: joint12
+    100012: joint13
+    100014: joint14
+    100016: joint2
+    100018: joint3
+    100020: joint4
+    100022: joint5
+    100024: joint6
+    100026: joint7
+    100028: joint8
+    100030: joint8 1
+    100032: joint9
+    100034: joint9 1
+    100036: //RootNode
+    100038: Yeti21
+    100040: Yeti22
+    400000: Collider1
+    400002: Collider2
+    400004: joint1
+    400006: joint10
+    400008: joint11
+    400010: joint12
+    400012: joint13
+    400014: joint14
+    400016: joint2
+    400018: joint3
+    400020: joint4
+    400022: joint5
+    400024: joint6
+    400026: joint7
+    400028: joint8
+    400030: joint8 1
+    400032: joint9
+    400034: joint9 1
+    400036: //RootNode
+    400038: Yeti21
+    400040: Yeti22
+    2300000: Collider1
+    2300002: Collider2
+    3300000: Collider1
+    3300002: Collider2
+    4300000: Yeti21
+    4300002: Collider1
+    4300004: Collider2
+    7400000: Idle
+    7400002: Walk
+    7400004: Throw
+    7400006: Attack
+    9500000: //RootNode
+    13700000: Yeti21
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NaturalEnemyYetiFace_1Material
+    second: {fileID: 2100000, guid: 9ab20f429afc2964399be5bb5a4543d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Yeti
+    second: {fileID: 2100000, guid: e2982154551644443858ebb154488331, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Yeti1
+    second: {fileID: 2100000, guid: f5ebf6f12bc9bdc48ac5762d481faf3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Yeti2
+    second: {fileID: 2100000, guid: 78a496862dedbad4ab2a4961b52f970e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: YetiFace
+    second: {fileID: 2100000, guid: 1f39520807647d34fb0823d44a112f58, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 96
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint14
+        weight: 1
+      - path: joint14/joint1
+        weight: 1
+      - path: joint14/joint1/Collider2
+        weight: 1
+      - path: joint14/joint1/joint2
+        weight: 1
+      - path: joint14/joint1/joint2/joint3
+        weight: 1
+      - path: joint14/joint4
+        weight: 1
+      - path: joint14/joint4/Collider1
+        weight: 1
+      - path: joint14/joint4/joint5
+        weight: 1
+      - path: joint14/joint4/joint5/joint6
+        weight: 1
+      - path: joint14/joint11
+        weight: 1
+      - path: joint14/joint11/joint12
+        weight: 1
+      - path: joint14/joint13
+        weight: 1
+      - path: joint14/joint13/joint7
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1/joint9 1
+        weight: 1
+      - path: joint14/joint13/joint10
+        weight: 1
+      - path: joint14/joint13/joint10/joint8
+        weight: 1
+      - path: joint14/joint13/joint10/joint8/joint9
+        weight: 1
+      - path: Yeti22
+        weight: 1
+      - path: Yeti22/Yeti21
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint14
+        weight: 1
+      - path: joint14/joint1
+        weight: 1
+      - path: joint14/joint1/Collider2
+        weight: 1
+      - path: joint14/joint1/joint2
+        weight: 1
+      - path: joint14/joint1/joint2/joint3
+        weight: 1
+      - path: joint14/joint4
+        weight: 1
+      - path: joint14/joint4/Collider1
+        weight: 1
+      - path: joint14/joint4/joint5
+        weight: 1
+      - path: joint14/joint4/joint5/joint6
+        weight: 1
+      - path: joint14/joint11
+        weight: 1
+      - path: joint14/joint11/joint12
+        weight: 1
+      - path: joint14/joint13
+        weight: 1
+      - path: joint14/joint13/joint7
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1/joint9 1
+        weight: 1
+      - path: joint14/joint13/joint10
+        weight: 1
+      - path: joint14/joint13/joint10/joint8
+        weight: 1
+      - path: joint14/joint13/joint10/joint8/joint9
+        weight: 1
+      - path: Yeti22
+        weight: 1
+      - path: Yeti22/Yeti21
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Throw
+      takeName: Take 001
+      firstFrame: 99
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint14
+        weight: 1
+      - path: joint14/joint1
+        weight: 1
+      - path: joint14/joint1/Collider2
+        weight: 1
+      - path: joint14/joint1/joint2
+        weight: 1
+      - path: joint14/joint1/joint2/joint3
+        weight: 1
+      - path: joint14/joint4
+        weight: 1
+      - path: joint14/joint4/Collider1
+        weight: 1
+      - path: joint14/joint4/joint5
+        weight: 1
+      - path: joint14/joint4/joint5/joint6
+        weight: 1
+      - path: joint14/joint11
+        weight: 1
+      - path: joint14/joint11/joint12
+        weight: 1
+      - path: joint14/joint13
+        weight: 1
+      - path: joint14/joint13/joint7
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1/joint9 1
+        weight: 1
+      - path: joint14/joint13/joint10
+        weight: 1
+      - path: joint14/joint13/joint10/joint8
+        weight: 1
+      - path: joint14/joint13/joint10/joint8/joint9
+        weight: 1
+      - path: Yeti22
+        weight: 1
+      - path: Yeti22/Yeti21
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Attack
+      takeName: Take 001
+      firstFrame: 147
+      lastFrame: 189
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint14
+        weight: 1
+      - path: joint14/joint1
+        weight: 1
+      - path: joint14/joint1/Collider2
+        weight: 1
+      - path: joint14/joint1/joint2
+        weight: 1
+      - path: joint14/joint1/joint2/joint3
+        weight: 1
+      - path: joint14/joint4
+        weight: 1
+      - path: joint14/joint4/Collider1
+        weight: 1
+      - path: joint14/joint4/joint5
+        weight: 1
+      - path: joint14/joint4/joint5/joint6
+        weight: 1
+      - path: joint14/joint11
+        weight: 1
+      - path: joint14/joint11/joint12
+        weight: 1
+      - path: joint14/joint13
+        weight: 1
+      - path: joint14/joint13/joint7
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1
+        weight: 1
+      - path: joint14/joint13/joint7/joint8 1/joint9 1
+        weight: 1
+      - path: joint14/joint13/joint10
+        weight: 1
+      - path: joint14/joint13/joint10/joint8
+        weight: 1
+      - path: joint14/joint13/joint10/joint8/joint9
+        weight: 1
+      - path: Yeti22
+        weight: 1
+      - path: Yeti22/Yeti21
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 80
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

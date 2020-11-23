@@ -1,0 +1,384 @@
+fileFormatVersion: 2
+guid: df36adf16aec1f448980abf371b9242d
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body
+    100002: //RootNode
+    100004: EnemyNatureBushHorned
+    100006: EnemyNatureBushHorned3
+    100008: Head
+    100010: Head1
+    100012: Head2
+    100014: HornLeft1
+    100016: HornLeft2
+    100018: HornLeft3
+    100020: HornRight1
+    100022: HornRight2
+    100024: HornRight3
+    100026: Leg1
+    100028: LegLeft1
+    100030: LegLeft2
+    100032: LegLeft3
+    100034: LegRight1
+    100036: LegRight2
+    100038: LegRight3
+    100040: group2
+    100042: polySurface1
+    100044: polySurface11
+    100046: polySurface2
+    100048: polySurface3
+    100050: polySurface4
+    100052: polySurface5
+    100054: polySurface8
+    400000: Body
+    400002: //RootNode
+    400004: EnemyNatureBushHorned
+    400006: EnemyNatureBushHorned3
+    400008: Head
+    400010: Head1
+    400012: Head2
+    400014: HornLeft1
+    400016: HornLeft2
+    400018: HornLeft3
+    400020: HornRight1
+    400022: HornRight2
+    400024: HornRight3
+    400026: Leg1
+    400028: LegLeft1
+    400030: LegLeft2
+    400032: LegLeft3
+    400034: LegRight1
+    400036: LegRight2
+    400038: LegRight3
+    400040: group2
+    400042: polySurface1
+    400044: polySurface11
+    400046: polySurface2
+    400048: polySurface3
+    400050: polySurface4
+    400052: polySurface5
+    400054: polySurface8
+    2300000: polySurface1
+    2300002: polySurface11
+    2300004: polySurface2
+    2300006: polySurface3
+    2300008: polySurface4
+    2300010: polySurface5
+    2300012: polySurface8
+    3300000: polySurface1
+    3300002: polySurface11
+    3300004: polySurface2
+    3300006: polySurface3
+    3300008: polySurface4
+    3300010: polySurface5
+    3300012: polySurface8
+    4300000: EnemyNatureBushHorned3
+    4300002: polySurface3
+    4300004: polySurface8
+    4300006: polySurface11
+    4300008: polySurface2
+    4300010: polySurface1
+    4300012: polySurface5
+    4300014: polySurface4
+    7400000: Idle
+    7400002: Walk
+    7400004: Hit
+    9500000: //RootNode
+    13700000: EnemyNatureBushHorned3
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EnemyBushHorned
+    second: {fileID: 2100000, guid: ae2c41966a7724f46851b0e094d770d9, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head2
+        weight: 1
+      - path: Body/Head2/Head1
+        weight: 1
+      - path: Body/HornLeft3
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2/HornLeft1
+        weight: 1
+      - path: Body/HornRight1
+        weight: 1
+      - path: Body/HornRight1/HornRight2
+        weight: 1
+      - path: Body/HornRight1/HornRight2/HornRight3
+        weight: 1
+      - path: Body/Leg1
+        weight: 1
+      - path: Body/Leg1/LegLeft1
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2/LegLeft3
+        weight: 1
+      - path: Body/Leg1/LegRight3
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2/LegRight1
+        weight: 1
+      - path: EnemyNatureBushHorned
+        weight: 1
+      - path: EnemyNatureBushHorned/EnemyNatureBushHorned3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head2
+        weight: 1
+      - path: Body/Head2/Head1
+        weight: 1
+      - path: Body/HornLeft3
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2/HornLeft1
+        weight: 1
+      - path: Body/HornRight1
+        weight: 1
+      - path: Body/HornRight1/HornRight2
+        weight: 1
+      - path: Body/HornRight1/HornRight2/HornRight3
+        weight: 1
+      - path: Body/Leg1
+        weight: 1
+      - path: Body/Leg1/LegLeft1
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2/LegLeft3
+        weight: 1
+      - path: Body/Leg1/LegRight3
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2/LegRight1
+        weight: 1
+      - path: EnemyNatureBushHorned
+        weight: 1
+      - path: EnemyNatureBushHorned/EnemyNatureBushHorned3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Hit
+      takeName: Take 001
+      firstFrame: 98
+      lastFrame: 124
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head2
+        weight: 1
+      - path: Body/Head2/Head1
+        weight: 1
+      - path: Body/HornLeft3
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2
+        weight: 1
+      - path: Body/HornLeft3/HornLeft2/HornLeft1
+        weight: 1
+      - path: Body/HornRight1
+        weight: 1
+      - path: Body/HornRight1/HornRight2
+        weight: 1
+      - path: Body/HornRight1/HornRight2/HornRight3
+        weight: 1
+      - path: Body/Leg1
+        weight: 1
+      - path: Body/Leg1/LegLeft1
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2
+        weight: 1
+      - path: Body/Leg1/LegLeft1/LegLeft2/LegLeft3
+        weight: 1
+      - path: Body/Leg1/LegRight3
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2
+        weight: 1
+      - path: Body/Leg1/LegRight3/LegRight2/LegRight1
+        weight: 1
+      - path: EnemyNatureBushHorned
+        weight: 1
+      - path: EnemyNatureBushHorned/EnemyNatureBushHorned3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 50
+    meshCompression: 2
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.25
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

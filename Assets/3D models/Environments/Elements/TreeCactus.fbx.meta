@@ -1,0 +1,191 @@
+fileFormatVersion: 2
+guid: 2c3989e133c70de4d9acec9bf91151a6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: TreeCactus2
+    100004: TreeCactus3
+    100006: TreeCactus4
+    100008: Spines1
+    100010: joint1
+    100012: joint2
+    100014: joint3
+    100016: joint4
+    100018: polySurface22
+    100020: polySurface25
+    100022: polySurface31
+    400000: //RootNode
+    400002: TreeCactus2
+    400004: TreeCactus3
+    400006: TreeCactus4
+    400008: Spines1
+    400010: joint1
+    400012: joint2
+    400014: joint3
+    400016: joint4
+    400018: polySurface22
+    400020: polySurface25
+    400022: polySurface31
+    2300000: TreeCactus2
+    2300002: TreeCactus3
+    2300004: TreeCactus4
+    2300006: Spines1
+    2300008: polySurface22
+    2300010: polySurface25
+    2300012: polySurface31
+    3300000: TreeCactus2
+    3300002: TreeCactus3
+    3300004: TreeCactus4
+    3300006: Spines1
+    3300008: polySurface22
+    3300010: polySurface25
+    3300012: polySurface31
+    4300000: TreeCactus2
+    4300002: TreeCactus3
+    4300004: TreeCactus4
+    4300006: Spines1
+    4300008: polySurface31
+    4300010: polySurface25
+    4300012: polySurface22
+    7400000: Idle
+    9500000: //RootNode
+    13700000: Spines1
+    13700002: TreeCactus3
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CactusEyes
+    second: {fileID: 2100000, guid: 490cc83a53d91674e82eb988f2b12eb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeCactus
+    second: {fileID: 2100000, guid: 207218bc6f7ca514bbe7502f7febf7af, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint2
+        weight: 1
+      - path: joint1/joint2/joint3
+        weight: 1
+      - path: joint1/joint2/joint3/joint4
+        weight: 1
+      - path: TreeCactus4
+        weight: 1
+      - path: TreeCactus4/Spines1
+        weight: 1
+      - path: TreeCactus4/TreeCactus3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 40
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.39999998
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

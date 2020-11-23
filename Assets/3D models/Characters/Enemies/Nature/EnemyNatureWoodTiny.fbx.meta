@@ -1,0 +1,469 @@
+fileFormatVersion: 2
+guid: 537d6da397631b44ebc7236b052e1878
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: EnemyNatureWoodTiny3
+    100004: EnemyNatureWoodTiny4
+    100006: joint1
+    100008: joint10
+    100010: joint11
+    100012: joint12
+    100014: joint13
+    100016: joint14
+    100018: joint15
+    100020: joint16
+    100022: joint2
+    100024: joint3
+    100026: joint4
+    100028: joint5
+    100030: joint6
+    100032: joint7
+    100034: joint8
+    100036: joint9
+    100038: joint17
+    100040: ArmLeft1
+    100042: ArmLeft2
+    100044: ArmLeft3
+    100046: ArmRight1
+    100048: Body
+    100050: Head
+    100052: Head2
+    100054: HeadMovable
+    100056: LowerBody1
+    100058: LowerBody2
+    100060: LowerBody3
+    100062: LowerBody4
+    100064: LowerBody5
+    100066: LowerBody6
+    100068: LowerBody7
+    100070: group1
+    100072: polySurface1
+    100074: polySurface2
+    100076: polySurface3
+    100078: polySurface4
+    100080: polySurface5
+    400000: //RootNode
+    400002: EnemyNatureWoodTiny3
+    400004: EnemyNatureWoodTiny4
+    400006: joint1
+    400008: joint10
+    400010: joint11
+    400012: joint12
+    400014: joint13
+    400016: joint14
+    400018: joint15
+    400020: joint16
+    400022: joint2
+    400024: joint3
+    400026: joint4
+    400028: joint5
+    400030: joint6
+    400032: joint7
+    400034: joint8
+    400036: joint9
+    400038: joint17
+    400040: ArmLeft1
+    400042: ArmLeft2
+    400044: ArmLeft3
+    400046: ArmRight1
+    400048: Body
+    400050: Head
+    400052: Head2
+    400054: HeadMovable
+    400056: LowerBody1
+    400058: LowerBody2
+    400060: LowerBody3
+    400062: LowerBody4
+    400064: LowerBody5
+    400066: LowerBody6
+    400068: LowerBody7
+    400070: group1
+    400072: polySurface1
+    400074: polySurface2
+    400076: polySurface3
+    400078: polySurface4
+    400080: polySurface5
+    2300000: polySurface1
+    2300002: polySurface2
+    2300004: polySurface3
+    2300006: polySurface4
+    2300008: polySurface5
+    3300000: polySurface1
+    3300002: polySurface2
+    3300004: polySurface3
+    3300006: polySurface4
+    3300008: polySurface5
+    4300000: EnemyNatureWoodTiny3
+    4300002: polySurface1
+    4300004: polySurface5
+    4300006: polySurface4
+    4300008: polySurface2
+    4300010: polySurface3
+    7400000: Idle
+    7400002: Die
+    7400004: Hit
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: EnemyNatureWoodTiny3
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EnemyNatureWoodTiny
+    second: {fileID: 2100000, guid: 21368b43566f98f49a93d7861d169c02, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 96
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/ArmLeft1
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2/ArmLeft3
+        weight: 1
+      - path: Body/ArmRight1
+        weight: 1
+      - path: Body/ArmRight1/joint2
+        weight: 1
+      - path: Body/ArmRight1/joint2/joint3
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head/HeadMovable
+        weight: 0
+      - path: Body/Head/HeadMovable/Head2
+        weight: 0
+      - path: Body/LowerBody1
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3/LowerBody4
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6/LowerBody7
+        weight: 1
+      - path: EnemyNatureWoodTiny4
+        weight: 1
+      - path: EnemyNatureWoodTiny4/EnemyNatureWoodTiny3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: Die
+      takeName: Take 001
+      firstFrame: 97
+      lastFrame: 190
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/ArmLeft1
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2/ArmLeft3
+        weight: 1
+      - path: Body/ArmRight1
+        weight: 1
+      - path: Body/ArmRight1/joint2
+        weight: 1
+      - path: Body/ArmRight1/joint2/joint3
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head/HeadMovable
+        weight: 1
+      - path: Body/Head/HeadMovable/Head2
+        weight: 1
+      - path: Body/LowerBody1
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3/LowerBody4
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6/LowerBody7
+        weight: 1
+      - path: EnemyNatureWoodTiny4
+        weight: 1
+      - path: EnemyNatureWoodTiny4/EnemyNatureWoodTiny3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: Hit
+      takeName: Take 001
+      firstFrame: 191
+      lastFrame: 231
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/ArmLeft1
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2/ArmLeft3
+        weight: 1
+      - path: Body/ArmRight1
+        weight: 1
+      - path: Body/ArmRight1/joint2
+        weight: 1
+      - path: Body/ArmRight1/joint2/joint3
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head/HeadMovable
+        weight: 1
+      - path: Body/Head/HeadMovable/Head2
+        weight: 1
+      - path: Body/LowerBody1
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3/LowerBody4
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6/LowerBody7
+        weight: 1
+      - path: EnemyNatureWoodTiny4
+        weight: 1
+      - path: EnemyNatureWoodTiny4/EnemyNatureWoodTiny3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 400
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: Body/ArmLeft1
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2
+        weight: 1
+      - path: Body/ArmLeft1/ArmLeft2/ArmLeft3
+        weight: 1
+      - path: Body/ArmRight1
+        weight: 1
+      - path: Body/ArmRight1/joint2
+        weight: 1
+      - path: Body/ArmRight1/joint2/joint3
+        weight: 1
+      - path: Body/Head
+        weight: 1
+      - path: Body/Head/HeadMovable
+        weight: 1
+      - path: Body/Head/HeadMovable/Head2
+        weight: 1
+      - path: Body/LowerBody1
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3
+        weight: 1
+      - path: Body/LowerBody1/LowerBody2/LowerBody3/LowerBody4
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6
+        weight: 1
+      - path: Body/LowerBody1/LowerBody5/LowerBody6/LowerBody7
+        weight: 1
+      - path: EnemyNatureWoodTiny4
+        weight: 1
+      - path: EnemyNatureWoodTiny4/EnemyNatureWoodTiny3
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 60
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.59999996
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

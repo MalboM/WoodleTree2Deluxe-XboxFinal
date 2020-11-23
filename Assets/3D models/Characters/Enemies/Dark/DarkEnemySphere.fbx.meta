@@ -1,0 +1,548 @@
+fileFormatVersion: 2
+guid: c243c4fe16936c940b6dc06ab0d2fcd6
+timeCreated: 1459193497
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: DarkSphere
+    100004: DarkSphere45
+    100006: DarkSphere46
+    100008: DarkSphere47
+    100010: DarkSphere48
+    100012: DarkSphere49
+    100014: DarkSphere50
+    100016: DarkSphere51
+    100018: DarkSphere52
+    100020: DarkSphere53
+    100022: DarkSphere54
+    100024: DarkSphere55
+    100026: DarkSphere56
+    100028: DarkSphere57
+    100030: joint1
+    100032: joint10
+    100034: joint11
+    100036: joint12
+    100038: joint13
+    100040: joint14
+    100042: joint15
+    100044: joint16
+    100046: joint2
+    100048: joint3
+    100050: joint4
+    100052: joint5
+    100054: joint6
+    100056: joint7
+    100058: joint8
+    100060: joint9
+    400000: //RootNode
+    400002: DarkSphere
+    400004: DarkSphere45
+    400006: DarkSphere46
+    400008: DarkSphere47
+    400010: DarkSphere48
+    400012: DarkSphere49
+    400014: DarkSphere50
+    400016: DarkSphere51
+    400018: DarkSphere52
+    400020: DarkSphere53
+    400022: DarkSphere54
+    400024: DarkSphere55
+    400026: DarkSphere56
+    400028: DarkSphere57
+    400030: joint1
+    400032: joint10
+    400034: joint11
+    400036: joint12
+    400038: joint13
+    400040: joint14
+    400042: joint15
+    400044: joint16
+    400046: joint2
+    400048: joint3
+    400050: joint4
+    400052: joint5
+    400054: joint6
+    400056: joint7
+    400058: joint8
+    400060: joint9
+    4300000: DarkSphere56
+    4300002: DarkSphere55
+    4300004: DarkSphere54
+    4300006: DarkSphere53
+    4300008: DarkSphere52
+    4300010: DarkSphere51
+    4300012: DarkSphere50
+    4300014: DarkSphere48
+    4300016: DarkSphere47
+    4300018: DarkSphere46
+    4300020: DarkSphere45
+    4300022: DarkSphere57
+    7400000: Idle
+    7400002: Walk
+    7400004: Die
+    7400006: Attack
+    9500000: //RootNode
+    13700000: DarkSphere45
+    13700002: DarkSphere46
+    13700004: DarkSphere47
+    13700006: DarkSphere48
+    13700008: DarkSphere50
+    13700010: DarkSphere51
+    13700012: DarkSphere52
+    13700014: DarkSphere53
+    13700016: DarkSphere54
+    13700018: DarkSphere55
+    13700020: DarkSphere56
+    13700022: DarkSphere57
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkEnemySphere
+    second: {fileID: 2100000, guid: 18807fea51986ff449ad33b5643c5ed1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkSphere41
+    second: {fileID: 2100000, guid: 1e6da98f087212449aab4756dfd59eb8, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: DarkSphere
+        weight: 1
+      - path: DarkSphere/DarkSphere49
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere45
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere46
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere47
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere48
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere57
+        weight: 1
+      - path: DarkSphere/DarkSphere50
+        weight: 1
+      - path: DarkSphere/DarkSphere51
+        weight: 1
+      - path: DarkSphere/DarkSphere52
+        weight: 1
+      - path: DarkSphere/DarkSphere53
+        weight: 1
+      - path: DarkSphere/DarkSphere54
+        weight: 1
+      - path: DarkSphere/DarkSphere55
+        weight: 1
+      - path: DarkSphere/DarkSphere56
+        weight: 1
+      - path: joint15
+        weight: 1
+      - path: joint15/joint1
+        weight: 1
+      - path: joint15/joint1/joint2
+        weight: 1
+      - path: joint15/joint1/joint2/joint3
+        weight: 1
+      - path: joint15/joint4
+        weight: 1
+      - path: joint15/joint4/joint5
+        weight: 1
+      - path: joint15/joint4/joint5/joint6
+        weight: 1
+      - path: joint15/joint7
+        weight: 1
+      - path: joint15/joint7/joint8
+        weight: 1
+      - path: joint15/joint7/joint8/joint9
+        weight: 1
+      - path: joint15/joint10
+        weight: 1
+      - path: joint15/joint10/joint11
+        weight: 1
+      - path: joint15/joint10/joint11/joint12
+        weight: 1
+      - path: joint15/joint13
+        weight: 1
+      - path: joint15/joint13/joint14
+        weight: 1
+      - path: joint15/joint13/joint14/joint16
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 96
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: DarkSphere
+        weight: 1
+      - path: DarkSphere/DarkSphere49
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere45
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere46
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere47
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere48
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere57
+        weight: 1
+      - path: DarkSphere/DarkSphere50
+        weight: 1
+      - path: DarkSphere/DarkSphere51
+        weight: 1
+      - path: DarkSphere/DarkSphere52
+        weight: 1
+      - path: DarkSphere/DarkSphere53
+        weight: 1
+      - path: DarkSphere/DarkSphere54
+        weight: 1
+      - path: DarkSphere/DarkSphere55
+        weight: 1
+      - path: DarkSphere/DarkSphere56
+        weight: 1
+      - path: joint15
+        weight: 1
+      - path: joint15/joint1
+        weight: 1
+      - path: joint15/joint1/joint2
+        weight: 1
+      - path: joint15/joint1/joint2/joint3
+        weight: 1
+      - path: joint15/joint4
+        weight: 1
+      - path: joint15/joint4/joint5
+        weight: 1
+      - path: joint15/joint4/joint5/joint6
+        weight: 1
+      - path: joint15/joint7
+        weight: 1
+      - path: joint15/joint7/joint8
+        weight: 1
+      - path: joint15/joint7/joint8/joint9
+        weight: 1
+      - path: joint15/joint10
+        weight: 1
+      - path: joint15/joint10/joint11
+        weight: 1
+      - path: joint15/joint10/joint11/joint12
+        weight: 1
+      - path: joint15/joint13
+        weight: 1
+      - path: joint15/joint13/joint14
+        weight: 1
+      - path: joint15/joint13/joint14/joint16
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Die
+      takeName: Take 001
+      firstFrame: 97
+      lastFrame: 145
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: DarkSphere
+        weight: 1
+      - path: DarkSphere/DarkSphere49
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere45
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere46
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere47
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere48
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere57
+        weight: 1
+      - path: DarkSphere/DarkSphere50
+        weight: 1
+      - path: DarkSphere/DarkSphere51
+        weight: 1
+      - path: DarkSphere/DarkSphere52
+        weight: 1
+      - path: DarkSphere/DarkSphere53
+        weight: 1
+      - path: DarkSphere/DarkSphere54
+        weight: 1
+      - path: DarkSphere/DarkSphere55
+        weight: 1
+      - path: DarkSphere/DarkSphere56
+        weight: 1
+      - path: joint15
+        weight: 1
+      - path: joint15/joint1
+        weight: 1
+      - path: joint15/joint1/joint2
+        weight: 1
+      - path: joint15/joint1/joint2/joint3
+        weight: 1
+      - path: joint15/joint4
+        weight: 1
+      - path: joint15/joint4/joint5
+        weight: 1
+      - path: joint15/joint4/joint5/joint6
+        weight: 1
+      - path: joint15/joint7
+        weight: 1
+      - path: joint15/joint7/joint8
+        weight: 1
+      - path: joint15/joint7/joint8/joint9
+        weight: 1
+      - path: joint15/joint10
+        weight: 1
+      - path: joint15/joint10/joint11
+        weight: 1
+      - path: joint15/joint10/joint11/joint12
+        weight: 1
+      - path: joint15/joint13
+        weight: 1
+      - path: joint15/joint13/joint14
+        weight: 1
+      - path: joint15/joint13/joint14/joint16
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Attack
+      takeName: Take 001
+      firstFrame: 146
+      lastFrame: 194
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: DarkSphere
+        weight: 1
+      - path: DarkSphere/DarkSphere49
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere45
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere46
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere47
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere48
+        weight: 1
+      - path: DarkSphere/DarkSphere49/DarkSphere57
+        weight: 1
+      - path: DarkSphere/DarkSphere50
+        weight: 1
+      - path: DarkSphere/DarkSphere51
+        weight: 1
+      - path: DarkSphere/DarkSphere52
+        weight: 1
+      - path: DarkSphere/DarkSphere53
+        weight: 1
+      - path: DarkSphere/DarkSphere54
+        weight: 1
+      - path: DarkSphere/DarkSphere55
+        weight: 1
+      - path: DarkSphere/DarkSphere56
+        weight: 1
+      - path: joint15
+        weight: 1
+      - path: joint15/joint1
+        weight: 1
+      - path: joint15/joint1/joint2
+        weight: 1
+      - path: joint15/joint1/joint2/joint3
+        weight: 1
+      - path: joint15/joint4
+        weight: 1
+      - path: joint15/joint4/joint5
+        weight: 1
+      - path: joint15/joint4/joint5/joint6
+        weight: 1
+      - path: joint15/joint7
+        weight: 1
+      - path: joint15/joint7/joint8
+        weight: 1
+      - path: joint15/joint7/joint8/joint9
+        weight: 1
+      - path: joint15/joint10
+        weight: 1
+      - path: joint15/joint10/joint11
+        weight: 1
+      - path: joint15/joint10/joint11/joint12
+        weight: 1
+      - path: joint15/joint13
+        weight: 1
+      - path: joint15/joint13/joint14
+        weight: 1
+      - path: joint15/joint13/joint14/joint16
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 15
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,278 @@
+fileFormatVersion: 2
+guid: 51127019a312c144daa9d6a554cffea6
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: joint6
+    100002: joint16
+    100004: pSphere1
+    100006: joint17
+    100008: transform7
+    100010: pCylinder4
+    100012: //RootNode
+    100014: joint14
+    100016: joint27
+    100018: pCylinder5
+    100020: joint21
+    100022: joint3
+    100024: transform3
+    100026: joint12
+    100028: pCube1
+    100030: joint19
+    100032: joint2
+    100034: joint10
+    100036: joint8
+    100038: joint26
+    100040: pCylinder1
+    100042: joint7
+    100044: transform2
+    100046: joint24
+    100048: transform1
+    100050: joint25
+    100052: joint22
+    100054: joint11
+    100056: transform5
+    100058: transform6
+    100060: transform4
+    100062: joint4
+    100064: joint13
+    100066: pCylinder6
+    100068: joint20
+    100070: pCylinder3
+    100072: joint5
+    100074: joint18
+    100076: polySurface1
+    100078: joint15
+    100080: joint1
+    100082: joint23
+    100084: joint9
+    400000: joint6
+    400002: joint16
+    400004: pSphere1
+    400006: joint17
+    400008: transform7
+    400010: pCylinder4
+    400012: //RootNode
+    400014: joint14
+    400016: joint27
+    400018: pCylinder5
+    400020: joint21
+    400022: joint3
+    400024: transform3
+    400026: joint12
+    400028: pCube1
+    400030: joint19
+    400032: joint2
+    400034: joint10
+    400036: joint8
+    400038: joint26
+    400040: pCylinder1
+    400042: joint7
+    400044: transform2
+    400046: joint24
+    400048: transform1
+    400050: joint25
+    400052: joint22
+    400054: joint11
+    400056: transform5
+    400058: transform6
+    400060: transform4
+    400062: joint4
+    400064: joint13
+    400066: pCylinder6
+    400068: joint20
+    400070: pCylinder3
+    400072: joint5
+    400074: joint18
+    400076: polySurface1
+    400078: joint15
+    400080: joint1
+    400082: joint23
+    400084: joint9
+    4300000: polySurface1
+    7400000: Take 001
+    7400002: idle
+    7400004: attack
+    7400006: die
+    7400008: Idle
+    7400010: Attack
+    7400012: Die
+    11100000: //RootNode
+    13700000: joint26
+    13700002: polySurface1
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 2f4e7a892b88c8c4d9e6ac12046705ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: b297ff014c2a7c34f9f18ca0b06f6267, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 3
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: 
+      firstFrame: 1
+      lastFrame: 96
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack
+      takeName: 
+      firstFrame: 96
+      lastFrame: 118
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Die
+      takeName: 
+      firstFrame: 119
+      lastFrame: 139
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

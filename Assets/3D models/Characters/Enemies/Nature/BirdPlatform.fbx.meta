@@ -1,0 +1,257 @@
+fileFormatVersion: 2
+guid: d3621350edc7b4844ad3033265134cf1
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BirdPlatform4
+    100004: BirdPlatform5
+    100006: BirdPlatform6
+    100008: joint1
+    100010: joint2
+    100012: joint3
+    100014: joint4
+    100016: joint5
+    100018: joint6
+    100020: joint7
+    100022: polySurface2
+    100024: polySurface6
+    100026: polySurface9
+    400000: //RootNode
+    400002: BirdPlatform4
+    400004: BirdPlatform5
+    400006: BirdPlatform6
+    400008: joint1
+    400010: joint2
+    400012: joint3
+    400014: joint4
+    400016: joint5
+    400018: joint6
+    400020: joint7
+    400022: polySurface2
+    400024: polySurface6
+    400026: polySurface9
+    2300000: BirdPlatform5
+    2300002: polySurface2
+    2300004: polySurface6
+    2300006: polySurface9
+    3300000: BirdPlatform5
+    3300002: polySurface2
+    3300004: polySurface6
+    3300006: polySurface9
+    4300000: BirdPlatform5
+    4300002: BirdPlatform4
+    4300004: polySurface2
+    4300006: polySurface9
+    4300008: polySurface6
+    7400000: Fly
+    7400002: Jump
+    9500000: //RootNode
+    13700000: BirdPlatform4
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bird3
+    second: {fileID: 2100000, guid: 97c9cc5b34225d44ba8372d59e9f2510, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirdPlatform
+    second: {fileID: 2100000, guid: c3af7ef3c229eb440ba886a236d80c77, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirdPlatform1
+    second: {fileID: 2100000, guid: aee285d210b656048b052249b614f4c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirdPlatform2
+    second: {fileID: 2100000, guid: c4bcbe0ae3c6063439b0e9415940a3a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirdPlatform3
+    second: {fileID: 2100000, guid: 1b27fa4fc37756449bdb0dd2f47dd078, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fly
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: BirdPlatform6
+        weight: 1
+      - path: BirdPlatform6/BirdPlatform4
+        weight: 1
+      - path: BirdPlatform6/BirdPlatform5
+        weight: 1
+      - path: joint5
+        weight: 1
+      - path: joint5/joint1
+        weight: 1
+      - path: joint5/joint1/joint2
+        weight: 1
+      - path: joint5/joint3
+        weight: 1
+      - path: joint5/joint3/joint4
+        weight: 1
+      - path: joint5/joint6
+        weight: 1
+      - path: joint5/joint6/joint7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Jump
+      takeName: Take 001
+      firstFrame: 49
+      lastFrame: 73
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: BirdPlatform6
+        weight: 1
+      - path: BirdPlatform6/BirdPlatform4
+        weight: 1
+      - path: BirdPlatform6/BirdPlatform5
+        weight: 1
+      - path: joint5
+        weight: 1
+      - path: joint5/joint1
+        weight: 1
+      - path: joint5/joint1/joint2
+        weight: 1
+      - path: joint5/joint3
+        weight: 1
+      - path: joint5/joint3/joint4
+        weight: 1
+      - path: joint5/joint6
+        weight: 1
+      - path: joint5/joint6/joint7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 70
+    meshCompression: 2
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
