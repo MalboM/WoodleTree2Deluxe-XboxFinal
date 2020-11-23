@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &141218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 484548}
+  - 114: {fileID: 11495402}
+  m_Layer: 0
+  m_Name: Bow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &484548
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11495402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f222e04d7860e6458970c223282a951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Bow
+  itemInfo: This is a bow.
+  usesQuantities: 1
+  maxQuantity: 50
+  quantity: 15
+  icon: {fileID: 21300000, guid: 51c67b57718d60d4294fd991ed6356c7, type: 3}
+  itemModel: {fileID: 155118, guid: c4fb0ef175bc8df448eafccd033ea07f, type: 2}
+  rightHandWield: 1
+  useWhenEquipped: 1
+  dualWield: 0
+  dualWieldItemName: 
+  modelRotations: {x: 0, y: 20, z: 90}
+  modelCentrePos: {x: -.0399999991, y: .300000012, z: -.0700000003}
+  positionInScript: 0
+  displayModelOnChar: 0
+  modelDisplayRotations: {x: 0, y: 0, z: 0}
+  modelDisplayCentrePos: {x: 0, y: 0, z: 0}
+  projectileModel: {fileID: 103732, guid: 192bc901bb6e9184bb829d21985c2941, type: 2}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 51c67b57718d60d4294fd991ed6356c7,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemInfo
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: quantity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxQuantity
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemModel
+      value: 
+      objectReference: {fileID: 155118, guid: c4fb0ef175bc8df448eafccd033ea07f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: rightHandItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rightHandWield
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: projectileModel
+      value: 
+      objectReference: {fileID: 103732, guid: 192bc901bb6e9184bb829d21985c2941, type: 2}
+    - target: {fileID: 0}
+      propertyPath: useWhenEquipped
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.z
+      value: -.0700000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: positionInScript
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.x
+      value: -.0399999991
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.y
+      value: .300000012
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 141218}
+  m_IsPrefabParent: 1

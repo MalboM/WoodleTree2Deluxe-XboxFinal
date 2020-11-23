@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &141218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 484548}
+  - 114: {fileID: 11495402}
+  m_Layer: 0
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &484548
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11495402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f222e04d7860e6458970c223282a951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Shield
+  itemInfo: This is a shield.
+  usesQuantities: 0
+  maxQuantity: 1
+  quantity: 1
+  icon: {fileID: 21300000, guid: 05df56bcaf37d0049901b7f813c26b61, type: 3}
+  itemModel: {fileID: 162942, guid: 9bd257c4b5d7e2c46bffa3deae51ae84, type: 2}
+  rightHandWield: 0
+  useWhenEquipped: 0
+  dualWield: 1
+  dualWieldItemName: Sword
+  modelRotations: {x: 375, y: 91, z: 270}
+  modelCentrePos: {x: -.0199999996, y: -.0299999993, z: .180000007}
+  positionInScript: 0
+  displayModelOnChar: 1
+  modelDisplayRotations: {x: 0, y: 120, z: 0}
+  modelDisplayCentrePos: {x: -.100000001, y: -.100000001, z: 0}
+  projectileModel: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 05df56bcaf37d0049901b7f813c26b61,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemInfo
+      value: This is a shield.
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemName
+      value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: usesQuantities
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemModel
+      value: 
+      objectReference: {fileID: 162942, guid: 9bd257c4b5d7e2c46bffa3deae51ae84, type: 2}
+    - target: {fileID: 0}
+      propertyPath: displayModelOnChar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.y
+      value: -.0299999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.y
+      value: 91
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelDisplayRotations.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelDisplayCentrePos.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dualWield
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dualWieldItemName
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelDisplayCentrePos.x
+      value: -.100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelRotations.x
+      value: 375
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalRotation.x
+      value: .0785461143
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalRotation.w
+      value: .996910512
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.x
+      value: -.0199999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: modelCentrePos.z
+      value: .180000007
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 141218}
+  m_IsPrefabParent: 1

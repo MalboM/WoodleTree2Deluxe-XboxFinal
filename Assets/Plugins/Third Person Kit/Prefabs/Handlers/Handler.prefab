@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &140280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 481082}
+  - 114: {fileID: 11442802}
+  - 114: {fileID: 11482650}
+  - 114: {fileID: 11476042}
+  - 114: {fileID: 11498156}
+  m_Layer: 0
+  m_Name: Handler
+  m_TagString: Handler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &481082
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11442802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6506cdef99b11bd4997e187e697e420a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudCanvas: {fileID: 0}
+  inventoryCanvas: {fileID: 0}
+  eventSys: {fileID: 0}
+  useHearts: 0
+  useBars: 0
+  useMoney: 0
+  useInventory: 0
+  displayHUD: 0
+  aimGUIElement: {fileID: 0}
+  heartGUIElement: {fileID: 0}
+  hudBars:
+  - slider: {fileID: 0}
+    autoRegen: 0
+    changeSpeed: 0.001
+    regenSpeed: 0.01
+  moneyGUIElement: {fileID: 0}
+  hotKeyGUIElement: {fileID: 0}
+  maxNoOfHearts: 20
+  amountOfAcquiredHearts: 18
+  drawHeartsLeftwards: 0
+  drawHeartsUpwards: 0
+  heartsPerRow: 10
+  healthChangeSpeed: 0.05
+  heartsXSpacing: 0
+  heartsYSpacing: 0
+  money: 8
+  maxMoney: 999
+  moneyChangeSpeed: 0.01
+  hotkeysAmount: 3
+  hotkeysPerRow: 1
+  drawHotkeysLeftwards: 0
+  drawHotkeysUpwards: 0
+  hotKeysXSpacing: 5
+  hotKeysYSpacing: 5
+  hotKeys: []
+  emptyHeartIcon: {fileID: 21300000, guid: 9a509b4ad92d6b348b475ea8d8bd702b, type: 3}
+  lowHeartIcon: {fileID: 21300000, guid: 5b8b53c6fad1503469188c17e5d1ef3f, type: 3}
+  midHeartIcon: {fileID: 21300000, guid: f9c887e38582f6148b7d8919642fb47f, type: 3}
+  highHeartIcon: {fileID: 21300000, guid: 25a09d08d593d7b4cb0db9eff4df4594, type: 3}
+  fullHeartIcon: {fileID: 21300000, guid: 6018357019018e747a3fc80e40183404, type: 3}
+--- !u!114 &11476042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babfb63cb0001f04d868c878ddb03553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xAxisL: 0
+  yAxisL: 0
+  xAxisR: 0
+  yAxisR: 0
+  instrumentTrig: 0
+  attackPress: 0
+  jumpPress: 0
+  glidePress: 0
+  leafPress: 0
+  runPress: 0
+  startPress: 0
+  attackHold: 0
+  jumpHold: 0
+  glideHold: 0
+  leafHold: 0
+  runHold: 0
+  startHold: 0
+--- !u!114 &11482650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb99688e2c8df2d4b9c5a7a5bb1b9df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggersAreButtons: 0
+--- !u!114 &11498156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0e6e740cbbb024ba5b3245d33b05d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  inGrabPull: 0
+  inGrabPush: 0
+  inGrabStill: 0
+  inABoxPushingAnim: 0
+  inFall: 0
+  inJump: 0
+  inDoubleJump: 0
+  inIdle: 0
+  inRun: 0
+  inRunLeft: 0
+  inRunRight: 0
+  inSprint: 0
+  inSprintLeft: 0
+  inSprintRight: 0
+  inWalk: 0
+  inBrake: 0
+  inSliding: 0
+  inGlide: 0
+  inLand: 0
+  locomotionBlend: 0
+  inLeafUp: 0
+  inLeafHold: 0
+  inLeafDown: 0
+  inQuickLeafDown: 0
+  inALeafAnim: 0
+  inAttack: 0
+  inAttackCharge: 0
+  inAttackRelease: 0
+  inAttackAnim: 0
+  inVictory: 0
+  inDefeated: 0
+  inHit: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 140280}
+  m_IsPrefabParent: 1

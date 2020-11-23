@@ -1,0 +1,42 @@
+﻿#if EASY_TOUCH_4
+using UnityEngine;
+using System.Collections;
+
+public enum TouchEventType {
+	TouchCancel,
+	Cancel2Fingers,
+	TouchStart,
+	TouchDown,
+	TouchUp,
+	SimpleTap,
+	DoubleTap,
+	LongTapStart,
+	LongTap,
+	LongTapEnd,
+	DragStart,
+	Drag,
+	DragEnd,
+	SwipeStart,
+	Swipe,
+	SwipeEnd,
+	TouchStart2Fingers,
+	TouchDown2Fingers,
+	TouchUp2Fingers,
+	SimpleTap2Fingers,
+	DoubleTap2Fingers,
+	LongTapStart2Fingers,
+	LongTap2Fingers,
+	LongTapEnd2Fingers,
+	Twist,
+	TwistEnd,
+	PinchIn,
+	PinchOut,
+	PinchEnd,
+	DragStart2Fingers,
+	Drag2Fingers,
+	DragEnd2Fingers,
+	SwipeStart2Fingers,
+	Swipe2Fingers,
+	SwipeEnd2Fingers,
+}
+#endif
