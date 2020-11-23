@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AccessPolicies
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://config.mgt.xboxlive.com/schema/accesspolicies/1">
+
+  <AccessPolicy Scope="Scopes.ServiceDefault">
+    <Permission Type="FullAccess">
+      <Principal Type="Product">THIS</Principal>
+    </Permission>
+  </AccessPolicy>
+
+  <AccessPolicy Scope="GameDVR">
+    <Permission Type="FullAccess">
+      <Principal Type="Product">THIS</Principal>
+      <Principal Type="XdpProduct">UNKNOWN</Principal>
+    </Permission>
+  </AccessPolicy>
+
+  <AccessPolicy Scope="GlobalStorage">
+    <Permission Type="FullAccess">
+      <Principal Type="Product">THIS</Principal>
+    </Permission>
+  </AccessPolicy>
+
+</AccessPolicies>
