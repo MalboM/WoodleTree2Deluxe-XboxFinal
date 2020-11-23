@@ -1,0 +1,2051 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SonyPS4SaveData</name>
+    </assembly>
+    <members>
+        <member name="T:Sony.PS4.SaveData.Backups">
+            <summary>
+            Backup savedata requests
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Backups.BackupRequest">
+            <summary>
+            Request passed to backup a savedata directory name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.BackupRequest.DirName">
+            <summary>
+            The directory name to backup
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.BackupRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Backups.BackupRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Backups.CheckBackupRequest">
+            <summary>
+            Request passed to check is a savedata directory has a backup
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupRequest.DirName">
+            <summary>
+            The directory name to check
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupRequest.IncludeParams">
+            <summary>
+            Select true if the parameters should be included in the returned results. False by default
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupRequest.IncludeIcon">
+            <summary>
+            Select true if icon details should be included in the returned results. False by default
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.CheckBackupRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Backups.CheckBackupRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Backups.RestoreBackupRequest">
+            <summary>
+            Request passed to restore a savedata directory from its backup
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.RestoreBackupRequest.DirName">
+            <summary>
+            The directory name to restore
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.RestoreBackupRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Backups.RestoreBackupRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Backups.CheckBackupResponse">
+            <summary>
+            Response class containing data for a savedata directory backup
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.Icon">
+            <summary>
+            The savedata icon retrieved if there is one. This will be null is no icon available. Only valid is <see cref="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.HasIcon"/> is true. 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.HasParams">
+            <summary>
+            True if paramater info was returned in the request. 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.HasIcon">
+            <summary>
+            True if icon data was returned in the request. 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.Params">
+            <summary>
+            Savedata parameter info. Only valid if <see cref="P:Sony.PS4.SaveData.Backups.CheckBackupResponse.HasParams"/> is true.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.CheckBackupResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Backups.CheckBackupResponse"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.Backup(Sony.PS4.SaveData.Backups.BackupRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to backup a savedata directory. See sceSaveDataBackup PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata directory to backup.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.CheckBackup(Sony.PS4.SaveData.Backups.CheckBackupRequest,Sony.PS4.SaveData.Backups.CheckBackupResponse)">
+            <summary>
+            This method is used to check is a savedata directory has a backup. See sceSaveDataCheckBackupData PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata directory to check.</param>
+            <param name="response">The backup details if any exist.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Backups.RestoreBackup(Sony.PS4.SaveData.Backups.RestoreBackupRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to restore a savedata directory from a backup,it is exists. See sceSaveDataRestoreBackupData PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata directory to restore.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.DirName">
+            <summary>
+            Savedata directory name
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.DirName.DIRNAME_DATA_MAXSIZE">
+            <summary>
+            Max savedata directory name size
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.DirName.Data">
+            <summary>
+            The savedata directory name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.DirName.IsEmpty">
+            <summary>
+            Is the directory name empty
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.DirName.ToString">
+            <summary>
+            Convert the directory name to a string
+            </summary>
+            <returns>Directory name</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataParams">
+            <summary>
+            Savedata paramters
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SaveDataParams.TITLE_MAXSIZE">
+            <summary>
+            Max length savedata title text
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SaveDataParams.SUBTITLE_MAXSIZE">
+            <summary>
+            Max length savedata subtitle text
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SaveDataParams.DETAIL_MAXSIZE">
+            <summary>
+            Max length of savedata detail info text
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataParams.Title">
+            <summary>
+            Savedata title name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataParams.SubTitle">
+            <summary>
+            Savedata subtitle name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataParams.Detail">
+            <summary>
+            Savedata detail text
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataParams.UserParam">
+            <summary>
+            Savedata user paramter
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataParams.Time">
+            <summary>
+            Date and time of last update
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataInfo">
+            <summary>
+            Savedata size info
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataInfo.Blocks">
+            <summary>
+            Total size of the save data
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataInfo.FreeBlocks">
+            <summary>
+            Free space of the save data
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Icon">
+            <summary>
+            PNG image store in bytes from NpToolkit
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Icon.RawBytes">
+            <summary>
+            Get the RawBytes from the Icon. These can be used to create a new Texture2d for example.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Icon.Width">
+            <summary>
+            Width in pixels of the icon.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Icon.Height">
+            <summary>
+            Height in pixels of the icon.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.APIResultTypes">
+            <summary>
+            API Results types returned from PRX calls contain details if the API call was successful,
+            or if a warning or error was generated.
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.APIResultTypes.Success">
+            <summary>Result was successful</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.APIResultTypes.Warning">
+            <summary>A warning has occured.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.APIResultTypes.Error">
+            <summary>An error had occured.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.APIResult">
+            <summary>
+            The structure even containing a successful API call or if it was a warning/error the details
+            about the error.
+            
+            This is also used to fill out the NpToolkitException class when throwing an exception
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataException">
+            <summary>
+            Creates an exception to throw back to the Unity project.
+            This can be created in the normal way or via a APIResult structure that has
+            been returned from the Native plug-in
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataException.ResultType">
+            <summary>
+            The type of results, either success, warning or error
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataException.Filename">
+            <summary>
+            If from a native plug-in error the .cpp filename
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataException.LineNumber">
+            <summary>
+            If from a native plug-in error the .cpp linenumber
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataException.SceErrorCode">
+            <summary>
+            If from a native plug-in error the Sce error code
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataException.#ctor">
+            <summary>
+            Empty Exception
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataException.#ctor(System.String)">
+            <summary>
+            Message only exception
+            </summary>
+            <param name="message">Message string</param>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Message plus inner exception
+            </summary>
+            <param name="message">Message string</param>
+            <param name="inner">Inner exception</param>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataException.ExtendedMessage">
+            <summary>
+            Get the extended message for this exception.
+            If the exception came from an error in the native plug-in it will include any Sce error code and the .cpp filename and line number.
+            The Sce error code will be returned as a Hex character representation
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.NativeInitResult">
+            <summary>
+            The native initialization state of SaveData
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SceSDKVersion">
+            <summary>
+            Sce SDK Version
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SceSDKVersion.Major">
+            <summary>
+            Major version
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SceSDKVersion.Minor">
+            <summary>
+            Minor verson
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.SceSDKVersion.Patch">
+            <summary>
+            Patch version
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SceSDKVersion.ToString">
+            <summary>
+            Return the SDK version as a string separated into Major, Minor and Patch values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.InitResult">
+            <summary>
+            The initialisation state of SaveData
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.InitResult.Initialized">
+            <summary>
+            Has NpToolkit been initialize correctly
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.InitResult.SceSDKVersionValue">
+            <summary>
+            The current SDK version the native plugin is built with
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.InitResult.DllVersion">
+            <summary>
+            The current Version number for the SonyNp assembly
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.InitResult.SceSDKVersion">
+            <summary>
+            The current SDK version as Major, Minor and Patch values.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.ThreadAffinity">
+            <summary>
+            Set the affinity mask to enable NpToolkit to run on multiple cores
+            Important - Core0 and Core1 and not provided as these are the main Update and Gfx cores and should not be used.
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ThreadAffinity.Core2">
+            <summary>Allow native NpToolkit plug-in to run on Core 2</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ThreadAffinity.Core3">
+            <summary>Allow native NpToolkit plug-in to run on Core 3</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ThreadAffinity.Core4">
+            <summary>Allow native NpToolkit plug-in to run on Core 4</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ThreadAffinity.Core5">
+            <summary>Allow native NpToolkit plug-in to run on Core 5</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ThreadAffinity.AllCores">
+            <summary>Allow native NpToolkit plug-in to run on Core 2,3,4, and 5</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.InitSettings">
+            <summary>
+            Set the initialisation settings for the Save Data plug-in
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.InitSettings.affinity">
+            <summary>
+            The affinity mask.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.InitSettings.Affinity">
+            <summary>
+            The current Version number for the SonyNp assembly
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.InitSettings.Init">
+            <summary>
+            By default initialise the thread settings to use cores 2,3,4 and 5
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.FunctionTypes">
+            <summary>
+            Defines the different APIs provided by the SaveData library.
+            It is set automatically when a request object is created, and identifies the function it belongs to.
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.Invalid">
+            <summary>Non-valid function. It should never be returned</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.Mount">
+            <summary>Mount a savedata</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.Unmount">
+            <summary>Unmount a savedata</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.GetMountInfo">
+            <summary>Get mounted savedata size info</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.GetMountParams">
+            <summary>Get mounted savedata parameters</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.SetMountParams">
+            <summary>Set mounted savedata parameters</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.SaveIcon">
+            <summary>Save icon to mounted savedata</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.LoadIcon">
+            <summary>Load icon from mounted savedata</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.Delete">
+            <summary>Delete a savedata directory</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.DirNameSearch">
+            <summary>Search for a users savedata directories</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.Backup">
+            <summary>Backup a savedata directory</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.CheckBackup">
+            <summary>Check if a savedata directory has a backup</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.RestoreBackup">
+            <summary>Restore a savedata directory from a backup</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.FileOps">
+            <summary>Custom request to perform file operations on a mounted savedata directory</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.OpenDialog">
+            <summary>Open a savedata dialogh</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.NotificationUnmountWithBackup">
+            <summary>Notification once a backup while unmounting a savedata directory has completed</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.NotificationBackup">
+            <summary>Notification once a backup has completed</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.NotificationAborted">
+            <summary>Notification when a request has been aborted.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.NotificationDialogOpened">
+            <summary>Notification when a dialog has been opened</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.FunctionTypes.NotificationDialogClosed">
+            <summary>Notification when a dialog has been closed</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.RequestBase">
+            <summary>
+            The base class contain common settings for all request classes
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.RequestBase.FunctionType">
+            <summary>
+            Returns a value representing the function that uses the request.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.RequestBase.UserId">
+            <summary>
+            Calling user Id performing the request
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.RequestBase.Async">
+            <summary>
+            Way the request will be performed: asynchronous or synchronous
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.RequestBase.Locked">
+            <summary>
+            Indicates if a Request object is locked as it's currently in the queue to be processed. 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.RequestBase.IgnoreCallback">
+            <summary>
+            Don't call the async callback when request has completed. Useful for polling an async response, for example inside a Coroutine, instead of receiving a callback.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.RequestBase.#ctor(Sony.PS4.SaveData.FunctionTypes)">
+            <summary>
+            Initialise the class with its service type and function type.
+            </summary>
+            <param name="functionType">The function type.</param>
+        </member>
+        <member name="T:Sony.PS4.SaveData.ReturnCodes">
+            <summary>
+            A set of return codes that map to the Sony SCE error codes.
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SUCCESS">
+            <summary></summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_PARAMETER">
+            <summary>Set the wrong parameter</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_NOT_INITIALIZED">
+            <summary>Not initialized save data library yet</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_OUT_OF_MEMORY">
+            <summary>Out of memory</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_BUSY">
+            <summary>Save data directory has already been mounted/save data memory setup has alraedy done.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_NOT_MOUNTED">
+            <summary>Save data directory is not mounted</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_NO_PERMISSION">
+            <summary>Permission denied</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_FINGERPRINT_MISMATCH">
+            <summary>Fingerprint mismatch</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_EXISTS">
+            <summary>Savedata already exists</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_NOT_FOUND">
+            <summary>Savedata not found</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.DATA_ERROR_NO_SPACE_FS">
+            <summary>Not enough space for mounting savedata at file system</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_INTERNAL">
+            <summary>Internal error</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_MOUNT_FULL">
+            <summary>Reached mount max</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_BAD_MOUNTED">
+            <summary>Not mounted for writing</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_FILE_NOT_FOUND">
+            <summary>File not found</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_BROKEN">
+            <summary>Save data broken</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.SAVE_DATA_ERROR_INVALID_LOGIN_USER">
+            <summary>Invalid login user</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.ReturnCodes.InvalidMountPointName">
+            <summary>Mountpoint name is invlaid during a file operation request</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.ResponseBase">
+            <summary>
+            Base class that contains common Response data
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.ResponseBase.ReturnCodeValue">
+            <summary>
+            Gets the return code value of a Response object when it is ready. The return value will be a
+            successful result or an error result. See specific functions to know which return codes may be returned
+            </summary>
+            <remarks>
+            This will be an interger value, which will be an error code is less than 0.
+            </remarks>
+        </member>
+        <member name="P:Sony.PS4.SaveData.ResponseBase.ReturnCode">
+            <summary>
+            Gets the return code enum of a Response object when it is ready. The return value will be a
+            successful result or an error result. See specific functions to know which return codes may be returned.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.ResponseBase.Exception">
+            <summary>
+            Returns any exception that may have occured during the background processing of the request.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.ResponseBase.Locked">
+            <summary>
+            Indicates if a Response object is being calculated or it is ready to be read.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.ResponseBase.IsErrorCode">
+            <summary>
+            Does the return code contain an error code.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.ResponseBase.ConvertReturnCodeToString(Sony.PS4.SaveData.FunctionTypes)">
+            <summary>
+            Generate a string containing the Hex return code and if known the Return code name
+            taken from the Core.ReturnCodes enum.
+            As some of the enums share the same code the returned string will depend on the
+            API function used that generated the return code;
+            </summary>
+            <param name="apiCalled">The API that generated the return code. </param>
+            <returns>The constructed string with the Hex and return code name.</returns>
+            <remarks>
+            By default apiCalled will be FunctionType.invalid. This will return the first Core.ReturnCodes enum that matches the return code value so may produce an incorrect string. 
+            </remarks>
+        </member>
+        <member name="T:Sony.PS4.SaveData.EmptyResponse">
+            <summary>
+            Representation of empty data of a ResponseBase class
+            This still provides basic data that will indicate errors or return codes
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Deleting">
+            <summary>
+            Delete savedata directory
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Deleting.DeleteRequest">
+            <summary>
+            Request passed to delete a savedata directory name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Deleting.DeleteRequest.DirName">
+            <summary>
+            The directory name to delete
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Deleting.DeleteRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Deleting.DeleteRequest"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Deleting.Delete(Sony.PS4.SaveData.Deleting.DeleteRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to delete a savedata directory. See sceSaveDataDelete PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata directory to delete.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataDialogProcess">
+            <summary>
+            Dialog state machine for running the save/load/delete savedata process
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataDialogProcess.SaveState">
+            <summary>
+            Save process states
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataDialogProcess.StartSaveDialogProcess(System.Int32,Sony.PS4.SaveData.Dialogs.NewItem,Sony.PS4.SaveData.DirName,System.UInt64,Sony.PS4.SaveData.SaveDataParams,Sony.PS4.SaveData.FileOps.FileOperationRequest,Sony.PS4.SaveData.FileOps.FileOperationResponse,System.Boolean)">
+            <summary>
+            Start the save process as a Unity Coroutine.
+            </summary>
+            <param name="userId">The userId who will save data</param>
+            <param name="newItem">The new item details displayed in the save list</param>
+            <param name="newDirName">The directory name of a new save data if new save is selected from the list.</param>
+            <param name="newSaveDataBlocks">The size of a new save data if new save is selected from the list.</param>
+            <param name="saveDataParams">The save data params for a new save data or overwritten save data.</param>
+            <param name="fileRequest">The custom file IO operations for the actually files inside the save data</param>
+            <param name="fileResponse">The custom file IO response containing the results of the file operation</param>
+            <param name="backup">Should the save data be backed up when saving is complete. This will generate a notification once backup is complete.</param>
+            <returns>The enumerator, which can be used in a Unity coroutine.</returns>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataDialogProcess.StartLoadDialogProcess(System.Int32,Sony.PS4.SaveData.FileOps.FileOperationRequest,Sony.PS4.SaveData.FileOps.FileOperationResponse)">
+            <summary>
+            Start the load process as a Unity Coroutine.
+            </summary>
+            <param name="userId">The userId who will save data</param>
+            <param name="fileRequest">The custom file IO operations for the actually files inside the save data</param>
+            <param name="fileResponse">The custom file IO response containing the results of the file operation</param>
+            <returns>The enumerator, which can be used in a Unity coroutine.</returns>
+        </member>
+        <member name="M:Sony.PS4.SaveData.SaveDataDialogProcess.StartDeleteDialogProcess(System.Int32)">
+            <summary>
+            Start the delete process as a Unity Coroutine.
+            </summary>
+            <param name="userId">The userId who will save data</param>
+            <returns>The enumerator, which can be used in a Unity coroutine.</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs">
+            <summary>
+            Savedata dialog system
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.OpenDialogSettings">
+            <summary>
+            Basic settings for the dialog
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.UserMessageParam">
+            <summary>
+            Parameters for application specified message display mode
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.UserMessageParam.MESSAGE_MAXSIZE">
+            <summary>
+            The maximum length of the message
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.UserMessageParam.ButtonType">
+            <summary>
+            Type of button displayed on the dialog
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.UserMessageParam.MsgType">
+            <summary>
+            Type of the dialog
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.UserMessageParam.Message">
+            <summary>
+            Message to display in the dialog
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.SystemMessageParam">
+            <summary>
+            Parameters for system defined message display mode
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.SystemMessageParam.SysMsgType">
+            <summary>
+            Type of system defined message to be displayed
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.SystemMessageParam.Value">
+            <summary>
+            Number to add to defined message
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.AnimationParam">
+            <summary>
+            Animation setting
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.AnimationParam.UserOK">
+            <summary>
+            Animation setting when the user performs an operation equivalent to OK
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.AnimationParam.UserCancel">
+            <summary>
+            Set animation for when the user cancels
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.AnimationParam.#ctor(Sony.PS4.SaveData.Dialogs.Animation,Sony.PS4.SaveData.Dialogs.Animation)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountRequest"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.AnimationParam.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.ProgressBarParam">
+            <summary>
+            Parameters for progress bar display mode
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ProgressBarParam.MESSAGE_MAXSIZE">
+            <summary>
+            The maximum length of the message
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.ProgressBarParam.BarType">
+            <summary>
+            Type of progress bar
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.ProgressBarParam.SysMsgType">
+            <summary>
+            Type of system message to display
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.ProgressBarParam.Message">
+            <summary>
+            Message string, can be empty
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.ErrorCodeParam">
+            <summary>
+            Parameters for error code display mode
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.ErrorCodeParam.ErrorCode">
+            <summary>
+            Error code to be displayed
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.Items">
+            <summary>
+            Parameters for displaying save data
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.Items.DIR_NAME_MAXSIZE">
+            <summary>
+            The maximum amount of targets that can be set.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.Items.DirNames">
+            <summary>
+            Array of target save data directory names
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.Items.DirNameCount">
+            <summary>
+            Number of target save data directories. Set this using <see cref="P:Sony.PS4.SaveData.Dialogs.Items.DirNames"/> 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.Items.FocusPos">
+            <summary>
+            Initial focus position on the list
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.Items.FocusPosDirName">
+            <summary>
+            Initial focus directory name on the list. Only valid is <see cref="F:Sony.PS4.SaveData.Dialogs.DialogMode.List"/> is set in the <see cref="T:Sony.PS4.SaveData.Dialogs.OpenDialogRequest"/> object.
+            </summary>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException"> Will throw an exception is <see cref="P:Sony.PS4.SaveData.Dialogs.Items.FocusPos"/> isn't set to <see cref="F:Sony.PS4.SaveData.Dialogs.FocusPos.DirName"/>.</exception>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.Items.ItemStyle">
+            <summary>
+            Display style of save data information
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.NewItem">
+            <summary>
+            Parameters for new save data
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.NewItem.TITLE_MAXSIZE">
+            <summary>
+            The maximum length of the message
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.NewItem.FILEPATH_LENGTH">
+            <summary>
+            The maximum length of the pathname to an icon file
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.NewItem.ICON_FILE_MAXSIZE">
+            <summary>
+            The maximum number of bytes in the icon PNG
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.NewItem.DATA_ICON_WIDTH">
+            <summary>
+            The required width of the icon
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.NewItem.DATA_ICON_HEIGHT">
+            <summary>
+            The required height of the icon
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.NewItem.Title">
+            <summary>
+            Title of new save data. Line breaks not possible.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.NewItem.IconPath">
+            <summary>
+            Path to a PNG file.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.NewItem.RawPNG">
+            <summary>
+            An array of bytes containing the PNG data
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.OptionParam">
+            <summary>
+            Save data dialog option setting parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OptionParam.Back">
+            <summary>
+            Enable/disable "Back" feature
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.CloseParam">
+            <summary>
+            Parameters for closing the save data dialog
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.CloseParam.Anim">
+            <summary>
+            Animation setting when closing dialog
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.OpenDialogRequest">
+            <summary>
+            Save data dialog parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.Mode">
+            <summary>
+            Operation mode of the save data dialog
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.DispType">
+            <summary>
+            Type of message to display (save/load/delete)
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.UserMessage">
+            <summary>
+            Application specified message display parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.SystemMessage">
+            <summary>
+            System defined message display parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.ErrorCode">
+            <summary>
+            Error code display parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.ProgressBar">
+            <summary>
+            Progress bar display parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.Option">
+            <summary>
+            Option setting parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.Items">
+            <summary>
+            Save data display parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.NewItem">
+            <summary>
+            Parameters of new save data
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.Animations">
+            <summary>
+            Animation setting parameters
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.OpenDialogRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Dialogs.OpenDialogRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.OpenDialogResponse">
+            <summary>
+            Save data dialog results
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.OpenDialogResponse.Result">
+            <summary>
+            The dialog result
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.OpenDialogResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Dialogs.OpenDialogResponse"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.OpenDialog(Sony.PS4.SaveData.Dialogs.OpenDialogRequest,Sony.PS4.SaveData.Dialogs.OpenDialogResponse)">
+            <summary>
+            This method is used to open a savedata dialog. See sceSaveDataDialogOpen PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata dialog parameters.</param>
+            <param name="response">The results of the dialog once closed.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogStatus">
+            <summary>
+            Status of the save data dialog
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogStatus.None">
+            <summary>Save data dialog is not running. See SCE_COMMON_DIALOG_STATUS_NONE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogStatus.Initialized">
+            <summary>Save data dialog is initialized See SCE_COMMON_DIALOG_STATUS_INITIALIZED for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogStatus.Running">
+            <summary>Save data dialog is being displayed See SCE_COMMON_DIALOG_STATUS_RUNNING for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogStatus.Finished">
+            <summary>Save data dialog is closed See SCE_COMMON_DIALOG_STATUS_FINISHED for details.</summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.DialogUpdateStatus">
+            <summary>
+            Update and get operation status of the save data dialog
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.DialogGetStatus">
+            <summary>
+            Get operation status of the save data dialog
+            </summary>
+            <returns>The status of the save data dialog.</returns>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.DialogIsReadyToDisplay">
+            <summary>
+            Get if screen preparations are ready or not
+            </summary>
+            <returns>Return true when the dialog is ready.</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogMode">
+            <summary>
+            Operation mode of the save data dialog
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.Invalid">
+            <summary>Invalid mode. See SCE_SAVE_DATA_DIALOG_MODE_INVALID for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.List">
+            <summary>Save data list display mode. See SCE_SAVE_DATA_DIALOG_MODE_LIST for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.UserMsg">
+            <summary>Application specified message display mode. See SCE_SAVE_DATA_DIALOG_MODE_USER_MSG for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.SystemMsg">
+            <summary>System defined message display mode. See SCE_SAVE_DATA_DIALOG_MODE_SYSTEM_MSG for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.ErrorCode">
+            <summary>Error code display mode. See SCE_SAVE_DATA_DIALOG_MODE_ERROR_CODE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogMode.ProgressBar">
+            <summary>Progress bar display mode. See SCE_SAVE_DATA_DIALOG_MODE_PROGRESS_BAR for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogType">
+            <summary>
+            Type of message to display (save/load/delete)
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogType.Invalid">
+            <summary>Inalvid Type. See SCE_SAVE_DATA_DIALOG_TYPE_INVALID for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogType.Save">
+            <summary>Display message for save processing. See SCE_SAVE_DATA_DIALOG_TYPE_SAVE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogType.Load">
+            <summary>Display message for load processing. See SCE_SAVE_DATA_DIALOG_TYPE_LOAD for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogType.Delete">
+            <summary>Display message for delete processing. See SCE_SAVE_DATA_DIALOG_TYPE_DELETE for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.UserMessageType">
+            <summary>
+            User message dialog type
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.UserMessageType.Normal">
+            <summary>Display as normal dialog. See SCE_SAVE_DATA_DIALOG_USERMSG_TYPE_NORMAL for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.UserMessageType.Error">
+            <summary>Display as error display dialog. See SCE_SAVE_DATA_DIALOG_USERMSG_TYPE_ERROR for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogCallResults">
+            <summary>
+            Dialog call result
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogCallResults.OK">
+            <summary>Closed by user operation or <see cref="M:Sony.PS4.SaveData.Dialogs.Close(Sony.PS4.SaveData.Dialogs.CloseParam)"/> . See SCE_COMMON_DIALOG_RESULT_OK for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogCallResults.UserCanceled">
+            <summary>Canceled by the user. See SCE_COMMON_DIALOG_RESULT_USER_CANCELED for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogButtonTypes">
+            <summary>
+            Type of button displayed on the user message dialog
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonTypes.OK">
+            <summary>1 button, the "OK" button. See SCE_SAVE_DATA_DIALOG_BUTTON_TYPE_OK for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonTypes.YesNo">
+            <summary>2 buttons, the "Yes" button and the "No" button. See SCE_SAVE_DATA_DIALOG_BUTTON_TYPE_YESNO for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonTypes.None">
+            <summary>Do not display buttons. See SCE_SAVE_DATA_DIALOG_BUTTON_TYPE_NONE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonTypes.OKCancel">
+            <summary>2 buttons, the "OK" button and the "Cancel" button. See SCE_SAVE_DATA_DIALOG_BUTTON_TYPE_OKCANCEL for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogButtonIds">
+            <summary>
+            Selected button ID
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonIds.Invalid">
+            <summary>No button was selected. See SCE_SAVE_DATA_DIALOG_BUTTON_ID_INVALID for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonIds.OK">
+            <summary>The "OK" button was selected. See SCE_SAVE_DATA_DIALOG_BUTTON_ID_OK for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonIds.Yes">
+            <summary>The "Yes" button was selected. See SCE_SAVE_DATA_DIALOG_BUTTON_ID_YES for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.DialogButtonIds.No">
+            <summary>The "No" button was selected. See SCE_SAVE_DATA_DIALOG_BUTTON_ID_NO for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.Animation">
+            <summary>
+            Animation setting
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.Animation.On">
+            <summary>Enable animation. See SCE_SAVE_DATA_DIALOG_ANIMATION_ON for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.Animation.Off">
+            <summary>Disable animation. See SCE_SAVE_DATA_DIALOG_ANIMATION_OFF for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.SystemMessageType">
+            <summary>
+            Types of system prepared message
+            </summary>
+            <remarks>
+            This will display various message depending on the dialog type <see cref="T:Sony.PS4.SaveData.Dialogs.DialogType"/> and the system message.
+            See the SaveData SDK documention for details on what message is displayed based on dialog type and system message.
+            </remarks>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Invalid">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_INVALID for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.NoData">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_NODATA for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Confirm">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_CONFIRM for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Overwrite">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_OVERWRITE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.NoSpace">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_NOSPACE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Progress">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_PROGRESS for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Corrupted">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_FILE_CORRUPTED for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.Finished">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_FINISHED for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.NoSpaceContinuable">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_NOSPACE_CONTINUABLE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.CorruptedAndDelete">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_CORRUPTED_AND_DELETE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.CorruptedAndCreate">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_CORRUPTED_AND_CREATE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.CurruptedAndRestore">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_CORRUPTED_AND_RESTORE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.SystemMessageType.TotalSizeExceeded">
+            <summary>See SCE_SAVE_DATA_DIALOG_SYSMSG_TYPE_TOTAL_SIZE_EXCEEDED for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.ProgressBarType">
+            <summary>
+            Progress bar type
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ProgressBarType.Percentage">
+            <summary>Progress bar expressed as a percentage. See SCE_SAVE_DATA_DIALOG_PROGRESSBAR_TYPE_PERCENTAGE for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.ProgressSystemMessageType">
+            <summary>
+            Type of progress bar system message to display
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ProgressSystemMessageType.Invalid">
+            <summary>Arbitrary string specified to <see cref="P:Sony.PS4.SaveData.Dialogs.ProgressBarParam.Message"/>. See SCE_SAVE_DATA_DIALOG_PRGRESS_SYSMSG_TYPE_INVALID for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ProgressSystemMessageType.Progress">
+            <summary>System defined message such as "Saving...", "Loading..", etc., according to the message display type. See SCE_SAVE_DATA_DIALOG_PRGRESS_SYSMSG_TYPE_PROGRESS for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ProgressSystemMessageType.Restore">
+            <summary>"Restoring saved data...". See SCE_SAVE_DATA_DIALOG_PRGRESS_SYSMSG_TYPE_RESTORE for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.OptionBack">
+            <summary>
+            Indicates if "Back" operation is enabled/disabled
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.OptionBack.Enable">
+            <summary>Enable "Back" operation. See SCE_SAVE_DATA_DIALOG_OPTION_BACK_ENABLE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.OptionBack.Disable">
+            <summary>Disable "Back" operation. See SCE_SAVE_DATA_DIALOG_OPTION_BACK_DISABLE for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.FocusPos">
+            <summary>
+            Initial focus position
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.ListHead">
+            <summary>List head. See SCE_SAVE_DATA_DIALOG_FOCUS_POS_LISTHEAD for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.ListTail">
+            <summary>List end. See SCE_SAVE_DATA_DIALOG_FOCUS_POS_LISTTAIL for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.DataHead">
+            <summary>Data head (same as list head). See SCE_SAVE_DATA_DIALOG_FOCUS_POS_DATAHEAD for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.DataTail">
+            <summary>Data end (same as list end). See SCE_SAVE_DATA_DIALOG_FOCUS_POS_DATATAIL for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.DataLatest">
+            <summary>Latest data. See SCE_SAVE_DATA_DIALOG_FOCUS_POS_DATALATEST for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.DataOldest">
+            <summary>Oldest data. See SCE_SAVE_DATA_DIALOG_FOCUS_POS_DATAOLDEST for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.FocusPos.DirName">
+            <summary><see cref="P:Sony.PS4.SaveData.Dialogs.Items.FocusPosDirName"/> . See SCE_SAVE_DATA_DIALOG_FOCUS_POS_DIRNAME for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.ItemStyle">
+            <summary>
+            Display style of save data
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ItemStyle.DateSizeSubtitle">
+            <summary>3-line display. 1st line: Title, 2nd line: Date and Size, 3rd line: Subtitle. See SCE_SAVE_DATA_DIALOG_ITEM_STYLE_TITLE_DATESIZE_SUBTITLE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ItemStyle.SubtitleDataSize">
+            <summary>3-line display. 1st line: Title, 2nd line: Subtitle, 3rd line: Date and Size. See SCE_SAVE_DATA_DIALOG_ITEM_STYLE_TITLE_SUBTITLE_DATESIZE for details.</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Dialogs.ItemStyle.DataSize">
+            <summary>2-line display. 1st line: Title, 2nd line: Date and Size. See SCE_SAVE_DATA_DIALOG_ITEM_STYLE_TITLE_DATESIZE for details.</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Dialogs.DialogResult">
+            <summary>
+            Save data dialog call result
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.Mode">
+            <summary>
+            Mode at the time of call
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.CallResult">
+            <summary>
+            The dialog call result - either OK or UserCanceled
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.ButtonId">
+            <summary>
+            The button id pressed.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.DirName">
+            <summary>
+            Directory name of the displayed or selected save data
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.Param">
+            <summary>
+            Detailed information of the save data
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Dialogs.DialogResult.ErrorCode">
+            <summary>
+            A SCE error code if the GetDialogResult() failed.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.ProgressBarInc(System.UInt32)">
+            <summary>
+            Add progress bar progress rate to save data dialog
+            </summary>
+            <param name="delta">Progress additional value</param>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.ProgressBarSetValue(System.UInt32)">
+            <summary>
+            Set progress rate of progress bar in save data dialog
+            </summary>
+            <param name="rate">Progress value</param>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Dialogs.Close(Sony.PS4.SaveData.Dialogs.CloseParam)">
+            <summary>
+            Close the save data dialog
+            </summary>
+            <param name="closeParam">Parameters for closing the save data dialog</param>
+        </member>
+        <member name="T:Sony.PS4.SaveData.FileOps">
+            <summary>
+            Perform file operations on mounted savedata
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.FileOps.FileOperationRequest">
+            <summary>
+            Base request class for custom file operations. Override the DoFileOperations method to customise file handling inside a savedata directory. 
+            Use System.IO .NET methods for file handling.
+            Prefix any directory name/file names with the savedata mountpoint name as the root path.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.FileOps.FileOperationRequest.MountPointName">
+            <summary>
+            The mount point name to perform the file operations
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.FileOps.FileOperationRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.FileOps.FileOperationRequest"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.FileOps.FileOperationRequest.DoFileOperations(Sony.PS4.SaveData.Mounting.MountPoint,Sony.PS4.SaveData.FileOps.FileOperationResponse)">
+            <summary>
+            Override this method to perform file operations
+            </summary>
+            <param name="mp">The mountpoint root path to use.</param>
+            <param name="response">The custom response object used to store results from any file operations</param>
+        </member>
+        <member name="T:Sony.PS4.SaveData.FileOps.FileOperationResponse">
+            <summary>
+            Base response class for custom file operations. Inherit from this class to provide custom file handling results
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.FileOps.FileOperationResponse.Progress">
+            <summary>
+            Get the current progress of the file operation - 0.0 to 1.0
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.FileOps.FileOperationResponse.UpdateProgress(System.Single)">
+            <summary>
+            Update the progress value of the file operation. Used by the dialog system when displaying a progress bar.
+            </summary>
+            <param name="progress">Progress value (0.0 to 1.0)</param>
+        </member>
+        <member name="M:Sony.PS4.SaveData.FileOps.FileOperationResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.FileOps.FileOperationResponse"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.FileOps.CustomFileOp(Sony.PS4.SaveData.FileOps.FileOperationRequest,Sony.PS4.SaveData.FileOps.FileOperationResponse)">
+            <summary>
+            This method is used to perform file operations on a savedata directory.
+            </summary>
+            <param name="request">The custom request object to perform the file operations.</param>
+            <param name="response">The custom response object to store any results from file operations.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Main">
+            <summary>
+            Main entry point to the SaveData plug-in and initialization
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Main.EventHandler">
+            <summary>
+            Delegate event handler defining the callback event
+            </summary>
+            <param name="npEvent"></param>
+        </member>
+        <member name="E:Sony.PS4.SaveData.Main.OnAsyncEvent">
+            <summary>
+            The event called when an async request has been completed or a notification
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Main.Initialize(Sony.PS4.SaveData.InitSettings)">
+            <summary>
+            Initialise the SaveData system
+            </summary>
+            <param name="initSettings">The initialisation paramaters.</param>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the SaveData plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Main.Terminate">
+            <summary>
+            Terminate the SaveData system
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Main.AbortRequest(System.Int32)">
+            <summary>
+            Abort a pending request. A pending request at the top of the list may not abort as processing the request may have already started.
+            </summary>
+            <param name="requestId">The request to abort.</param>
+            <returns>Returns true is the request is in the pending list, otherwise returns false.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the SaveData plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Main.GetPendingRequests">
+            <summary>
+            Get the pending async requests list. This takes a copy of the list so it is safe to enumerate the list.
+            </summary>
+            <returns>A list of pending async requests.</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting">
+            <summary>
+            Mount savedata directory
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountPointName">
+            <summary>
+            Savedata mount point name
+            </summary>
+            <remarks>
+            The save data mount point name will be a character string called "/savedata0", "/savedata1", […] or "/savedata15".
+            </remarks>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountPointName.MOUNT_POINT_DATA_MAXSIZE">
+            <summary>
+            Max size of mountpoint name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPointName.Data">
+            <summary>
+            Mountpoint name
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountPointName.ToString">
+            <summary>
+            The mountpoint name string
+            </summary>
+            <returns>The mountpoint name</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountModeFlags">
+            <summary>
+            Mount mode
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.Invalid">
+            <summary>Non-valid. It should never be used</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.ReadOnly">
+            <summary>Read-only. See SCE_SAVE_DATA_MOUNT_MODE_RDONLY</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.ReadWrite">
+            <summary>Read/write. See SCE_SAVE_DATA_MOUNT_MODE_RDWR</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.Create">
+            <summary>Create new (error if save data directory already exists). See SCE_SAVE_DATA_MOUNT_MODE_CREATE</summary> 
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.DestructOff">
+            <summary>Destruct off (not recommended). See SCE_SAVE_DATA_MOUNT_MODE_DESTRUCT_OFF</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.CopyIcon">
+            <summary>Copy save_data.png in package as icon when newly creating save data. See SCE_SAVE_DATA_MOUNT_MODE_COPY_ICON</summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountModeFlags.Create2">
+            <summary>Create new (mount save data directory if it already exists). See SCE_SAVE_DATA_MOUNT_MODE_CREATE2</summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountPoint">
+            <summary>
+            Details for a mounted savedata directory
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.PathName">
+            <summary>
+            The pathname for the mounted savedata. Will be a character string called "/savedata0", "/savedata1", […] or "/savedata15".
+            Used when doing an file operations as the root path name.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.OpenTime">
+            <summary>
+            The time the savedata directory was mounted
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.TimeMountedEstimate">
+            <summary>
+            The estimated time the savedata directory has been mounted for. See TRC R4098 for details on how long a Read/Write savedata directory can remain mounted. Only use this as a guide.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.UserId">
+            <summary>
+            Calling user Id that opened the mount point
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.MountMode">
+            <summary>
+            The flags used to mount the savedata directory
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.DirName">
+            <summary>
+            The directory name associated with the mount point. Must use the mountpoint name when doing file operations and not this directory name.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountPoint.IsMounted">
+            <summary>
+            Flag to indicate if the mount point is still mounted. Will be set to false when an unmount request is pending in the request queue. Don't use any mountpoints
+            that are going to be unmounted on the background thread.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountPoint.ToString">
+            <summary>
+            The mountpoint name
+            </summary>
+            <returns>The mountpoint name</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountRequest">
+            <summary>
+            Request parameters to mount savedata directory
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountRequest.BLOCK_SIZE">
+            <summary>
+            Number of bytes in a single block
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountRequest.BLOCKS_MIN">
+            <summary>
+            The minimum reserved size of a savedata directory
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.MountRequest.BLOCKS_MAX">
+            <summary>
+            The maximum reserved size of a savedata directory
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountRequest.DirName">
+            <summary>
+            Directory name to mount
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountRequest.Blocks">
+            <summary>
+            Maximum number of save data blocks during new creation (number of blocks, 96 to 32768)
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountRequest.MountMode">
+            <summary>
+            Mount mode
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.UnmountRequest">
+            <summary>
+            Unmounts save data mountpoint
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.UnmountRequest.MountPointName">
+            <summary>
+            Name of mountpoint to unmount
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.UnmountRequest.Backup">
+            <summary>
+            Should a backup of the savedata be made once it has been unmounted. False by default
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.UnmountRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.UnmountRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.GetMountInfoRequest">
+            <summary>
+            Get mount information
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.GetMountInfoRequest.MountPointName">
+            <summary>
+            Mountpoint name to retieve the info.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.GetMountInfoRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.GetMountInfoRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.GetMountParamsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.GetMountParamsRequest.MountPointName">
+            <summary>
+            Mointpoint name to retrieve the parameters
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.GetMountParamsRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.GetMountParamsRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.SetMountParamsRequest">
+            <summary>
+            Set parameters for a mountpoint name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.SetMountParamsRequest.MountPointName">
+            <summary>
+            Mount point name to set the parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.SetMountParamsRequest.Params">
+            <summary>
+            Parameters to set
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.SetMountParamsRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.SetMountParamsRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.SaveIconRequest">
+            <summary>
+            Request class to save icon to a mountpoint
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.SaveIconRequest.FILEPATH_LENGTH">
+            <summary>
+            The maximum length of the pathname to an icon file
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.SaveIconRequest.ICON_FILE_MAXSIZE">
+            <summary>
+            The maximum number of bytes in the icon PNG
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.SaveIconRequest.DATA_ICON_WIDTH">
+            <summary>
+            The required width of the icon
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Mounting.SaveIconRequest.DATA_ICON_HEIGHT">
+            <summary>
+            The required height of the icon
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.SaveIconRequest.MountPointName">
+            <summary>
+            Mountname to save the icon
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.SaveIconRequest.IconPath">
+            <summary>
+            Path to a PNG file.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.SaveIconRequest.RawPNG">
+            <summary>
+            An array of bytes containing the PNG data
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.SaveIconRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.SaveIconRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.LoadIconRequest">
+            <summary>
+            Load an icon from a mountpoint
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.LoadIconRequest.MountPointName">
+            <summary>
+            The mountpoint name to load the icon
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.LoadIconRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.LoadIconRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountResponse">
+            <summary>
+            Response class containing the mount result
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountResponse.MountPoint">
+            <summary>
+            The mountpoint name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountResponse.RequiredBlocks">
+            <summary>
+            Number of free file system blocks required for mounting
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountResponse.WasCreated">
+            <summary>
+            Was the savedata directory created as part of the mount operation. True is newly created, false if it already existed.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountResponse"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountInfoResponse">
+            <summary>
+            Response class contain size info for a mountpoint.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountInfoResponse.Info">
+            <summary>
+            The size info
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountInfoResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountInfoResponse"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.MountParamsResponse">
+            <summary>
+            Response class containing the parameters of the mountpoint
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.MountParamsResponse.Params">
+            <summary>
+            The mountpoint parameters
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.MountParamsResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.MountParamsResponse"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Mounting.LoadIconResponse">
+            <summary>
+            Response class containing the savedata mountpoint icon.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.LoadIconResponse.Icon">
+            <summary>
+            The save data icon retrieved if there is one. This will be null is no icon available
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.LoadIconResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Mounting.LoadIconResponse"/> class.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Mounting.ActiveMountPoints">
+            <summary>
+            Returns a list of active mount points. This take a snapshot copy of the current list so it is safe to iterate the list.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.Mount(Sony.PS4.SaveData.Mounting.MountRequest,Sony.PS4.SaveData.Mounting.MountResponse)">
+            <summary>
+            This method is used to mount a savedata directory. See sceSaveDataMount2 PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mount settings.</param>
+            <param name="response">The results of the mount operation.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.Unmount(Sony.PS4.SaveData.Mounting.UnmountRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to unmount a savedata directory. See sceSaveDataUmount PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mountpoint to unmount.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.GetMountInfo(Sony.PS4.SaveData.Mounting.GetMountInfoRequest,Sony.PS4.SaveData.Mounting.MountInfoResponse)">
+            <summary>
+            This method is used to retrieve size info for a savedata directory. See sceSaveDataGetMountInfo PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mountpoint.</param>
+            <param name="response">The size info for the mountpoint.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.GetMountParams(Sony.PS4.SaveData.Mounting.GetMountParamsRequest,Sony.PS4.SaveData.Mounting.MountParamsResponse)">
+            <summary>
+            This method is used to get the parameters of a savedata mountpoint. See sceSaveDataGetParam PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mount.</param>
+            <param name="response">The parameters of the savedata mountpoint.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.SetMountParams(Sony.PS4.SaveData.Mounting.SetMountParamsRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to set the mountpoint parameters. See sceSaveDataSetParam PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mount.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.SaveIcon(Sony.PS4.SaveData.Mounting.SaveIconRequest,Sony.PS4.SaveData.EmptyResponse)">
+            <summary>
+            This method is used to save an icon to the savedata mountpoint. See sceSaveDataSaveIcon PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mount settings.</param>
+            <param name="response">This response does not have data, only return code.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Mounting.LoadIcon(Sony.PS4.SaveData.Mounting.LoadIconRequest,Sony.PS4.SaveData.Mounting.LoadIconResponse)">
+            <summary>
+            This method is used to load a savedata icon. See sceSaveDataLoadIcon PS4 documention for further details. 
+            </summary>
+            <param name="request">The savedata mount settings.</param>
+            <param name="response">The response contains the PNG image data.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.UnmountWithBackupNotification">
+            <summary>
+            Notification called once backup, after unmounting a mountpoint, has been completed. See <see cref="M:Sony.PS4.SaveData.Mounting.Unmount(Sony.PS4.SaveData.Mounting.UnmountRequest,Sony.PS4.SaveData.EmptyResponse)"/> 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.UnmountWithBackupNotification.UserId">
+            <summary>
+            User Id that made the unmount request
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.UnmountWithBackupNotification.DirName">
+            <summary>
+            Savedata directory name that was backed up
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.UnmountWithBackupNotification.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.UnmountWithBackupNotification"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.BackupNotification">
+            <summary>
+            Notification when a savedata directory has been backed up. See <see cref="M:Sony.PS4.SaveData.Backups.Backup(Sony.PS4.SaveData.Backups.BackupRequest,Sony.PS4.SaveData.EmptyResponse)"/> 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.BackupNotification.UserId">
+            <summary>
+            User Id that made the backup request
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.BackupNotification.DirName">
+            <summary>
+            Savedata directory name that was backed up
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.BackupNotification.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.BackupNotification"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Progress">
+            <summary>
+            Progress for various background savedata tasks.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Progress.ClearProgress">
+            <summary>
+            Clear progress
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Progress.GetProgress">
+            <summary>
+            Get progress
+            </summary>
+            <returns>Progress (0.0f to 1.0f)</returns>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching">
+            <summary>
+            Savedata search methods
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching.SearchSortKey">
+            <summary>
+            Sort key
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortKey.DirName">
+            <summary> Directory name. See SCE_SAVE_DATA_SORT_KEY_DIRNAME </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortKey.UserParam">
+            <summary> User parameter. See SCE_SAVE_DATA_SORT_KEY_USER_PARAM </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortKey.Blocks">
+            <summary> Number of blocks. See SCE_SAVE_DATA_SORT_KEY_BLOCKS </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortKey.Time">
+            <summary> Date/time of last update. See SCE_SAVE_DATA_SORT_KEY_MTIME </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortKey.FreeBlocks">
+            <summary> Number of free blocks. See SCE_SAVE_DATA_SORT_KEY_FREE_BLOCKS </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching.SearchSortOrder">
+            <summary>
+            Sort order
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortOrder.Ascending">
+            <summary> Ascending order. See SCE_SAVE_DATA_SORT_ORDER_ASCENT </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.SearchSortOrder.Descending">
+            <summary> Descending order. See SCE_SAVE_DATA_SORT_ORDER_DESCENT </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching.DirNameSearchRequest">
+            <summary>
+            Request paramters for search for existing savedata directories
+            </summary>
+        </member>
+        <member name="F:Sony.PS4.SaveData.Searching.DirNameSearchRequest.DIR_NAME_MAXSIZE">
+            <summary>
+            Maximum number of directory names to return.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.DirName">
+            <summary>
+            Filter for directory names. By default this is empty so all directory names are considered.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.MaxDirNameCount">
+            <summary>
+            Maximum number of directory names to return.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.Key">
+            <summary>
+            Search key to use. Defaults to <see cref="F:Sony.PS4.SaveData.Searching.SearchSortKey.DirName"/> 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.Order">
+            <summary>
+            Sort order. Defaults to <see cref="F:Sony.PS4.SaveData.Searching.SearchSortOrder.Ascending"/> 
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.IncludeParams">
+            <summary>
+            Include parameters in returned results.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchRequest.IncludeBlockInfo">
+            <summary>
+            Include block size info in returned results.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Searching.DirNameSearchRequest.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Searching.DirNameSearchRequest"/> class.
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching.SearchSaveDataItem">
+            <summary>
+            Search directory name details.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.SearchSaveDataItem.DirName">
+            <summary>
+            Savedata directory name
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.SearchSaveDataItem.Params">
+            <summary>
+            Savedata directory parameters
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.SearchSaveDataItem.Info">
+            <summary>
+            Savedata directory size info
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.Searching.DirNameSearchResponse">
+            <summary>
+            Response class contains a list of found savedata directory names
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchResponse.SaveDataItems">
+            <summary>
+            The directory names found in a search.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchResponse.HasParams">
+            <summary>
+            Are the directory parameters included in the results
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.Searching.DirNameSearchResponse.HasInfo">
+            <summary>
+            Are the directory block sizes included in the results.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Searching.DirNameSearchResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sony.PS4.SaveData.Searching.DirNameSearchResponse"/> class.
+            </summary>
+        </member>
+        <member name="M:Sony.PS4.SaveData.Searching.DirNameSearch(Sony.PS4.SaveData.Searching.DirNameSearchRequest,Sony.PS4.SaveData.Searching.DirNameSearchResponse)">
+            <summary>
+            This method is used to search for savedata directories for a specified user id. See sceSaveDataDirNameSearch PS4 documention for further details. 
+            </summary>
+            <param name="request">The search parameters to use.</param>
+            <param name="response">The results of the search.</param>
+            <returns>If the operation is asynchronous, the function provides the request Id.</returns>
+            <exception cref="T:Sony.PS4.SaveData.SaveDataException">Will throw an exception either when the request data is invalid, or an internal error has occured inside the plug-in.</exception>
+        </member>
+        <member name="T:Sony.PS4.SaveData.SaveDataCallbackEvent">
+            <summary>
+            Callback class containing the results of an async request or notification
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataCallbackEvent.ApiCalled">
+            <summary>
+            Function called to perform the request. In case of Notification service, the type of notification
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataCallbackEvent.RequestId">
+            <summary>
+            The request Id returned when the async request was made
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataCallbackEvent.Response">
+            <summary>
+            The response passed when the request was made. In case of notifications, it will be created by the plug-in.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataCallbackEvent.Request">
+            <summary>
+            The request instance that started the async request. Will be null for any Notification responses.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.SaveDataCallbackEvent.UserId">
+            <summary>
+            The user Id of the user who performed the request
+            </summary>
+        </member>
+        <member name="T:Sony.PS4.SaveData.PendingRequest">
+            <summary>
+            A request currently on the pending queue waiting to be processed.
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.PendingRequest.NpRequestId">
+            <summary>
+            The unique request id
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.PendingRequest.Request">
+            <summary>
+            The request object containing the request settings
+            </summary>
+        </member>
+        <member name="P:Sony.PS4.SaveData.PendingRequest.AbortPending">
+            <summary>
+            If the request has been aborted but is still in the pending list awaiting removal.
+            </summary>
+        </member>
+    </members>
+</doc>
