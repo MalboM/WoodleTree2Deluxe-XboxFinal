@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e470dcf9618ddbb4c891d1e00397b280, type: 3}
+  m_Name: GlobalVariables
+  m_EditorClassIdentifier: 
+  variables:
+  - {fileID: 11447828}
+  - {fileID: 114135078655081096}
+--- !u!114 &11441018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb277f6959ac73745a8dcde1fff07e7d, type: 3}
+  m_Name: Animator
+  m_EditorClassIdentifier: 
+  isHidden: 0
+  isShared: 0
+  name: Animator
+  group: Default
+  value: {fileID: 0}
+  scenePath: 
+--- !u!114 &11447828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb277f6959ac73745a8dcde1fff07e7d, type: 3}
+  m_Name: Leaf
+  m_EditorClassIdentifier: 
+  isHidden: 0
+  isShared: 0
+  name: Leaf
+  group: Default
+  value: {fileID: 0}
+  scenePath: Leaf(Assets/Scenes/TestScenes/TestMainWorldYan5.unity)
+--- !u!114 &114135078655081096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb277f6959ac73745a8dcde1fff07e7d, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  isHidden: 0
+  isShared: 0
+  name: Player
+  group: Default
+  value: {fileID: 0}
+  scenePath: Woodle Character(Assets/Scenes/MainPlaza/MainPlaza7New.unity)
