@@ -221,8 +221,11 @@ namespace CinemaDirector
                     }
                 }
 
-                if (CurveData[0].PropertyName == "localEulerAngles")
-                    Actor.transform.hasChanged = false;
+                for (int i = 0; i < CurveData.Count; i++)
+                {
+                    if (CurveData[i].PropertyName == "localEulerAngles")
+                        Actor.transform.hasChanged = false;
+                }
             }
         }
 

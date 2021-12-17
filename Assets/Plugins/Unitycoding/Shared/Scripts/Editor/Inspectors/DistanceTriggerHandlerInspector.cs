@@ -36,7 +36,7 @@ namespace Unitycoding{
 			Handles.color = new Color (0f,1f,0f,0.3f);
 			Handles.DrawSolidDisc(trigger.transform.position, Vector3.up, trigger.distance);
 			Handles.color = new Color (0f,1f,0f,1f);
-			Handles.CircleCap(0,trigger.transform.position,Quaternion.Euler(Vector3.right*90), trigger.distance);
+			Handles.CircleHandleCap(0,trigger.transform.position,Quaternion.Euler(Vector3.right*90), trigger.distance, EventType.MouseDown);
 			Handles.color = color;
 		}
 	}

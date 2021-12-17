@@ -15,7 +15,8 @@ namespace CinemaDirector
         /// <param name="deltaTime">The deltaTime since last update.</param>
         public override void UpdateTrack(float time, float deltaTime)
         {
-            base.elapsedTime = time;
+            float previousTime = base.elapsedTime;
+            base.UpdateTrack(time, deltaTime);
 
             TimelineItem[] items = GetTimelineItems();
             for (int i = 0; i < items.Length; i++)
@@ -23,7 +24,39 @@ namespace CinemaDirector
                 CinemaActorClipCurve actorClipCurve = items[i] as CinemaActorClipCurve;
                 if (actorClipCurve != null)
                 {
-                    actorClipCurve.SampleTime(time);
+                    // Trigger
+                    if (((previousTime < actorClipCurve.Firetime || previousTime <= 0f)
+                        && base.elapsedTime >= actorClipCurve.Firetime)
+                        && base.elapsedTime < actorClipCurve.EndTime)
+                    {
+                        actorClipCurve.SampleTime(actorClipCurve.Firetime);
+                    }
+                    // End
+                    else if (previousTime < actorClipCurve.EndTime 
+                            && base.elapsedTime >= actorClipCurve.EndTime)
+                    {
+                        actorClipCurve.SampleTime(actorClipCurve.EndTime);
+                    }
+                    // Reverse Trigger
+                    else if (previousTime >= actorClipCurve.Firetime 
+                            && previousTime < actorClipCurve.EndTime 
+                            && base.elapsedTime <= actorClipCurve.Firetime)
+                    {
+                        actorClipCurve.SampleTime(actorClipCurve.Firetime);
+                    }
+                    // Reverse End
+                    else if (((previousTime > actorClipCurve.EndTime || previousTime >= actorClipCurve.Cutscene.Duration) 
+                            && (base.elapsedTime > actorClipCurve.Firetime) 
+                            && (base.elapsedTime <= actorClipCurve.EndTime)))
+                    {
+                        actorClipCurve.SampleTime(actorClipCurve.EndTime);
+                    }
+                    // Update
+                    else if ((base.elapsedTime > actorClipCurve.Firetime) 
+                            && (base.elapsedTime <= actorClipCurve.EndTime))
+                    {
+                        actorClipCurve.SampleTime(time);
+                    }
                 }
             }
         }

@@ -103,7 +103,21 @@ public class CinemaAudioControl : ActionFixedItemControl
                 if (texture == null || audioItemName != audioSource.clip.name)
                 {
                     audioItemName = audioSource.clip.name;
-                    texture = AssetPreview.GetAssetPreview(audioSource.clip);
+
+                    
+                    if (!EditorPrefs.HasKey("DirectorControl.UseHQWaveformTextures"))
+                    {
+                        EditorPrefs.SetBool("DirectorControl.UseHQWaveformTextures", true);
+                    }
+
+                    if (EditorPrefs.GetBool("DirectorControl.UseHQWaveformTextures"))
+                    {
+                        texture = GenerateAudioWaveformTexture(audioSource.clip);
+                    }
+                    else
+                    {
+                        texture = AssetPreview.GetAssetPreview(audioSource.clip);
+                    }
                 }
 
                 float inTimeOffset = (audioItem.InTime) * state.Scale.x;
@@ -117,5 +131,67 @@ public class CinemaAudioControl : ActionFixedItemControl
                 GUILayout.EndArea();
             }
         }
+    }
+
+    private Texture2D GenerateAudioWaveformTexture(AudioClip audio)
+    {
+        Color waveformColor = new Color(1, 0.5f, 0);
+        Color bgColor = new Color(0, 0, 0, 0.5f);
+        int width = Mathf.Clamp((int)(128 * Mathf.Ceil(audio.length)), 0, 16384); // Textures limited to 16384 pixels
+        int height = 64;
+
+        Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+
+        // Texture Background
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                tex.SetPixel(x, y, bgColor);
+            }
+        }
+
+        float[] samples = new float[audio.samples * audio.channels];
+        audio.GetData(samples, 0);
+
+        float[] waveform;
+        float[] channelSamples;
+
+        for (int channel = 0; channel < audio.channels; channel++)
+        {
+            waveform = new float[width];
+            channelSamples = new float[audio.samples];
+            int channelSampleIndex = 0;
+
+            for (int i = channel; i < samples.Length; i += audio.channels)
+            {
+                channelSamples[channelSampleIndex++] = samples[i];
+            }
+
+            int packSize = (channelSamples.Length / width) + 1;
+            int s = 0;
+            for (int i = 0; i < channelSamples.Length; i += packSize)
+            {
+                waveform[s] = Mathf.Abs(channelSamples[i]);
+                s++;
+            }
+
+            // Draw waveform 
+            float heightModifier = audio.channels == 1 ? 0.5f :
+                                        channel == 0 ? .75f : 0.25f;
+
+            for (int x = 0; x < waveform.Length; x++)
+            {
+                for (int y = 0; y <= waveform[x] * ((float)height * .35f); y++)
+                {
+                    tex.SetPixel(x, (int)(height * heightModifier) + y, waveformColor);
+                    tex.SetPixel(x, (int)(height * heightModifier) - y, waveformColor);
+                }
+            }
+        }
+
+        tex.Apply();
+
+        return tex;
     }
 }

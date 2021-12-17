@@ -87,11 +87,7 @@ namespace CinemaSuite
 
         public void Awake()
         {
-#if UNITY_5 && !UNITY_5_0 || UNITY_2017_1_OR_NEWER
             base.titleContent = new GUIContent(TITLE);
-#else
-            base.title = TITLE;
-#endif
             
             this.minSize = new Vector2(600, 700);
 

@@ -5,6 +5,7 @@ public class DirectorSettingsWindow : EditorWindow
 {
     private const string TITLE = "Settings";
     private bool enableBetaFeatures;
+    private bool enableHQWaveformTextures;
 
     private TangentMode defaultTangentMode;
 
@@ -33,6 +34,16 @@ public class DirectorSettingsWindow : EditorWindow
             defaultTangentMode = (TangentMode) EditorPrefs.GetInt("DirectorControl.DefaultTangentMode");
         }
 
+        if (EditorPrefs.HasKey("DirectorControl.UseHQWaveformTextures"))
+        {
+            enableHQWaveformTextures = EditorPrefs.GetBool("DirectorControl.UseHQWaveformTextures");
+        }
+        else
+        {
+            enableHQWaveformTextures = true;
+            EditorPrefs.SetBool("DirectorControl.UseHQWaveformTextures", enableHQWaveformTextures);
+        }
+
         if (EditorPrefs.HasKey("DirectorControl.EnableBetaFeatures"))
         {
             enableBetaFeatures = EditorPrefs.GetBool("DirectorControl.EnableBetaFeatures");
@@ -52,8 +63,16 @@ public class DirectorSettingsWindow : EditorWindow
             defaultTangentMode = tempTangentMode;
             EditorPrefs.SetInt("DirectorControl.DefaultTangentMode", (int)defaultTangentMode);
         }
-        
-        
+
+        bool useHQWaveformTextures = EditorGUILayout.Toggle(new GUIContent("Use HQ Waveform Textures", 
+                                                            "Replaces the old blurry and stretched waveform with custom made waveform textures, but uses more resources. Requires reloading the Director Window."),
+                                                            enableHQWaveformTextures);
+        if (useHQWaveformTextures != enableHQWaveformTextures)
+        {
+            enableHQWaveformTextures = useHQWaveformTextures;
+            EditorPrefs.SetBool("DirectorControl.UseHQWaveformTextures", enableHQWaveformTextures);
+        }
+
         bool tempBetaFeatures = EditorGUILayout.Toggle(new GUIContent("Enable Beta Features"), enableBetaFeatures);
         if(tempBetaFeatures!=enableBetaFeatures)
         {
