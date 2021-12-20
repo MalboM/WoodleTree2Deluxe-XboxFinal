@@ -17,11 +17,6 @@ public class XOneUserManager : MonoBehaviour
       
     }
 
-    void OnLevelWasLoaded()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

@@ -160,10 +160,10 @@ public class XOneEventsManager : MonoBehaviour
     }
 
 
-    void OnLevelWasLoaded()
-    {
-        isGoingBackToMain = false;
-    }
+    //void OnLevelWasLoaded()
+    //{
+    //    isGoingBackToMain = false;
+    //}
 
     void ResourceAvailabilityChangedEvent(bool amConstrained)
     {

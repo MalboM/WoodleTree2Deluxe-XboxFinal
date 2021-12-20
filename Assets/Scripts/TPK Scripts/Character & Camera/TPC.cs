@@ -184,7 +184,7 @@ public class TPC : MonoBehaviour
     private GameObject leafColObj;
     private LeafCollision leafCol;
     [HideInInspector] public AttackSettings leafAS;
-    [HideInInspector] public int leafNo;
+    [SerializeField] public int leafNo;
     [HideInInspector] public bool isHoldingLeaf;
     [HideInInspector] public bool cancelLeafHold;
     bool attackBuffer;

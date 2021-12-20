@@ -35,13 +35,17 @@ public class WaterTearManager : MonoBehaviour
 
     void Awake()
     {
-        if (singleton != null)
+        if (singleton != null && singleton != this)
         {
             enabled = false;
             Destroy(this);
             return;
         }
-        singleton = this;
+        else if( singleton == null)
+        {
+            singleton = this;
+        }
+
 
         tearAppearEM = tearAppearPFX.GetComponent<ParticleSystem>().emission;
         tearAppearEM.enabled = false;

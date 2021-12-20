@@ -19,11 +19,11 @@ public class LoadingScreen : MonoBehaviour
     }
 
     //
-    private void OnLevelWasLoaded(int level)
-    {
-        //
-        Display(false);
-    }
+    //private void OnLevelWasLoaded(int level)
+    //{
+    //    //
+    //    Display(false);
+    //}
 
     private void Start()
     {

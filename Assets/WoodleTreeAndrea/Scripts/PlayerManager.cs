@@ -147,7 +147,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (singleton == null)
         {
-        //    Debug.LogError("PlayerManager.GetMainPlayer() was called but singleton was null! Aborting.");
+            Debug.LogError("PlayerManager.GetMainPlayer() was called but singleton was null! Aborting.");
             return null;
         }
 

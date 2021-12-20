@@ -5,7 +5,7 @@ using UnityEngine;
 public class VibrateInRange : MonoBehaviour {
     
     TPC tpc;
-    bool entered;
+    [SerializeField] bool entered;
 
     public float distanceToStart = 30f;
     public float intensityAtFurthest = 0.1f;
@@ -18,11 +18,31 @@ public class VibrateInRange : MonoBehaviour {
     float curIntensity;
     float curDist;
 
-	void Start () {
+    [SerializeField] SphereCollider collider;
+
+	void Start () 
+    {
         entered = false;
-        StartCoroutine("CheckDistance");
-	}
-	
+
+
+        if(collider == null)
+        {
+            if(TryGetComponent<SphereCollider>(out SphereCollider sphereCollider))
+            {
+                collider = sphereCollider;
+            }
+            else
+            {
+                collider = gameObject.AddComponent<SphereCollider>();
+            }
+        }
+
+        collider.radius = distanceToStart;
+
+        collider.isTrigger = true;
+
+    }
+
     IEnumerator Vibrate()
     {
         curDist = Vector3.Distance(this.transform.position, tpc.transform.position);
@@ -40,8 +60,10 @@ public class VibrateInRange : MonoBehaviour {
     IEnumerator CheckDistance()
     {
         if (tpc == null)
+        {
             tpc = PlayerManager.GetMainPlayer();
-        if(tpc != null)
+        }
+        else if (tpc != null)
         {
             if(Vector3.Distance(this.transform.position, tpc.transform.position) <= distanceToStart)
             {
@@ -52,7 +74,7 @@ public class VibrateInRange : MonoBehaviour {
                         StartCoroutine("Vibrate");
                 }
             }
-            else
+            else if(Vector3.Distance(this.transform.position, tpc.transform.position) > distanceToStart)
             {
                 if (entered)
                 {
@@ -86,4 +108,25 @@ public class VibrateInRange : MonoBehaviour {
         HDRumbleMain.PlayVibrationPreset(0, "P04_DampedFm1", collectIntensity * 4f, 1, collectIntensity * 2f);
      //   tpc.Vibrate(collectIntensity * 2f, collectDuration * 2f, 1);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<TPC>(out TPC player))
+        {
+            Debug.Log(other.name + " ENTERD THE TRIGGER ZONE");
+            tpc = player;
+            StartCoroutine(CheckDistance());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.TryGetComponent<TPC>(out TPC player) && player == tpc)
+        {
+            Debug.Log(other.name + " LEFT THE TRIGGER ZONE");
+            tpc = null;
+            StopCoroutine(CheckDistance());
+        }
+    }
+
 }

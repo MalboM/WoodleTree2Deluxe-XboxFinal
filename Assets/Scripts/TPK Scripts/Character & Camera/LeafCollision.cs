@@ -66,9 +66,10 @@ public class LeafCollision : MonoBehaviour {
                     }
 			    }
 
-                if (other.gameObject.name == "LeafBox")
+                if (other.gameObject.CompareTag("LeafBox"))
                 {
                     lbo = other.gameObject.GetComponentInParent<LeafBoxObstacle>();
+
                     if (tpc.leafNo >= lbo.boxType)
                     {
                         HDRumbleMain.PlayVibrationPreset(playerI, "D06_Thumpp4", 1f, 0, 0.2f);
