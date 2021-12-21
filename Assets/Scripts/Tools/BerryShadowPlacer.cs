@@ -1,15 +1,17 @@
-﻿#if UNITY_EDITOR
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class BerryShadowPlacer : MonoBehaviour {
 
     public LayerMask whatToHit;
-    
+
+#if UNITY_EDITOR    
     public void ChangeThem()
     {
         foreach (Transform t in this.transform) {
@@ -57,9 +59,10 @@ public class BerryShadowPlacer : MonoBehaviour {
         }
         Debug.Log(c.ToString());
     }
-
+#endif
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(BerryShadowPlacer))]
 public class BerryShadowPlacerEdit : Editor
 {
