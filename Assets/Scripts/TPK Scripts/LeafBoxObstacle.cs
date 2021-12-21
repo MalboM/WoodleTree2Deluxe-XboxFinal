@@ -36,8 +36,10 @@ public class LeafBoxObstacle : MonoBehaviour {
 
     IEnumerator DelayDeactivate()
     {
-        yield return null;
         theBox.SetActive(false);
+
+        yield return new WaitForSeconds(1);
+
         Destroy(this.transform.parent.gameObject);
 
         //for (float f = 0f; f < 0.4f; f += Time.deltaTime * Time.timeScale)
