@@ -5,7 +5,7 @@ using UnityEngine;
 public class VibrateInRange : MonoBehaviour {
     
     TPC tpc;
-    bool entered;
+    [SerializeField] bool entered;
 
     public float distanceToStart = 30f;
     public float intensityAtFurthest = 0.1f;
@@ -18,11 +18,31 @@ public class VibrateInRange : MonoBehaviour {
     float curIntensity;
     float curDist;
 
-	void Start () {
+    [SerializeField] SphereCollider collider;
+
+	void Start () 
+    {
         entered = false;
-        InvokeRepeating("CheckDistance", 1f, 1f);
-	}
-	
+
+
+        if(collider == null)
+        {
+            if(TryGetComponent<SphereCollider>(out SphereCollider sphereCollider))
+            {
+                collider = sphereCollider;
+            }
+            else
+            {
+                collider = gameObject.AddComponent<SphereCollider>();
+            }
+        }
+
+        collider.radius = distanceToStart;
+
+        collider.isTrigger = true;
+
+    }
+
     IEnumerator Vibrate()
     {
         curDist = Vector3.Distance(this.transform.position, tpc.transform.position);
@@ -37,11 +57,13 @@ public class VibrateInRange : MonoBehaviour {
         StartCoroutine("Vibrate");
     }
 
-    void CheckDistance()
+    IEnumerator CheckDistance()
     {
         if (tpc == null)
+        {
             tpc = PlayerManager.GetMainPlayer();
-        if(tpc != null)
+        }
+        else if (tpc != null)
         {
             if(Vector3.Distance(this.transform.position, tpc.transform.position) <= distanceToStart)
             {
@@ -52,7 +74,7 @@ public class VibrateInRange : MonoBehaviour {
                         StartCoroutine("Vibrate");
                 }
             }
-            else
+            else if(Vector3.Distance(this.transform.position, tpc.transform.position) > distanceToStart)
             {
                 if (entered)
                 {
@@ -61,6 +83,16 @@ public class VibrateInRange : MonoBehaviour {
                 }
             }
         }
+
+        for (float f = 0f; f < 1f; f += Time.deltaTime * Time.timeScale)
+        {
+            while (DataManager.isSuspended)
+                yield return null;
+
+            yield return null;
+        }
+
+        StartCoroutine("CheckDistance");
     }
 
     public void CollectedTear()
@@ -74,6 +106,27 @@ public class VibrateInRange : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         HDRumbleMain.PlayVibrationPreset(0, "P04_DampedFm1", collectIntensity * 4f, 1, collectIntensity * 2f);
-        //    tpc.Vibrate(collectIntensity * 2f, collectDuration * 2f, 1);
+     //   tpc.Vibrate(collectIntensity * 2f, collectDuration * 2f, 1);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<TPC>(out TPC player))
+        {
+            Debug.Log(other.name + " ENTERD THE TRIGGER ZONE");
+            tpc = player;
+            StartCoroutine(CheckDistance());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.TryGetComponent<TPC>(out TPC player) && player == tpc)
+        {
+            Debug.Log(other.name + " LEFT THE TRIGGER ZONE");
+            tpc = null;
+            StopCoroutine(CheckDistance());
+        }
+    }
+
 }

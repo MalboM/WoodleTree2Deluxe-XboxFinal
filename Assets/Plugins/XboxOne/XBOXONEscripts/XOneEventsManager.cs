@@ -91,12 +91,10 @@ public class XOneEventsManager : MonoBehaviour
         levelNames[8] = "Level7";
         levelNames[9] = "Level8";
 
-/*
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
         SceneManager.LoadScene(1);
         return;
-#endif
-    */
+#endif*/
         //
         //Debug.Log("pluginmanagr create");
         //PluginLogManager.Create();
@@ -1471,11 +1469,9 @@ public class XOneEventsManager : MonoBehaviour
     void Update()
     {
 
-/*
-    #if UNITY_EDITOR
+/*#if UNITY_EDITOR
         return;
-#endif
-    */
+#endif*/
 
         //
         if (isSuspended)

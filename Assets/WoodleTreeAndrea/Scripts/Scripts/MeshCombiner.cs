@@ -1,10 +1,11 @@
-﻿#if UNITY_EDITOR
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using System.Linq;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [ExecuteInEditMode]
 public class MeshCombiner : MonoBehaviour
@@ -13,6 +14,7 @@ public class MeshCombiner : MonoBehaviour
     public string saveInFolder;
     public GameObject cubeRef;
 
+#if UNITY_EDITOR
     public void CreateSinglePoly()
     {
         MeshRenderer[] allBevelled = this.transform.GetComponentsInChildren<MeshRenderer>();
@@ -195,8 +197,11 @@ public class MeshCombiner : MonoBehaviour
             DestroyImmediate(child.gameObject.GetComponent<MeshFilter>());
         }
     }
+#endif
+
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(MeshCombiner))]
 public class CombineBlocks : Editor
 {
