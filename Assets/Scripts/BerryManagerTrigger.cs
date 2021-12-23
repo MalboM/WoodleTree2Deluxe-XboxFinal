@@ -74,7 +74,7 @@ public class BerryManagerTrigger : MonoBehaviour
             int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", tpc.berryCount);
             totalRedBerries += valueToAdd;
             PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
-
+/*
 #if UNITY_PS4
             //
             // check trophy
@@ -113,6 +113,7 @@ public class BerryManagerTrigger : MonoBehaviour
         }
        
 #endif
+*/
         }
 
         if (berryType == BerryType.blue)
