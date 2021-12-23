@@ -29,6 +29,8 @@ public class CageObject : MonoBehaviour
 
     public int berryReward = 50;
 
+    public bool trpSet;
+
     private void Awake()
     {
         //    if(debugResetPref)

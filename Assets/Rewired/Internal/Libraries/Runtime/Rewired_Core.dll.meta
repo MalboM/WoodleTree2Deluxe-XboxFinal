@@ -31,7 +31,7 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
-      '': Any
+      : Any
     second:
       enabled: 0
       settings:
@@ -50,12 +50,12 @@ PluginImporter:
         Exclude iOS: 0
         Exclude tvOS: 0
   - first:
-      '': BlackBerry
+      : BlackBerry
     second:
       enabled: 1
       settings: {}
   - first:
-      '': WP8
+      : WP8
     second:
       enabled: 0
       settings:
@@ -179,6 +179,11 @@ PluginImporter:
         PlaceholderPath: 
         SDK: AnySDK
         ScriptingBackend: AnyScriptingBackend
+  - first:
+      XboxOne: XboxOne
+    second:
+      enabled: 1
+      settings: {}
   - first:
       iPhone: iOS
     second:

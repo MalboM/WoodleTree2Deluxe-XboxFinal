@@ -23,6 +23,10 @@ public class ActivateBonusAbility : MonoBehaviour
     Font originalFont;
     FontStyle originalFontStyle;
 
+    public int abiliesCount;
+    public bool allPowerupsTrophy;
+
+
     private void Awake()
     {
         foreach (Transform t in priceObj.GetComponentsInChildren<Transform>(true))

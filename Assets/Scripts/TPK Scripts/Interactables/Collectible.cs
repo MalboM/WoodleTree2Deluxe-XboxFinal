@@ -22,6 +22,9 @@ public class Collectible : MonoBehaviour
 
     [HideInInspector] public bool canCollect = false;
 
+    //
+    public int totalRBCount;
+
     private void Awake()
     {
         StartCoroutine("WaitToCollect");

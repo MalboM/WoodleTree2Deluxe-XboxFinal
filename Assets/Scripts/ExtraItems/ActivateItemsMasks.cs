@@ -28,6 +28,10 @@ public class ActivateItemsMasks : MonoBehaviour
     Font originalFont;
     FontStyle originalFontStyle;
 
+    public int itemsBoughtCount;
+    public bool threeItemsTrophy;
+    public bool allItemsTrophy;
+
     private void Awake()
     {
         foreach (Transform t in priceObj.GetComponentsInChildren<Transform>(true))

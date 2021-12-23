@@ -165,12 +165,12 @@ public class NPCInteraction : MonoBehaviour
 
             if (textID == 19)
             {
-#if !UNITY_EDITOR
-                if (SteamManager.Initialized) {                
-                SteamUserStats.SetAchievement("Is Anyone There?");
-                SteamUserStats.StoreStats();
-                }
-#endif
+//#if !UNITY_EDITOR
+//                if (SteamManager.Initialized) {                
+//                SteamUserStats.SetAchievement("Is Anyone There?");
+//                SteamUserStats.StoreStats();
+//                }
+//#endif
             }
 
             if (textID >= 26 && textID <= 29)

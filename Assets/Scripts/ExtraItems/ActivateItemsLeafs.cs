@@ -32,6 +32,11 @@ public class ActivateItemsLeafs : MonoBehaviour
     Font originalFont;
     FontStyle originalFontStyle;
 
+    //Missing Var added
+    public int itemsBoughtCount;
+    public bool threeItemsTrophy; 
+    public bool allItemsTrophy;
+
     private void Awake()
     {
         foreach (Transform t in priceObj.GetComponentsInChildren<Transform>(true))

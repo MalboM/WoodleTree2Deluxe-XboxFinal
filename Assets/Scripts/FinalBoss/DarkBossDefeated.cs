@@ -38,6 +38,9 @@ public class DarkBossDefeated : MonoBehaviour
     public GameObject waterfallparticle3;
     TPC tpc;
 
+    //
+    public bool finishgameAchieved;
+
     // Update is called once per frame
     void Update()
     {

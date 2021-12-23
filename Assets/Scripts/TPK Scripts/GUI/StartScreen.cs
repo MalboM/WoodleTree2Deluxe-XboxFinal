@@ -238,73 +238,74 @@ public class StartScreen : MonoBehaviour
 
         if (PlayerPrefs.GetInt("SteamCheckedLanguage", 0) == 0)
         {
-#if !UNITY_EDITOR
-        if (SteamManager.Initialized) {
-            switch (SteamApps.GetCurrentGameLanguage())
+            switch (Application.systemLanguage)
             {
-                case "english":
+                case SystemLanguage.English:
                     PlayerPrefs.SetInt("Language", 0);
                     break;
 
-                case "russian":
+                case SystemLanguage.Russian:
                     PlayerPrefs.SetInt("Language", 1);
                     break;
 
-                case "spanish":
+                case SystemLanguage.Spanish:
                     PlayerPrefs.SetInt("Language", 2);
                     break;
 
-                case "italian":
+                case SystemLanguage.Italian:
                     PlayerPrefs.SetInt("Language", 3);
                     break;
 
-                case "schinese":
+                case SystemLanguage.ChineseSimplified:
                     PlayerPrefs.SetInt("Language", 4);
                     break;
 
-                case "french":
+                case SystemLanguage.French:
                     PlayerPrefs.SetInt("Language", 5);
                     break;
 
-                case "portuguese":
+                case SystemLanguage.Portuguese:
                     PlayerPrefs.SetInt("Language", 6);
                     break;
 
-                case "dutch":
+                case SystemLanguage.Dutch:
                     PlayerPrefs.SetInt("Language", 7);
                     break;
 
-                case "german":
+                case SystemLanguage.German:
                     PlayerPrefs.SetInt("Language", 8);
                     break;
 
-                case "japanese":
+                case SystemLanguage.Japanese:
                     PlayerPrefs.SetInt("Language", 9);
                     break;
 
-                case "turkish":
+                case SystemLanguage.Turkish:
                     PlayerPrefs.SetInt("Language", 10);
                     break;
 
-                case "arabic":
+                case SystemLanguage.Arabic:
                     PlayerPrefs.SetInt("Language", 11);
                     break;
 
-                case "polish":
+                case SystemLanguage.Polish:
                     PlayerPrefs.SetInt("Language", 12);
                     break;
 
-                case "danish":
+                case SystemLanguage.Danish:
                     PlayerPrefs.SetInt("Language", 13);
                     break;
 
-                case "koreana":
+                case SystemLanguage.Korean:
                     PlayerPrefs.SetInt("Language", 14);
                     break;
+
+                default:
+                    PlayerPrefs.SetInt("Language", 0);
+                    break;
             }
+
             PlayerPrefs.SetInt("SteamCheckedLanguage", 1);
-        }
-#endif
         }
         if (!PlayerPrefs.HasKey("BlueBerryTotal"))
         {
@@ -312,7 +313,7 @@ public class StartScreen : MonoBehaviour
             PlayerPrefs.Save();
             //
 #if UNITY_XBOXONE
-            // DataManager.xOneEventsManager.SaveProgs();
+            DataManager.xOneEventsManager.SaveProgs();
 #endif
         }
 
@@ -1616,9 +1617,6 @@ public class StartScreen : MonoBehaviour
 
         if (counted >= 11)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WONDERFUL_WOODLE_HOUSE);
-
-        //
-        CheckTears();
 
         if (PlayerPrefs.GetInt("FinalBossDefeated", 0) == 1)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_SAVIOR);
