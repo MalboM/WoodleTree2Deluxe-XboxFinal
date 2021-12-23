@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class HUDFPS : MonoBehaviour
 {
 
-    // Attach this to a Text to make a frames/second indicator.
+    // Attach this to a GUIText to make a frames/second indicator.
     //
     // It calculates frames/second over each updateInterval,
     // so the display does not keep changing wildly.
@@ -21,16 +20,16 @@ public class HUDFPS : MonoBehaviour
     private float accum = 0; // FPS accumulated over the interval
     private int frames = 0; // Frames drawn over the interval
     private float timeleft; // Left time for current interval
-
+    /*
     void Start()
     {
-        if (!GetComponent<Text>())
+    //    if (!GetComponent<GUIText>())
         {
-            Debug.Log("UtilityFramesPerSecond needs a Text component!");
-            enabled = false;
-            return;
+         //   Debug.Log("UtilityFramesPerSecond needs a GUIText component!");
+        //    enabled = false;
+        //    return;
         }
-        timeleft = updateInterval;
+    //    timeleft = updateInterval;
     }
 
     void Update()
@@ -45,19 +44,19 @@ public class HUDFPS : MonoBehaviour
             // display two fractional digits (f2 format)
             float fps = accum / frames;
             string format = System.String.Format("{0:F2} FPS", fps);
-            GetComponent<Text>().text = format;
+            GetComponent<GUIText>().text = format;
 
             if (fps < 30)
-                GetComponent<Text>().material.color = Color.yellow;
+                GetComponent<GUIText>().material.color = Color.yellow;
             else
                 if (fps < 10)
-                GetComponent<Text>().material.color = Color.red;
+                GetComponent<GUIText>().material.color = Color.red;
             else
-                GetComponent<Text>().material.color = Color.green;
+                GetComponent<GUIText>().material.color = Color.green;
             //	DebugConsole.Log(format,level);
             timeleft = updateInterval;
             accum = 0.0F;
             frames = 0;
         }
-    }
+    }*/
 }

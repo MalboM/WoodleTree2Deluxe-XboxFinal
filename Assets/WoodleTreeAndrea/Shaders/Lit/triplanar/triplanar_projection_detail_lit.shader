@@ -110,4 +110,5 @@ Shader "WoodleTree/Lit/Triplanar/Detail/triplanar_projection_detail"
 			ENDCG
 		}
 	}
+		Fallback "Diffuse"
 }

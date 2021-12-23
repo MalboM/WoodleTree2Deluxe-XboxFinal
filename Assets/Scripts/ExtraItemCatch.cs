@@ -204,9 +204,6 @@ public class ExtraItemCatch : MonoBehaviour {
                     PlayerPrefs.SetInt("CollectablesTotal", 0);
                 PlayerPrefs.SetInt("CollectablesTotal", PlayerPrefs.GetInt("CollectablesTotal", 0) + 1);
                 other.gameObject.GetComponent<TPC>().itemText.text = PlayerPrefs.GetInt("CollectablesTotal").ToString();
-                other.gameObject.GetComponent<TPC>().ps.SetCollectables();
-
-
             //    PlayerPrefs.Save();
 
                 StartCoroutine(WaitToDeact());

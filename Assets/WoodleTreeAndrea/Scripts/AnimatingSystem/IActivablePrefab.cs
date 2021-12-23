@@ -31,8 +31,7 @@ public class IActivablePrefab : MonoBehaviour, IActivable
     SkinnedMeshRenderer[] lowObjSMR;
     bool fullRenderersOn;
     bool lowRenderersOn;
-    [HideInInspector]
-    public bool insideChunk = true;
+    [HideInInspector] public bool insideChunk = true;
 
 
     public Animation animationComponent;
@@ -206,7 +205,7 @@ public class IActivablePrefab : MonoBehaviour, IActivable
         if (fullObj != null)
         {
             curDistance = (woodle.transform.position - fullObj.transform.position).sqrMagnitude;
-            distanceMultiplier = Mathf.Lerp(1f, 2f, (float)PlayerPrefs.GetInt("ObjectDetails", 2) / 8f);
+            distanceMultiplier = Mathf.Lerp(1f, 2f, (float)PlayerPrefs.GetInt("ObjectDetails",2)/8f);
             if (curDistance <= (fullDistToUse * distanceMultiplier))
             {
                 if ((lowObj != null && lowObj.activeInHierarchy) || (!fullObj.activeInHierarchy))

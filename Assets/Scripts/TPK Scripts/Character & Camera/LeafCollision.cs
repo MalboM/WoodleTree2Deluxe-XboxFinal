@@ -66,12 +66,12 @@ public class LeafCollision : MonoBehaviour {
                     }
 			    }
 
-                if (other.gameObject.CompareTag("LeafBox"))
+                if (other.gameObject.name == "LeafBox")
                 {
                     lbo = other.gameObject.GetComponentInParent<LeafBoxObstacle>();
-
                     if (tpc.leafNo >= lbo.boxType)
                     {
+                        tpc.PlayHitFreeze(null, false, false, false);
                         HDRumbleMain.PlayVibrationPreset(playerI, "D06_Thumpp4", 1f, 0, 0.2f);
                         lbo.DestroyBox();
                     }
@@ -107,6 +107,8 @@ public class LeafCollision : MonoBehaviour {
                     other.gameObject.GetComponentInChildren<Animator>().SetBool("Activate", true);
                     if(other.tag == "LeafHit")
                         BerrySpawnManager.SpawnABerry(other.transform.position);
+
+                    tpc.PlayHitFreeze(null, false, false, false);
                 }
             }
         }

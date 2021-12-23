@@ -60,7 +60,6 @@ namespace AmplifyBloom
 
 		public StarDefData(){}
 
-		
 		public void Destroy()
 		{
 			m_starLinesArr = null;

@@ -15,7 +15,16 @@ namespace ICode{
 		public delegate void CustomEvent(string eventName, object parameter);
 		public event CustomEvent onReceiveEvent;
 		private Node actveNode;
-		public Node ActiveNode{
+
+        /*
+        private void Start()
+        {
+
+            Destroy(this);
+        }*/
+
+
+        public Node ActiveNode{
 			get{
 				return this.actveNode;
 			}

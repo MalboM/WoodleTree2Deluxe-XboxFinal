@@ -19,7 +19,7 @@ public class LeafBoxObstacle : MonoBehaviour {
 	}
 
 	public void DestroyBox(){
-        StartCoroutine(DelayDeactivate());
+        StartCoroutine("DelayDeactivate");
 		thePFX.SetActive (true);
         sound.clip = correctSounds[Random.Range(0, correctSounds.Length)];
         sound.pitch = Random.Range(0.8f, 1.2f);
@@ -36,27 +36,9 @@ public class LeafBoxObstacle : MonoBehaviour {
 
     IEnumerator DelayDeactivate()
     {
+        yield return new WaitForSeconds(0.4f);
         theBox.SetActive(false);
-
-        yield return new WaitForSeconds(1);
-
+        yield return new WaitForSeconds(2f);
         Destroy(this.transform.parent.gameObject);
-
-        //for (float f = 0f; f < 0.4f; f += Time.deltaTime * Time.timeScale)
-        //{
-        //    while (DataManager.isSuspended)
-        //        yield return null;
-
-        //    yield return null;
-        //}
-        ////theBox.SetActive(false);
-        //for (float f = 0f; f < 2f; f += Time.deltaTime * Time.timeScale)
-        //{
-        //    while (DataManager.isSuspended)
-        //        yield return null;
-
-        //    yield return null;
-        //}
-        ////Destroy(this.transform.parent.gameObject);
     }
 }

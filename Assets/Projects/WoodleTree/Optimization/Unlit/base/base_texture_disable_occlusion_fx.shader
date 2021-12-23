@@ -88,4 +88,5 @@ Shader "WoodleTree/Unlit/Base/base_texture/occlusion/Base Texture - Disable Occl
 			ENDCG
 		}
 	}
+			FallBack "Diffuse"
 }

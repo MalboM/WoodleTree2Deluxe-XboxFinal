@@ -14,7 +14,7 @@ public class BerrySpawnManager : MonoBehaviour
     public GameObject[] bigberries;
     Coroutine[] bigdespawnings;
     int bigberryIterator;
-
+    
     [SerializeField] private AudioClip[] berrySounds = new AudioClip[4];
     [SerializeField] private AudioClip[] blueBerrySounds = new AudioClip[4];
     public AudioClip berryBigSound;
@@ -37,8 +37,8 @@ public class BerrySpawnManager : MonoBehaviour
         despawnings = new Coroutine[berries.Length];
 
         bigdespawnings = new Coroutine[bigberries.Length];
-
-        for (int au = 0; au < 6; au++)
+        
+        for(int au = 0; au < 6; au++)
         {
             audioSources[au].loop = false;
             audioSources[au].playOnAwake = false;
@@ -66,9 +66,9 @@ public class BerrySpawnManager : MonoBehaviour
 
     void _SpawnABerry(Vector3 position)
     {
-        if (despawnings[berryIterator] != null)
+        if(despawnings[berryIterator] != null)
             StopCoroutine(despawnings[berryIterator]);
-
+        
         GameObject currentBerry = berries[berryIterator];
         Rigidbody berryRB = currentBerry.GetComponentInChildren<Rigidbody>(true);
 

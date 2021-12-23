@@ -14,7 +14,8 @@ namespace PicoGames.EditorExtensions
             sceneCamera = SceneView.currentDrawingSceneView.camera;
 
             DrawDot(_position, _color, _size);
-            return Handles.Button(_position, sceneCamera.transform.rotation, _size, _size * buttonBorderSize, Handles.CircleHandleCap);
+            //    return Handles.Button(_position, sceneCamera.transform.rotation, _size, _size * buttonBorderSize, Handles.CircleCap);
+            return false;
         }
 
         public static void DrawDot(Vector3 _position, Color _color, float _size)

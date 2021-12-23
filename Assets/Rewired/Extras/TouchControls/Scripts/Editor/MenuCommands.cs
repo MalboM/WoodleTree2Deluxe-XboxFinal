@@ -1,9 +1,10 @@
-﻿namespace Rewired.Editor.TouchControls {
-    using UnityEngine;
-    using UnityEditor;
-    using System;
-    using System.Collections;
-    using System.Reflection;
+﻿using UnityEngine;
+using UnityEditor;
+using System;
+using System.Collections;
+using System.Reflection;
+
+namespace Rewired.Editor.TouchControls {
 
     public static class MenuCommands {
 

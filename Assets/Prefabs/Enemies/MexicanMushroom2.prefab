@@ -65,6 +65,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -154,6 +155,7 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &5168755456692533832
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +221,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -270,11 +273,8 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9156836155584986178}
     m_Modifications:
-    - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
-      propertyPath: m_Name
-      value: Mushroom mexican02Low
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
+    - target: {fileID: -7455685359145607950, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -283,13 +283,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: -7455685359145607950, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+    - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
+      propertyPath: m_Name
+      value: Mushroom mexican02Low
       objectReference: {fileID: 0}
-    - target: {fileID: 1135244083771908629, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
+    - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -337,17 +335,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1135244083771908629, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406916848136235212, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
     - target: {fileID: 5218053877760515484, guid: 9fdfe0e99c3f0ff45b22159934d20832,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
     - target: {fileID: 6306971017694268109, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
-    - target: {fileID: 2406916848136235212, guid: 9fdfe0e99c3f0ff45b22159934d20832,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -391,6 +394,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9156836155584986178}
     m_Modifications:
+    - target: {fileID: -7455685359145607950, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -6236743471014415788, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
       propertyPath: m_Name
       value: Mushroom mexican02
@@ -400,21 +413,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 9fdfe0e99c3f0ff45b22159934d20832, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: -6236743471014415788, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: -7455685359145607950, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1135244083771908629, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
@@ -462,22 +460,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1135244083771908629, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1401006494575068746, guid: 9fdfe0e99c3f0ff45b22159934d20832,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2406916848136235212, guid: 9fdfe0e99c3f0ff45b22159934d20832,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
     - target: {fileID: 5218053877760515484, guid: 9fdfe0e99c3f0ff45b22159934d20832,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
     - target: {fileID: 6306971017694268109, guid: 9fdfe0e99c3f0ff45b22159934d20832,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 38e561ecd2c6ea64a9cb3453da078dc8, type: 2}
-    - target: {fileID: 2406916848136235212, guid: 9fdfe0e99c3f0ff45b22159934d20832,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

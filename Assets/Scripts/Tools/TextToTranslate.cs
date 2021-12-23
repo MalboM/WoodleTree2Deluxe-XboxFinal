@@ -11,6 +11,7 @@ public class TextToTranslate : MonoBehaviour
     public TextElement[] textElements;
     int currentLanguage = 0;
     bool firstSet;
+    int runToggle;
 
     int debugCount;
     int index;
@@ -29,14 +30,18 @@ public class TextToTranslate : MonoBehaviour
             }
             else
             {
-                t.originalFont = t.textMesh.font;
-                t.originalFontStyle = t.textMesh.fontStyle;
+                if (t.textMesh != null)
+                {
+                    t.originalFont = t.textMesh.font;
+                    t.originalFontStyle = t.textMesh.fontStyle;
+                }
             }
         }
     }
     
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.H))
         {
             debugCount++;
@@ -44,15 +49,18 @@ public class TextToTranslate : MonoBehaviour
                 debugCount = 0;
             PlayerPrefs.SetInt("Language", debugCount);
         }
+#endif
 
         if (TextTranslationManager.singleton != null)
         {
-            if (firstSet || currentLanguage != PlayerPrefs.GetInt("Language", 0))
+            if (firstSet || currentLanguage != PlayerPrefs.GetInt("Language", 0) || runToggle != PlayerPrefs.GetInt("RunByDefault", 1))
             {
                 if (firstSet)
                     firstSet = false;
                 else
                     currentLanguage = PlayerPrefs.GetInt("Language", 0);
+
+                runToggle = PlayerPrefs.GetInt("RunByDefault", 1);
 
                 SetText();
             }
@@ -73,22 +81,31 @@ public class TextToTranslate : MonoBehaviour
     {
         if (textObject != null)
         {
-            textObject.text = TextTranslationManager.GetText(textCollection, textID, currentLanguage);
+            if(textCollection == TextTranslationManager.TextCollection.startMenu && textID == 11)
+            {
+                if (PlayerPrefs.GetInt("RunByDefault", 1) == 1)
+                    textObject.text = TextTranslationManager.GetText(textCollection, 15, currentLanguage);
+                else
+                    textObject.text = TextTranslationManager.GetText(textCollection, 11, currentLanguage);
+            }
+            else
+               textObject.text = TextTranslationManager.GetText(textCollection, textID, currentLanguage);
+
             if (addedText != "")
             {
                 if (!dontIncludeAutoSpace)
                     textObject.text += " ";
                 textObject.text += addedText;
             }
-            if (makeUpperCase)
+            if(makeUpperCase)
                 textObject.text = textObject.text.ToUpper();
 
-            if (this.gameObject.name == "Pause Screen" && index > 26 && index < 34)
-                textObject.fontSize = (int)Mathf.Lerp(300, 200, Mathf.Clamp01((textObject.text.Length - 10) / 5f));
+            if(this.gameObject.name == "Pause Screen" && index > 26 && index < 34)
+                textObject.fontSize = (int)Mathf.Lerp(300, 200, Mathf.Clamp01((textObject.text.Length - 10)/5f));
 
             if (textCollection == TextTranslationManager.TextCollection.itemPrompts && textID == 1)
             {
-                if (PlayerPrefs.GetInt("Language") == 1)
+                if(PlayerPrefs.GetInt("Language") == 1)
                     textObject.fontSize = 150;
                 else
                     textObject.fontSize = 300;
@@ -113,7 +130,7 @@ public class TextToTranslate : MonoBehaviour
                 }
             }
 
-            if (textCollection == TextTranslationManager.TextCollection.startMenu && textID == 13 && textObject.gameObject.name == "TutorialTextRotCam")
+            if(textCollection == TextTranslationManager.TextCollection.startMenu && textID == 13 && textObject.gameObject.name == "TutorialTextRotCam")
             {
                 if (PlayerPrefs.GetInt("Language") == 5 || PlayerPrefs.GetInt("Language") == 13)
                     textObject.fontSize = 100;
@@ -124,30 +141,6 @@ public class TextToTranslate : MonoBehaviour
             if (PlayerPrefs.GetInt("Language") == 11)
             {
                 textObject.font = TextTranslationManager.singleton.arabicFont;
-                textObject.fontStyle = FontStyle.Bold;
-            }
-            else
-            if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Chinese)
-            {
-                textObject.font = TextTranslationManager.singleton.chineseFont;
-                textObject.fontStyle = FontStyle.Bold;
-            }
-            else
-            if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Japanese)
-            {
-                textObject.font = TextTranslationManager.singleton.japaneseFont;
-                textObject.fontStyle = FontStyle.Bold;
-            }
-            else
-            if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Korean)
-            {
-                textObject.font = TextTranslationManager.singleton.koreanFont;
-                textObject.fontStyle = FontStyle.Bold;
-            }
-            else
-            if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Russian)
-            {
-                textObject.font = TextTranslationManager.singleton.cyrillicFont;
                 textObject.fontStyle = FontStyle.Bold;
             }
             else

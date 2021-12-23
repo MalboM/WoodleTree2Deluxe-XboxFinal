@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using Steamworks;
 
-public class DarkBossDefeated : MonoBehaviour {
+public class DarkBossDefeated : MonoBehaviour
+{
 
 
     public GameObject darkboss;
@@ -39,7 +39,8 @@ public class DarkBossDefeated : MonoBehaviour {
     TPC tpc;
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (red1 == null || red2 == null || red3 == null)
         {
             red1 = redball1.GetComponent<RedBallToHIt>();
@@ -93,7 +94,6 @@ public class DarkBossDefeated : MonoBehaviour {
         }
     }
 
-    bool finishgameAchieved;
     void RemoveWaterfall()
     {
         if (tpc == null)
@@ -101,7 +101,7 @@ public class DarkBossDefeated : MonoBehaviour {
 
         if (tpc.currentWaterfall != null)
         {
-            if(tpc.currentWaterfall.gameObject == waterfallcollider1)
+            if (tpc.currentWaterfall.gameObject == waterfallcollider1)
             {
                 waterfall1.SetActive(false);
                 waterfallcollider1.SetActive(false);
@@ -153,9 +153,10 @@ public class DarkBossDefeated : MonoBehaviour {
         tpc.disableControl = true;
         tpc.rb.velocity = Vector3.zero;
         tpc.rb.isKinematic = true;
+        tpc.ps.cantPause = true;
         yield return null;
         tpc.anim.SetFloat("Speed", 0f);
-        if(tpc.onGround)
+        if (tpc.onGround)
             tpc.anim.Play("Idle", 0);
 
         yield return new WaitForSeconds(3f);
@@ -175,7 +176,7 @@ public class DarkBossDefeated : MonoBehaviour {
 
         yield return new WaitForSeconds(5.0f);
 
-       
+
         WaterTearManager.FinalCutscene();
 
 

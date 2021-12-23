@@ -1,70 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using Steamworks;
+using UnityEngine.UI;
 
 public class ActivateItemsMasks : MonoBehaviour
 {
 
-	public int itemID;
+    public int itemID;
     int promptID;
 
     public GameObject itemonwoodle;
-	public GameObject priceObj;
-	public GameObject icon;
-	public GameObject bought;
+    public GameObject priceObj;
+    Text priceText;
+    public GameObject icon;
+    public GameObject bought;
     // Use this for initialization
 
-	bool touchedThis;
+    bool touchedThis;
 
-	public bool isAMask;
-	public bool isAnItem;
-	public bool isAHat;
+    public bool isAMask;
+    public bool isAnItem;
+    public bool isAHat;
 
-	public TPC tpc;
-	public MainMarket mainMarket;
+    public TPC tpc;
+    public MainMarket mainMarket;
     int curLang;
 
     Font originalFont;
     FontStyle originalFontStyle;
 
-    int itemsBoughtCount;
-    int abiliesCount;
+    private void Awake()
+    {
+        foreach (Transform t in priceObj.GetComponentsInChildren<Transform>(true))
+        {
+            if (t.gameObject.GetComponent<Text>() != null)
+                priceText = t.gameObject.GetComponent<Text>();
+        }
+        originalFont = priceText.font;
+        originalFontStyle = priceText.fontStyle;
+    }
 
     void Start()
     {
-        originalFont = priceObj.GetComponent<TextMesh>().font;
-        originalFontStyle = priceObj.GetComponent<TextMesh>().fontStyle;
 
         tpc = PlayerManager.GetMainPlayer();
 
-        if (!PlayerPrefs.HasKey("PaidItemsCount"))
-        {
-            PlayerPrefs.SetInt("PaidItemsCount", 0);
-            itemsBoughtCount = 0;
-        }
+        if (!PlayerPrefs.HasKey("PaidForItem" + itemID.ToString()))
+            PlayerPrefs.SetInt("PaidForItem" + itemID.ToString(), 0);
         else
-            itemsBoughtCount = PlayerPrefs.GetInt("PaidItemsCount");
-
-        //
-
-        if (!PlayerPrefs.HasKey ("PaidForItem" + itemID.ToString ()))
-			PlayerPrefs.SetInt ("PaidForItem" + itemID.ToString (), 0);
-		else {
-			if (PlayerPrefs.GetInt ("PaidForItem" + itemID.ToString (), 0) == 1) {
-				if (PlayerPrefs.GetInt ("UsingItem" + itemID.ToString (), 0) == 1) {
-					itemonwoodle.SetActive (true);
-					touchedThis = true;
-					if(isAMask)
-						tpc.wearingMask = true;
-					if(isAnItem)
+        {
+            if (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString(), 0) == 1)
+            {
+                if (PlayerPrefs.GetInt("UsingItem" + itemID.ToString(), 0) == 1)
+                {
+                    itemonwoodle.SetActive(true);
+                    touchedThis = true;
+                    if (isAMask)
+                        tpc.wearingMask = true;
+                    if (isAnItem)
                         tpc.holdingItem = true;
-					if(isAHat)
+                    if (isAHat)
                         tpc.wearingHat = true;
-					icon.SetActive (false);
-					bought.SetActive (true);
+                    icon.SetActive(false);
+                    bought.SetActive(true);
                     tpc.ToggleAbility(itemID, true);
-				}
-			}
+                }
+            }
         }
 
         ConvetForItemPrompt();
@@ -86,7 +86,7 @@ public class ActivateItemsMasks : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-		if (other.tag == "Player" && other.gameObject.name == "Woodle Character")
+        if (other.tag == "Player" && other.gameObject.name == "Woodle Character")
             ItemPromptManager.DisplayPrompt(promptID, itemID, null, null, this, (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString(), 0) == 1), touchedThis);
     }
 
@@ -96,58 +96,48 @@ public class ActivateItemsMasks : MonoBehaviour
             ItemPromptManager.ExitPrompt(promptID);
     }
 
-    //
-    bool threeItemsTrophy, allItemsTrophy;
-    //
-    public void TouchThis(){
-		mainMarket.ReturnCurrentAddon ((isAMask && tpc.wearingMask), (isAnItem && tpc.holdingItem), (isAHat && tpc.wearingHat));
+    public void TouchThis()
+    {
+        mainMarket.ReturnCurrentAddon((isAMask && tpc.wearingMask), (isAnItem && tpc.holdingItem), (isAHat && tpc.wearingHat));
 
-		touchedThis = true;
-		if (isAMask) {
-			tpc.wearingMask = true;
-			mainMarket.SetCurrentID (itemID, 0);
-		}
-		if (isAnItem) {
-			tpc.holdingItem = true;
-			mainMarket.SetCurrentID (itemID, 1);
-		}
-		if (isAHat) {
-			tpc.wearingHat = true;
-			mainMarket.SetCurrentID (itemID, 2);
-		}
+        touchedThis = true;
+        if (isAMask)
+        {
+            tpc.wearingMask = true;
+            mainMarket.SetCurrentID(itemID, 0);
+        }
+        if (isAnItem)
+        {
+            tpc.holdingItem = true;
+            mainMarket.SetCurrentID(itemID, 1);
+        }
+        if (isAHat)
+        {
+            tpc.wearingHat = true;
+            mainMarket.SetCurrentID(itemID, 2);
+        }
 
         tpc.ToggleAbility(itemID, true);
 
-		this.GetComponent<AudioSource> ().Play ();
+        this.GetComponent<AudioSource>().Play();
 
-		itemonwoodle.SetActive (true);
+        itemonwoodle.SetActive(true);
 
-		icon.SetActive (false);
-		bought.SetActive (true);
+        icon.SetActive(false);
+        bought.SetActive(true);
 
-        if (!PlayerPrefs.HasKey("PaidItemsCount"))
-             PlayerPrefs.SetInt("PaidItemsCount", itemsBoughtCount);
-        else
-            itemsBoughtCount = PlayerPrefs.GetInt("PaidItemsCount");
-        //
-        PlayerPrefs.SetInt ("UsingItem" + itemID.ToString (), 1);
+        PlayerPrefs.SetInt("UsingItem" + itemID.ToString(), 1);
 
-		if (PlayerPrefs.GetInt ("PaidForItem" + itemID.ToString (), 0) == 0) {
-			PlayerPrefs.SetInt ("PaidForItem" + itemID.ToString (), 1);
-            SetPriceText();
-            Transform t = this.transform;
-			while (t.gameObject.GetComponent<UnlockItemMarket> () == null && t.parent != null)
-				t = t.parent;
-			if (t.gameObject.GetComponent<UnlockItemMarket> () != null)
-				t.gameObject.GetComponent<UnlockItemMarket> ().DisplayIt ();
-		}
+        if (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString(), 0) == 0)
+        {
+            PlayerPrefs.SetInt("PaidForItem" + itemID.ToString(), 1);
 
-        //
-        itemsBoughtCount++;
-        PlayerPrefs.SetInt("PaidItemsCount", itemsBoughtCount);
-        //
-
-
+            if (itemID != 24)
+            {
+                int amountBought = PlayerPrefs.GetInt("BoughtItems", 0) + 1;
+                PlayerPrefs.SetInt("BoughtItems", amountBought);
+                if (amountBought >= 3)
+                {
 #if UNITY_PS4
         //
         // check trophy : items >= 3 and items = all 
@@ -183,45 +173,56 @@ public class ActivateItemsMasks : MonoBehaviour
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING_FOR_EVERYTHING);
         }
 #endif
+                }
+            }
+
+            SetPriceText();
+            Transform t = this.transform;
+            while (t.gameObject.GetComponent<UnlockItemMarket>() == null && t.parent != null)
+                t = t.parent;
+            if (t.gameObject.GetComponent<UnlockItemMarket>() != null)
+                t.gameObject.GetComponent<UnlockItemMarket>().DisplayIt();
+        }
     }
 
-    public void UntouchThis(){
-		touchedThis = false;
+    public void UntouchThis()
+    {
+        touchedThis = false;
 
-		if(isAMask)
-			tpc.wearingMask = false;
-		if(isAnItem)
-			tpc.holdingItem = false;
-		if(isAHat)
-			tpc.wearingHat = false;
+        if (isAMask)
+            tpc.wearingMask = false;
+        if (isAnItem)
+            tpc.holdingItem = false;
+        if (isAHat)
+            tpc.wearingHat = false;
 
         tpc.ToggleAbility(itemID, false);
 
-        itemonwoodle.SetActive (false);
+        itemonwoodle.SetActive(false);
 
-		bought.SetActive (false);
-		icon.SetActive (true);
+        bought.SetActive(false);
+        icon.SetActive(true);
 
-		PlayerPrefs.SetInt ("UsingItem" + itemID.ToString (), 0);
+        PlayerPrefs.SetInt("UsingItem" + itemID.ToString(), 0);
         //    PlayerPrefs.Save();
     }
 
     void SetPriceText()
     {
-        priceObj.GetComponent<TextMesh>().text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, curLang);
-        if (curLang == 1 || curLang == 2 || curLang == 3 || curLang == 6 || curLang == 7 || curLang == 8 || curLang == 9 || curLang == 10 || curLang == 11 || curLang == 12)
-            priceObj.GetComponent<TextMesh>().fontSize = 50;
-        else
-            priceObj.GetComponent<TextMesh>().fontSize = 80;
+        priceText.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, curLang);
+        /*    if (curLang == 1 || curLang == 2 || curLang == 3 || curLang == 6 || curLang == 7 || curLang == 8 || curLang == 9 || curLang == 10 || curLang == 11 || curLang == 12)
+                priceText.fontSize = 50;
+            else
+                priceText.fontSize = 80;*/
         if (curLang == 11)
         {
-            priceObj.GetComponent<TextMesh>().font = TextTranslationManager.singleton.arabicFont;
-            priceObj.GetComponent<TextMesh>().fontStyle = FontStyle.Bold;
+            priceText.font = TextTranslationManager.singleton.arabicFont;
+            priceText.fontStyle = FontStyle.Bold;
         }
         else
         {
-            priceObj.GetComponent<TextMesh>().font = originalFont;
-            priceObj.GetComponent<TextMesh>().fontStyle = originalFontStyle;
+            priceText.font = originalFont;
+            priceText.fontStyle = originalFontStyle;
         }
     }
 

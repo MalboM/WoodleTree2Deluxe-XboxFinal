@@ -196,4 +196,5 @@ Shader "WoodleTree/Special/SandSnow/SnowFakeAOV1"
 			ENDCG
 		}
 	}
+	FallBack "Diffuse"
 }

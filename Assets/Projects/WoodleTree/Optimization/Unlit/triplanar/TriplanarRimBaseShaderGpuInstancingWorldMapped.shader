@@ -36,7 +36,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseGpuInstancingShaderWorldMappe
 
             struct v2f
             {
-                float4 objPosition : TEXCOORD0;
+				float4 objPosition : TEXCOORD0;
                 float3 objNormal: NORMAL;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
@@ -66,7 +66,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseGpuInstancingShaderWorldMappe
               o.objPosition = float4(mul(unity_ObjectToWorld,v.vertex).xyz,rimFac);
 
               o.vertex = UnityObjectToClipPos(v.vertex);
-              o.objNormal = mul(unity_ObjectToWorld, float4(v.normal, 0.)).xyz;
+              o.objNormal = mul(unity_ObjectToWorld,v.normal).xyz;
               UNITY_TRANSFER_FOG(o,o.vertex);
               return o;
             }
@@ -102,6 +102,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseGpuInstancingShaderWorldMappe
             ENDCG
         }
     }
+			FallBack "Diffuse"
 }
 /*
 

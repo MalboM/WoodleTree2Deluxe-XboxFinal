@@ -16,6 +16,9 @@ namespace CinemaDirector
         #region Fields
         [SerializeField]
         private float duration = 30f; // Duration of cutscene in seconds.
+
+        [SerializeField]
+        private Animator skipCSAnim = null;
         
         [SerializeField]
         private float playbackSpeed = 1f; // Multiplier for playback speed.
@@ -139,13 +142,33 @@ namespace CinemaDirector
         /// <summary>
         /// Skip the cutscene to the end and stop it
         /// </summary>
-        public void Skip()
+        public bool Skip()
         {
             if (isSkippable)
             {
-                SetRunningTime(this.Duration);
-                Stop();
+                if (skipCSAnim.GetBool("skipOn") == false)
+                {
+                    skipCSAnim.SetBool("skipOn", true);
+                    StartCoroutine("SkipWait");
+                    return false;
+                }
+                else
+                {
+                    StopCoroutine("SkipWait");
+                    skipCSAnim.SetBool("skipOn", false);
+                    SetRunningTime(this.Duration);
+                    Stop();
+                    return true;
+                }
             }
+            else
+                return false;
+        }
+
+        IEnumerator SkipWait()
+        {
+            yield return new WaitForSeconds(2f);
+            skipCSAnim.SetBool("skipOn", false);
         }
 
         /// <summary>
@@ -380,6 +403,18 @@ namespace CinemaDirector
                 {
                     this.duration = 0.1f;
                 }
+            }
+        }
+
+        public Animator SkipCSAnim
+        {
+            get
+            {
+                return this.skipCSAnim;
+            }
+            set
+            {
+                this.skipCSAnim = value;
             }
         }
 

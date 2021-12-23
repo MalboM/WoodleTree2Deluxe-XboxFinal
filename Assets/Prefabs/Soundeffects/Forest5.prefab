@@ -85,6 +85,7 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &1051231970195105030
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +126,8 @@ AudioSource:
   m_GameObject: {fileID: 1051231970195105030}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243206808097846298, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 331567e143e038b48a8bb7255392191b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.746

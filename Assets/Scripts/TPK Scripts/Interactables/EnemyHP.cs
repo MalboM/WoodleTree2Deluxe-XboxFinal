@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using ICode;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
-public class EnemyHP : MonoBehaviour {
+public class EnemyHP : MonoBehaviour
+{
 
     public bool debugTest;
 
     public int health;
     int initHealth;
-	public bool infiniteHealth;
+    public bool infiniteHealth;
     [SerializeField] private int invincibilityFrames;
     [HideInInspector] public bool invincible;
     [HideInInspector] public EnemyBarrier enemyBarrier;
@@ -26,7 +28,7 @@ public class EnemyHP : MonoBehaviour {
     bool hasCheckedParam;
     bool hasParam;
 
-	Rigidbody rb;
+    Rigidbody rb;
     BoxCollider boxCol;
     SphereCollider sphereCol;
     TPC chara;
@@ -43,7 +45,7 @@ public class EnemyHP : MonoBehaviour {
     float iterator = 0f;
     int mCount = 0;
     Color endCol = new Color(1f, 0f, 0f, 0f);
-    
+
     public ICodeBehaviour icodescript;
 
     public int berriesToSpawn = 1;
@@ -53,6 +55,7 @@ public class EnemyHP : MonoBehaviour {
     AudioSource sound;
     public AudioClip dieSound;
     public bool useBigOuchSounds;
+    public AudioMixerGroup mixerGroup;
 
     private ParticleSystem.EmissionModule dieParticleComponent;
     NavMeshAgent nma;
@@ -113,6 +116,12 @@ public class EnemyHP : MonoBehaviour {
                 sound = this.transform.parent.parent.gameObject.AddComponent<AudioSource>();
             else
                 sound = this.transform.parent.gameObject.AddComponent<AudioSource>();
+
+            if (this.gameObject.GetComponent<AudioSource>() != null)
+                sound.outputAudioMixerGroup = this.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup;
+            else
+                sound.outputAudioMixerGroup = mixerGroup;
+
             sound.playOnAwake = false;
         }
 
@@ -147,10 +156,16 @@ public class EnemyHP : MonoBehaviour {
                 if (chara.inCutscene && !freezeEnemy)
                 {
                     freezeEnemy = true;
+                    if (anim != null)
+                        anim.enabled = false;
                     fzPos = this.transform.position;
                 }
                 if (!chara.inCutscene && freezeEnemy)
+                {
                     freezeEnemy = false;
+                    if (anim != null)
+                        anim.enabled = true;
+                }
             }
 
             if (freezeEnemy)
@@ -166,7 +181,7 @@ public class EnemyHP : MonoBehaviour {
     {
         if (other.gameObject.name == "Foliage")
             TreeShakeManager.ShakeTree(other.gameObject, other.gameObject.GetComponent<MeshRenderer>());
-        
+
         if (other.gameObject.name.Contains("Shield"))
         {
             hitByShield = true;
@@ -180,18 +195,46 @@ public class EnemyHP : MonoBehaviour {
         }
     }
 
-    //
     public void Death()
     {
         if (enemyBarrier)
             enemyBarrier.EnemyKilled();
+
+        if (isDark)
+        {
+            int amountKilled = PlayerPrefs.GetInt("DarkKilled", 0) + 1;
+            PlayerPrefs.SetInt("DarkKilled", amountKilled);
+            if (amountKilled >= 100)
+            {
+#if !UNITY_EDITOR
+            //    if (SteamManager.Initialized) {                
+            //        SteamUserStats.SetAchievement("Woodle Warrior");
+            //        SteamUserStats.StoreStats();
+            //    }
+#endif
+            }
+        }
+        else
+        {
+            int amountKilled = PlayerPrefs.GetInt("NaturalKilled", 0) + 1;
+            PlayerPrefs.SetInt("NaturalKilled", amountKilled);
+            if (amountKilled >= 100)
+            {
+#if !UNITY_EDITOR
+            //    if (SteamManager.Initialized) {                
+            //        SteamUserStats.SetAchievement("Woodle Avenger");
+            //        SteamUserStats.StoreStats();
+            //    }
+#endif
+            }
+        }
 
         if (anim != null && hasParam)
         {
             anim.ResetTrigger("Hurt");
             anim.SetTrigger("Hurt");
         }
-        if(useBigOuchSounds)
+        if (useBigOuchSounds)
             EnemySoundManager.PlayBigOuchSound();
         else
             EnemySoundManager.PlayOuchSound();
@@ -203,18 +246,19 @@ public class EnemyHP : MonoBehaviour {
             icodescript.enabled = false;
         }
         this.GetComponent<Collider>().enabled = false;
-        if(anim)
+        if (anim)
             anim.SetBool("Die", true);
 
-        if(icodescript == null)
-            GameObject.FindWithTag("FXPool").GetComponent<BerryPFX>().PlayEffect(3, this.transform.position, this.gameObject, Vector3.zero, false);
-        else 
-            GameObject.FindWithTag("FXPool").GetComponent<BerryPFX>().PlayEffect(3, this.transform.position, icodescript.gameObject, Vector3.zero, true);
+        if (icodescript == null)
+            GameObject.FindWithTag("FXPool").GetComponent<BerryPFX>().PlayEffect(3, this.transform.position, this.gameObject, Vector3.zero, false, false);
+        else
+            GameObject.FindWithTag("FXPool").GetComponent<BerryPFX>().PlayEffect(3, this.transform.position, icodescript.gameObject, Vector3.zero, true, false);
 
         if (rb)
         {
             rb.isKinematic = false;
             rb.useGravity = true;
+            //    rb.velocity = Vector3.up * 20f;
         }
 
         if (sound != null && dieSound != null)
@@ -223,107 +267,10 @@ public class EnemyHP : MonoBehaviour {
             sound.Play();
         }
         StartCoroutine(Killed());
-
-        // counter for trophies
-        if (isDark)
-        {
-            //
-            int darkKilledEnemies;
-            if (!PlayerPrefs.HasKey("DarkEnemiesKilledCount"))
-            {
-                PlayerPrefs.SetInt("DarkEnemiesKilledCount", 0);
-                darkKilledEnemies = 0;
-            }
-            else
-                darkKilledEnemies = PlayerPrefs.GetInt("DarkEnemiesKilledCount");
-            //
-            if (darkKilledEnemies < 100)
-            {
-                darkKilledEnemies++;
-                PlayerPrefs.SetInt("DarkEnemiesKilledCount", darkKilledEnemies);
-
-                //
-                if (PlayerPrefs.HasKey("DarkEnemiesAchiev"))
-                {
-                    if (PlayerPrefs.GetInt("DarkEnemiesAchiev") == 0 && darkKilledEnemies >= 100)
-                        SetDarkAchievs();
-                }
-                else
-                    PlayerPrefs.SetInt("DarkEnemiesAchiev", 0);
-            }else
-                SetDarkAchievs();
-        }
-        else
-        {
-            //
-            int normalKilledEnemies;
-            if (!PlayerPrefs.HasKey("NormalEnemiesKilledCount"))
-            {
-                PlayerPrefs.SetInt("NormalEnemiesKilledCount", 0);
-                normalKilledEnemies = 0;
-            }
-            else
-                normalKilledEnemies = PlayerPrefs.GetInt("NormalEnemiesKilledCount");
-            //
-            if (normalKilledEnemies < 100)
-            {
-                normalKilledEnemies++;
-                PlayerPrefs.SetInt("NormalEnemiesKilledCount", normalKilledEnemies);
-                
-                //
-                if (PlayerPrefs.HasKey("NormalEnemiesAchiev"))
-                {
-                    if (PlayerPrefs.GetInt("NormalEnemiesAchiev") == 0 && normalKilledEnemies >= 100)
-                        SetNormalAchievs();
-                }
-                else
-                    PlayerPrefs.SetInt("NormalEnemiesAchiev", 0);
-            }else
-                SetNormalAchievs();
-        }
     }
 
-    //
-    void SetNormalAchievs()
+    public void BeenHit(bool wasWindballOrDrop, int charaID)
     {
-        //
-#if UNITY_PS4
-        //
-        // check trophy :  normal enemies
-        PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.DEFEAT_100_NATURAL_ENEMIES);
-        PlayerPrefs.SetInt("NormalEnemiesAchiev", 1);
-#endif
-
-
-#if UNITY_XBOXONE
-        //
-        // check trophy : items >= 3 and items = all 
-        //
-        XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_WARRIOR);
-#endif
-    }
-
-    //
-    void SetDarkAchievs()
-    {
-        //
-#if UNITY_PS4
-        //
-        // check trophy :  dark enemies
-        PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.ANNIHILIATE_100_DARK_ENEMIES);
-        PlayerPrefs.SetInt("DarkEnemiesAchiev", 1);
-
-#endif
-
-#if UNITY_XBOXONE
-        //
-        // check trophy : items >= 3 and items = all 
-        //
-        XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_AVENGER);
-#endif
-    }
-
-    public void BeenHit(bool wasWindballOrDrop, int charaID) {
         if (anim != null && hasParam)
         {
             anim.ResetTrigger("Hurt");
@@ -341,6 +288,14 @@ public class EnemyHP : MonoBehaviour {
         }
         StopCoroutine("HitFlash");
         StartCoroutine("HitFlash");
+        StartCoroutine(InvicibleFrames());
+    }
+
+    IEnumerator InvicibleFrames()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(0.3f);
+        invincible = false;
     }
 
     public void SendFlying(bool wasWindballOrDrop)
@@ -358,7 +313,7 @@ public class EnemyHP : MonoBehaviour {
     {
         if (currentChara == null)
             currentChara = PlayerManager.GetMainPlayer();
-        Vector3 atkDir = (currentChara.transform.forward) * 10f;
+        Vector3 atkDir = (currentChara.transform.forward * 10f);
         if (!wasWindballOrDrop)
         {
             if (rb)
@@ -398,7 +353,7 @@ public class EnemyHP : MonoBehaviour {
             rb.isKinematic = false;
             rb.AddForce(atkDir, ForceMode.Impulse);
         }
-    //    invincible = true;
+        //    invincible = true;
         for (int inv = 0; inv < invincibilityFrames; inv++)
         {
             if (rb)
@@ -409,7 +364,7 @@ public class EnemyHP : MonoBehaviour {
             rb.isKinematic = true;
 
         hitByShield = false;
-    //    invincible = false;
+        //    invincible = false;
     }
 
     IEnumerator HitFlash()
@@ -418,7 +373,7 @@ public class EnemyHP : MonoBehaviour {
         reverse = false;
         iterator = 0f;
         mCount = 0;
-        while(f >= 0)
+        while (f >= 0)
         {
             iterator = (float)f / 20f;
 
@@ -430,8 +385,8 @@ public class EnemyHP : MonoBehaviour {
                     if (m.HasProperty("_RimColor") && m.HasProperty("_RimIntensityF"))
                     {
                         m.SetColor("_RimColor", Color.Lerp(origRimCol[mCount], endCol, iterator));
-                    //    if (m.HasProperty("_RimIntensityF"))
-                            m.SetFloat("_RimIntensityF", Mathf.Lerp(origRimInt[mCount], 10f, iterator));
+                        //    if (m.HasProperty("_RimIntensityF"))
+                        m.SetFloat("_RimIntensityF", Mathf.Lerp(origRimInt[mCount], 10f, iterator));
                         mCount++;
                     }
                 }
@@ -454,12 +409,31 @@ public class EnemyHP : MonoBehaviour {
         Vector3 curScale = this.transform.localScale;
         if (icodescript)
             curScale = icodescript.gameObject.transform.localScale;
-        for(float k = 0f; k <= 1f; k += (1f/60f))
+        bool doneFirstHalf = false;
+        for (float k = 0f; k <= 1f; k += (Time.deltaTime / (Time.timeScale + 0.0001f)))
         {
-            if(icodescript)
-                icodescript.gameObject.transform.localScale = Vector3.Lerp(curScale, Vector3.one * 0.001f, k);
+            if (k <= 0.5f)
+            {
+                if (icodescript)
+                    icodescript.gameObject.transform.localScale = Vector3.Lerp(curScale, curScale * 1.25f, k * 2f);
+                else
+                    this.transform.localScale = Vector3.Lerp(curScale, curScale * 1.25f, k * 2f);
+            }
             else
-                this.transform.localScale = Vector3.Lerp(curScale, Vector3.one * 0.001f, k);
+            {
+                if (!doneFirstHalf)
+                {
+                    curScale = this.transform.localScale;
+                    if (icodescript)
+                        curScale = icodescript.gameObject.transform.localScale;
+                    doneFirstHalf = true;
+                }
+
+                if (icodescript)
+                    icodescript.gameObject.transform.localScale = Vector3.Lerp(curScale, Vector3.one * 0.001f, (k - 0.5f) * 2f);
+                else
+                    this.transform.localScale = Vector3.Lerp(curScale, Vector3.one * 0.001f, (k - 0.5f) * 2f);
+            }
             yield return null;
         }
 
@@ -469,7 +443,8 @@ public class EnemyHP : MonoBehaviour {
             for (int k = 0; k < total; k++)
                 BerrySpawnManager.SpawnABigBerry(this.transform.position);
         }
-        else {
+        else
+        {
             if (berriesToSpawn > 0)
             {
                 for (int k = 0; k < berriesToSpawn; k++)
@@ -502,9 +477,9 @@ public class EnemyHP : MonoBehaviour {
         else
         {
             Destroy(parentToDisable.gameObject);
-        //    parentToDisable.SetActive(false);
+            //    parentToDisable.SetActive(false);
         }
-        
+
     }
 
     public void Reset()

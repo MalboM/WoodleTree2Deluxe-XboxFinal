@@ -109,4 +109,5 @@ Shader "WoodleTree/Unlit/Silhouette/Disabled/base_texture (CamAlphaBlend - VertD
             ENDCG
         }
     }
+		FallBack "Diffuse"
 }

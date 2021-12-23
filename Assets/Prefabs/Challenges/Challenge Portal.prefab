@@ -5082,12 +5082,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3b2d671eea64d458eb56c63b004d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnOffFirst: 0
+  turnOffSecond: 0
   portalID: 0
   challengeScene: Challenges0
   portalType: 0
   returnPortal: {fileID: 0}
   exitPortal: {fileID: 0}
   pfx: {fileID: 776663682315546048}
+  sleepingFlowerNPC: {fileID: 0}
+  nearbyNPC: {fileID: 0}
+  npcAddOn: {fileID: 0}
 --- !u!82 &941561490916372636
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5097,8 +5102,9 @@ AudioSource:
   m_GameObject: {fileID: 2019196683468693871}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ae81808faf48b1e4eb901ad8e9c85978, type: 3}
+  OutputAudioMixerGroup: {fileID: 243206808097846298, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 5e7e47e6bbe694e46818b35f23454a86, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1

@@ -11,15 +11,9 @@ namespace CinemaDirector
     [CutsceneItemAttribute("uGUI", "Change Color Selectable", CutsceneItemGenre.ActorItem)]
     public class ColorChangeSelectable : CinemaActorAction, IRevertable
     {
-        public enum ColorBlockChoices {
-            normalColor,
-            highlightedColor,
-            pressedColor,
-            disabledColor
-        };
-
+        enum ColorBlockChoices {normalColor,highlightedColor,pressedColor, disabledColor};
         [SerializeField]
-        public ColorBlockChoices colorField;
+        ColorBlockChoices colorField;
 
         [SerializeField]
         Color colorValue = Color.white;

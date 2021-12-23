@@ -1,10 +1,8 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class ChunkGenerator : MonoBehaviour {
@@ -28,7 +26,6 @@ public class ChunkGenerator : MonoBehaviour {
     float yPos;
     float zPos;
 
-#if UNITY_EDITOR
     public void ChunkItUp()
     {
 
@@ -141,12 +138,8 @@ public class ChunkGenerator : MonoBehaviour {
             }
         }
     }
-
-#endif
-
 }
 
-#if UNITY_EDITOR
 [CustomEditor(typeof(ChunkGenerator))]
 public class ChunkGeneratorEdit : Editor
 {

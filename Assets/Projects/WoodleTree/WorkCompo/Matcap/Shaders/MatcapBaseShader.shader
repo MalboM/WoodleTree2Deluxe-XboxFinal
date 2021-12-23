@@ -165,5 +165,6 @@ Shader "Polymole/Effects/Matcap/MatcapBaseShader"
             ENDCG
         }
     }
+	FallBack "Diffuse"
 }
 

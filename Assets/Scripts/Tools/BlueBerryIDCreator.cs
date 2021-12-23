@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BlueBerryIDCreator : MonoBehaviour
 {
-    [HideInInspector]
-    public List<Transform> berries = new List<Transform>();
-    
+    [HideInInspector] public List<Transform> berries = new List<Transform>();
+
+    public bool collectAll;
+
     public ChunkDistanceChecker chunkDistanceChecker;
 
     void OnEnable()
@@ -15,23 +16,18 @@ public class BlueBerryIDCreator : MonoBehaviour
         bool checking = false;
         bool collected = false;
         berries.Clear();
-        string totalString = "";
-        Debug.Log("BERRIES - HAS KEY: " + PlayerPrefs.HasKey(this.gameObject.scene.name + "BlueBerry0"));
         foreach (Transform t in this.GetComponentsInChildren<Transform>(true))
         {
             if (t.transform.parent == this.transform)
             {
                 checking = false;
                 collected = false;
-                foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true))
-                {
+                foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true)) {
                     if (t1.GetComponentInChildren<BerryCollect>() != null)
                         t1.GetComponentInChildren<BerryCollect>().id = counter;
-                    //if (!checking && PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
-                    if (!checking)
+                    if (!checking && PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
                     {
-                   //     if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry")[counter].ToString() == "1")
-                        if(PlayerPrefs.GetInt(this.gameObject.scene.name + "BlueBerry" + counter.ToString()) == 1)
+                        if(PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry")[counter].ToString() == "1")
                             collected = true;
                     }
                     checking = true;
@@ -39,12 +35,27 @@ public class BlueBerryIDCreator : MonoBehaviour
                         t1.gameObject.SetActive(false);
                 }
                 berries.Add(t);
-                totalString = totalString.Insert(totalString.Length, (PlayerPrefs.GetInt(this.gameObject.scene.name + "BlueBerry" + counter.ToString())).ToString());
                 counter++;
             }
         }
-        Debug.Log("* BERRIES TOTAL: " + totalString);
-        Debug.Log("* SCENE NAME: " + this.gameObject.scene.name);
+    }
+
+    private void Update()
+    {
+        if (collectAll)
+        {
+            collectAll = false;
+
+            string completeString = "";
+            foreach (Transform t in berries)
+            {
+                completeString = completeString + "1";
+                foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true))
+                    t1.gameObject.SetActive(false);
+            }
+
+            PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", completeString);
+        }
     }
 
     public void ReEnableBerries()

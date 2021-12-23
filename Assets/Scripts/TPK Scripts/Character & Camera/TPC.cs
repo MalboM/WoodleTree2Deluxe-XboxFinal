@@ -7,8 +7,7 @@ using PigeonCoopToolkit.Effects.Trails;
 
 public class TPC : MonoBehaviour
 {
-    [HideInInspector]
-    public bool challengeReset;
+
     [HideInInspector] public Player input;
     public string playerID;
     [HideInInspector] public int pID;
@@ -25,6 +24,7 @@ public class TPC : MonoBehaviour
     [HideInInspector] public bool disableControl;
     public GameObject dayPack;
     [HideInInspector] public GameObject cam;
+    CameraFollower camF;
     [HideInInspector] public GameObject relative;
     [HideInInspector] public Rigidbody rb;
     Animations currentAnim;
@@ -106,12 +106,13 @@ public class TPC : MonoBehaviour
     bool gvIncline;
     bool gvSlide;
     bool gvIce;
-    bool checkGroundThisFrame;
     Vector3 slideHigh;
 
     bool startedGroundDelay;
     bool canGlideFromGround;
-    
+
+    [HideInInspector] public bool runByDefault;
+
     [HideInInspector] public bool jumped;
     bool slowedJump;
     bool doubleJumped;
@@ -130,7 +131,7 @@ public class TPC : MonoBehaviour
     [Range(0f, 1f)] public float groundTolerance;
 
     [HideInInspector] public bool inWindCol;
- //   [HideInInspector] public bool inWaterCol;
+    //   [HideInInspector] public bool inWaterCol;
     [HideInInspector] public bool jumping;
     bool inBamboo;
     float curBambooSpeed;
@@ -184,7 +185,7 @@ public class TPC : MonoBehaviour
     private GameObject leafColObj;
     private LeafCollision leafCol;
     [HideInInspector] public AttackSettings leafAS;
-    [SerializeField] public int leafNo;
+    [HideInInspector] public int leafNo;
     [HideInInspector] public bool isHoldingLeaf;
     [HideInInspector] public bool cancelLeafHold;
     bool attackBuffer;
@@ -199,6 +200,7 @@ public class TPC : MonoBehaviour
     bool canAttackNext;
     MeshRenderer curGroundMR;
     bool checkingAttackAnim;
+    bool inHitFreeze;
 
     //
 
@@ -256,6 +258,7 @@ public class TPC : MonoBehaviour
     private AudioSource enHit2Sound;
     private AudioSource enHit3Sound;
     private AudioSource boostingSound;
+    private AudioSource bbFinderSource;
     private bool stepDelay;
     private int stepInt;
     private int prevStepInt;
@@ -318,6 +321,10 @@ public class TPC : MonoBehaviour
     [SerializeField] private GameObject enemyParticles;
     [SerializeField] private GameObject buttonParticles;
 
+    [SerializeField] private GameObject bbFinderParticles;
+    [SerializeField] private GameObject portal1Particles;
+    [SerializeField] private GameObject portal2Particles;
+
     private ParticleSystem.EmissionModule walkEM;
     private ParticleSystem.EmissionModule runEM;
     private ParticleSystem.EmissionModule splashMoveEM;
@@ -351,6 +358,10 @@ public class TPC : MonoBehaviour
     private ParticleSystem.EmissionModule leafSlidingEM;
     private ParticleSystem.EmissionModule enemyEM;
 
+    private ParticleSystem.EmissionModule bbFinderEM;
+    private ParticleSystem.EmissionModule portal1EM;
+    private ParticleSystem.EmissionModule portal2EM;
+
     //
 
     [SerializeField] private AudioClip attack1Sound;
@@ -359,6 +370,7 @@ public class TPC : MonoBehaviour
     [SerializeField] private AudioClip attack4Sound;
     private int attackIterate;
     private int attackAnimIterate;
+    bool isThirdAttack;
     [SerializeField] private AudioClip attackChargedSound;
     [SerializeField] private AudioClip attackFullyChargedSound;
     [SerializeField] private AudioClip attackChargingSound;
@@ -424,7 +436,7 @@ public class TPC : MonoBehaviour
     [HideInInspector] public Vector3 zeroVelocity;
 
     //
-    
+
     RaycastHit rrr;
     GameObject curFloor;
     GameObject curBox;
@@ -437,7 +449,7 @@ public class TPC : MonoBehaviour
     bool ledgeHopping;
 
     //
-    
+
     public SkinnedMeshRenderer[] bodyRenderers;
     public SkinnedMeshRenderer[] toHideRender;
     bool curOpaque;
@@ -482,11 +494,11 @@ public class TPC : MonoBehaviour
     public Renderer eyesRenderer;
     public Texture eyesOpen;
     public Texture eyesClosed;
-
+    /*
     bool inStoneMode;
     bool stoneModeFirstFrame;
     public AttackSettings stoneAttack;
-
+    */
 
     [HideInInspector] public bool jumpButtonDown;
     bool glideButtonDown;
@@ -552,8 +564,21 @@ public class TPC : MonoBehaviour
     public Material blueLeafDissolve;
     [HideInInspector] public bool challengeWarping;
 
+    List<BlueBerryIDCreator> blueBerryIDCreators;
+    public AudioClip bbFinderSound;
+    public AudioClip bbFinderONSound;
+    public AudioClip bbFinderOFFSound;
+    public Animator bbFinderAnim;
+    bool usingBBFinder;
+    float bbFinderIntensity;
+    public MeshRenderer bbFinderMeshRenderer;
+    Material bbFinderMat;
+
     [System.Serializable] public class SMRColors { public Color tint; public Color rim; public float sharpness; public float intensity; }
     List<SMRColors> smrColors = new List<SMRColors>();
+
+    public GameObject noIntObj;
+    public GameObject yesIntObj;
 
     #region ANDREA RICCARDI ADDONS
 
@@ -564,7 +589,7 @@ public class TPC : MonoBehaviour
 
     void Awake()
     {
-    //    PlayerManager.AddPlayer(this, int.Parse(playerID));
+        //    PlayerManager.AddPlayer(this, int.Parse(playerID));
     }
 
     #endregion
@@ -585,11 +610,9 @@ public class TPC : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody>();
         capcol = this.gameObject.GetComponent<CapsuleCollider>();
 
-        rb.angularDrag = 1f;
-
         if (this.gameObject.GetComponent<Telescope>())
             telescope = this.gameObject.GetComponent<Telescope>();
-        
+
         boxX = 0.3f;
         boxY = 0.9f;
         boxZ = 0.3f;
@@ -749,6 +772,8 @@ public class TPC : MonoBehaviour
         enHit2Sound = sources[5];
         enHit3Sound = sources[6];
         boostingSound = sources[7];
+        if (pID == 0)
+            bbFinderSource = sources[8];
 
         walkEM = dustWalkParticles.GetComponent<ParticleSystem>().emission;
         runEM = dustRunParticles.GetComponent<ParticleSystem>().emission;
@@ -816,6 +841,20 @@ public class TPC : MonoBehaviour
         boostingEM.enabled = false;
         leafSlidingEM.enabled = false;
 
+        if (pID == 0)
+        {
+            bbFinderEM = bbFinderParticles.GetComponent<ParticleSystem>().emission;
+            bbFinderEM.enabled = false;
+
+            portal1EM = portal1Particles.GetComponent<ParticleSystem>().emission;
+            portal2EM = portal2Particles.GetComponent<ParticleSystem>().emission;
+            portal1EM.enabled = false;
+            portal2EM.enabled = false;
+
+            bbFinderMat = bbFinderMeshRenderer.material;
+            bbFinderMeshRenderer.material = bbFinderMat;
+        }
+
         rippleParticles.gameObject.transform.SetParent(this.transform.parent);
         rippleCParticles.gameObject.transform.SetParent(this.transform.parent);
 
@@ -861,7 +900,7 @@ public class TPC : MonoBehaviour
         wallJumpRay = new RaycastHit();
         seaHit = new RaycastHit();
 
-        stoneAttack.tpc = this;
+        //   stoneAttack.tpc = this;
 
         if (playerID == "0")
             StartCoroutine("Blink");
@@ -875,7 +914,8 @@ public class TPC : MonoBehaviour
             renderers = this.gameObject.GetComponentsInChildren<Renderer>();
         foreach (Renderer r in renderers)
         {
-            if (!r.name.Contains("eaf")) {
+            if (!r.name.Contains("eaf"))
+            {
                 foreach (Material m in r.materials)
                 {
                     if (m.HasProperty("_RimColor") && m.HasProperty("_RimIntensityF"))
@@ -886,6 +926,8 @@ public class TPC : MonoBehaviour
                 }
             }
         }
+
+        blueBerryIDCreators = new List<BlueBerryIDCreator>();
     }
 
     void OnEnable()
@@ -914,43 +956,46 @@ public class TPC : MonoBehaviour
             }
 
 #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.U))
+            if (ps.enableDebugTab)
             {
-                PlayerPrefs.SetInt("Berries", berryCount + 20000);
-                berryCount = PlayerPrefs.GetInt("Berries", 0);
-            }
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                PlayerPrefs.SetInt("BlueBerries", blueberryCount + 500);
-                blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
-            }
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                PlayerPrefs.SetInt("Berries", 0);
-                berryCount = PlayerPrefs.GetInt("Berries", 0);
-                PlayerPrefs.SetInt("BlueBerries", 0);
-                blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
-            }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                for (int xyz = 0; xyz < 21; xyz++)
+                if (Input.GetKeyDown(KeyCode.U))
                 {
-                    PlayerPrefs.SetInt("UsingItem" + xyz.ToString(), 0);
-                    PlayerPrefs.SetInt("PaidForItem" + xyz.ToString(), 0);
+                    PlayerPrefs.SetInt("Berries", berryCount + 20000);
+                    berryCount = PlayerPrefs.GetInt("Berries", 0);
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                for (int lvl = 1; lvl <= 8; lvl++)
+                if (Input.GetKeyDown(KeyCode.I))
                 {
-                    for (int tearNo = 1; tearNo <= 3; tearNo++)
-                        PlayerPrefs.SetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 1);
+                    PlayerPrefs.SetInt("BlueBerries", blueberryCount + 500);
+                    blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
+                }
+                if (Input.GetKeyDown(KeyCode.O))
+                {
+                    PlayerPrefs.SetInt("Berries", 0);
+                    berryCount = PlayerPrefs.GetInt("Berries", 0);
+                    PlayerPrefs.SetInt("BlueBerries", 0);
+                    blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
+                }
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    for (int xyz = 0; xyz < 21; xyz++)
+                    {
+                        PlayerPrefs.SetInt("UsingItem" + xyz.ToString(), 0);
+                        PlayerPrefs.SetInt("PaidForItem" + xyz.ToString(), 0);
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    for (int lvl = 1; lvl <= 8; lvl++)
+                    {
+                        for (int tearNo = 1; tearNo <= 3; tearNo++)
+                            PlayerPrefs.SetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 1);
+                    }
                 }
             }
 #endif
 
-            if (inStoneMode && !disableControl)
-                disableControl = true;
+            //    if (inStoneMode && !disableControl)
+            //        disableControl = true;
 
             if (!inLeafSlide && capcol.radius != 0.2f)
                 capcol.radius = 0.2f;
@@ -960,11 +1005,11 @@ public class TPC : MonoBehaviour
             {
 
                 jumpButtonDown = (input.GetButtonDown("Jump") && !inShop);
-           //     if (jumpButtonDown)
-            //        Debug.Log("JUMP BUTTON PRESSED : " + disableControl + " . " + lockVelocity +" . "+ inCutscene);
+                //    if (jumpButtonDown)
+                //      Debug.Log("JUMP BUTTON PRESSED : " + disableControl + " . " + lockVelocity +" . "+ inCutscene);
                 glideButtonDown = input.GetButtonDown("Glide");
-            //    if (glideButtonDown)
-            //        Debug.Log("GLIDE BUTTON PRESSED : " + Time.timeSinceLevelLoad + " . " + disableControl + " . " + lockVelocity + " . " + inCutscene);
+                //    if (glideButtonDown)
+                //        Debug.Log("GLIDE BUTTON PRESSED : " + Time.timeSinceLevelLoad + " . " + disableControl + " . " + lockVelocity + " . " + inCutscene);
                 runButtonDown = input.GetButtonDown("Run");
                 jumpButtonHold = (input.GetButton("Jump") && !inShop);
                 glideButtonHold = input.GetButton("Glide");
@@ -972,7 +1017,7 @@ public class TPC : MonoBehaviour
 
                 if (!ps.enableDebugTab)
                 {
-                    if(gliding && (runButtonDown || runButtonHold))
+                    if (gliding && (runButtonDown || runButtonHold))
                     {
                         runButtonDown = false;
                         runButtonHold = false;
@@ -1021,7 +1066,6 @@ public class TPC : MonoBehaviour
                 gvIncline = false;
                 gvSlide = false;
                 gvIce = false;
-                checkGroundThisFrame = false;
 
                 slopeCheckers[0] = this.transform.position;
                 slopeCheckers[1] = this.transform.position - (Vector3.forward * boxZ / 2f);
@@ -1036,11 +1080,6 @@ public class TPC : MonoBehaviour
                 {
                     if (Physics.Raycast(groundCheckers[gv].transform.position, -Vector3.up, out groundHits[gv], 0.1f, whatIsGround) && !groundHits[gv].collider.isTrigger)
                     {
-                        if (pID == 0 && !checkGroundThisFrame)
-                        {
-                            checkGroundThisFrame = true;
-                            GetWoodleLocation(groundHits[gv].collider.gameObject.scene.buildIndex);
-                        }
                         if (groundHits[gv].normal.y >= groundTolerance)
                         {
                             if (!gvFound)
@@ -1108,6 +1147,8 @@ public class TPC : MonoBehaviour
                     }
                     gv++;
                 }
+                if (!gvIncline && inclineNormal != Vector3.up)
+                    inclineNormal = Vector3.up;
                 if (gvFound && delayed)
                 {
                     onGround = true;
@@ -1128,7 +1169,7 @@ public class TPC : MonoBehaviour
                     {
                         landed = true;
                         if ((fallHeight - this.transform.position.y) >= 1.5f)
-                            HDRumbleMain.PlayVibrationPreset(pID, "B02_Bu2", 0.8f, 1, 0.3f);
+                            HDRumbleMain.PlayVibrationPreset(pID, "B02_Bu2", 0.4f, 1, 0.3f);
 
                         jumpST.Emit = false;
 
@@ -1221,7 +1262,7 @@ public class TPC : MonoBehaviour
                     }
                     if (gliding)
                     {
-                    //    Debug.Log("EXIT GLIDE BECAUSE ONGROUND");
+                        //    Debug.Log("EXIT GLIDE BECAUSE ONGROUND");
                         gliding = false;
                         anim.SetTrigger("exitGlide");
                     }
@@ -1305,7 +1346,7 @@ public class TPC : MonoBehaviour
 
                 if (onGround && gliding)
                 {
-                //    Debug.Log("EXIT GLIDE BECAUSE ONGROUND 2");
+                    //    Debug.Log("EXIT GLIDE BECAUSE ONGROUND 2");
                     gliding = false;
                     anim.SetTrigger("exitGlide");
                 }
@@ -1451,7 +1492,7 @@ public class TPC : MonoBehaviour
                         attackBufferX = false;
                     }
 
-                    if (input.GetButtonDown("Attack") && !inShop && !noDirectional && !isBoosting && !inLeafSlide && !attackBuffer && !startedAttack && !defeated)
+                    if (input.GetButtonDown("Attack") && !inHitFreeze && !inShop && !noDirectional && !isBoosting && !inLeafSlide && !attackBuffer && !startedAttack && !defeated)
                     {
                         rb.velocity = rb.velocity / 3f;
                         StopCoroutine("RandomiseMainIdle");
@@ -1521,12 +1562,17 @@ public class TPC : MonoBehaviour
                             }
                         }
 
+                        isThirdAttack = false;
+
                         if (attackAnimIterate == 0)
                             HDRumbleMain.PlayVibrationPreset(pID, "B04_Bam1", 1f, 1, 0.3f);
                         if (attackAnimIterate == 1)
                             HDRumbleMain.PlayVibrationPreset(pID, "B05_Bam2", 1f, 1, 0.3f);
                         if (attackAnimIterate == 2)
+                        {
                             HDRumbleMain.PlayVibrationPreset(pID, "B06_Bump1", 1f, 1, 0.3f);
+                            isThirdAttack = true;
+                        }
 
                         if (hasUltraLeaf)
                             LaunchWindball();
@@ -1603,7 +1649,8 @@ public class TPC : MonoBehaviour
 
                     if (pID == 0)
                     {
-                        if (input.GetButtonDown("Leaf") && onGround && delayed && ps.challengeWarpAnim.GetBool("skipOn") == false && !isHoldingLeaf && !currentAnim.inLeafDown && !currentAnim.inQuickLeafDown && !attackBuffer && !inLeafSlide)
+                        if (input.GetButtonDown("Leaf") && onGround && delayed && ps.challengeWarpAnim.GetBool("skipOn") == false && ps.racePromptAnim.GetBool("skipOn") == false
+                            && !isHoldingLeaf && !currentAnim.inLeafDown && !currentAnim.inQuickLeafDown && !attackBuffer && !inLeafSlide)
                         {
                             isHoldingLeaf = true;
                             anim.ResetTrigger("leafDown");
@@ -1765,6 +1812,38 @@ public class TPC : MonoBehaviour
                     }
                 }
 
+                if (pID == 0 && PlayerPrefs.GetInt("HalfBlueBerries", 0) == 1)
+                {
+                    if (input.GetButtonDown("BlueBerryFind") && PlayerPrefs.GetInt("AllBlueBerries", 0) == 0)
+                    {
+                        usingBBFinder = !usingBBFinder;
+                        bbFinderSource.Stop();
+                        if (usingBBFinder)
+                        {
+                            bbFinderSource.clip = bbFinderONSound;
+                            StartCoroutine("BlueBerryFinder", true);
+                            bbFinderAnim.SetBool("activate", true);
+                        }
+                        else
+                        {
+                            bbFinderSource.clip = bbFinderOFFSound;
+                            StopCoroutine("BlueBerryFinder");
+                            bbFinderAnim.SetBool("activate", false);
+                        }
+                        bbFinderSource.pitch = 1f;
+                        bbFinderSource.PlayDelayed(0f);
+                    }
+                    if (usingBBFinder && PlayerPrefs.GetInt("AllBlueBerries", 0) == 1)
+                    {
+                        StopCoroutine("BlueBerryFinder");
+                        bbFinderSource.Stop();
+                        bbFinderSource.clip = bbFinderOFFSound;
+                        bbFinderSource.pitch = 1f;
+                        bbFinderSource.PlayDelayed(0f);
+                        bbFinderAnim.SetBool("activate", false);
+                    }
+                }
+
                 /*
                 if (pID == 0 && !inStoneMode && input.GetButtonDown("Stone") && !disableControl)
                 {
@@ -1796,6 +1875,9 @@ public class TPC : MonoBehaviour
                 */
             }
 
+            //    if (!jumpButtonDown && input.GetButtonDown("Jump"))
+            //        Debug.Log("INPUT NOT READ: " + disableControl +" "+ cam);
+
             if (currentAnim.inIdle && !inIdleRoutine && !defeated)
             {
                 inIdleRoutine = true;
@@ -1808,7 +1890,7 @@ public class TPC : MonoBehaviour
                 StopCoroutine("IdleRoutine");
             }
 
-            if(gliding && !currentAnim.inGlide && anim.GetNextAnimatorStateInfo(0).IsName("Glide"))
+            if (gliding && !currentAnim.inGlide && anim.GetNextAnimatorStateInfo(0).IsName("Glide"))
             {
                 anim.ResetTrigger("enterGlide");
                 anim.SetTrigger("enterGlide");
@@ -1831,6 +1913,7 @@ public class TPC : MonoBehaviour
             }
         }
 
+
         //null checks
         if (cam == null)
             return;
@@ -1850,20 +1933,41 @@ public class TPC : MonoBehaviour
 
                 if (!onSlide)
                 {
+                    float inputMagnitude = Mathf.Clamp01(Vector3.Magnitude(new Vector3(leftX, 0f, leftY)));
+
                     if (onGround)
                     {
-                        if (!runButtonHold)
-                            movementSpeed = groundSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY));
+                        if (!runByDefault)
+                        {
+                            if (!runButtonHold)
+                                movementSpeed = groundSpeed * inputMagnitude;
+                            else
+                                movementSpeed = sprintSpeed * inputMagnitude;
+                        }
                         else
-                            movementSpeed = sprintSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY));
+                        {
+                            if (runButtonHold)
+                                movementSpeed = groundSpeed * inputMagnitude;
+                            else
+                                movementSpeed = sprintSpeed * inputMagnitude;
+                        }
                     }
                     else
                     {
-
-                        if (!runButtonHold)
-                            movementSpeed = Mathf.Lerp(movementSpeed, groundSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY)), Time.fixedDeltaTime * 5f);
+                        if (!runByDefault)
+                        {
+                            if (!runButtonHold || gliding)
+                                movementSpeed = Mathf.Lerp(movementSpeed, groundSpeed * inputMagnitude, Time.fixedDeltaTime * 5f);
+                            else
+                                movementSpeed = Mathf.Lerp(movementSpeed, sprintSpeed * inputMagnitude, Time.fixedDeltaTime * 5f);
+                        }
                         else
-                            movementSpeed = Mathf.Lerp(movementSpeed, sprintSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY)), Time.fixedDeltaTime * 5f);
+                        {
+                            if (runButtonHold || gliding)
+                                movementSpeed = Mathf.Lerp(movementSpeed, groundSpeed * inputMagnitude, Time.fixedDeltaTime * 5f);
+                            else
+                                movementSpeed = Mathf.Lerp(movementSpeed, sprintSpeed * inputMagnitude, Time.fixedDeltaTime * 5f);
+                        }
                     }
 
                     if (isBoosting)
@@ -1884,7 +1988,7 @@ public class TPC : MonoBehaviour
                         movementSpeed *= 0.2f;
 
                     if (flowerPower && movementSpeed > 0.01f)
-                        movementSpeed += (0.2f * Vector3.Magnitude(new Vector3(leftX, 0f, leftY)));
+                        movementSpeed += (0.2f * inputMagnitude);
 
 
                     float lerpFactor = 1f;
@@ -1910,12 +2014,20 @@ public class TPC : MonoBehaviour
                         else
                             rb.velocity = Vector3.Lerp(rb.velocity, zeroVelocity + new Vector3(this.transform.forward.x * movementSpeed, rb.velocity.y, this.transform.forward.z * movementSpeed), Time.fixedDeltaTime * lerpFactor);
                     }
-                    if (onIncline && !onIncline)
+
+                    if (onGround)
                     {
                         if (movementSpeed == 0f)
-                            rb.velocity = zeroVelocity;
-                        else
-                            rb.AddForce(-inclineNormal * rb.mass * gravityForce * 2f, ForceMode.Force);
+                        {
+                            if (!onIce)
+                                rb.velocity = zeroVelocity;
+                            else
+                                rb.velocity = Vector3.Lerp(rb.velocity, zeroVelocity, Time.fixedDeltaTime * lerpFactor);
+                        }
+                        //    if (pID == 0)
+                        //        Debug.Log(rb.velocity + " " + zeroVelocity + " " + movementSpeed +" " + riverForce +" "+ onIncline +" "+ inclineNormal +" " + gvIncline);
+                        //    else
+                        //        rb.AddForce(-inclineNormal * rb.mass * gravityForce * 2f, ForceMode.Force);
                     }
                 }
                 else
@@ -2022,7 +2134,7 @@ public class TPC : MonoBehaviour
                 else
                 {
                     //    if (jumpButtonDown)
-                    //        Debug.Log("MISSED JUMP INPUT? " + delayed);
+                    //       Debug.Log("MISSED JUMP INPUT? " + delayed +" "+ bounce);
                 }
 
                 if (bounce)
@@ -2105,120 +2217,10 @@ public class TPC : MonoBehaviour
                 hitSea = false;
         }
     }
-    
-    void LateUpdate()
-    {
-        if (cam != null)
-        {
-            if (Vector3.Distance(this.transform.position, cam.transform.position) < 0.65f)
-            {
-                if (curOpaque)
-                {
-                    curOpaque = false;
-                    foreach (SkinnedMeshRenderer smr in toHideRender)
-                        smr.enabled = false;
-                }
-            }
-            else
-            {
-                if (!curOpaque)
-                {
-                    curOpaque = true;
-                    foreach (SkinnedMeshRenderer smr in toHideRender)
-                        smr.enabled = true;
-                }
-            }
-            if (onGround && anim.gameObject.activeSelf && anim.gameObject.activeInHierarchy && anim.GetBool("inLocomotion") && (this.gameObject.transform.parent == null || this.gameObject.transform.parent.name == "Character and Camera Home"))
-            {
-                if (leftAboveZero)
-                {
-                    if (leftFoot.transform.localEulerAngles.y <= 0f || leftFoot.transform.localEulerAngles.y > 180f)
-                    {
-                        if (Physics.Raycast(leftFoot.transform.position, -Vector3.up, out leftRay, 1f, whatIsFootPrinted) && !leftRay.collider.isTrigger)
-                        {
-                            if (leftRay.collider.GetComponentInChildren<MeshRenderer>() == null || !leftRay.collider.GetComponentInChildren<MeshRenderer>().material.name.Contains("Ice"))
-                            {
-                                leftAboveZero = false;
-                                leftFPs[leftInt].transform.SetParent(initialParent);
-                                leftFPs[leftInt].transform.position = leftRay.point + (Vector3.up * 0.01f);
-                                leftFPs[leftInt].transform.forward = this.transform.forward;
-                                leftInt++;
-                                if (leftInt >= leftFPs.Length)
-                                    leftInt = 0;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (leftFoot.transform.localEulerAngles.y > 0f && leftFoot.transform.localEulerAngles.y < 180f)
-                        leftAboveZero = true;
-                }
-                if (rightAboveZero)
-                {
-                    if (rightFoot.transform.localEulerAngles.y <= 0f || rightFoot.transform.localEulerAngles.y > 180f)
-                    {
-                        if (Physics.Raycast(rightFoot.transform.position, -Vector3.up, out rightRay, 1f, whatIsFootPrinted) && !rightRay.collider.isTrigger)
-                        {
-                            if (rightRay.collider.GetComponentInChildren<MeshRenderer>() == null || !rightRay.collider.GetComponentInChildren<MeshRenderer>().material.name.Contains("Ice"))
-                            {
-                                rightAboveZero = false;
-                                rightFPs[rightInt].transform.SetParent(initialParent);
-                                rightFPs[rightInt].transform.position = rightRay.point + (Vector3.up * 0.01f);
-                                rightFPs[rightInt].transform.forward = this.transform.forward;
-                                rightInt++;
-                                if (rightInt >= rightFPs.Length)
-                                    rightInt = 0;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (rightFoot.transform.localEulerAngles.y > 0f && rightFoot.transform.localEulerAngles.y < 180f)
-                        rightAboveZero = true;
-                }
-            }
-        }
-
-        if (this.transform.localEulerAngles.x != 0f || this.transform.localEulerAngles.z != 0f)
-        {
-            this.transform.rotation = new Quaternion(0f, this.transform.rotation.y, 0f, this.transform.rotation.w);
-        }
-
-        if (rippleEM.enabled == true)
-        {
-            rippleParticles.transform.position = new Vector3(this.transform.position.x, waterFSHeight -0.02f, this.transform.position.z);
-            rippleCParticles.transform.position = rippleParticles.transform.position;
-        }
-
-        if (ps.enableDebugTab && input.GetButton("Levitate"))
-        {
-            if (onGround)
-                onGround = false;
-            rb.velocity = new Vector3(rb.velocity.x, 10f, rb.velocity.z);
-        }
-
-        if(this.transform.lossyScale != Vector3.one)
-        {
-            this.transform.SetParent(initialParent);
-            this.transform.localScale = Vector3.one;
-        }
-
-        if (onGround && this.transform.parent != initialParent)
-        {
-            if (rb.interpolation != RigidbodyInterpolation.None)
-                rb.interpolation = RigidbodyInterpolation.None;
-        }
-        else
-        {
-            if (rb.interpolation != RigidbodyInterpolation.Interpolate)
-                rb.interpolation = RigidbodyInterpolation.Interpolate;
-        }
-    }
 
     public void Jump()
     {
+        //   Debug.Log("JUMP SUCCESSFULL: " + jumpChance + " " + jumped + " " + onGround + " " + againstWall);
         if (jumpChance && !jumped)
         {
             jumped = true;
@@ -2317,11 +2319,21 @@ public class TPC : MonoBehaviour
                             anim.SetTrigger("exitGlide");
                             //    Debug.Log("EXIT GLIDE BECAUSE DOUBLEJUMPING");
                         }
-
-                        if (!runButtonHold)
-                            movementSpeed = groundSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY));
+                        float inputMagnitude = Mathf.Clamp01(Vector3.Magnitude(new Vector3(leftX, 0f, leftY)));
+                        if (!runByDefault)
+                        {
+                            if (!runButtonHold)
+                                movementSpeed = groundSpeed * inputMagnitude;
+                            else
+                                movementSpeed = sprintSpeed * inputMagnitude;
+                        }
                         else
-                            movementSpeed = sprintSpeed * Vector3.Magnitude(new Vector3(leftX, 0f, leftY));
+                        {
+                            if (runButtonHold)
+                                movementSpeed = groundSpeed * inputMagnitude;
+                            else
+                                movementSpeed = sprintSpeed * inputMagnitude;
+                        }
                         this.transform.forward = lookAt.transform.forward;
                         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -2331,7 +2343,7 @@ public class TPC : MonoBehaviour
                         rb.AddForce(Vector3.up * doubleJumpImpulse * jumpMultiply, ForceMode.Impulse);
                         if (doubleJumped)
                         {
-                            HDRumbleMain.PlayVibrationPreset(pID, "K04_FadingPatter1", 1f, 1, 0.2f);
+                            HDRumbleMain.PlayVibrationPreset(pID, "K04_FadingPatter1", 0.5f, 1, 0.2f);
                             hasTripJumped = true;
                             EmitWallHitParticles();
                             if (pID == 0)
@@ -2339,7 +2351,7 @@ public class TPC : MonoBehaviour
                         }
                         if (!doubleJumped)
                         {
-                            HDRumbleMain.PlayVibrationPreset(pID, "B07_Bump2", 1f, 1, 0.2f);
+                            HDRumbleMain.PlayVibrationPreset(pID, "B07_Bump2", 0.5f, 1, 0.2f);
 
                             doubleJumped = true;
                             //    Debug.Log("DOUBLE JUMP SUCCESSFUL");
@@ -2378,56 +2390,255 @@ public class TPC : MonoBehaviour
         }
     }
 
-    void GetWoodleLocation(int sceneBuildIndex)
+    IEnumerator BlueBerryFinder(bool justOpened)
     {
-        if(sceneBuildIndex == 1)
+        if (justOpened)
+            yield return new WaitForSeconds(2f);
+
+        blueBerryIDCreators.Clear();
+        foreach (BlueBerryIDCreator bbidc in FindObjectsOfType<BlueBerryIDCreator>())
         {
-            //IN PLAZA
+            bool useThisOne = false;
+            foreach (string s in ps.sS.levelNames)
+            {
+                if (s == bbidc.gameObject.scene.name)
+                {
+                    if (PlayerPrefs.GetString(s + "BlueBerry").Contains("0"))
+                        useThisOne = true;
+                }
+            }
+            if (useThisOne)
+                blueBerryIDCreators.Add(bbidc);
         }
-        if (sceneBuildIndex == 2)
+        bool isABerry = false;
+        float smallestDistance = 9999999f;
+        if (blueBerryIDCreators.Count != 0)
         {
-            //IN EXT
+            Vector3 closestPosition = Vector3.zero;
+            foreach (BlueBerryIDCreator bbidc in blueBerryIDCreators)
+            {
+                int berryIndex = 0;
+                string prefToCheck = PlayerPrefs.GetString(bbidc.gameObject.scene.name + "BlueBerry");
+                foreach (Transform t in bbidc.berries)
+                {
+                    if (prefToCheck[berryIndex].ToString() == "0")
+                    {
+                        if ((t.position - this.transform.position).sqrMagnitude < smallestDistance)
+                        {
+                            smallestDistance = (t.position - this.transform.position).sqrMagnitude;
+                            closestPosition = t.position;
+                        }
+                    }
+                    berryIndex++;
+                }
+            }
+            isABerry = true;
         }
-        if (sceneBuildIndex == 3)
+        else
         {
-            //IN LV1
+            /*    bool useThisOne = false;
+                int sceneToCheck = 0;
+                int sceneCounter = 0;
+                foreach (string s in ps.sS.levelNames)
+                {
+                    if (!useThisOne)
+                    {
+                        if (s != "MainPlaza7New" && s != "ExternalWorld")
+                        {
+                            int total = 80;
+                            if (s == "Level2")
+                                total = 90;
+                            if (s == "Level6")
+                                total = 120;
+
+                            if (PlayerPrefs.GetString(s + "BlueBerry").Contains("0"))
+                            {
+                                useThisOne = true;
+                                sceneToCheck = sceneCounter;
+                                smallestDistance = (ps.sS.loadLevelAdditives[sceneToCheck].transform.position - this.transform.position).sqrMagnitude;
+                            }
+
+                            sceneCounter++;
+                        }
+                    }
+                }*/
         }
-        if (sceneBuildIndex == 4)
+        if (!isABerry)
+            bbFinderIntensity = Mathf.Lerp(1f, 0f, smallestDistance / 700000f);
+        else
+            bbFinderIntensity = Mathf.Lerp(1f, 0f, smallestDistance / 10000f);
+
+        if (bbFinderIntensity > 0f)
         {
-            //IN LV2
+            bbFinderEM.enabled = true;
+            bbFinderParticles.gameObject.SetActive(true);
+            bbFinderParticles.GetComponent<ParticleSystem>().Play();
+            StartCoroutine(DeactivateParticle(bbFinderParticles, bbFinderEM));
+
+            bbFinderSource.Stop();
+            if (bbFinderSource.clip != bbFinderSound)
+                bbFinderSource.clip = bbFinderSound;
+            bbFinderSource.pitch = Mathf.Lerp(0.6f, 1.4f, bbFinderIntensity);
+            bbFinderSource.PlayDelayed(0f);
+
+            bbFinderAnim.SetTrigger("signal");
+
+            StartCoroutine("BBFinderMaterialFlash");
         }
-        if (sceneBuildIndex == 5)
+
+        yield return new WaitForSeconds(Mathf.Lerp(3f, 1f, bbFinderIntensity));
+
+        if (usingBBFinder)
+            StartCoroutine("BlueBerryFinder", false);
+    }
+
+    IEnumerator BBFinderMaterialFlash()
+    {
+        for (float t = 0f; t <= 1f; t += Time.deltaTime)
         {
-            //IN LV3
+            bbFinderMat.SetFloat("_RimSharpnessF", Mathf.Lerp(0f, 1.16f, t));
+            yield return null;
         }
-        if (sceneBuildIndex == 6)
+        bbFinderMat.SetFloat("_RimSharpnessF", 1.16f);
+    }
+
+    void FixedUpdate()
+    {
+    }
+
+    void LateUpdate()
+    {
+        if (cam != null)
         {
-            //IN LV4
+            if (Vector3.Distance(this.transform.position, cam.transform.position) < 0.65f)
+            {
+                if (curOpaque)
+                {
+                    curOpaque = false;
+                    foreach (SkinnedMeshRenderer smr in toHideRender)
+                        smr.enabled = false;
+                }
+            }
+            else
+            {
+                if (!curOpaque)
+                {
+                    curOpaque = true;
+                    foreach (SkinnedMeshRenderer smr in toHideRender)
+                        smr.enabled = true;
+                }
+            }
+            if (onGround && anim.gameObject.activeSelf && anim.gameObject.activeInHierarchy && anim.GetBool("inLocomotion") && (this.gameObject.transform.parent == null || this.gameObject.transform.parent.name == "Character and Camera Home"))
+            {
+                if (leftAboveZero)
+                {
+                    if (leftFoot.transform.localEulerAngles.y <= 0f || leftFoot.transform.localEulerAngles.y > 180f)
+                    {
+                        if (Physics.Raycast(leftFoot.transform.position, -Vector3.up, out leftRay, 1f, whatIsFootPrinted) && !leftRay.collider.isTrigger)
+                        {
+                            if (leftRay.collider.GetComponentInChildren<MeshRenderer>() == null || !leftRay.collider.GetComponentInChildren<MeshRenderer>().material.name.Contains("Ice"))
+                            {
+                                leftAboveZero = false;
+                                leftFPs[leftInt].transform.SetParent(initialParent);
+                                leftFPs[leftInt].transform.position = leftRay.point + (Vector3.up * 0.01f);
+                                leftFPs[leftInt].transform.forward = this.transform.forward;
+                                leftInt++;
+                                if (leftInt >= leftFPs.Length)
+                                    leftInt = 0;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (leftFoot.transform.localEulerAngles.y > 0f && leftFoot.transform.localEulerAngles.y < 180f)
+                        leftAboveZero = true;
+                }
+                if (rightAboveZero)
+                {
+                    if (rightFoot.transform.localEulerAngles.y <= 0f || rightFoot.transform.localEulerAngles.y > 180f)
+                    {
+                        if (Physics.Raycast(rightFoot.transform.position, -Vector3.up, out rightRay, 1f, whatIsFootPrinted) && !rightRay.collider.isTrigger)
+                        {
+                            if (rightRay.collider.GetComponentInChildren<MeshRenderer>() == null || !rightRay.collider.GetComponentInChildren<MeshRenderer>().material.name.Contains("Ice"))
+                            {
+                                rightAboveZero = false;
+                                rightFPs[rightInt].transform.SetParent(initialParent);
+                                rightFPs[rightInt].transform.position = rightRay.point + (Vector3.up * 0.01f);
+                                rightFPs[rightInt].transform.forward = this.transform.forward;
+                                rightInt++;
+                                if (rightInt >= rightFPs.Length)
+                                    rightInt = 0;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (rightFoot.transform.localEulerAngles.y > 0f && rightFoot.transform.localEulerAngles.y < 180f)
+                        rightAboveZero = true;
+                }
+            }
         }
-        if (sceneBuildIndex == 7)
+
+        if (this.transform.localEulerAngles.x != 0f || this.transform.localEulerAngles.z != 0f)
         {
-            //IN LV5
+            this.transform.rotation = new Quaternion(0f, this.transform.rotation.y, 0f, this.transform.rotation.w);
         }
-        if (sceneBuildIndex == 8)
+
+        if (rippleEM.enabled == true)
         {
-            //IN LV6
+            rippleParticles.transform.position = new Vector3(this.transform.position.x, waterFSHeight - 0.02f, this.transform.position.z);
+            rippleCParticles.transform.position = rippleParticles.transform.position;
         }
-        if (sceneBuildIndex == 9)
+
+        if (ps.enableDebugTab && input.GetButton("Levitate"))
         {
-            //IN LV7
+            if (onGround)
+                onGround = false;
+            rb.velocity = new Vector3(rb.velocity.x, 10f, rb.velocity.z);
         }
-        if (sceneBuildIndex == 10)
+
+        if (this.transform.lossyScale != Vector3.one)
         {
-            //IN LV8
+            this.transform.SetParent(initialParent);
+            this.transform.localScale = Vector3.one;
         }
-        if (sceneBuildIndex == 11)
+        /*
+        if (onGround && this.transform.parent != initialParent)
         {
-            //IN LV9
+            if (rb.interpolation != RigidbodyInterpolation.None)
+                rb.interpolation = RigidbodyInterpolation.None;
         }
-        if (sceneBuildIndex == 12)
+        else
         {
-            //IN CHALLENGES
+            if (rb.interpolation != RigidbodyInterpolation.Interpolate)
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
         }
+        */
+        /*
+        if (noIntObj != null)
+        {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                noIntObj.SetActive(false);
+                yesIntObj.SetActive(false);
+                rb.interpolation = RigidbodyInterpolation.None;
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                noIntObj.SetActive(true);
+                yesIntObj.SetActive(false);
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                noIntObj.SetActive(false);
+                yesIntObj.SetActive(true);
+                rb.interpolation = RigidbodyInterpolation.Extrapolate;
+            }
+        }
+        */
     }
 
     void OnCollisionEnter(Collision o)
@@ -2436,7 +2647,7 @@ public class TPC : MonoBehaviour
         {
             if (cp.otherCollider.gameObject.layer == enemyCollisionLayer)
             {
-                if (bbPower)
+                if (bbPower && cp.otherCollider.gameObject.name != "DyingGroundDown" && !cp.otherCollider.gameObject.name.ToLower().Contains("sea"))
                 {
                     if (cp.otherCollider.gameObject.GetComponent<EnemyHP>() != null && cp.otherCollider.gameObject.GetComponent<EnemyHP>().icodescript != null)
                         cp.otherCollider.gameObject.GetComponent<EnemyHP>().SendFlying(true);
@@ -2490,7 +2701,7 @@ public class TPC : MonoBehaviour
                 if (cp.otherCollider.gameObject.GetComponentInChildren<Animator>())
                 {
                     cp.otherCollider.gameObject.GetComponentInChildren<Animator>().SetBool("Activate", true);
-                 //   BerrySpawnManager.SpawnABerry(cp.otherCollider.transform.position);
+                    //   BerrySpawnManager.SpawnABerry(cp.otherCollider.transform.position);
                 }
             }
 
@@ -2561,7 +2772,7 @@ public class TPC : MonoBehaviour
 
         if (other.gameObject.tag == "FallingPlatform")
         {
-            if(other.gameObject.name.Contains("Pine"))
+            if (other.gameObject.name.Contains("Pine"))
                 other.gameObject.transform.parent.GetComponentInChildren<Animator>().SetTrigger("ActivateTrigger");
             else
                 other.gameObject.transform.parent.GetComponentInChildren<Animator>().SetBool("Activate", true);
@@ -2591,7 +2802,7 @@ public class TPC : MonoBehaviour
         if (other.gameObject.layer == bouncySuperLayer)
             BounceCharacter(true, other.gameObject, true, false);
 
-        if(other.gameObject.name == "Foliage")
+        if (other.gameObject.name == "Foliage")
         {
             TreeShakeManager.ShakeTree(other.gameObject, other.gameObject.GetComponent<MeshRenderer>());
         }
@@ -2604,7 +2815,7 @@ public class TPC : MonoBehaviour
             if (other.gameObject.GetComponentInChildren<Animator>())
             {
                 other.gameObject.GetComponentInChildren<Animator>().SetBool("Activate", true);
-            //    BerrySpawnManager.SpawnABerry(other.transform.position);
+                //    BerrySpawnManager.SpawnABerry(other.transform.position);
             }
         }
     }
@@ -2618,9 +2829,9 @@ public class TPC : MonoBehaviour
         {
             if (other.gameObject.layer == windColumnColLayer)
             {
-            //    if (other.gameObject.tag == "WaterColumn")
-            //        inWaterCol = true;
-            //    else
+                //    if (other.gameObject.tag == "WaterColumn")
+                //        inWaterCol = true;
+                //    else
                 {
                     if (other.transform.parent.name == "Bamboo")
                         StartCoroutine("InTheBamboo");
@@ -2639,7 +2850,7 @@ public class TPC : MonoBehaviour
         {
             inRiverForce = true;
             currentRiverForce = other.gameObject.GetComponent<RiverForce>();
-            if(!currentRiverForce.setToForward)
+            if (!currentRiverForce.setToForward)
                 riverForce = currentRiverForce.forceDirection * currentRiverForce.intensity;
             else
                 riverForce = currentRiverForce.gameObject.transform.forward * currentRiverForce.intensity;
@@ -2649,7 +2860,7 @@ public class TPC : MonoBehaviour
 
         if (onGround && other.gameObject.tag == "Quicksand")
         {
-            if(!superslowMovement)
+            if (!superslowMovement)
                 superslowMovement = true;
         }
     }
@@ -2676,18 +2887,19 @@ public class TPC : MonoBehaviour
         if (other.gameObject.tag == "Slow")
         {
             slowCount--;
-            if(slowCount == 0)
-               slowMovement = false;
+            if (slowCount == 0)
+                slowMovement = false;
         }
         if (other.gameObject.tag == "Quicksand")
         {
             superslowMovement = false;
         }
-        if (other.gameObject.layer == windColumnColLayer) { 
-        //    if (other.gameObject.tag == "WaterColumn")
-        //        inWaterCol = false;
-        //    else
-                inWindCol = false;
+        if (other.gameObject.layer == windColumnColLayer)
+        {
+            //    if (other.gameObject.tag == "WaterColumn")
+            //        inWaterCol = false;
+            //    else
+            inWindCol = false;
         }
     }
 
@@ -2757,10 +2969,26 @@ public class TPC : MonoBehaviour
                 }
                 if (!isBoosting)
                 {
-                    if (!input.GetButton("Run"))
-                        locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY)) * 20f;
+                    if (!runByDefault)
+                    {
+                        if (!input.GetButton("Run"))
+                            locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY)) * 20f;
+                        else
+                            locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY).normalized) * 60f;
+                    }
                     else
-                        locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY).normalized) * 60f;
+                    {
+                        bool slowRunning = (new Vector3(inputX, 0f, inputY).magnitude <= 0.6f);
+                        if (input.GetButton("Run") || slowRunning)
+                        {
+                            if (!slowRunning)
+                                locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY)) * 20f;
+                            else
+                                locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY)) * 40f;
+                        }
+                        else
+                            locoSpeed = Vector3.Magnitude(new Vector3(inputX, 0f, inputY).normalized) * 60f;
+                    }
                 }
 
                 if (Physics.Raycast(this.transform.position, this.transform.forward, out pushRay, boxZ * 3f, whatIsMoveable))
@@ -2855,18 +3083,19 @@ public class TPC : MonoBehaviour
 
     public void BounceCharacter(bool isBounceObj, GameObject other, bool superBounce, bool ninfea)
     {
+        /*
         if (inStoneMode)
         {
             inStoneMode = false;
             disableControl = false;
             rb.isKinematic = false;
             stoneAttack.activeAttack = false;
-        }
+        }*/
         if (gliding)
         {
             gliding = false;
             anim.SetTrigger("exitGlide");
-        //    Debug.Log("EXIT GLIDE BECAUSE BOUNCING");
+            //    Debug.Log("EXIT GLIDE BECAUSE BOUNCING");
         }
         if (isBounceObj)
         {
@@ -2932,7 +3161,7 @@ public class TPC : MonoBehaviour
             boxCol.size = new Vector3(0.4f, 0.39f, 0.19f);
 
         if (pID == 1)                                       //FOX
-        	boxCol.size = new Vector3(0.5f, 0.35f, 0.4f);
+            boxCol.size = new Vector3(0.5f, 0.35f, 0.4f);
 
         if (pID == 2)                                       //BEAVER
         {
@@ -2951,6 +3180,7 @@ public class TPC : MonoBehaviour
         leafRB.isKinematic = true;
         leafColObj.gameObject.AddComponent<AudioSource>();
         leafColObj.gameObject.GetComponent<AudioSource>().clip = leafWallHit;
+        leafColObj.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup = sound.outputAudioMixerGroup;
         leafColObj.gameObject.layer = leafCollisionLayer;
         leafCol = leafColObj.AddComponent<LeafCollision>();
         LeafCollision lCol = leafColObj.GetComponent<LeafCollision>();
@@ -2969,7 +3199,7 @@ public class TPC : MonoBehaviour
         leafAS.activeAttack = false;
         leafAS.enemyLayer = enemyCollisionLayer;
         leafAS.tpc = this;
-        
+
         int wbInt = 0;
         wbPar1 = new GameObject(this.gameObject.name + " Windballs 1 Parent");
         wbPar2 = new GameObject(this.gameObject.name + " Windballs 2 Parent");
@@ -2981,7 +3211,8 @@ public class TPC : MonoBehaviour
             wbInt++;
         }
 
-        if(pID == 0) {
+        if (pID == 0)
+        {
             wbInt = 0;
             while (wbInt < windBalls2.Length)
             {
@@ -3060,13 +3291,15 @@ public class TPC : MonoBehaviour
         wBAS.spread = 190;
         wBAS.rolloffMode = AudioRolloffMode.Linear;
         wBAS.clip = windballSound;
+        wBAS.outputAudioMixerGroup = sound.outputAudioMixerGroup;
         wbArray[index].gameObject.SetActive(false);
     }
-    
+
     public void UpdateBerryHUDRed()
     {
         PlayerPrefs.SetInt("Berries", berryCount);
-    //    PlayerPrefs.Save();
+
+        //    PlayerPrefs.Save();
         berryText.text = berryCount.ToString();
         if (berryHUD.GetBool("function") == false)
         {
@@ -3080,11 +3313,20 @@ public class TPC : MonoBehaviour
         }
         berryHUD.SetTrigger("bounceText");
     }
-    
+
     public void UpdateBerryHUDBlue()
     {
         PlayerPrefs.SetInt("BlueBerries", blueberryCount);
-    //    PlayerPrefs.Save();
+        if (blueberryCount >= 100)
+        {
+#if !UNITY_EDITOR
+        //    if (SteamManager.Initialized) {                
+        //        SteamUserStats.SetAchievement("Blue Berry Lover");
+        //        SteamUserStats.StoreStats();
+        //    }
+#endif
+        }
+        //    PlayerPrefs.Save();
         blueberryText.text = blueberryCount.ToString();
         if (blueberryHUD.GetBool("function") == false)
         {
@@ -3097,6 +3339,18 @@ public class TPC : MonoBehaviour
             StartCoroutine("HUDWait");
         }
         blueberryHUD.SetTrigger("bounceText");
+    }
+
+    public void ChallengePortalWarpPFX()
+    {
+        portal1EM.enabled = true;
+        portal2EM.enabled = true;
+        portal1Particles.gameObject.SetActive(true);
+        portal2Particles.gameObject.SetActive(true);
+        portal1Particles.GetComponent<ParticleSystem>().Play();
+        portal2Particles.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(DeactivateParticle(portal1Particles, portal1EM));
+        StartCoroutine(DeactivateParticle(portal2Particles, portal2EM));
     }
 
     IEnumerator DefeatWait()
@@ -3176,13 +3430,13 @@ public class TPC : MonoBehaviour
         if (gliding)
         {
             gliding = false;
-         //   Debug.Log("EXIT GLIDE BECAUSE HURT");
+            //   Debug.Log("EXIT GLIDE BECAUSE HURT");
         }
 
         isHoldingLeaf = false;
-    //    anim.SetTrigger("quickLeafDown");
+        //    anim.SetTrigger("quickLeafDown");
 
-        if (!inStoneMode)
+        //    if (!inStoneMode)
         {
             if (damageAmount != 0)
             {
@@ -3259,7 +3513,7 @@ public class TPC : MonoBehaviour
                 }
 
                 HDRumbleMain.PlayVibrationPreset(pID, "B07_Bump2", 1f, 0, 0.3f);
-                
+
                 beenHit = true;
                 if (damageAmount != 0)
                     LoseHealth(1);
@@ -3304,7 +3558,7 @@ public class TPC : MonoBehaviour
                         if (curLeafMat != null && leafMesh.material.name != greyLeaf.name + " (Instance)" && leafMesh.material.name != whiteLeaf.name + " (Instance)")
                             curLeafMat = leafMesh.material;
                         leafMesh.material = greyLeaf;
-                        leafMesh.material.SetColor("_MainColor", Color.gray);
+                        leafMesh.material.SetColor("_MainColor", Color.grey);
                         interactions.clip = leafShrink;
                         interactions.PlayDelayed(0f);
                         StartCoroutine("LeafShrink");
@@ -3450,10 +3704,13 @@ public class TPC : MonoBehaviour
         {
             foreach (Joystick j in input.controllers.Joysticks)
             {
-                if (!j.supportsVibration)
-                    continue;
-                if (j.vibrationMotorCount > 0)
-                    j.SetVibration(motorIndex, level, duration);
+                if (pID != 0 || j.GetLastTimeActive() == ReInput.time.unscaledTime)
+                {
+                    if (!j.supportsVibration)
+                        continue;
+                    if (j.vibrationMotorCount > 0)
+                        j.SetVibration(motorIndex, level, duration);
+                }
             }
         }
     }
@@ -3516,7 +3773,7 @@ public class TPC : MonoBehaviour
         }
     }
 
-    public void HitAnEnemy(Vector3 pos, bool wasWindball, bool infiniteHealth)
+    public void HitAnEnemy(Vector3 pos, bool wasWindball, bool infiniteHealth, Animator enemyAnim, bool defeatingHit, bool bigEnemy)
     {
         enemyEM.enabled = true;
         if (!wasWindball)
@@ -3554,8 +3811,8 @@ public class TPC : MonoBehaviour
         enemyParticles.transform.LookAt(cam.transform.position);
         enemyParticles.transform.localEulerAngles = new Vector3(enemyParticles.transform.localEulerAngles.x, enemyParticles.transform.localEulerAngles.y, Random.Range(0f, 360f));
         enemyParticles.GetComponent<ParticleSystem>().Play();
-        if(pID == 0 && !wasWindball)
-            StartCoroutine("HitFreeze");
+        if (pID == 0)
+            StartCoroutine(HitFreeze(enemyAnim, defeatingHit, wasWindball, bigEnemy));
         StartCoroutine(DeactivateParticle(enemyParticles, enemyEM));
     }
 
@@ -3630,10 +3887,10 @@ public class TPC : MonoBehaviour
         if (pID == 0)
         {
             curLeafMat = leafMesh.material;
-            
+
             dissolves[2].origMaterials[0] = curLeafMat;
 
-            if(leafNo == 1)
+            if (leafNo == 1)
                 dissolves[2].dissolveMaterials[0] = greenLeafDissolve;
             if (leafNo == 2)
                 dissolves[2].dissolveMaterials[0] = yellowLeafDissolve;
@@ -3650,7 +3907,7 @@ public class TPC : MonoBehaviour
         {
             if (!lockVelocity)
             {
-                if(!onSpline)
+                if (!onSpline)
                     this.transform.rotation = Quaternion.Lerp(this.transform.rotation, lookAt.transform.rotation, Time.deltaTime * 5f);
                 else
                     this.transform.rotation = Quaternion.Lerp(this.transform.rotation, relative.transform.rotation, Time.deltaTime * 5f);
@@ -3679,7 +3936,13 @@ public class TPC : MonoBehaviour
 
     IEnumerator AttackNext()
     {
-        yield return new WaitForSeconds(0.5f);
+        float an = 0f;
+        while (an <= 0.5f)
+        {
+            if (!inHitFreeze && !ps.inPause)
+                an += Time.deltaTime * Time.timeScale;
+            yield return null;
+        }
         attackAnimIterate = 0;
     }
 
@@ -3730,7 +3993,7 @@ public class TPC : MonoBehaviour
     IEnumerator BoostLength()
     {
         yield return new WaitForSeconds(4.5f);
-        if(bandanaPower)
+        if (bandanaPower)
             yield return new WaitForSeconds(1f);
         boostingSound.Stop();
         isBoosting = false;
@@ -3755,7 +4018,7 @@ public class TPC : MonoBehaviour
         killedParticles.GetComponent<ParticleSystem>().Play();
         StartCoroutine(DeactivateParticle(killedParticles, killedEM));
         yield return new WaitForSeconds(3.3f);
-        if(pID != 0)
+        if (pID != 0)
         {
             sound.clip = respawnSound;
             sound.loop = false;
@@ -3764,18 +4027,27 @@ public class TPC : MonoBehaviour
         }
         ExitWaterFS();
         inWindCol = false;
-     //   inWaterCol = false;
-        yield return new WaitForSeconds(3f);
-        anim.enabled = true;
+        //   inWaterCol = false;
+
+        while (!anim.enabled)
+            yield return null;
+        anim.Play("Idle", 0);
+        anim.SetBool("inLocomotion", false);
+        anim.SetFloat("Speed", 0f);
+        anim.SetFloat("turnAmount", 0f);
+
         interactions.PlayDelayed(0f);
         anim.SetBool("damaged", false);
         if (pID == 0)
             leafMesh.material = curLeafMat;
         capcol.enabled = true;
-        rb.isKinematic = false;
-        disableControl = false;
-        if (pID == 0)
-            cam.GetComponent<CameraFollower>().disableControl = false;
+        if (challengePortal == null)
+        {
+            rb.isKinematic = false;
+            disableControl = false;
+            if (pID == 0)
+                cam.GetComponent<CameraFollower>().disableControl = false;
+        }
         health = 2;
         defeated = false;
         StartCoroutine("Invincibility");
@@ -3790,7 +4062,7 @@ public class TPC : MonoBehaviour
         beingReset = false;
     }
 
-    IEnumerator Invincibility()
+    public IEnumerator Invincibility()
     {
         beenHit = false;
         Physics.IgnoreLayerCollision(characterCollisionLayer, enemyCollisionLayer, false);
@@ -3854,8 +4126,6 @@ public class TPC : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         this.transform.position = PlayerManager.GetMainPlayer().gameObject.transform.position + (Vector3.up * 2f);
         startedCharacterRespawn = false;
-        if (challengeReset)
-            challengeReset = false;
     }
 
     IEnumerator RefillLife()
@@ -3902,9 +4172,9 @@ public class TPC : MonoBehaviour
         this.transform.RotateAround(this.transform.position, Vector3.up, 180f);
         Quaternion endRot = this.transform.rotation;
         this.transform.rotation = startRot;
-        for (int ps = 1; ps < 31; ps++)
+        for (float ps = 0f; ps <= 0.5f; ps += Time.deltaTime)
         {
-            this.transform.rotation = Quaternion.Lerp(startRot, endRot, (1f * ps) / 30f);
+            this.transform.rotation = Quaternion.Lerp(startRot, endRot, ps * 2f);
             yield return null;
         }
         onGround = true;
@@ -3938,7 +4208,7 @@ public class TPC : MonoBehaviour
         bool goForward = true;
         while (overall <= 5f)
         {
-            leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.gray, Color.white, pingpong));
+            leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.grey, Color.white, pingpong));
             if (goForward)
                 pingpong += 0.1f;
             else
@@ -4009,13 +4279,13 @@ public class TPC : MonoBehaviour
         Vector3 nextPos = Vector3.zero;
 
         float iter = 0f;
-        for (int i = 1; i <= 30; i++)
+        for (float i = 0f; i <= 0.5f; i += (Time.deltaTime))
         {
-            nextPos = Vector3.Lerp(startPos, endPos, (i * 1f) / 30f);
-            iter += Mathf.PI / 30f;
+            nextPos = Vector3.Lerp(startPos, endPos, i * 2f);
+            iter += (Mathf.PI * Time.deltaTime * 2f);
             nextPos += Vector3.up * Mathf.Sin(iter);
 
-            rb.velocity = (nextPos - rb.position).normalized * 5f;
+            rb.velocity = Vector3.Lerp(rb.velocity, (nextPos - rb.position).normalized * 5f, Time.deltaTime * 30f);
             yield return null;
         }
         rb.isKinematic = false;
@@ -4069,7 +4339,7 @@ public class TPC : MonoBehaviour
 
     IEnumerator AttackSpeedStop()
     {
-        for (int aaa = 0; aaa < 10; aaa++)
+        for (float aaa = 0f; aaa < 1f / 6f; aaa += (Time.deltaTime))
             yield return null;
         rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
     }
@@ -4091,33 +4361,96 @@ public class TPC : MonoBehaviour
         StartCoroutine("Blink");
     }
 
-    IEnumerator HitFreeze()
+    public void PlayHitFreeze(Animator enemyAnim, bool defeatingHit, bool wasWindball, bool bigEnemy)
     {
-        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(HitFreeze(enemyAnim, defeatingHit, wasWindball, bigEnemy));
+    }
+
+    IEnumerator HitFreeze(Animator enemyAnim, bool defeatingHit, bool wasWindball, bool bigEnemy)
+    {
+        inHitFreeze = (defeatingHit || wasWindball);
+        if (defeatingHit)
+        {
+            if (camF == null)
+                camF = cam.GetComponent<CameraFollower>();
+
+            camF.AttackZoom();
+        }
+
+        yield return new WaitForSeconds(0.15f);
+        if (defeatingHit)
+            yield return new WaitForSeconds(0.05f);
         if (!ps.inPause)
         {
-            Time.timeScale = 0.1f;
-            for (int t = 0; t < 10; t++)
+            float speedToUse = 0.5f;
+            float timeOfEffect = 0.25f;
+            if (wasWindball)
+                speedToUse = 0.2f;
+            if (defeatingHit)
+            {
+                speedToUse = 0.1f;
+                timeOfEffect = 0.75f;
+            }
+            if (wasWindball && !defeatingHit)
+                timeOfEffect = 0.2f;
+
+            //    anim.speed = speedToUse;
+            //    if(enemyAnim != null)
+            //        enemyAnim.speed = speedToUse;
+            //    anim.speed = 0f;
+            //    if (enemyAnim != null)
+            //        enemyAnim.speed = 0f;
+            //    for (float t = 0; t < 0.2f; t += (Time.deltaTime / (Time.timeScale + 0.0001f)))
+            //        yield return null;
+
+            //    anim.speed = speedToUse;
+            //    if(enemyAnim != null)
+            //        enemyAnim.speed = speedToUse;
+            //    anim.speed = 1f;
+            //    if (enemyAnim != null)
+            //        enemyAnim.speed = 1f;
+
+            bool setSlow = (defeatingHit || wasWindball);
+            if (setSlow)
+                Time.timeScale = 0.1f;
+
+            if (defeatingHit && bigEnemy)
+            {
+                Time.timeScale = 0.07f;
+                timeOfEffect *= 1.25f;
+            }
+
+            for (float t = 0; t < timeOfEffect; t += (Time.deltaTime / (Time.timeScale + 0.0001f)))
                 yield return null;
-            if (!ps.inPause)
+
+            inHitFreeze = false;
+
+            while (ps.inPause)
+                yield return null;
+
+            anim.speed = 1f;
+            if (enemyAnim != null)
+                enemyAnim.speed = 1f;
+            if (setSlow)
                 Time.timeScale = 1f;
         }
+        inHitFreeze = false;
     }
 
     IEnumerator TurnDark()
     {
         List<Color> origColors = new List<Color>();
         int smrCounter = 0;
-        for (int t = 1; t <= 120; t++)
+        for (float t = 0f; t <= 2f; t += (Time.deltaTime))
         {
-            if (t <= 90)
+            if (t <= 1.5f)
             {
                 smrCounter = 0;
                 foreach (SkinnedMeshRenderer smr in bodyRenderers)
                 {
-                    if (t == 1)
+                    if (t == 0f)
                         origColors.Add(smr.material.GetColor("_TintColor"));
-                    smr.material.SetColor("_TintColor", Color.Lerp(origColors[smrCounter], Color.black, (t * 1f) / 90f));
+                    smr.material.SetColor("_TintColor", Color.Lerp(origColors[smrCounter], Color.black, t / 2f));
                     smrCounter++;
                 }
             }
@@ -4251,20 +4584,20 @@ public class TPC : MonoBehaviour
     {
         if (pID == 0 && curLeafMat != null && leafMesh.material.name != greyLeaf.name + " (Instance)" && leafMesh.material.name != whiteLeaf.name + " (Instance)")
             curLeafMat = leafMesh.material;
-        for (float f = 0f; (f <= 20f && !onGround); f++)
+        for (float f = 0f; (f <= (1f / 3f) && !onGround); f += (Time.deltaTime))
         {
-        //    leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.grey, Color.white, f / 20f)); 
-            leafMesh.material.SetFloat("_RimSharpnessF",Mathf.Lerp(1.25f, 0f, f / 20f));
+            //    leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.grey, Color.white, f / 20f)); 
+            leafMesh.material.SetFloat("_RimSharpnessF", Mathf.Lerp(1.25f, 0f, f * 3f));
             yield return null;
         }
         leafMesh.material = whiteLeaf;
         while (!onGround && !bounce)
             yield return null;
         leafMesh.material = curLeafMat;
-        for (float f = 0f; f <= 20f; f++)
+        for (float f = 0f; f <= (1f / 3f); f += (Time.deltaTime))
         {
-        //    leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.white, Color.grey, f / 20f));
-            leafMesh.material.SetFloat("_RimSharpnessF", Mathf.Lerp(0f, 1.25f, f / 20f));
+            //    leafMesh.material.SetColor("_TintColor", Color.Lerp(Color.white, Color.grey, f / 20f));
+            leafMesh.material.SetFloat("_RimSharpnessF", Mathf.Lerp(0f, 1.25f, f * 3f));
             yield return null;
         }
     }
@@ -4298,15 +4631,15 @@ public class TPC : MonoBehaviour
         inBamboo = true;
         curBambooSpeed = bambooSpeed;
 
-        for(int bb = 1; bb <= 60; bb++)
+        for (float bb = 0f; bb <= 1f; bb += Time.deltaTime)
         {
             while (Time.timeScale != 1f)
                 yield return null;
 
-            curBambooSpeed = Mathf.Lerp(curBambooSpeed, 0f, (bb/60f)*(bb/60f));
+            curBambooSpeed = Mathf.Lerp(curBambooSpeed, 0f, bb * bb);
             yield return null;
         }
-        
+
         inBamboo = false;
     }
 
@@ -4320,11 +4653,11 @@ public class TPC : MonoBehaviour
         {
             gliding = false;
             anim.SetTrigger("exitGlide");
-         //   Debug.Log("EXIT GLIDE BECAUSE CHECKING FOR WALL JUMP");
+            //   Debug.Log("EXIT GLIDE BECAUSE CHECKING FOR WALL JUMP");
         }
         anim.SetTrigger("onWall");
         yield return null;
-    //    yield return new WaitForSeconds(0.2f);
+        //    yield return new WaitForSeconds(0.2f);
         HDRumbleMain.PlayVibrationPreset(pID, "K02_Patter2", 1f, 1, 0.15f);
         againstWall = true;
     }
@@ -4334,7 +4667,7 @@ public class TPC : MonoBehaviour
     {
         startedGlideTimer = true;
         gTimer = 0f;
-        while(gTimer <= 20f)
+        while (gTimer <= 20f)
         {
             if (gliding)
                 gTimer += Time.deltaTime;
@@ -4342,13 +4675,13 @@ public class TPC : MonoBehaviour
         }
         glidedTooLong = true;
         gliding = false;
-    //    Debug.Log("EXIT GLIDE BECAUSE TIMER RAN OUT");
+        //    Debug.Log("EXIT GLIDE BECAUSE TIMER RAN OUT");
         anim.SetTrigger("exitGlide");
     }
 
     IEnumerator ReverseCharacter(Vector3 direction)
     {
-        if(!ps.GetComponentInChildren<TextTriggerMain>().currentlyDisplaying)
+        if (!ps.GetComponentInChildren<TextTriggerMain>().currentlyDisplaying)
             ps.GetComponentInChildren<TextTriggerMain>().SetText(11);
 
         noDirectional = true;
@@ -4366,9 +4699,9 @@ public class TPC : MonoBehaviour
         anim.SetBool("inLocomotion", true);
         anim.SetFloat("Speed", 20f);
 
-        for(float rc = 0f; rc <= 120f; rc++)
+        for (float rc = 0f; rc <= 2f; rc += (Time.deltaTime))
         {
-            this.transform.forward = Vector3.Lerp(this.transform.forward, direction, rc/60f);
+            this.transform.forward = Vector3.Lerp(this.transform.forward, direction, rc / 2f);
             rb.velocity = this.transform.forward * groundSpeed;
             yield return null;
         }

@@ -49,90 +49,112 @@ MonoBehaviour:
     price: 200
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 1
     price: 320
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 2
     price: 750
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 3
     price: 440
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 4
     price: 350
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 5
     price: 550
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 6
     price: 650
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 7
     price: 900
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 8
     price: 600
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 9
     price: 1000
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 10
     price: 2500
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 11
     price: 500
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 13
     price: 300
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 14
     price: 200
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 15
     price: 250
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 18
     price: 290
     useBlueBerries: 1
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 19
     price: 110
     useBlueBerries: 1
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 20
     price: 70
     useBlueBerries: 1
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 21
     price: 350
     useBlueBerries: 1
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 22
     price: 320
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 23
     price: 240
     useBlueBerries: 0
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   - itemID: 24
     price: -1
     useBlueBerries: 1
     textMesh: {fileID: 0}
+    priceText: {fileID: 0}
   animator: {fileID: 0}
   promptTitle: {fileID: 0}
   promptInfo: {fileID: 0}
@@ -245,6 +267,7 @@ MonoBehaviour:
   buyClip: {fileID: 8300000, guid: 35af5a7616a59d14682c5248286bffbe, type: 3}
   declineClip: {fileID: 8300000, guid: 2aa03275ac007bc498a1b40479a9d441, type: 3}
   equipClip: {fileID: 8300000, guid: e0fca080f90c7ed47aa6c4b3aa6f0285, type: 3}
+  displaying: 0
 --- !u!82 &1000518523
 AudioSource:
   m_ObjectHideFlags: 0

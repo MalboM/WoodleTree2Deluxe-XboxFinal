@@ -103,4 +103,5 @@ Shader "WoodleTree/Unlit/Base/base_texture (CamAlphaBlend - CenterPos)"
             ENDCG
         }
     }
+		FallBack "Diffuse"
 }

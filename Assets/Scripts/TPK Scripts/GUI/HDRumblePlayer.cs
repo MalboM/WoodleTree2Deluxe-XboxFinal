@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+//using Rewired.Platforms.Switch;
 using UnityEngine.UI;
-
+//using nn;
+//using nn.util;
+//using nn.hid;
 
 public class HDRumblePlayer : MonoBehaviour
 {
-#if UNITY_SWITCH
-
     public int playerID;
 
     public int sampleSize;
@@ -28,7 +29,7 @@ public class HDRumblePlayer : MonoBehaviour
     public Text intensityText;
     float curIntensity;
 
-    private nn.hid.NpadId npadId = nn.hid.NpadId.Invalid;
+    /*private nn.hid.NpadId npadId = nn.hid.NpadId.Invalid;
     private nn.hid.NpadStyle npadStyle = nn.hid.NpadStyle.Invalid;
     private NpadState npadState = new NpadState();
     private VibrationValue vibrationValue = VibrationValue.Make();
@@ -41,9 +42,9 @@ public class HDRumblePlayer : MonoBehaviour
     private VibrationFileParserContext curFileContext = new VibrationFileParserContext();
     private int sampleA;
     private byte[] curFile;
-
+    */
     [HideInInspector] public float vibrationTimer = 0f;
-    
+    /*
     void Start () {
         iterator = 0;
         
@@ -85,12 +86,12 @@ public class HDRumblePlayer : MonoBehaviour
 
                     if (displayDebugLogs)
                         Debug.Log(curIntensity);
-                    /*
+                    
                         outputValue = VibrationValue.Make(vibrationValue.amplitudeLow * curIntensity,
                         vibrationValue.frequencyLow * curIntensity,
                         vibrationValue.amplitudeHigh * curIntensity,
                         vibrationValue.frequencyHigh * curIntensity);
-                    */
+                    
                     Vibration.SendValue(vibrationDeviceHandles[i], outputValue);
                 }
             }
@@ -113,7 +114,7 @@ public class HDRumblePlayer : MonoBehaviour
             }
         }
     }
-
+    */
     public void IncreaseIterator()
     {
         iterator++;
@@ -127,22 +128,22 @@ public class HDRumblePlayer : MonoBehaviour
         if (iterator < 0)
             iterator = rumblePresets.Length-1;
     }
-
+    
     public void PlayVibration()
     {
-        vibrationValue.Clear();
+     /*   vibrationValue.Clear();
         curFile = rumblePresets[iterator].bytes;
         Result result;
         result = VibrationFile.Parse(ref curFileInfo, ref curFileContext, curFile, curFile.Length);
         Debug.Assert(result.IsSuccess());
         sampleA = 0;
 
-        vibrationTimer = (curFileInfo.sampleLength - 1) / samplesPerSec;
+        vibrationTimer = (curFileInfo.sampleLength - 1) / samplesPerSec;*/
     }
 
     public void PlayVibrationPreset(string presetName, float intensityMultiplier)
     {
-        if (intensityMultiplier == 0f)
+    /*    if (intensityMultiplier == 0f)
             intensityMultiplier = 1f;
         intensityOverallMultiplier = intensityMultiplier;
 
@@ -171,11 +172,11 @@ public class HDRumblePlayer : MonoBehaviour
                 Debug.Log("PLAYING: " + rumblePresets[toUse].name);
             else
                 Debug.Log("Preset: " + presetName + "... was not found!");
-        }
+        }*/
     }
 
-    private void GetVibrationDevice(nn.hid.NpadId id, nn.hid.NpadStyle style)
-    {
+    private void GetVibrationDevice()
+    {/*
         vibrationValue.Clear();
         for (int i = 0; i < vibrationDeviceCount; i++)
         {
@@ -189,9 +190,9 @@ public class HDRumblePlayer : MonoBehaviour
         {
             Vibration.InitializeDevice(vibrationDeviceHandles[i]);
             Vibration.GetDeviceInfo(ref vibrationDeviceInfos[i], vibrationDeviceHandles[i]);
-        }
+        }*/
     }
-
+    /*
     private bool UpdatePadState()
     {
         nn.hid.NpadStyle handheldStyle = Npad.GetStyleSet(nn.hid.NpadId.Handheld);
@@ -333,6 +334,5 @@ public class HDRumblePlayer : MonoBehaviour
             return false;
         }
         return true;
-    }
-#endif
+    }*/
 }

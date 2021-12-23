@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ChallengePortal : MonoBehaviour
 {
+    public bool turnOffFirst;
+    public bool turnOffSecond;
     public int portalID;
     public string challengeScene = "Challenges0";
     public enum PortalType { entrance, exit};
@@ -78,7 +80,7 @@ public class ChallengePortal : MonoBehaviour
         }
         if (inTrigger && ps.warping)
             ExitTrigger();
-
+        
         if(sleepingFlowerNPC != null)
             CheckPref();
     }
@@ -102,9 +104,11 @@ public class ChallengePortal : MonoBehaviour
             if (npcAddOn != null)
                 npcAddOn.SetActive(false);
         }
+        
 
-        if (!flowerAnim.GetCurrentAnimatorStateInfo(0).IsName("FlowerSleeping"))
-            flowerAnim.Play("FlowerSleeping", 0);
+        if (flowerAnim.GetBool("sleeping") == false)
+            flowerAnim.SetBool("sleeping", true);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -146,6 +150,7 @@ public class ChallengePortal : MonoBehaviour
                 dissolve.renderer.sharedMaterials = dissolveMatInsts;
             }
         }
+        tpc.ChallengePortalWarpPFX();
         Vector3 origCameraPos = tpc.cam.transform.position;
         Quaternion origCameraRot = tpc.cam.transform.rotation;
         for (float f = 0f; f <= 1.2f; f += (Time.deltaTime / 2f))
@@ -262,6 +267,7 @@ public class ChallengePortal : MonoBehaviour
         yield return null;
         tpc.gameObject.transform.position = newPos;
         yield return null;
+        tpc.rb.velocity = Vector3.zero;
         tpc.disableControl = true;
         yield return new WaitForSeconds(2f);
 
@@ -318,6 +324,7 @@ public class ChallengePortal : MonoBehaviour
                 dissolve.renderer.sharedMaterials = dissolveMatInsts;
             }
         }
+        tpc.ChallengePortalWarpPFX();
         Vector3 origCameraPos = tpc.cam.transform.position;
         Quaternion origCameraRot = tpc.cam.transform.rotation;
         for (float f = 0f; f <= 1.2f; f += (Time.deltaTime / 2f))
@@ -410,6 +417,7 @@ public class ChallengePortal : MonoBehaviour
         tpc.gameObject.transform.position = newPos;
         yield return null;
         tpc.disableControl = true;
+        tpc.rb.velocity = Vector3.zero;
         tpc.gameObject.transform.position = newPos;
         yield return new WaitForSeconds(4f);
 
@@ -440,10 +448,10 @@ public class ChallengePortal : MonoBehaviour
         inTrigger = false;
         tpc.challengeWarping = false;
     }
-    
+
+
     public IEnumerator ResetCharacter(TPC character)
     {
-        character.challengeReset = true;
         if (character == PlayerManager.GetMainPlayer())
         {
             if (ps == null)
@@ -497,8 +505,6 @@ public class ChallengePortal : MonoBehaviour
                 mtpc.disableControl = false;
             character.rb.velocity = Vector3.zero;
             ps.cantPause = false;
-
-            character.challengeReset = false;
         }
         else
             StartCoroutine(character.RespawnCharacterWait());

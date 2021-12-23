@@ -218,15 +218,3 @@ float gaussian(float3 p){
 
     return o4.y * d.y + o4.x * (1.0 - d.y);
 }
-
-
-
-#define HASHSCALE3 float3(443.897, 441.423, 437.195)
-#define HASHSCALE2 float3(225.354,241.325, 233.112)
-
-inline float2 hash22(float2 p)
-{
-    float3 p3 = frac(float3(p.xyx) * HASHSCALE2);
-    p3 += dot(p3, p3.yzx + 19.19);
-    return frac((p3.xx + p3.yz)*p3.zy);
-}

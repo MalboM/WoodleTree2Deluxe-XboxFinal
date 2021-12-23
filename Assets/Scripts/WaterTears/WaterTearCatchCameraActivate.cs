@@ -11,29 +11,14 @@ public class WaterTearCatchCameraActivate : MonoBehaviour
     public string vasetofind;
 
     void OnEnable() {
-        if (PlayerPrefs.GetInt(vasetofind) > 0)
+        if (PlayerPrefs.GetInt(vasetofind, 0) == 1)
             DeactivateTear();
         else
             ActivateTear();
     }
 
-    private void Start()
-    {
-        if (PlayerPrefs.GetInt(vasetofind) > 0)
-        {
-            DeactivateTear();
-        }
-        else
-        {
-            ActivateTear();
-        }
-    }
-
-    void OnTriggerEnter(Collider other) 
-    {
-
-		if (other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().inButtonCutscene && PlayerPrefs.GetInt(vasetofind) < 1) 
-        {
+    void OnTriggerEnter(Collider other) {
+		if (other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().inButtonCutscene && PlayerPrefs.GetInt(vasetofind, 0) == 0) {
 
             this.GetComponent<AudioSource>().Play();
 
@@ -47,20 +32,14 @@ public class WaterTearCatchCameraActivate : MonoBehaviour
 
     public void ActivateTear()
     {
-        if(watertear != null && !watertear.activeInHierarchy)
-        {
+        if(watertear != null)
             watertear.SetActive(true);
-        }
     }
 
     public void DeactivateTear()
     {
-        if (watertear != null && watertear.activeInHierarchy)
-        {
+        if (watertear != null)
             watertear.SetActive(false);
-            //Posso fare un check aggiuntivo per verificare che la lacrima sia stata presa?
-            WaterTearManager.UpdateTears();
-        }
     }
 
 }

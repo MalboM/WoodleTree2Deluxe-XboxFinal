@@ -1,7 +1,4 @@
-// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
-
-//#define REWIRED_CONTROL_MAPPER_USE_TMPRO
-
+﻿// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
 #pragma warning disable 0219
 #pragma warning disable 0618
 #pragma warning disable 0649
@@ -16,11 +13,6 @@ namespace Rewired.UI.ControlMapper {
     using System.Collections.ObjectModel;
     using Rewired;
     using Rewired.Utils;
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-    using Text = TMPro.TMP_Text;
-#else
-    using Text = UnityEngine.UI.Text;
-#endif
 
     public partial class ControlMapper {
 
@@ -348,17 +340,6 @@ namespace Rewired.UI.ControlMapper {
                 text.text = label;
             }
 
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-            public void SetFontStyle(TMPro.FontStyles style) {
-                if(text == null) return;
-                text.fontStyle = style;
-            }
-
-            public void SetTextAlignment(TMPro.TextAlignmentOptions alignment) {
-                if(text == null) return;
-                text.alignment = alignment;
-            }
-#else
             public void SetFontStyle(FontStyle style) {
                 if(text == null) return;
                 text.fontStyle = style;
@@ -368,7 +349,6 @@ namespace Rewired.UI.ControlMapper {
                 if(text == null) return;
                 text.alignment = alignment;
             }
-#endif
 
             public void SetActive(bool state) {
                 if(gameObject == null) return;
@@ -387,9 +367,9 @@ namespace Rewired.UI.ControlMapper {
             }
         }
 
-#endregion
+        #endregion
 
-#region Serialized Data
+        #region Serialized Data
 
         [System.Serializable]
         public class MappingSet {
@@ -746,7 +726,7 @@ namespace Rewired.UI.ControlMapper {
 
         }
 
-#endregion
+        #endregion
 
         private class InputActionSet {
             private int _actionId;

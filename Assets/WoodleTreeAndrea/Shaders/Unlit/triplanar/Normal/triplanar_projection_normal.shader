@@ -111,4 +111,5 @@
 			ENDCG
 		}
 	}
+		Fallback "Diffuse"
 }

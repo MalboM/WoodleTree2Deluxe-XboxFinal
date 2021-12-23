@@ -34,7 +34,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderWorldMapped"
 
             struct v2f
             {
-                float4 objPosition : TEXCOORD0;
+				float4 objPosition : TEXCOORD0;
                 float3 objNormal: NORMAL;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
@@ -53,15 +53,15 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderWorldMapped"
                 v2f o;
 
                 // calculate rim factor
-
-                float rimFac = clamp(dot(v.normal,normalize(ObjSpaceViewDir(v.vertex)))*_RimSharpnessF,0.,1.);
-
+                
+                float rimFac = clamp(dot(v.normal,normalize(ObjSpaceViewDir(v.vertex)))*_RimSharpnessF,0.,1.);    
+                
                 // apply world matrix and re mapping vertex coordinates to fit with uv coordinates
 
                 o.objPosition = float4(mul(unity_ObjectToWorld,v.vertex).xyz,rimFac);
 
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.objNormal = mul(unity_ObjectToWorld, float4(v.normal, 0.)).xyz;
+	            o.vertex = UnityObjectToClipPos(v.vertex);
+                o.objNormal = mul(unity_ObjectToWorld,v.normal).xyz;
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
@@ -69,7 +69,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderWorldMapped"
 
             fixed4 frag (v2f i) : SV_Target
             {
-
+             
                 // sample the texture
 
                 half3 powNormal = abs(i.objNormal);
@@ -97,6 +97,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderWorldMapped"
             ENDCG
         }
     }
+			FallBack "Diffuse"
 }
 /*
 

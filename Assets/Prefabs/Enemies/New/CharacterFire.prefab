@@ -55,6 +55,7 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &1103438310070969959
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +121,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -132,6 +134,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &8400664770877328970
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3177311173801874453}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8075101926799643368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -141,7 +156,8 @@ AudioSource:
   m_GameObject: {fileID: 3177311173801874453}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243899822893694608, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: d1d3b6f1cb49c6348bf6c5e2762f691d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.834
@@ -228,19 +244,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &8400664770877328970
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3177311173801874453}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &1923059124137396256
 Animator:
   serializedVersion: 3
@@ -386,6 +389,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -421,11 +425,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100006, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
+    - target: {fileID: 100004, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
+    - target: {fileID: 100006, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
@@ -570,11 +574,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2300004, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
+    - target: {fileID: 2300002, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9433c3a024b402541bfea8b16c4f9fee, type: 2}
-    - target: {fileID: 2300002, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
+    - target: {fileID: 2300004, guid: ff115763352a2eb41a6b9e7005b8d47e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9433c3a024b402541bfea8b16c4f9fee, type: 2}

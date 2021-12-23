@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Rewired;
 
 // A UI element to show information about a debug entry
 namespace IngameDebugConsole
@@ -40,15 +39,6 @@ namespace IngameDebugConsole
 		{
 			this.manager = manager;
 		}
-
-        void LateUpdate()
-        {
-            if ((this.manager.indicesOfEntriesToShow.Count - 1) == entryIndex && ReInput.players.GetPlayer(0).GetButtonDown("Glide"))
-            {
-                Clicked();
-                this.manager.manager.snapToBottom = true;
-            }
-        }
 
 		public void SetContent( DebugLogEntry logEntry, int entryIndex, bool isExpanded )
 		{

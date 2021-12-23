@@ -90,4 +90,5 @@ Shader "WoodleTree/Unlit/Base/base_transparency_texture (Pixel Opt)"
 			ENDCG
 		}
 	}
+			FallBack "Diffuse"
 }

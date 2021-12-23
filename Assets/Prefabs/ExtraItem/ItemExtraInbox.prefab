@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e49d2109ad33445b06776690bac099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateInstead: 0
   playerprefstocheck: inbox
 --- !u!1 &618272453805283969
 GameObject:
@@ -110,6 +111,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -180,7 +182,8 @@ AudioSource:
   m_GameObject: {fileID: 3073390340670276926}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243382132470434748, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c1dd01e0a1706e549bfb800500fcc67c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -310,7 +313,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4007251416156746012}
-  - component: {fileID: 2603017708513738654}
   - component: {fileID: 9067548011761340855}
   m_Layer: 0
   m_Name: ItemExtraInbox
@@ -334,29 +336,6 @@ Transform:
   m_Father: {fileID: 496570}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 15.4616995, z: 0}
---- !u!205 &2603017708513738654
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296471158660074355}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.012150772, y: 0.029442146, z: 0.019228406}
-  m_Size: 0.4501067
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.0058755176
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7586487739295105341}
-    - renderer: {fileID: 8566626310506368773}
-    - renderer: {fileID: 825732310166980717}
-    - renderer: {fileID: 7977260253661644344}
-    - renderer: {fileID: 3105569791115677238}
-  m_Enabled: 1
 --- !u!114 &9067548011761340855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,14 +349,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testetstst: 0
-  timeToWait: 0
-  fullObjDistance: 0
-  lowObjDistance: 0
+  timeToWait: 2
+  fullObjDistance: 80
+  lowObjDistance: 81
   fullObj: {fileID: 3073390340670276926}
   lowObj: {fileID: 0}
   fullObjCharacter: {fileID: 0}
   shadowObj: {fileID: 0}
+  insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &3541406448735149117
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +424,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -520,6 +502,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5234,7 +5217,7 @@ ParticleSystem:
 --- !u!199 &3105569791115677238
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5258,6 +5241,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5358,6 +5342,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

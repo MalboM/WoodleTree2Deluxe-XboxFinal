@@ -18,7 +18,7 @@ PlayerSettings:
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 0
+  m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
@@ -644,27 +644,27 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    1: ICODE;SR_uMMO
+    1: ICODE;SR_uMMO;UNITY_POST_PROCESSING_STACK_V2
     2: ICODE
     4: ICODE
-    7: ICODE
-    13: ICODE;SR_uMMO
-    14: ICODE
+    7: ICODE;UNITY_POST_PROCESSING_STACK_V2
+    13: ICODE;SR_uMMO;UNITY_POST_PROCESSING_STACK_V2
+    14: ICODE;UNITY_POST_PROCESSING_STACK_V2
     17: ICODE
     18: ICODE
-    19: ICODE
+    19: ICODE;UNITY_POST_PROCESSING_STACK_V2
     20: ICODE
-    21: ICODE;UNITY_XBOXONE_MASTER_BUILD
+    21: ICODE;UNITY_XBOXONE_MASTER_BUILD;UNITY_POST_PROCESSING_STACK_V2
     23: ICODE
     24: ICODE
-    25: ICODE
+    25: ICODE;UNITY_POST_PROCESSING_STACK_V2
     26: ICODE
-    27: 
-    28: ICODE
-    29: ICODE
-    30: ICODE
-    32: ICODE
-    33: ICODE
+    27: UNITY_POST_PROCESSING_STACK_V2
+    28: ICODE;UNITY_POST_PROCESSING_STACK_V2
+    29: ICODE;UNITY_POST_PROCESSING_STACK_V2
+    30: ICODE;UNITY_POST_PROCESSING_STACK_V2
+    32: ICODE;UNITY_POST_PROCESSING_STACK_V2
+    33: ICODE;UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

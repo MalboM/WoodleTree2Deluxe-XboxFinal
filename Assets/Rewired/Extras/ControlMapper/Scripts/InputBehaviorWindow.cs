@@ -1,7 +1,4 @@
-// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
-
-//#define REWIRED_CONTROL_MAPPER_USE_TMPRO
-
+﻿// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
 #pragma warning disable 0219
 #pragma warning disable 0618
 #pragma warning disable 0649
@@ -15,11 +12,6 @@ namespace Rewired.UI.ControlMapper {
     using System.Collections.Generic;
     using System.Collections;
     using Rewired;
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-    using Text = TMPro.TMP_Text;
-#else
-    using Text = UnityEngine.UI.Text;
-#endif
 
     [AddComponentMenu("")]
     public class InputBehaviorWindow : Window {

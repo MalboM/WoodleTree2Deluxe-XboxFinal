@@ -35,10 +35,10 @@ public class BerryCollect : MonoBehaviour {
         }*/
     }
 
-    void OnEnable()
+    void OnEnable ()
     {
         this.GetComponent<SphereCollider>().enabled = true;
-        if (initAmount != 0)
+        if(initAmount != 0)
             amount = initAmount;
     }
 
@@ -51,15 +51,12 @@ public class BerryCollect : MonoBehaviour {
             //    else
             collected = true;
 
-            if (berryType == BerryManagerTrigger.BerryType.blue)
+           if (berryType == BerryManagerTrigger.BerryType.blue)
             {
-                /*    Debug.Log(this.gameObject.name + " BERRY " + id.ToString() +": " + PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry"));
-                    string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry");
-                    string temp2 = temp1.Remove(id, 1);
-                    string temp3 = temp2.Insert(id, "1");
-                    PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", temp3);
-                    */
-                PlayerPrefs.SetInt(this.gameObject.scene.name + "BlueBerry" + id.ToString(), 1);
+                string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry");
+                string temp2 = temp1.Remove(id, 1);
+                string temp3 = temp2.Insert(id, "1");
+                PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", temp3);
             }
 
             StartCoroutine("MultiCollect", other.gameObject.GetComponent<TPC>().initialParent.GetComponent<BerryManagerTrigger>());
@@ -74,7 +71,7 @@ public class BerryCollect : MonoBehaviour {
         bmt.CollectBerry(this.transform.parent.gameObject, berryType, initAmount, (initAmount == amount), initAmount);
         amount--;
         yield return new WaitForSeconds(0.2f);
-        if (amount != 0)
+        if(amount != 0)
             StartCoroutine("MultiCollect", bmt);
     }
 

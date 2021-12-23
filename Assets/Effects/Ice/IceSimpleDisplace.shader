@@ -132,7 +132,7 @@
                 color = pow(color, _Contrast);
                 
                 #ifdef RIM
-                color = lerp(color, _RimColor.rgb, (1. - i.uv.z)*_RimIntensityF);
+                color = lerp(color, _RimColor, (1. - i.uv.z)*_RimIntensityF);
                 #endif
                 
                 //return heatmapSimple(0,1,offset);

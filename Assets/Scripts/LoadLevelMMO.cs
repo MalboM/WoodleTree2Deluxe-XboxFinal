@@ -20,11 +20,10 @@ public class LoadLevelMMO : MonoBehaviour
 
     void Awake()
     {
-        //
-        enterlevel = false;
-        //
-        if (loadinggui != null)
-            animator = loadinggui.GetComponent<Animator>();
+
+        animator = loadinggui.GetComponent<Animator>();
+
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -35,11 +34,17 @@ public class LoadLevelMMO : MonoBehaviour
            // SteamUserStats.SetAchievement("MMO mode");
 
             animator.SetBool("Loading", true);
+
+
             enterlevel = true;
             this.GetComponent<Collider>().enabled = false;
+
+
         }
 
     }
+
+
 
     void Update()
     {
@@ -49,10 +54,7 @@ public class LoadLevelMMO : MonoBehaviour
             blurscript.enabled = true;
 
             //Application.LoadLevelAdditive(level);
-            //
-            Debug.LogError("Load level " + level);
-            //
-            SceneManager.LoadScene(level, LoadSceneMode.Single);
+             SceneManager.LoadScene(level, LoadSceneMode.Single);
 
            // loader = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
 
@@ -60,9 +62,14 @@ public class LoadLevelMMO : MonoBehaviour
 
             enterlevel = false;
             StartCoroutine(loadinglevel());
+
         }
+
+
     }
-    
+
+
+
     IEnumerator loadinglevel()
     {
 
@@ -85,6 +92,8 @@ public class LoadLevelMMO : MonoBehaviour
              
            
        // }
+
+
     }
 
     IEnumerator waitseconds()

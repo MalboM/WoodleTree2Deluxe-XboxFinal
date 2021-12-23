@@ -892,6 +892,7 @@ namespace ICode.FSMEditor
 		#endif
 		static void DrawGameObjectName (Transform transform, GizmoType gizmoType)
 		{   
+            /*
 			ICodeBehaviour behaviour = transform.GetComponent<ICodeBehaviour> ();
 			if (behaviour == null) {
 				return;
@@ -905,6 +906,7 @@ namespace ICode.FSMEditor
 					Handles.Label (transform.position, activeNode.Name, FsmEditorStyles.stateLabelGizmo);
 				}
 			}
+            */
 		}
 
 		public bool IsDocked {

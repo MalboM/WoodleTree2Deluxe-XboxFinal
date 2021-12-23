@@ -285,7 +285,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68638e902eb835b4fbc666bee887c5b8, type: 2}
+  - {fileID: 2100000, guid: cb288ca3e789ecd49b70ecd55e6dc945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -489,7 +489,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68638e902eb835b4fbc666bee887c5b8, type: 2}
+  - {fileID: 2100000, guid: cb288ca3e789ecd49b70ecd55e6dc945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -765,7 +765,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68638e902eb835b4fbc666bee887c5b8, type: 2}
+  - {fileID: 2100000, guid: cb288ca3e789ecd49b70ecd55e6dc945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1158,7 +1158,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68638e902eb835b4fbc666bee887c5b8, type: 2}
+  - {fileID: 2100000, guid: cb288ca3e789ecd49b70ecd55e6dc945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1401,6 +1401,7 @@ MonoBehaviour:
   slideSpeed: 5
   onGround: 0
   isBoosting: 0
+  runByDefault: 0
   jumped: 0
   delayed: 0
   jumpImpulse: 600
@@ -1544,6 +1545,9 @@ MonoBehaviour:
   leafSlidingParticles: {fileID: 6364574371290803052}
   enemyParticles: {fileID: 9124684546462524682}
   buttonParticles: {fileID: 6316897933945075359}
+  bbFinderParticles: {fileID: 0}
+  portal1Particles: {fileID: 0}
+  portal2Particles: {fileID: 0}
   attack1Sound: {fileID: 8300000, guid: a5809994d7a72164ab26ef8f96c27e86, type: 3}
   attack2Sound: {fileID: 8300000, guid: a7a9d0d415d22b344b5d19649e63c800, type: 3}
   attack3Sound: {fileID: 8300000, guid: a5809994d7a72164ab26ef8f96c27e86, type: 3}
@@ -1658,6 +1662,13 @@ MonoBehaviour:
   redLeafDissolve: {fileID: 0}
   blueLeafDissolve: {fileID: 0}
   challengeWarping: 0
+  bbFinderSound: {fileID: 0}
+  bbFinderONSound: {fileID: 0}
+  bbFinderOFFSound: {fileID: 0}
+  bbFinderAnim: {fileID: 0}
+  bbFinderMeshRenderer: {fileID: 0}
+  noIntObj: {fileID: 0}
+  yesIntObj: {fileID: 0}
 --- !u!136 &136417607765648070
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1685,7 +1696,7 @@ Rigidbody:
   m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!114 &114160818697145600
@@ -2626,7 +2637,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68638e902eb835b4fbc666bee887c5b8, type: 2}
+  - {fileID: 2100000, guid: cb288ca3e789ecd49b70ecd55e6dc945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

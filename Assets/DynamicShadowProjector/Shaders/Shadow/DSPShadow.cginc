@@ -9,7 +9,7 @@ float4 DSPShadowVertOpaque(float4 vertex : POSITION) : SV_POSITION
 	return UnityObjectToClipPos(vertex);
 }
 
-fixed4 DSPShadowFragOpaque() : SV_Target
+fixed4 DSPShadowFragOpaque() : COLOR
 {
 	return fixed4(0,0,0,1);
 }
@@ -29,7 +29,7 @@ DSP_V2F_SHADOW_TRANS DSPShadowVertTrans(float4 vertex : POSITION, float4 texcoor
 
 sampler2D _MainTex;
 fixed4 _Color;
-fixed4 DSPShadowFragTrans(DSP_V2F_SHADOW_TRANS i) : SV_Target
+fixed4 DSPShadowFragTrans(DSP_V2F_SHADOW_TRANS i) : COLOR
 {
 	fixed a = tex2D(_MainTex, i.uv).a * _Color.a;
 	return fixed4(0,0,0,a);

@@ -63,10 +63,9 @@ public class WaterRelease : MonoBehaviour {
                         lbo = other.gameObject.GetComponentInParent<LeafBoxObstacle>();
                         if (lbo != null)
                         {
+                         //   BurstDrop();
                             if (lbo.boxType == 5)
-                            {
                                 lbo.DestroyBox();
-                            }
                             else
                             {
                                 lbo.Wrong();

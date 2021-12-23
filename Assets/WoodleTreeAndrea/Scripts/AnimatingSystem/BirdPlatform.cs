@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BirdPlatform : MonoBehaviour
 {
-    [System.Serializable]
-    public class BirdPosition { public GameObject bird;[Range(0f, 1f)] public float startingOffset; public bool invertMovement; public float speed; public GameObject leftWing; public GameObject rightWing;[HideInInspector] public Vector3 startPos; }
+    [System.Serializable] public class BirdPosition { public GameObject bird; [Range(0f,1f)] public float startingOffset; public bool invertMovement; public float speed; public GameObject leftWing; public GameObject rightWing; [HideInInspector] public Vector3 startPos; }
     public BirdPosition[] birdPositions;
     float[] positioner;
     float[] sign;
@@ -77,8 +76,8 @@ public class BirdPlatform : MonoBehaviour
                         if ((sign[b] > 0f && positioner[b] > 0f) || (sign[b] < 0f && positioner[b] < -overallDistance))
                             sign[b] *= -1f;
                     }
-                    //    if (positioner[b] < 0f)
-                    //        sign[b] = 1f;
+                //    if (positioner[b] < 0f)
+                //        sign[b] = 1f;
 
                     rotationer[b] += Time.deltaTime * 300f * Mathf.Sign(rSign[b]);
                     if (rotationer[b] > 60f)
@@ -101,7 +100,7 @@ public class BirdPlatform : MonoBehaviour
 
     void CheckDist()
     {
-        if (chara == null)
+        if(chara == null)
         {
             if (PlayerManager.GetMainPlayer() != null)
                 chara = PlayerManager.GetMainPlayer().gameObject;

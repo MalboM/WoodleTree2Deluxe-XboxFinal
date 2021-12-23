@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ConsoleUtils;
 
-public class ObjDeactivateManager : MonoBehaviour
-{
+public class ObjDeactivateManager : MonoBehaviour {
 
     GameObject[] curGameObjects = new GameObject[16];
     Coroutine[] coroutines = new Coroutine[16];
@@ -43,9 +41,9 @@ public class ObjDeactivateManager : MonoBehaviour
         {
             foreach (Transform t in curGameObjects[g].transform)
             {
-                //    Debug.Log("ACTIVATING " + curGameObjects[g].name + " : " + t.name);
-                //    if (t.gameObject != curGameObjects[g])
-                //    {
+            //    Debug.Log("ACTIVATING " + curGameObjects[g].name + " : " + t.name);
+            //    if (t.gameObject != curGameObjects[g])
+            //    {
                 if (t.childCount > 0)
                 {
                     foreach (Transform tr in t)
@@ -53,23 +51,17 @@ public class ObjDeactivateManager : MonoBehaviour
                         if (tr.gameObject != t.gameObject)
                         {
                             tr.gameObject.SetActive(true);
-                            while(DataManager.isSuspended)
-                                yield return null;
                             yield return null;
                         }
                     }
                 }
                 t.gameObject.SetActive(true);
-                while (DataManager.isSuspended)
-                    yield return null;
                 yield return null;
-                //    }
+            //    }
             }
             curGameObjects[g].gameObject.SetActive(true);
         }
         curGameObjects[g] = null;
-        while (DataManager.isSuspended)
-            yield return null;
         yield return null;
     }
 
@@ -143,9 +135,6 @@ public class ObjDeactivateManager : MonoBehaviour
                                                 if (tra.gameObject != tr.gameObject)
                                                 {
                                                     tr.gameObject.SetActive(false);
-
-                                                    while (DataManager.isSuspended)
-                                                        yield return null;
                                                     yield return null;
                                                 }
 
@@ -154,8 +143,6 @@ public class ObjDeactivateManager : MonoBehaviour
                                         else
                                         {
                                             tr.gameObject.SetActive(false);
-                                            while (DataManager.isSuspended)
-                                                yield return null;
                                             yield return null;
                                         }
                                     }
@@ -170,15 +157,11 @@ public class ObjDeactivateManager : MonoBehaviour
                         if (!t.gameObject.activeInHierarchy)
                             t.gameObject.SetActive(true);
                     }
-                    while (DataManager.isSuspended)
-                        yield return null;
                     yield return null;
                 }
             }
         }
         curGameObjects[g] = null;
-        while (DataManager.isSuspended)
-            yield return null;
         yield return null;
     }
 

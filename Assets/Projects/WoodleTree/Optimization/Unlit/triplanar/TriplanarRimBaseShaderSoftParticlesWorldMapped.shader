@@ -1,6 +1,5 @@
 
 
-
 Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMapped"
 {
     Properties
@@ -25,6 +24,8 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMappe
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
             #include "UnityCG.cginc"
+            
+            
 
             struct appdata
             {
@@ -56,7 +57,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMappe
 
               UNITY_INITIALIZE_OUTPUT(v2f, o);
               UNITY_SETUP_INSTANCE_ID(v);
-
+  
               // calculate rim factor
               float rimFac = clamp(dot(v.normal,normalize(ObjSpaceViewDir(v.vertex)))*_RimSharpnessF,0.,1.);
 
@@ -65,7 +66,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMappe
               o.objPosition = float4(mul(unity_ObjectToWorld,v.vertex).xyz,rimFac);
 
               o.vertex = UnityObjectToClipPos(v.vertex);
-              o.objNormal = mul(unity_ObjectToWorld, float4(v.normal, 0.)).xyz;
+              o.objNormal = mul(unity_ObjectToWorld,v.normal).xyz;
               UNITY_TRANSFER_FOG(o,o.vertex);
               return o;
             }
@@ -101,7 +102,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMappe
             ENDCG
         }
 
-
+        
 
         // Pass to render object as a shadow caster
         Pass
@@ -136,9 +137,10 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderWorldMappe
             }
             ENDCG
         }
-
-
+        
+        
     }
+	FallBack "Diffuse"
 }
 /*
 

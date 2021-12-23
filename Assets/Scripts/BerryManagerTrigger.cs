@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BerryManagerTrigger : MonoBehaviour {
+public class BerryManagerTrigger : MonoBehaviour
+{
 
     GameObject[] berries;
     GameObject woodle;
@@ -14,7 +15,7 @@ public class BerryManagerTrigger : MonoBehaviour {
 
     public enum BerryType { red, blue, redCircle };
 
-	void Start ()
+    void Start()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -57,98 +58,22 @@ public class BerryManagerTrigger : MonoBehaviour {
                     PlayerPrefs.SetInt("FirstRedBerry", 1);
                     textMain.SetText(0);
                 }
-                tpc.berryPFX.PlayEffect(0, berry.transform.position, null, Vector3.zero, false);
+                tpc.berryPFX.PlayEffect(0, berry.transform.position, null, Vector3.zero, false, false);
 
                 if (amount == 1)
                     BerrySpawnManager.PlayBerryNoise(false);
                 else
                     BerrySpawnManager.PlayBerryNoise(true);
             }
-            tpc.berryCount++;
+            int valueToAdd = 1;
             if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
-            {
-                tpc.berryCount++;
-                CheckPSTrophies(2);
-            }
-            else
-                CheckPSTrophies(1);
-
-
+                valueToAdd = 2;
+            tpc.berryCount += valueToAdd;
             tpc.UpdateBerryHUDRed();
 
-        }
-        if (berryType == BerryType.blue)
-        {
-
-            if (playFX)
-            {
-                if (PlayerPrefs.GetInt("FirstBlueBerry") == 0)
-                {
-                    PlayerPrefs.SetInt("FirstBlueBerry", 1);
-                    textMain.SetText(1);
-                }
-                tpc.berryPFX.PlayEffect(1, berry.transform.position, null, Vector3.zero, false);
-            }
-
-            tpc.blueberryCount += amount;
-            tpc.UpdateBerryHUDBlue();
-
-            //     tpc.ps.CheckBlues();
-            PlayerPrefs.SetInt("BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal") + 1);
-
-#if UNITY_PS4
-            // check trophy
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_BLUE_BERRIES);
-            }
-            //
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_ALL_BLUE_BERRIES);
-            }
-#endif
-
-#if UNITY_XBOXONE
-            // check trophy
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
-            {
-                // check friend trophy
-                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
-            }
-            //
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
-            {
-                // check friend trophy
-                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
-            }
-#endif
-
-            if (PlayerPrefs.GetInt("BlueBerryTotal") == 930)
-            {
-                PlayerPrefs.SetInt("AllBlueBerries", 1);
-                textMain.SetText(13);
-                BerrySpawnManager.PlayBerryNoise(true);
-
-                tpc.berryCount += 1000;
-                CheckPSTrophies(1000);
-                tpc.UpdateBerryHUDRed();
-            }
-            else
-                BerrySpawnManager.PlayBlueBerryNoise(0);
-        }
-        if (playFX)
-        {
-            berry.GetComponentInChildren<SphereCollider>().enabled = false;
-            StartCoroutine(MoveBerry(berry, berryType, initAmount));
-        }
-    }
-
-    void CheckPSTrophies(int amount)
-    {
-        int totalRBCount = PlayerPrefs.GetInt("RedBerryTotal", tpc.berryCount);
-        totalRBCount += amount;
-        PlayerPrefs.SetInt("RedBerryTotal", totalRBCount);
+            int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", tpc.berryCount);
+            totalRedBerries += valueToAdd;
+            PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
 
 #if UNITY_PS4
             //
@@ -188,10 +113,82 @@ public class BerryManagerTrigger : MonoBehaviour {
         }
        
 #endif
+        }
 
+        if (berryType == BerryType.blue)
+        {
+
+            if (playFX)
+            {
+                if (PlayerPrefs.GetInt("FirstBlueBerry") == 0)
+                {
+                    PlayerPrefs.SetInt("FirstBlueBerry", 1);
+                    textMain.SetText(1);
+                }
+                tpc.berryPFX.PlayEffect(1, berry.transform.position, null, Vector3.zero, false, false);
+            }
+
+            tpc.blueberryCount += amount;
+            tpc.UpdateBerryHUDBlue();
+
+            //     tpc.ps.CheckBlues();
+            PlayerPrefs.SetInt("BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal") + 1);
+
+            if (PlayerPrefs.GetInt("BlueBerryTotal") == 465)
+            {
+                PlayerPrefs.SetInt("HalfBlueBerries", 1);
+                textMain.SetText(15);
+            }
+
+            if (PlayerPrefs.GetInt("BlueBerryTotal") == 930)
+            {
+                PlayerPrefs.SetInt("AllBlueBerries", 1);
+
+                textMain.SetText(13);
+                BerrySpawnManager.PlayBerryNoise(true);
+
+                tpc.berryCount += 1000;
+                tpc.UpdateBerryHUDRed();
+            }
+            else
+                BerrySpawnManager.PlayBlueBerryNoise(0);
+#if UNITY_PS4
+            // check trophy
+            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
+            {
+                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_BLUE_BERRIES);
+            }
+            //
+            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
+            {
+                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_ALL_BLUE_BERRIES);
+            }
+#endif
+
+#if UNITY_XBOXONE
+            // check trophy
+            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
+            {
+                // check friend trophy
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
+            }
+            //
+            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
+            {
+                // check friend trophy
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
+            }
+#endif
+
+        }
+        if (playFX)
+        {
+            berry.GetComponentInChildren<SphereCollider>().enabled = false;
+            StartCoroutine(MoveBerry(berry, berryType, initAmount));
+        }
     }
 
-    IEnumerator MoveBerry(GameObject berry, BerryType berryType, int initAmount )
+    IEnumerator MoveBerry(GameObject berry, BerryType berryType, int initAmount)
     {
         int berryIt = 0;
         Vector3 origPos = berry.transform.position;
@@ -213,9 +210,9 @@ public class BerryManagerTrigger : MonoBehaviour {
             berryIt++;
             yield return null;
         }
-        
+
         if (tpc.gameObject.name == "Woodle Character")
-            tpc.berryPFX.PlayEffect(2, this.transform.position, null, Vector3.zero, false);
+            tpc.berryPFX.PlayEffect(2, this.transform.position, null, Vector3.zero, false, false);
 
         //   if (this.transform.parent.gameObject.GetComponent<ActivateAtDistanceNew2>() != null)
         //       Destroy(this.transform.parent.gameObject.GetComponent<ActivateAtDistanceNew2>());
@@ -225,7 +222,7 @@ public class BerryManagerTrigger : MonoBehaviour {
 
         yield return new WaitForSeconds(0.2f * (initAmount - 1));
 
-    //    berry.transform.parent.gameObject.GetComponent<IActivablePrefab>().CancelRepeat();
+        //    berry.transform.parent.gameObject.GetComponent<IActivablePrefab>().CancelRepeat();
         berry.gameObject.SetActive(false);
 
         if (berryType == BerryType.redCircle)
@@ -244,8 +241,9 @@ public class BerryManagerTrigger : MonoBehaviour {
     IEnumerator CheckDistance()
     {
         yield return new WaitForSeconds(1f);
-        foreach (GameObject g in berries) {
-            if(Vector3.Distance(g.transform.position, woodle.transform.position) <= 60f)
+        foreach (GameObject g in berries)
+        {
+            if (Vector3.Distance(g.transform.position, woodle.transform.position) <= 60f)
             {
                 if (!g.activeInHierarchy)
                     g.SetActive(true);

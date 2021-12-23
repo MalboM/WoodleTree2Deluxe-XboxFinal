@@ -28,7 +28,8 @@ Shader "Polymole/Effects/Matcap/MatcapOcclusionBaseShader (Silhouette Disabled)"
 
     SubShader
     {
-        Tags { "Queue" = "Geometry"}
+        Tags { "Queue" = "Geometry" "RenderType" = "Opaque"}
+		ZWrite On
         LOD 100
 
         Cull [_Cull]
@@ -182,4 +183,5 @@ Shader "Polymole/Effects/Matcap/MatcapOcclusionBaseShader (Silhouette Disabled)"
             ENDCG
         }
     }
+	FallBack "Diffuse"
 }

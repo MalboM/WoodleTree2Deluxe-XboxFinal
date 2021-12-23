@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e49d2109ad33445b06776690bac099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateInstead: 0
   playerprefstocheck: plantjar
 --- !u!1 &1605700068576432098
 GameObject:
@@ -132,6 +133,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -225,6 +227,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -295,7 +298,8 @@ AudioSource:
   m_GameObject: {fileID: 4094723925810412535}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243382132470434748, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c1dd01e0a1706e549bfb800500fcc67c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -551,7 +555,9 @@ MonoBehaviour:
   lowObj: {fileID: 0}
   fullObjCharacter: {fileID: 0}
   shadowObj: {fileID: 0}
+  insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &6129761831448576397
 GameObject:
   m_ObjectHideFlags: 0
@@ -5285,7 +5291,7 @@ ParticleSystem:
 --- !u!199 &1760669283897632901
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5309,6 +5315,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

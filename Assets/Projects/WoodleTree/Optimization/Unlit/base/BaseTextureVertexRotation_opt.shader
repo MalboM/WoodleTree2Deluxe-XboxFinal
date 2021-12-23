@@ -110,4 +110,5 @@ Shader "WoodleTree/Base/BaseTextureVertexRotation (Vertex Opt)"
             ENDCG
         }
     }
+		FallBack "Diffuse"
 }

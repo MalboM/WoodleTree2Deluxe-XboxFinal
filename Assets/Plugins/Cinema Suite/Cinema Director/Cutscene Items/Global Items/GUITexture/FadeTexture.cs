@@ -1,6 +1,5 @@
 // Cinema Suite
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CinemaDirector
 {
@@ -8,11 +7,11 @@ namespace CinemaDirector
     /// An action that fades in a texture over the first 25% of length, shows for 50% of time length
     /// and fades away over the final 25%.
     /// </summary>
-    [CutsceneItem("RawImage", "Fade Texture", CutsceneItemGenre.GlobalItem)]
+    [CutsceneItem("GUITexture", "Fade Texture", CutsceneItemGenre.GlobalItem)]
     public class FadeTexture : CinemaGlobalAction
     {
-        // The RawImage to show
-        public RawImage target;
+        // The GUITexture to show
+    //    public GUITexture target;
 
         // Optional Tint
         public Color tint = Color.grey;
@@ -22,11 +21,11 @@ namespace CinemaDirector
         /// </summary>
         void Awake()
         {
-            if (this.target != null)
+        /*    if (this.target != null)
             {
                 this.target.enabled = false;
                 this.target.color = Color.clear;
-            }
+            }*/
         }
 
         /// <summary>
@@ -34,11 +33,11 @@ namespace CinemaDirector
         /// </summary>
         public override void Trigger()
         {
-            if (this.target != null)
+        /*    if (this.target != null)
             {
                 this.target.enabled = true;
                 this.target.color = Color.clear;
-            }
+            }*/
         }
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace CinemaDirector
         /// <param name="deltaTime">The deltaTime since last update.</param>
         public override void UpdateTime(float time, float deltaTime)
         {
-            if (this.target != null)
+         /*   if (this.target != null)
             {
                 float transition = time / Duration;
                 if (transition <= 0.25f)
@@ -67,7 +66,7 @@ namespace CinemaDirector
                 {
                     FadeToColor(tint, Color.clear, (transition - 0.75f) / .25f);
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace CinemaDirector
         /// <param name="deltaTime">The deltaTime since last update.</param>
         public override void SetTime(float time, float deltaTime)
         {
-            if (this.target != null)
+         /*   if (this.target != null)
             {
                 this.target.enabled = true;
                 if (time >= 0 && time <= Duration)
@@ -88,7 +87,7 @@ namespace CinemaDirector
                 {
                     this.target.enabled = false;
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -96,10 +95,10 @@ namespace CinemaDirector
         /// </summary>
         public override void End()
         {
-            if (this.target != null)
+        /*    if (this.target != null)
             {
                 this.target.enabled = false;
-            }
+            }*/
         }
 
         /// <summary>
@@ -115,10 +114,10 @@ namespace CinemaDirector
         /// </summary>
         public override void Stop()
         {
-            if (this.target != null)
+        /*    if (this.target != null)
             {
                 this.target.enabled = false;
-            }
+            }*/
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace CinemaDirector
         /// <param name="transition">The transition amount.</param>
         private void FadeToColor(Color from, Color to, float transition)
         {
-            this.target.color = Color.Lerp(from, to, transition);
+        //    this.target.color = Color.Lerp(from, to, transition);
         }
     }
 }

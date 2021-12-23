@@ -125,6 +125,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseSoftParticlesShaderLocalMappe
         }
         
     }
+	FallBack "Diffuse"
 }
 /*
 

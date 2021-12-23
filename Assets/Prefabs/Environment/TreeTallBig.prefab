@@ -119,6 +119,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -155,7 +156,7 @@ GameObject:
   - component: {fileID: 8874023718362439382}
   - component: {fileID: 8874023718361636598}
   - component: {fileID: 8874023718360669238}
-  - component: {fileID: 7423479631451721942}
+  - component: {fileID: 6202722811253564007}
   m_Layer: 0
   m_Name: polySurface5
   m_TagString: Untagged
@@ -210,6 +211,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -222,8 +224,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &7423479631451721942
-MeshCollider:
+--- !u!136 &6202722811253564007
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,7 +234,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300002, guid: 211842ad7fa2e3646ab52458eaae9f39, type: 3}
+  m_Radius: 1.0336754
+  m_Height: 11.65
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -120,10 +120,6 @@ public class UnlockItemMarket : MonoBehaviour
 			hudAnim.transform.Find ("Text").GetComponent<Text> ().text = PlayerPrefs.GetInt ("Berries", 0).ToString ();
         }
         PlayerPrefs.Save();
-        //
-#if UNITY_XBOXONE
-        DataManager.xOneEventsManager.SaveProgs();
-#endif
 
         hudAnim.SetBool ("function", true);
         hudAnim.Play("Text Bounce", 1);

@@ -31,12 +31,12 @@ v2f_blit vert_blit(appdata_img v)
 	return o;
 }
 
-fixed4 frag_blit(v2f_blit i) : SV_Target
+fixed4 frag_blit(v2f_blit i) : COLOR
 {
 	return tex2D(_MainTex, i.uv0);
 }
 
-fixed4 frag_blit_withShadowColor(v2f_blit i) : SV_Target
+fixed4 frag_blit_withShadowColor(v2f_blit i) : COLOR
 {
 	return lerp(fixed4(1,1,1,0), _Color, tex2D(_MainTex, i.uv0).a);
 }
@@ -52,7 +52,7 @@ v2f_downsample vert_downsample(appdata_img v)
 	return o;
 }
 
-fixed4 frag_downsample(v2f_downsample i) : SV_Target
+fixed4 frag_downsample(v2f_downsample i) : COLOR
 {
 	fixed4 color = 0.25*tex2D(_MainTex, i.uv0);
 	color += 0.25*tex2D(_MainTex, i.uv1);
@@ -61,7 +61,7 @@ fixed4 frag_downsample(v2f_downsample i) : SV_Target
 	return color;
 }
 
-fixed4 frag_downsample_withShadowColor(v2f_downsample i) : SV_Target
+fixed4 frag_downsample_withShadowColor(v2f_downsample i) : COLOR
 {
 	fixed a = 0.25*tex2D(_MainTex, i.uv0).a;
 	a += 0.25*tex2D(_MainTex, i.uv1).a;
@@ -78,7 +78,7 @@ DSP_OFFSET_TYPE4 _Offset2;
 DSP_OFFSET_TYPE4 _Offset3;
 fixed4 _Weight;
 
-fixed4 frag_downsample_with_blur(v2f_blit i) : SV_Target
+fixed4 frag_downsample_with_blur(v2f_blit i) : COLOR
 {
 	DSP_OFFSET_TYPE2 uv = i.uv0 + _Offset0.xy;
 	fixed4 c0 = tex2D(_MainTex, uv);

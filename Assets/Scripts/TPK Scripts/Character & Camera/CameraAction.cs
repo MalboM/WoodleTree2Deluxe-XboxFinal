@@ -58,7 +58,7 @@ public class CameraAction : MonoBehaviour {
                 }
                 if (moveUp)
                 {
-                    if (camF.distanceUp <= moveUpMaxHeight)
+                    if (camF.distanceUp <= moveUpMaxHeight && !PlayerManager.GetMainPlayer().gliding)
                     {
                         if (!camF.setToMoveUp)
                         {

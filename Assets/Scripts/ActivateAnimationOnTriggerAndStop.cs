@@ -8,12 +8,18 @@ public class ActivateAnimationOnTriggerAndStop : MonoBehaviour
     //public string booleanactivated;
     public int layerint;
 
+    void Awake()
+    {
+
+        animator = GetComponent<Animator>();
+
+    }
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == layerint && !other.isTrigger)
         {
-            if(animator == null)
-                animator = GetComponent<Animator>();
             animator.SetBool("Activated", true);
             StartCoroutine(Stop());
         }

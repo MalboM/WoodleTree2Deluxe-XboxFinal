@@ -35,17 +35,13 @@ public class WaterTearManager : MonoBehaviour
 
     void Awake()
     {
-        if (singleton != null && singleton != this)
+        if (singleton != null)
         {
             enabled = false;
             Destroy(this);
             return;
         }
-        else if( singleton == null)
-        {
-            singleton = this;
-        }
-
+        singleton = this;
 
         tearAppearEM = tearAppearPFX.GetComponent<ParticleSystem>().emission;
         tearAppearEM.enabled = false;
@@ -80,46 +76,30 @@ public class WaterTearManager : MonoBehaviour
             Debug.LogError("Singleton is null! Aborting.");
             return;
         }
-
-        Debug.Log("A");
         singleton._ShowCutscene(waterTear);
     }
 
     void _ShowCutscene(WaterTearCatchCameraActivate waterTear)
     {
-        Debug.Log("B");
-
         if (PlayerPrefs.GetInt("FirstTear") == 0)
         {
-            Debug.Log("C");
-
             PlayerPrefs.SetInt("FirstTear", 1);
             GameObject.FindWithTag("Pause").transform.Find("Event Text").gameObject.GetComponent<TextTriggerMain>().SetText(3);
         }
 
-        Debug.Log("D");
-
         foreach (GameObject t in tearsToActivate)
         {
-            if (t.name == waterTear.vasetofind) 
+            if (t.name == waterTear.vasetofind)
                 currentTear = t;
         }
-
-        Debug.Log("E");
-
 
         PlayerPrefs.SetInt(waterTear.vasetofind, 1);
 
         mainCharacter.ps.CheckTears();
-
-        Debug.Log("F");
-
         if (mainCharacter.ps.tearCount < 10)
             mainCharacter.tearText.text = "0" + mainCharacter.ps.tearCount.ToString();
         else
             mainCharacter.tearText.text = mainCharacter.ps.tearCount.ToString();
-
-        Debug.Log("G");
 
         StartCoroutine(Camerachange(waterTear));
     }
@@ -173,13 +153,9 @@ public class WaterTearManager : MonoBehaviour
 
     IEnumerator Camerachange(WaterTearCatchCameraActivate waterTear)
     {
-        Debug.Log("G-1 :");
-
         TPC tpc = PlayerManager.GetMainPlayer();
         tpc.ps.ControlDisable(true);
         cameraFollower.disableControl = true;
-
-        Debug.Log("G-2 :");
 
         foreach (Camera c in camerasToActivate)
         {
@@ -187,27 +163,16 @@ public class WaterTearManager : MonoBehaviour
                 currentCamera = c;
         }
 
-        Debug.Log("G-3 :");
-
         foreach (GameObject g in cutsceneActiveObjs)
-        {
             g.SetActive(true);
-        }
-
 
         currentCamera.enabled = true;
         mainCamera.enabled = false;
         bool plazaActiveState = mainPlaza.activeInHierarchy;
         bool plazaFActiveState = mainPlaza.transform.parent.gameObject.activeInHierarchy;
-
         if (!plazaFActiveState)
             mainPlaza.transform.parent.gameObject.SetActive(true);
-
-        Debug.Log("G-4 :");
-
-
         mainPlaza.gameObject.SetActive(true);
-
 
         tearAppearPFX.transform.position = currentTear.transform.position;
         tearAppearEM.enabled = true;
@@ -215,12 +180,9 @@ public class WaterTearManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        Debug.Log("G-5 :");
-
         currentTear.GetComponent<WaterTearAltairActivateSave>().waterteartoactivate.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("G-6 :");
 
         tearAppearEM.enabled = false;
 
@@ -229,16 +191,17 @@ public class WaterTearManager : MonoBehaviour
         currentCamera.enabled = false;
         mainCamera.enabled = true;
 
-    //    foreach (GameObject g in cutsceneActiveObjs)
-    //        g.SetActive(false);
+        //    foreach (GameObject g in cutsceneActiveObjs)
+        //        g.SetActive(false);
 
         //    waterTear.DeactivateTear();
 
         //    waterTear.GetComponent<Collider>().enabled = false;
+
+
         if (PlayerPrefs.GetInt("First3Tears", 0) == 0 && PlayerPrefs.GetInt("Vase1Level1", 0) == 1 && PlayerPrefs.GetInt("Vase2Level1", 0) == 1 && PlayerPrefs.GetInt("Vase3Level1", 0) == 1)
         {
-            Debug.Log("G-7 :");
-
+            PlayerPrefs.SetInt("First3Tears", 1);
 #if UNITY_PS4
             //
             // check trophy
@@ -251,17 +214,12 @@ public class WaterTearManager : MonoBehaviour
             //
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.FIRST_TREE_SAGE_RESTORED);
 #endif
-            Debug.Log("G-8 :");
-
-            PlayerPrefs.SetInt("First3Tears", 1);
             StartCoroutine("CutsceneRoutine", firstTearsCutscene);
-            if(bordersParent != null)
+            if (bordersParent != null)
                 bordersParent.SetActive(false);
         }
         else
         {
-            Debug.Log("G-9 :");
-
             tpc.ps.ControlDisable(false);
             cameraFollower.disableControl = false;
         }
@@ -308,7 +266,7 @@ public class WaterTearManager : MonoBehaviour
             }
         }
         tpc.ps.StartCutscene(cutsceneToPlay, Vector3.up);
-    //    ControlDisable(false);
+        //    ControlDisable(false);
     }
 
     public static void DeactivateAllTears()
@@ -323,7 +281,7 @@ public class WaterTearManager : MonoBehaviour
 
     void _DeactivateAllTears()
     {
-        foreach(GameObject g in tearsToActivate)
+        foreach (GameObject g in tearsToActivate)
         {
             g.GetComponent<WaterTearAltairActivateSave>().waterteartoactivate.SetActive(false);
         }
@@ -368,7 +326,7 @@ public class WaterTearManager : MonoBehaviour
         if (mainCharacter.ps.tearCount == 0)
         {
             elevator.SetActive(true);
-            if(bordersParent != null)
+            if (bordersParent != null)
                 bordersParent.SetActive(true);
         }
     }

@@ -19,31 +19,37 @@ namespace ICode.Actions.UnityNavMeshAgent
 			base.OnEnter ();
 			#if UNITY_5_3_OR_NEWER
 			#if UNITY_5_6_OR_NEWER
-			agent.isStopped=true;
-			#else
+            if(agent.isOnNavMesh)   
+    			agent.isStopped=true;
+#else
 			agent.Stop ();
-			#endif
-		
-			agent.updatePosition = !stopUpdates.Value;
-			#else
-			agent.Stop (stopUpdates.Value);
-			#endif
-			if (!everyFrame) {
+#endif
+
+            if (agent.isOnNavMesh)
+                agent.updatePosition = !stopUpdates.Value;
+#else
+            if(agent.isOnNavMesh)   
+			    agent.Stop (stopUpdates.Value);
+#endif
+            if (!everyFrame) {
 				Finish ();
 			}
 		}
 
 		public override void OnUpdate ()
 		{
-			#if UNITY_5_3_OR_NEWER
-			#if UNITY_5_6_OR_NEWER
-			agent.isStopped=true;
-			#else
-			agent.Stop ();
-			#endif
-			#else
-			agent.Stop (stopUpdates.Value);
-			#endif
-		}
-	}
+#if UNITY_5_3_OR_NEWER
+#if UNITY_5_6_OR_NEWER
+            if (agent.isOnNavMesh)
+                agent.isStopped=true;
+#else
+            if(agent.isOnNavMesh)   
+			    agent.Stop ();
+#endif
+#else
+            if(agent.isOnNavMesh)   
+			    agent.Stop (stopUpdates.Value);
+#endif
+        }
+    }
 }

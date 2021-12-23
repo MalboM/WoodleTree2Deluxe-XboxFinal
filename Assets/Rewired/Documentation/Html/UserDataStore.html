@@ -172,12 +172,12 @@ public class MyUserDataStore : Rewired.Data.UserDataStore {
     <p>If &quot;Load Data on Start&quot; is checked in the inspector, all controller data will be loaded at the beginning of the session. This is useful if you want the player's last settings to be loaded automatically for any controllers already attached to the system at runtime.</p>
     <p><strong>Data that is saved and loaded</strong></p>
     <div>
-      <p>UserDataStore_PlayerPrefs does not take a snapshot of the entire current Player state.</p>
+      <p>UserDataStore_PlayerPrefs does not take a snapshot of the entire current Player state.  It   saves and loads the modified controller map bindings as a replacement set of   default mappings, but it does not save or load a list of which maps the Player currently   has loaded/assigned.</p>
     </div>
     
     <p>Saved data does not include:</p>
     <ol>
-    <li>The current list of what Controller Maps are loaded in the Player.</li>
+    <li>The current list of what Controller Maps are assigned to the Player.</li>
     <li>The enabled state of these Controller Maps.</li>
     </ol>
 
@@ -210,7 +210,7 @@ public class MyUserDataStore : Rewired.Data.UserDataStore {
         
     </div>
   <div class="footer clearfix">
-   	<p class="left">Copyright &copy;2014-2019 <a href="http://guavaman.com" title="Guavaman Enterprises">Guavaman Enterprises</a>. All rights reserved. No materials may be reproduced without permission.</p>
+   	<p class="left">Copyright &copy;2014-2018 <a href="http://guavaman.com" title="Guavaman Enterprises">Guavaman Enterprises</a>. All rights reserved. No materials may be reproduced without permission.</p>
   	<p class="right"><a href="http://guavaman.com/projects/rewired" title="Return to Rewired Website">Return to Rewired Website</a></p>
   </div>
   <!-- end .content --></div>

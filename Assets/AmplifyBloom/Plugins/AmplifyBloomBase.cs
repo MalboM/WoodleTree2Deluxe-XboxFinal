@@ -315,7 +315,7 @@ namespace AmplifyBloom
 #if TRIAL
 			if ( watermark != null )
 			{
-			//	DestroyImmediate( watermark );
+				DestroyImmediate( watermark );
 				watermark = null;
 			}
 #endif
@@ -400,8 +400,8 @@ namespace AmplifyBloom
 			{
 				RenderTexture.active = null;
 				m_tempFilterBuffer.Release();
-				//	DestroyImmediate(  );
-					m_tempFilterBuffer = null;
+				DestroyImmediate( m_tempFilterBuffer );
+				m_tempFilterBuffer = null;
 			}
 		}
 

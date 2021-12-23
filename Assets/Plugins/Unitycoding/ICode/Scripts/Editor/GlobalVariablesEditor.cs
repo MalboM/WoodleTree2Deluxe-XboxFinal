@@ -159,15 +159,15 @@ namespace ICode.FSMEditor{
 									}
 									#else
 									UnityEditor.SceneManagement.EditorSceneManager.SaveOpenScenes();
-									UnityEngine.SceneManagement.Scene scene= UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
-									UnityEditor.SceneManagement.EditorSceneManager.SetActiveScene(scene);
+								//	UnityEngine.SceneManagement.Scene scene= UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
+								//	UnityEditor.SceneManagement.EditorSceneManager.SetActiveScene(scene);
 									#endif
 									
-									List<SetGlobalGameObject> gos=FindObjectsOfType<SetGlobalGameObject>().ToList();
-									SetGlobalGameObject go=gos.Find(x=>x.variableName==parameter.Name);
-									if(go != null){
-										DestroyImmediate(go);
-									}
+								//	List<SetGlobalGameObject> gos=FindObjectsOfType<SetGlobalGameObject>().ToList();
+								//	SetGlobalGameObject go=gos.Find(x=>x.variableName==parameter.Name);
+								//	if(go != null){
+								//		DestroyImmediate(go);
+								//	}
 								}
 								globalVariables.Variables= ArrayUtility.Remove(globalVariables.Variables,parameter);
 								FsmEditorUtility.DestroyImmediate(parameter);;

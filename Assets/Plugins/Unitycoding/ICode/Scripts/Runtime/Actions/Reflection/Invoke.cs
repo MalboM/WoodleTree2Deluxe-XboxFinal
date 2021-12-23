@@ -32,13 +32,7 @@ namespace ICode.Actions{
 				if (repeatRate.Value == 0) {
 					behaviour.Invoke (methodName, delay.Value);
 				} else {
-					object[] paras = new object[5];
-					paras[0] = methodName;
-					paras[1] = delay.Value;
-					paras[2] = repeatRate.Value;
-					paras[3] = true;
-					paras[4] = mComponent;
-					behaviour.StartCoroutine(InvokeRepeatedly(paras));
+					behaviour.InvokeRepeating (methodName, delay.Value, repeatRate.Value);
 				}
 			} else {
 				GameObject instance= new GameObject("RoutineHandler");
@@ -71,33 +65,6 @@ namespace ICode.Actions{
 					yield return new WaitForSeconds(repeatRate.Value);
 				}
 			} 
-		}
-
-		IEnumerator InvokeRepeatedly (object[] paras)
-		{
-			if ((bool)paras[3] == true) {
-				for (float f = 0f; f < (float)paras[1]; f += Time.deltaTime * Time.timeScale)
-				{
-					while (DataManager.isSuspended)
-						yield return null;
-
-					yield return null;
-				}
-				paras[3] = false;
-			}
-
-			MonoBehaviour behaviour = (Component)paras[4] as MonoBehaviour;
-
-			behaviour.Invoke((string)paras[0], 0f);
-
-			for (float f = 0f; f < (float)paras[2]; f += Time.deltaTime * Time.timeScale)
-			{
-				while (DataManager.isSuspended)
-					yield return null;
-
-				yield return null;
-			}
-			behaviour.StartCoroutine(InvokeRepeatedly(paras));
 		}
 	}
 }

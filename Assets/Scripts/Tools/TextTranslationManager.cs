@@ -4,38 +4,14 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-//
-public enum LANGUAGES
-{
-    English,
-    Russian,
-    Spanish,
-    Italian,
-    Chinese,
-    French,
-    Portuguese,
-    Dutch,
-    German,
-    Japanese,
-    Turkish,
-    Arabic,
-    Polish,
-    Danish,
-    Korean
-}
-
 public class TextTranslationManager : MonoBehaviour
 {
     [HideInInspector] public static TextTranslationManager singleton;
     public Font arabicFont;
 
-    // For PS4:
-    public Font cyrillicFont, chineseFont, koreanFont, japaneseFont;
+    public enum TextCollection { startMenu, pause, common, mapLevels, itemPrompts, npc, cutscene, levelTitles, plazaMisc, textPrompts, tutorials, buttons };
 
-    //
-    public enum TextCollection { startMenu, pause, common, mapLevels, itemPrompts, npc, cutscene, levelTitles, plazaMisc, textPrompts, tutorials};
-
-    string[,] startMenuTexts = new string[15, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
+    string[,] startMenuTexts = new string[28, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
         
     //textID: 0
         {"Start",
@@ -123,19 +99,19 @@ public class TextTranslationManager : MonoBehaviour
         "확실해요?"},
         
     //textID: 5
-        {"Soundtracks & Effects",
+        {"Soundtracks & Sound Effects",
         "Звуковая дорожка и эффекты",
         "Banda sonora y efectos de sonido",
-        "Soundtrack e Effects",
+        "Soundtrack e Sound Effects",
         "音轨和音效",
-        "Bandes sonores et sonores",
-        "Bandas Sonoras e Sonoros",
+        "Bandes sonores et effets sonores",
+        "Bandas Sonoras e Efeitos Sonoros",
         "Soundtracks & Geluidseffecten",
         "Soundtracks & Soundeffekte",
         "サウンドトラック＆音響効果",
-        "Oyun Müzikleri & Efektleri",
+        "Oyun Müzikleri & Ses Efektleri",
         "الموسيقى التصويرية والمؤثرات الصوتية",
-        "Ścieżki dźwiękowe i efekty",
+        "Ścieżki dźwiękowe i efekty dźwiękowe",
         "Lydspor og lydeffekter",
         "사운드 트랙 및 음향 효과"},
         
@@ -290,10 +266,231 @@ public class TextTranslationManager : MonoBehaviour
         "النقل الفضائي",
         "Teleport",
         "Teleport",
-        "순간 이동"}
+        "순간 이동"},
+        
+    //textID: 15
+        {"Walk",
+        "Ходить",
+        "Caminar",
+        "Camminare",
+        "步行",
+        "Marche",
+        "Caminhar",
+        "Lopen",
+        "Gehen",
+        "歩く",
+        "Yürüme",
+        "سير",
+        "Space-\nrować",
+        "Gå",
+        "산책"},
+        
+    //textID: 16
+        {"BLOOM",
+        "цветение",
+        "floración",
+        "fioritura",
+        "盛开",
+        "Floraison",
+        "flor",
+        "bloeien",
+        "blühen",
+        "咲く",
+        "Çiçek açmak",
+        "إزهار",
+        "kwiat",
+        "flor",
+        "꽃"},
+        
+    //textID: 17
+        {"AMBIENT OCCLUSION",
+        "Окружающая Окклюзия",
+        "Oclusión ambiental",
+        "Occlusione ambientale",
+        "环境光遮蔽",
+        "Occlusion ambiante",
+        "Oclusão ambiental",
+        "Omringende occlusie",
+        "Ambient Occlusion",
+        "アンビエントオクルージョン",
+        "Çevresel perdeleme",
+        "انسداد المحيط",
+        "Okluzja otoczenia",
+        "Omgivelse af omgivelser",
+        "주변 폐색"},
+        
+    //textID: 18
+        {"DEPTH OF FIELD",
+        "Глубина резкости",
+        "Profundidad de campo",
+        "Profondità di campo",
+        "景深",
+        "Profondeur de champ",
+        "Profundidade de campo",
+        "Diepte van het veld",
+        "Tiefenschärfe",
+        "被写界深度",
+        "Alan derinliği",
+        "عمق الميدان",
+        "Głębia pola",
+        "Dybdeskarphed",
+        "피사계 심도"},
+        
+    //textID: 19
+        {"FULLSCREEN",
+        "Полноэкранный",
+        "Pantalla completa",
+        "A schermo intero",
+        "全屏",
+        "Plein écran",
+        "Tela cheia",
+        "Volledig scherm",
+        "Ganzer Bildschirm",
+        "全画面表示",
+        "Tam ekran",
+        "تكبير الشاشة",
+        "Pełny ekran",
+        "Fuld skærm",
+        "전체 화면"},
+        
+    //textID: 20
+        {"BORDERLESS",
+        "безграничный",
+        "Sin bordes",
+        "Senza bordo",
+        "无国界",
+        "Sans frontière",
+        "Sem fronteiras",
+        "Borderless",
+        "Grenzenlos",
+        "フチなし",
+        "sınırsız",
+        "بلا حدود",
+        "Bez granic",
+        "Uden ramme",
+        "무제한"},
+        
+    //textID: 21
+        {"WINDOW",
+        "Окно",
+        "Ventana",
+        "Finestra",
+        "窗口",
+        "Fenêtre",
+        "Janela",
+        "Venster",
+        "Fenster",
+        "窓",
+        "pencere",
+        "نافذة او شباك",
+        "Okno",
+        "Vindue",
+        "창문"},
+        
+    //textID: 22
+        {"OFF",
+        "от",
+        "Apagado",
+        "via",
+        "关",
+        "De",
+        "Fora",
+        "Uit",
+        "aus",
+        "オフ",
+        "kapalı",
+        "إيقاف",
+        "Poza",
+        "Af",
+        "떨어져서"},
+        
+    //textID: 23
+        {"FULL",
+        "Полный",
+        "Lleno",
+        "Pieno",
+        "充分",
+        "Plein",
+        "Cheio",
+        "vol",
+        "Voll",
+        "いっぱい",
+        "Tam",
+        "ممتلئ",
+        "Pełny",
+        "Fuld",
+        "완전한"},
+        
+    //textID: 24
+        {"HALF",
+        "половина",
+        "Mitad",
+        "Metà",
+        "半",
+        "Moitié",
+        "Metade",
+        "Voor de helft",
+        "Hälfte",
+        "ハーフ",
+        "Yarım",
+        "نصف",
+        "Pół",
+        "Halvt",
+        "절반"},
+        
+    //textID: 25
+        {"NONE",
+        "Никто",
+        "Ninguna",
+        "Nessuna",
+        "没有",
+        "Aucun",
+        "Nenhum",
+        "Geen",
+        "Keiner",
+        "なし",
+        "Yok",
+        "لا شيء",
+        "Żaden",
+        "Ingen",
+        "없음"},
+        
+    //textID: 26
+        {"RESTORE\nDEFAULTS",
+        "ВОССТАНОВИТЬ ЗНАЧЕНИЯ\nПО УМОЛЧАНИЮ",
+        "RESTAURAR LOS\nVALORES PREDETERMINADOS",
+        "Ripristina i\nvalori predefiniti",
+        "恢复默认值",
+        "Réinitialiser",
+        "Restaurar padrões",
+        "Herstel standaardwaarden",
+        "Standardeinstellungen wiederherstellen",
+        "デフォルトに戻す",
+        "Varsayılanları\ngeri yükle",
+        "استعادة الضبط" +"\n" +"الافتراضي",
+        "Przywróć\ndomyślne",
+        "Gendanne standardindstillingerne",
+        "기본값으로 복원"},
+        
+    //textID: 27
+        {"Lock Framerate",
+        "Блокировать частоту кадров",
+        "Framerate bloqueo",
+        "Blocca il framerate",
+        "锁定帧率",
+        "Limiter les images par secondes",
+        "Bloquear taxa de quadros",
+        "Framesnelheid vergrendelen",
+        "Framerate sperren",
+        "フレームレートをロック",
+        "Kare hızını sabitle",
+        "قفل معدل الإطار",
+        "Zablokuj klatek na sekundę",
+        "Lås Framerate",
+        "프레임 레이트 고정"}
     };
 
-    string[,] pauseMenuTexts = new string[7, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
+    string[,] pauseMenuTexts = new string[23, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
         
     //textID: 0
         {"Map",
@@ -412,7 +609,279 @@ public class TextTranslationManager : MonoBehaviour
         "النقل الفضائي",
         "Teleport",
         "Teleport",
-        "순간 이동"}
+        "순간 이동"},
+        
+    //textID: 7
+        {"Blueberry radar",
+        "черничный радар",
+        "radar de arándanos",
+        "Radar per Bacche Blu",
+        "蓝莓雷达",
+        "radar myrtille",
+        "radar de mirtilo",
+        "bosbessen radar",
+        "Blaubeerradar",
+        "ブルーベリーレーダー",
+        "yabanmersini radarı",
+        "عنبية الرادار",
+        "radar jagodowy",
+        "blåbærradar",
+        "블루 베리 레이더"},
+        
+    //textID: 8
+        {"Race",
+        "чраса",
+        "Carrera",
+        "Gara",
+        "种族",
+        "Course",
+        "Raça",
+        "Ras",
+        "Rennen",
+        "人種",
+        "Yarış",
+        "سباق",
+        "Wyścig",
+        "Race",
+        "경주"},
+        
+    //textID: 9
+        {"Results",
+        "Результаты",
+        "Resultados",
+        "risultati",
+        "结果",
+        "Résultats",
+        "Resultados",
+        "resultaten",
+        "Ergebnisse",
+        "結果",
+        "Sonuçlar",
+        "النتائج",
+        "Wyniki",
+        "Resultater",
+        "결과"},
+        
+    //textID: 10
+        {"Reward",
+        "Награда",
+        "Recompensa",
+        "Ricompensa",
+        "奖励",
+        "Récompense",
+        "Recompensa",
+        "Beloning",
+        "Belohnung",
+        "褒賞",
+        "Ödül",
+        "مكافأة",
+        "Nagroda",
+        "Belønning",
+        "보상"},
+        
+    //textID: 11
+        {"Quit",
+        "Уволиться",
+        "Dejar",
+        "Smettere",
+        "放弃",
+        "Quitter",
+        "Sair",
+        "ophouden",
+        "Verlassen",
+        "終了する",
+        "Bırakmak",
+        "استقال",
+        "Porzucić",
+        "Afslut",
+        "떠나다"},
+        
+    //textID: 12
+        {"run by default",
+        "запустить по умолчанию",
+        "ejecutado por defecto",
+        "gestito di default",
+        "默认运行",
+        "courir par défaut",
+        "executado por padrão",
+        "standaard uitgevoerd",
+        "standardmäßig ausführen",
+        "デフォルトで実行",
+        "varsayılan olarak çalıştır",
+        "تشغيل افتراضيا",
+        "uruchamiany domyślnie",
+        "kør som standard",
+        "기본적으로 실행"},
+        
+    //textID: 13
+        {"player 1 keyboard only",
+        "только клавиатура игрока 1",
+        "jugador 1 solo teclado",
+        "solo giocatore 1 tastiera",
+        "仅限玩家1键盘",
+        "joueur 1 clavier seulement",
+        "apenas teclado do jogador 1",
+        "alleen speler 1 toetsenbord",
+        "Nur Player 1-Tastatur",
+        "プレーヤー1キーボードのみ",
+        "sadece oyuncu 1 klavye",
+        "لاعب 1 لوحة المفاتيح فقط",
+        "tylko klawiatura odtwarzacza 1",
+        "kun spiller 1-tastatur",
+        "플레이어 1 키보드 만"},
+        
+    //textID: 14
+        {"button mappings",
+        "сопоставления кнопок",
+        "asignaciones de botones",
+        "mappature dei pulsanti",
+        "按钮映射",
+        "mappages de boutons",
+        "mapeamentos de botões",
+        "knoptoewijzingen",
+        "Schaltflächenzuordnungen",
+        "ボタンのマッピング",
+        "düğme eşlemeleri",
+        "تعيينات الزر",
+        "mapowania przycisków",
+        "knapmappinger",
+        "버튼 매핑"},
+        
+    //textID: 15
+        {"resolution",
+        "разрешающая способность",
+        "resolución",
+        "risoluzione",
+        "解析度",
+        "résolution",
+        "resolução",
+        "resolutie",
+        "Auflösung",
+        "解決",
+        "çözüm",
+        "القرار",
+        "rozkład",
+        "løsning",
+        "해결"},
+        
+    //textID: 16
+        {"window",
+        "окно",
+        "ventana",
+        "finestra",
+        "窗口",
+        "fenêtre",
+        "janela",
+        "venster",
+        "Fenster",
+        "窓",
+        "pencere",
+        "نافذة او شباك",
+        "okno",
+        "vindue",
+        "창문"},
+        
+    //textID: 17
+        {"v-sync",
+        "вертикальная синхронизация",
+        "sincronización vertical",
+        "sincronizzazione verticale",
+        "垂直同步",
+        "synchronisation verticale",
+        "sincronização vertical",
+        "verticale synchronisatie",
+        "vertikale Synchronisation",
+        "垂直同期",
+        "dikey senkronizasyon",
+        "تزامن عمودي",
+        "synchronizacja pionowa",
+        "vertikal synkronisering",
+        "수직 동기"},
+        
+    //textID: 18
+        {"object detail scaling",
+        "масштабирование деталей объекта",
+        "escalado de detalles de objeto",
+        "ridimensionamento dei dettagli dell'oggetto",
+        "对象细节缩放",
+        "mise à l'échelle des détails d'objet",
+        "escala de detalhes do objeto",
+        "object detail schalen",
+        "Objektdetail-Skalierung",
+        "オブジェクト詳細スケーリング",
+        "nesne detayı ölçeklendirme",
+        "تحجيم تفاصيل الكائن",
+        "skalowanie szczegółów obiektu",
+        "skalering af objektdetaljer",
+        "객체 디테일 스케일링"},
+        
+    //textID: 19
+        {"distance scaling",
+        "масштабирование расстояния",
+        "escalamiento de distancia",
+        "ridimensionamento della distanza",
+        "距离缩放",
+        "mise à l'échelle de la distance",
+        "escala de distância",
+        "afstandsschaling",
+        "Entfernungsskalierung",
+        "距離スケーリング",
+        "mesafe ölçeklendirme",
+        "تحجيم المسافة",
+        "skalowanie odległości",
+        "afstand skalering",
+        "거리 스케일링"},
+        
+    //textID: 20
+        {"Apply",
+        "Применять",
+        "Aplicar",
+        "Applicare",
+        "应用",
+        "Appliquer",
+        "Aplique",
+        "Van toepassing zijn",
+        "Anwenden",
+        "適用する",
+        "Uygulamak",
+        "تطبيق",
+        "Zastosować",
+        "ansøge",
+        "대다"},
+        
+    //textID: 21
+        {"Quit",
+        "уволиться",
+        "Dejar",
+        "Smettere",
+        "放弃",
+        "Quitter",
+        "Sair",
+        "Ophouden",
+        "Verlassen",
+        "終了する",
+        "çıkış",
+        "استقال",
+        "Porzucić",
+        "Afslut",
+        "떠나다"},
+        
+    //textID: 22
+        {"Save and Quit",
+        "Сохранить и выйти",
+        "Guardar y Salir",
+        "Salva ed esci",
+        "保存并退出",
+        "Sauvegarder et quitter",
+        "Salvar e sair",
+        "Opslaan en afsluiten",
+        "Speichern und Beenden",
+        "保存して終了",
+        "Kaydet ve çık",
+        "احفظ واخرج",
+        "Zapisz i wyjdź",
+        "Gem og afslut",
+        "저장하고 종료"}
     };
 
     string[,] commonTexts = new string[18, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
@@ -705,23 +1174,23 @@ public class TextTranslationManager : MonoBehaviour
         "Język",
         "Sprog",
         "언어"},
-
+        
     //textID: 17
-        {"Xbox One Programmer",
-        "программист Xbox One",
-        "Programador Xbox One",
-        "Programmatore Xbox One",
-        "Xbox One 程序员",
-        "Programmeur Xbox One",
-        "Programador Xbox One",
-        "Xbox One Programmeur",
-        "Xbox One Programmierer",
-        "Xbox Oneプログラマー",
-        "Xbox One Programcı",
-        "Xbox One مبرمج",
-        "Programator Xbox One",
-        "Xbox One Programmerer",
-        "Xbox One 프로그래머"}
+        {"New button mappings will not visually update icons and tutorials in the game.",
+        "Новые сопоставления кнопок не будут визуально обновлять значки и учебники в игре.",
+        "Las nuevas asignaciones de botones no actualizarán visualmente iconos y tutoriales en el juego.",
+        "Le nuove mappature dei pulsanti non aggiorneranno visivamente icone ed esercitazioni nel gioco.",
+        "新的按钮映射不会在视觉上更新游戏中的图标和教程。",
+        "Les nouveaux mappages de boutons ne mettront pas à jour visuellement les icônes et les didacticiels du jeu.",
+        "Novos mapeamentos de botões não atualizam visualmente ícones e tutoriais no jogo.",
+        "Nieuwe knoptoewijzingen zullen pictogrammen en tutorials in het spel niet visueel bijwerken.",
+        "Neue Tastenzuordnungen aktualisieren Symbole und Tutorials im Spiel nicht visuell.",
+        "新しいボタンマッピングは、ゲーム内のアイコンやチュートリアルを視覚的に更新しません。",
+        "Yeni düğme eşlemeleri, oyundaki simgeleri ve öğreticileri görsel olarak güncellemez.",
+        "لن تؤدي تعيينات الأزرار الجديدة إلى تحديث الرموز والبرامج التعليمية في اللعبة بشكل مرئي.",
+        "Nowe mapowania przycisków nie aktualizują wizualnie ikon i samouczków w grze.",
+        "Nye knapmappninger opdaterer ikke ikoner og tutorials visuelt i spillet.",
+        "새로운 버튼 매핑은 게임에서 아이콘과 튜토리얼을 시각적으로 업데이트하지 않습니다."}
     };
 
     string[,] mapLevelNamesTexts = new string[41, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
@@ -1546,21 +2015,21 @@ public class TextTranslationManager : MonoBehaviour
         "잎사귀 슬라이딩"},
         
     //textID: 7
-        {"Your leaf can now be used as a super-fast skateboard! Hold down the RT button while on ground to activate.",
-        "Этот лист теперь можно использовать как суперскоростной скейтборд! Держи нажатой кнопка RT на земле для активирования.",
-        "¡Tu hoja se ha convertido en una tabla de skate ultrarápida! Para patinar, mantén  presionado el botón RT cuando estés en el suelo.",
-        "Puoi usare la tua foglia come Skateboard super veloce! Tieni premuto RT mentre sei a terra per attivare questa mossa sorprendente.",
-        "你的叶子现在可以作为一个超快速滑板！打开时按住RT按钮 地面启动。",
-        "Votre feuille peut maintenant être utilisée comme une planche à roulettes super rapide ! Maintenez le bouton RT enfoncé pendant que l'appareil est au sol pour l'activer.",
-        "A tua folha agora pode ser usada como um skate super-rápido! Mantém pressionado o botão RT enquanto estiveres em terra para ativar.",
-        "Jouw blad glijdt supersnel!! Houd de RT knop ingedrukt op de grond om te activeren.",
-        "Dein Blatt kann jetzt als superschnelles Skateboard verwendet werden! Zur Aktivierung RT-Taste gedrückt halten, während man auf dem Boden ist.",
-        "貴方の葉っぱは今度、超早いスケートボードとして使えます！アクティブ化するのにグランドにいる間はRTボタンを押したままにして下さい。",
-        "Yaprağını artık süper-hızlı bir kaykay gibi kullanabilirsin. Etkinleştirmek için yerdeyken RT düğmesi basılı tut.",
-        "يمكن الآن استخدام ورقة الشجر الخاصة بك كلوح التزلج فائق السرعة! اضغط باستمرار على " +"زر" +" TR " + "أثناء التشغيل أرضية التفعيل.",
-        "Twój liść może być teraz używany jako superszybka deskorolka! Przytrzymaj przycisk RT, kiedy stoisz na ziemi, aby aktywować.",
-        "Nu kan dit blad bruges som et super hurtigt skateboard! Hold RT-knappen nede, når du er på jorden for at aktivere funktionen.",
-        "이제 잎사귀을 초고속 스케이트 보드로 사용할 있습니다! 보드를 타는 동안 RT 버튼을 길게 누르세요."},
+        {"Your leaf can now be used as a super-fast skateboard! Hold down the ##S## button while on ground to activate.",
+        "Этот лист теперь можно использовать как суперскоростной скейтборд! Держи нажатой кнопку ##S## на земле для активирования.",
+        "¡Tu hoja se ha convertido en una tabla de skate ultrarápida! Para patinar, mantén  presionado el botón ##S## cuando estés en el suelo.",
+        "Puoi usare la tua foglia come Skateboard super veloce! Tieni premuto ##S## mentre sei a terra per attivare questa mossa sorprendente.",
+        "你的叶子现在可以作为一个超快速滑板！打开时按住##S##按钮 地面启动。",
+        "Votre feuille peut maintenant être utilisée comme une planche à roulettes super rapide ! Maintenez le bouton ##S## enfoncé pendant que l'appareil est au sol pour l'activer.",
+        "A tua folha agora pode ser usada como um skate super-rápido! Mantém pressionado o botão ##S## enquanto estiveres em terra para ativar.",
+        "Jouw blad glijdt supersnel!! Houd de ##S## knop ingedrukt op de grond om te activeren.",
+        "Dein Blatt kann jetzt als superschnelles Skateboard verwendet werden! Zur Aktivierung ##S##-Taste gedrückt halten, während man auf dem Boden ist.",
+        "貴方の葉っぱは今度、超早いスケートボードとして使えます！アクティブ化するのにグランドにいる間は##S##ボタンを押したままにして下さい。",
+        "Yaprağını artık süper-hızlı bir kaykay gibi kullanabilirsin. Etkinleştirmek için yerdeyken ##S## tuşuna basılı tut.",
+        "يمكن الآن استخدام ورقة الشجر الخاصة بك كلوح التزلج فائق السرعة! اضغط باستمرار على الزر ##S## أثناء التشغيل أرضية التفعيل.",
+        "Twój liść może być teraz używany jako superszybka deskorolka! Przytrzymaj przycisk ##S##, kiedy stoisz na ziemi, aby aktywować.",
+        "Nu kan dit blad bruges som et super hurtigt skateboard! Hold ##S##-knappen nede, når du er på jorden for at aktivere funktionen.",
+        "이제 잎사귀을 초고속 스케이트 보드로 사용할 있습니다! 보드를 타는 동안 ##S## 버튼을 길게 누르세요."},
         
     //textID: 8
         {"AUTO WINDBALL",
@@ -2362,7 +2831,7 @@ public class TextTranslationManager : MonoBehaviour
         "취소"}
     };
 
-    string[,] npcTexts = new string[96, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
+    string[,] npcTexts = new string[97, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
         
     //textID: 0
         {"Help! The four other band members have been taken by those dark beings. Please free them if you see them...",
@@ -2569,21 +3038,21 @@ public class TextTranslationManager : MonoBehaviour
         "여기까지 올 줄은 몰랐어요!"},
         
     //textID: 12
-        {"Did you know that you can get help from your friends? Press the Menu button on the other controllers to let them join!",
-        "Ты знал, что помощь получить помощь друга? Нажми Menu на других контроллерах, чтобы они могли присоединиться!",
-        "¿Sabías que puedes conseguir ayuda de tus amigos? Dale al botón Menu en los otros mandos para juntarlos a la partida!",
-        "Sapevi che puoi farti aiutare dai tuoi amici? Premi Menu sugli altri controller per farli arrivare!",
-        "你知道你可以得到朋友的帮助吗？按Menu键 按下其他控制器让他们加入！",
-        "Saviez-vous que vous pouvez obtenir de l'aide de vos amis ? Appuyez sur le bouton Menu des autres manettes pour les laisser se joindre !",
-        "Sabias que podes obter ajuda dos teus amigos? Prime o Botão Menu nos outros comandos para deixá-los entrar!",
-        "Wist je dat je hulp van je vrienden kunt krijgen? Druk op de Menu Knop op de andere Controllers om ze te laten deelnemen!",
-        "Wusstest du, dass du Hilfe von deinen Freunden bekommen kannst? Drücke die Menu Taste auf den anderen Controllern und lasse sie teilnehmen!",
-        "貴方は貴方の友達の助けを得られることを知っていましたか？他のコントローラーのMenuボタンボタンを押して彼らを合流させて下さい！",
-        "Arkadaşlarından yardım alabileceğini biliyor muydun? Katılmalarına izin vermek için diğer kontrol cihazlarındaki Menu Düğmesine bas!",
-        "هل تعلم أنه يمكنك الحصول على مساعدة من أصدقائك؟ اضغط على زر unem على وحدات التحكم الأخرى للسماح لهم بالانضمام!",
-        "Czy wiesz, że możesz uzyskać pomoc od znajomych? Naciśnij przycisk Menu na innych kontrolerach, aby pozwolić im dołączyć!",
-        "Vidste du, at du kan få hjælp fra dine venner? Tryk på Menu -knappen på de andre controllere for at lade dem være med!",
-        "친구들에게 도움받을 수 있다는 것을 알고 있었나요? 다른 컨트롤러에 있는 Menu 버튼을 눌러 친구들과 함께 하세요!"},
+        {"Did you know that you can get help from your friends? Press any button on the other controllers to let them join!",
+        "Ты знал, что помощь получить помощь друга? Нажми Любые на других контроллерах, чтобы они могли присоединиться!",
+        "¿Sabías que puedes obtener ayuda de tus amigos? ¡Presiona cualquier botón en los otros controles para unirlos al juego!",
+        "Sapevi che puoi farti aiutare dai tuoi amici? Premi qualunque sugli altri controller per farli arrivare!",
+        "你知道你可以得到朋友的帮助吗？按任何 按下其他控制器让他们加入！",
+        "Saviez-vous que vous pouvez obtenir de l'aide de vos amis ? Appuyez sur le bouton toute des autres contrôleurs pour les laisser se joindre !",
+        "Sabias que podes obter ajuda dos teus amigos? Prime o Botão qualquer nos outros controladores para deixá-los entrar!",
+        "Wist je dat je hulp van je vrienden kunt krijgen? Druk op de ieder Knop op de andere Controllers om ze te laten deelnemen!",
+        "Wusstest du, dass du Hilfe von deinen Freunden bekommen kannst? Drücke die irgendein Taste auf den anderen Controllern und lasse sie teilnehmen!",
+        "貴方は貴方の友達の助けを得られることを知っていましたか？他のコントローラーのどれかボタンを押して彼らを合流させて下さい！",
+        "Arkadaşlarından yardım alabileceğini biliyor muydun? Katılmalarına izin vermek için diğer kontrol cihazlarındaki herhangi Düğmesine bas!",
+        "هل تعلم أنه يمكنك الحصول على مساعدة من أصدقائك؟ اضغط على زر أي على وحدات التحكم الأخرى للسماح لهم بالانضمام!",
+        "Czy wiesz, że możesz uzyskać pomoc od znajomych? Naciśnij przycisk każdy na innych kontrolerach, aby pozwolić im dołączyć!",
+        "Vidste du, at du kan få hjælp fra dine venner? Tryk på nogen -knappen på de andre controllere for at lade dem være med!",
+        "친구들에게 도움받을 수 있다는 것을 알고 있었나요? 다른 컨트롤러에 있는 어떤 버튼을 눌러 친구들과 함께 하세요!"},
         
     //textID: 13
         {"From up here you can fly wherever you want!",
@@ -3079,21 +3548,21 @@ public class TextTranslationManager : MonoBehaviour
         "이 마을은 우리 세계를 구했던 과거 영웅의 이름을 따서 지어졌어요!"},
         
     //textID: 42
-        {"Using the Glide move (Y button) should make it easier to land on these bird platforms.",
-        "Используя скольжение (Y), ты запросто приземлишься на эти птичьи платформы.",
-        "Si te deslizas con la botón Y, te será más sencillo aterrizar en estas nidos de pájaros.",
-        "Usa la mossa Planata (tasto Y) dovrebbe renderti più facile atterrare su quelle piattaforme uccello.",
-        "使用Glide move（Y）可以更容易降落在这些鸟身上。",
-        "L'utilisation du mouvement Glisse (touche Y) devrait faciliter l'atterrissage sur ces plates-formes à oiseaux.",
-        "Utilizar o movimento de Planar (botão Y) deve facilitar a aterragem nestas plataformas de pássaros.",
-        "Met de Glide Beweging (Y) zou het eenvoudiger moeten zijn om op deze vogelplatforms te landen.",
-        "Die Gleitbewegung (Y-Taste) vereinfacht das Landen auf diesen Vogelplattformen.",
-        "グライド移動（Y）を使用するとこれらのバード・プラットフォームにより簡単に着陸できます。",
-        "Kayma hamlesini (Y) kullanma, bu kuş platformlarına inmeyi kolaylaştırmalı.",
-        "باستخدام حركة الانزلاق (Y) ستسهل الهبوط على منصات الطيور هذه.",
-        "Użycie ruchu Szybowania (Y) powinno ułatwić lądowanie na tych platformach dla ptaków.",
-        "Brug af Glide-bevægelsen (Y) skal gøre det lettere at lande på disse fugleplatforme.",
-        "글라이드 이동(Y)을 사용하면 이러한 버드 플랫폼에 쉽게 착륙할 수 있어요."},
+        {"Using the Glide move (##G##) should make it easier to land on these bird platforms.",
+        "Используя скольжение (##G##), ты запросто приземлишься на эти птичьи платформы.",
+        "Si te deslizas con la (##G##), te será más sencillo aterrizar en estas nidos de pájaros.",
+        "Usa la mossa Planata (##G##) dovrebbe renderti più facile atterrare su quelle piattaforme uccello.",
+        "使用Glide move（##G##）可以更容易降落在这些鸟身上。",
+        "L'utilisation du mouvement Glisse (##G##) devrait faciliter l'atterrissage sur ces plates-formes à oiseaux.",
+        "Utilizar o movimento de Planar (##G##) deve facilitar a aterragem nestas plataformas de pássaros.",
+        "Met de Glide Beweging (##G##) zou het eenvoudiger moeten zijn om op deze vogelplatforms te landen.",
+        "Die Gleitbewegung (##G##) vereinfacht das Landen auf diesen Vogelplattformen.",
+        "グライド移動（##G##）を使用するとこれらのバード・プラットフォームにより簡単に着陸できます。",
+        "Kayma hamlesini (##G##) kullanma, bu kuş platformlarına inmeyi kolaylaştırmalı.",
+        "باستخدام حركة الانزلاق (##G##) ستسهل الهبوط على منصات الطيور هذه.",
+        "Użycie ruchu Szybowania (##G##) powinno ułatwić lądowanie na tych platformach dla ptaków.",
+        "Brug af Glide-bevægelsen (##G##) skal gøre det lettere at lande på disse fugleplatforme.",
+        "글라이드 이동(##G##)을 사용하면 이러한 버드 플랫폼에 쉽게 착륙할 수 있어요."},
         
     //textID: 43
         {"Hey! Don't touch my blue berry!",
@@ -3994,6 +4463,23 @@ public class TextTranslationManager : MonoBehaviour
         "إن 12 من الزهور المقدسة التي كانت تحمي هذا المكان من خلال سلطاتها تنام حول العالم! يرجى محاولة إيقاظهم إذا رأيتهم.",
         "12 Świętych Kwiatów, które niegdyś chroniły to miejsce swoimi mocami, śpią na całym świecie! Spróbuj je obudzić, jeśli je zobaczysz.",
         "De 12 hellige blomster, der engang beskyttede dette sted med deres kræfter, sover rundt om i verden! Prøv at vække dem, hvis du ser dem.",
+        "한때 그들의 힘으로이 장소를 보호했던 12 개의 신성한 꽃이 전 세계에서 자고 있습니다! 당신이 그들을 볼 경우에 깨워보십시오."},
+        
+    //textID: 96
+        {"I challenge you to a race!",
+        "12 Священных Цветов снова играют в этом пространстве, их силы спят по всему миру! Пожалуйста, попробуйте разбудить их, если вы их видите.",
+        "¡Las 12 Flores Sagradas que alguna vez protegieron este lugar con sus poderes están durmiendo alrededor del mundo! Por favor, trata de despertarlas si las ves.",
+        "I 12 fiori sacri che un tempo proteggevano questo posto con i loro poteri, dormono in tutto il mondo! Per favore, prova a svegliarli se li vedi.",
+        "十二朵圣花再次在这个空间中扮演着他们的力量在世界各地睡觉！如果你看到它们，请尝试将它们唤醒。",
+        "Les 12 Fleurs Sacrées jouent encore une fois dans cet espace avec leurs pouvoirs endormies autour du monde! S'il vous plaît, essayez de les réveiller si vous les voyez.",
+        "As 12 Flores Sagradas estão mais uma vez jogando este espaço com seus poderes dormindo em todo o mundo! Por favor, tente acordá-los se você os vir.",
+        "De 12 heilige bloemen spelen opnieuw deze ruimte met hun krachten slapen over de hele wereld! Probeer ze wakker te maken als je ze ziet.",
+        "Die 12 heiligen Blumen, die diesen Ort einst mit ihren Kräften beschützt haben, schlafen auf der ganzen Welt! Bitte versuchen Sie, sie zu wecken, wenn Sie sie sehen.",
+        "かつて彼らの力でこの場所を守ってきた12の聖なる花は世界中で眠っています！表示されたら目を覚ましてみてください。",
+        "Burayı bir zamanlar güçleriyle koruyan 12 Kutsal Çiçek, dünyanın her yerinde uyuyor! Lütfen görürseniz onları uyandırmaya çalışın.",
+        "إن 12 من الزهور المقدسة التي كانت تحمي هذا المكان من خلال سلطاتها تنام حول العالم! يرجى محاولة إيقاظهم إذا رأيتهم.",
+        "12 Świętych Kwiatów, które niegdyś chroniły to miejsce swoimi mocami, śpią na całym świecie! Spróbuj je obudzić, jeśli je zobaczysz.",
+        "De 12 hellige blomster, der engang beskyttede dette sted med deres kræfter, sover rundt om i verden! Prøv at vække dem, hvis du ser dem.",
         "한때 그들의 힘으로이 장소를 보호했던 12 개의 신성한 꽃이 전 세계에서 자고 있습니다! 당신이 그들을 볼 경우에 깨워보십시오."}
     };
 
@@ -4805,7 +5291,7 @@ public class TextTranslationManager : MonoBehaviour
         "이파리"}
     };
 
-    [HideInInspector] public string[,] textPrompts = new string[15, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
+    [HideInInspector] public string[,] textPrompts = new string[16, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
         
     //textID: 0
         {"You found a red berry!\nCollect these to buy items,\nmasks and hats from the markets\nnear your house.",
@@ -4961,21 +5447,21 @@ public class TextTranslationManager : MonoBehaviour
         "이 블록을 부수려면 다른 것이 필요해요…"},
 
     //textID: 8
-        {"You can teleport to checkpoints if you fall down.\nJust press the Menu button and select the position!",
-        "Ты можешь телепортироваться на заставы, если упадешь. Просто кнопка Menu и выбери позицию!",
-        "Si te caes, te puedes teletransportar a un punto de control:  dale al botón Menu y escoge un destino.",
-        "Puoi teletrasportarti ai checkpoint se cadi giù.\nBasta premere il tasto Menu e selezionare la posizione!",
-        "如果你摔倒了，可以传送到检查站。Menu键 按钮并选择位置！",
-        "Vous pouvez vous téléporter aux checkpoints si vous tombez. Appuyez simplement sur le touche Menu et sélectionnez la position !",
-        "Podes teletransportar-te para pontos de verificação se caíres. Basta pressionar o botão Menu e selecionar a posição! ",
-        "Je kunt je naar andere controleposten teleporteren als je valt. Druk gewoon op de Menu-toets en selecteer de positie!",
-        "Du kannst dich zu den Kontrollpunkten teleportieren, solltest du hinfallen. Drücke einfach die Menu-Taste und wähle die Position!",
-        "貴方が落ちればチェックポイントへテレポートできます。Menuボタン、場所を選ぶだけです！",
-        "Düşersen kontrol noktalarına warplayabilirsin. Sadece Menu düğmesi basarak pozisyonu seç!",
-        "يمكنك بالتنقل الفوري إلى نقاط التفتيش إذا سقطت. فقط اضغط على زر unem ‏ وحدد الموقف!",
-        "Możesz się teleportować do punktów kontrolnych, jeśli spadniesz. Wystarczy nacisnąć przycisk Menu i wybrać pozycję!",
-        "Du kan teleportere til kontrolpunkter, hvis du falder ned. Tryk bare på Menu-knap og vælg positionen!",
-        "넘어지면 체크포인트로 순간이동할 수 있습니다. Menu 버튼 누르고 위치를 선택하세요!"},
+        {"You can teleport to checkpoints if you fall down.\nJust press the ##P## Button and select the position!",
+        "Ты можешь телепортироваться на заставы, если упадешь. Просто нажми ##P## и выбери позицию!",
+        "Si te caes, te puedes teletransportar a un punto de control:  dale al botón ##P## y escoge un destino.",
+        "Puoi teletrasportarti ai checkpoint se cadi giù.\nBasta premere ##P## e selezionare la posizione!",
+        "如果你摔倒了，可以传送到检查站。只需按下##P##按钮并选择位置！",
+        "Vous pouvez vous téléporter aux checkpoints si vous tombez. Appuyez simplement sur le bouton ##P## et sélectionnez la position !",
+        "Podes teletransportar-te para pontos de verificação se caíres. Basta pressionar o botão ##P## e selecionar a posição! ",
+        "Je kunt je naar andere controleposten teleporteren als je valt. Druk gewoon op de ##P## Toets en selecteer de positie!",
+        "Du kannst dich zu den Kontrollpunkten teleportieren, solltest du hinfallen. Drücke einfach die ##P## Taste und wähle die Position!",
+        "貴方が落ちればチェックポイントへテレポートできます。＋ボタンを押し、場所を選ぶだけです！",
+        "Düşersen kontrol noktalarına warplayabilirsin. Sadece ##P## düğmesine basarak pozisyonu seç!",
+        "يمكنك بالتنقل الفوري إلى نقاط التفتيش إذا سقطت. فقط اضغط على زر ##P## وحدد الموقف!",
+        "Możesz się teleportować do punktów kontrolnych, jeśli spadniesz. Wystarczy nacisnąć przycisk ##P## i wybrać pozycję!",
+        "Du kan teleportere til kontrolpunkter, hvis du falder ned. Tryk bare på ##P## -knappen og vælg positionen!",
+        "넘어지면 체크포인트로 순간이동할 수 있습니다. ##P## 버튼을 누르고 위치를 선택하세요!"},
 
     //textID: 10
         {"Follow the path when you get lost in the world!",
@@ -5050,7 +5536,7 @@ public class TextTranslationManager : MonoBehaviour
         "Поздравляем! Все Священные Цветы не спят! Теперь, благодаря их силе, все красные ягоды, которые вы получите, будут удвоены в цене!",
         "¡Felicidades! ¡Todas las flores sagradas están despiertas! Ahora, gracias a su poder, ¡todas las bayas rojas que obtendrás duplicarán su valor!",
         "Congratulazioni! Tutti i Fiori Sacri sono svegli! Ora grazie al loro potere, tutte le bacche rosse che otterrai saranno raddoppiate di valore!",
-        "축하합니다! 모든 신성한 꽃이 깨어 있습니다! 그들의 힘 덕분에, 당신이 얻을 수있는 모든 붉은 열매는 가치가 두 배가 될 것입니다!",
+        "恭喜！所有的圣花都清醒了！现在由于它们的力量，你所获得的所有红色浆果的价值都会翻倍！",
         "Toutes nos félicitations! Toutes les fleurs sacrées sont réveillées! Maintenant, grâce à leur puissance, toutes les baies rouges que vous obtiendrez seront doublées!",
         "Parabéns! Todas as flores sagradas estão acordadas! Agora, graças ao seu poder, todas as frutas vermelhas que você receberá serão dobradas em valor!",
         "Gefeliciteerd! Alle heilige bloemen zijn wakker! Dankzij hun kracht worden alle rode bessen die je krijgt verdubbeld in waarde!",
@@ -5060,7 +5546,24 @@ public class TextTranslationManager : MonoBehaviour
         "تهانينا! كل الزهور المقدسة مستيقظة! الآن بفضل قوتهم ، سيتم مضاعفة قيمة كل التوت الأحمر الذي ستحصل عليه!",
         "Gratulacje! Wszystkie Święte Kwiaty są przebudzone! Teraz dzięki ich mocy wszystkie czerwone jagody, które dostaniesz, zostaną podwojone!",
         "Tillykke! Alle de hellige blomster er vågne! Takket være deres kraft vil alle de røde bær, du får, blive fordoblet i værdi!",
-        "축하합니다! 모든 신성한 꽃이 깨어 있습니다! 그들의 힘 덕분에, 당신이 얻을 수있는 모든 붉은 열매는 가치가 두 배가 될 것입니다!"}
+        "축하합니다! 모든 신성한 꽃이 깨어 있습니다! 그들의 힘 덕분에, 당신이 얻을 수있는 모든 붉은 열매는 가치가 두 배가 될 것입니다!"},
+        
+    //textID: 15
+        {"You've collected half of the Blue Berries! To help you find the remaining ones, I've given you the Blue Berry Radar: just press Left Joystick in order to activate it. It will sparkle when you're nearby a Blue Berry!",
+        "У тебя половина голубых ягод! Чтобы помочь вам найти оставшиеся, я дал вам радар с синей ягодой: просто нажмите левый джойстик, чтобы активировать его. Он будет вибрировать, когда вы рядом с синей ягодой!",
+        "Tienes la mitad de las bayas azules! Para ayudarlo a encontrar los restantes, le he dado el radar de bayas azules: simplemente presione el Joystick izquierdo para activarlo. ¡Vibrará cuando estés cerca de una baya azul!",
+        "Hai metà delle bacche blu! Per aiutarti a trovare quelli rimanenti, ti ho dato il radar della bacca blu: basta premere il Joystick sinistro per attivarlo. Vibrerà quando sei vicino a una bacca blu!",
+        "你有一半的蓝色浆果！为了帮助您找到其余的，我给了你蓝莓果雷达：只需按下左侧操纵杆即可激活它。当你在蓝莓附近时，它会振动！",
+        "Vous avez la moitié des baies bleues! Pour vous aider à trouver ceux qui restent, je vous ai donné le radar de la baie bleue: il vous suffit d'appuyer sur le joystick gauche pour l'activer. Il va vibrer lorsque vous êtes à proximité d'une baie bleue!",
+        "Você tem metade das bagas azuis! Para ajudá-lo a encontrar os restantes, forneci o radar da baga azul: basta pressionar o Joystick esquerdo para ativá-lo. Ele vibrará quando você estiver perto de uma baga azul!",
+        "Je hebt de helft van de blauwe bessen! Om je te helpen de resterende te vinden, heb ik je de blauwe bessenradar gegeven: druk gewoon op de linker joystick om deze te activeren. Hij trilt wanneer je in de buurt bent van een blauwe bes!",
+        "Du hast die Hälfte der blauen Beeren! Um die restlichen zu finden, habe ich Ihnen das blaue Beerenradar gegeben: Drücken Sie einfach den linken Joystick, um es zu aktivieren. Es vibriert, wenn Sie sich in der Nähe einer blauen Beere befinden!",
+        "ブルーベリーの半分を得ました！残りのものを見つけるのを助けるために、ブルーベリーレーダーを提供しました。左のジョイスティックを押すとアクティブになります。ブルーベリーの近くにいると振動します！",
+        "Mavi Karpuzu'nun yarısını aldın! Kalanları bulmanıza yardımcı olmak için, size mavi berry radar verdim: sadece etkinleştirmek için sol Joystick'e basın. Mavi bir meyvenin yakınındayken titrer!",
+        "حصلت على نصف التوت الأزرق! لمساعدتك في العثور على الباقي ، أعطيتك رادار التوت الأزرق: فقط اضغط على المقود الأيسر لتنشيطه. سوف يهتز عندما تكون بالقرب من التوت الأزرق!",
+        "Masz połowę Niebieskich Jagód! Aby pomóc ci znaleźć pozostałe, dałem ci niebieski radar z jagodami: po prostu naciśnij lewy joystick, aby go aktywować. Będzie wibrować, gdy będziesz w pobliżu niebieskiej jagody!",
+        "Du har halvdelen af ​​de blå bær! For at hjælpe dig med at finde de resterende, har jeg givet dig den blå bærradar: bare tryk på venstre joystick for at aktivere den. Det vil vibrere, når du er i nærheden af ​​en blå bær!",
+        "블루 베리의 절반을 얻었습니다! 남은 것을 찾기 위해 블루 베리 레이더를 제공했습니다. 활성화하려면 왼쪽 조이스틱을 누르십시오. 블루 베리 근처에있을 때 진동합니다!"}
     };
 
 
@@ -5169,6 +5672,161 @@ public class TextTranslationManager : MonoBehaviour
         "벽에서 뛰어 내리다"}
     };
 
+    string[,] buttons = new string[9, 15]{  // = [ How many orange Lines of code below , How many languages per line ]
+    //textID: 0
+        {"Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl",
+        "Ctrl" },
+
+    //textID: 1
+        {"RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB",
+        "RB" },
+
+    //textID: 2
+        {"R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1",
+        "R1" },
+
+    //textID: 3
+        {"Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc",
+        "Esc" },
+
+    //textID: 4
+        {"Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu",
+        "Menu" },
+
+    //textID: 5
+        {"Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options",
+        "Options"},
+
+    //textID: 6
+        {"Right-Click",
+        "Правая кнопка мыши",
+        "Botón derecho del ratón",
+        "Tasto destro del mouse",
+        "右键点击",
+        "Clic-droit",
+        "Botão direito do mouse",
+        "Rechter muis knop",
+        "Rechtsklick",
+        "右クリック",
+        "sağ tık",
+        "زر الماوس الايمن",
+        "Prawy przycisk myszy",
+        "Højreklik",
+        "마우스 오른쪽 버튼"},
+
+    //textID: 7
+        {"Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y",
+        "Y"},
+
+    //textID: 8
+        {"△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△",
+        "△"}
+    };
+
     void Awake()
     {
         if (singleton != null)
@@ -5233,6 +5891,13 @@ public class TextTranslationManager : MonoBehaviour
             return "OUT OF ARRAY";
         else
         {
+            if (stringToReturn.Contains("##P##"))
+                stringToReturn = stringToReturn.Replace("##P##", ButtonString("PAUSE"));
+            if (stringToReturn.Contains("##S##"))
+                stringToReturn = stringToReturn.Replace("##S##", ButtonString("SLIDE"));
+            if (stringToReturn.Contains("##G##"))
+                stringToReturn = stringToReturn.Replace("##G##", ButtonString("GLIDE"));
+
             if (language == 11)
                 stringToReturn = ReverseString(stringToReturn);
 
@@ -5246,5 +5911,40 @@ public class TextTranslationManager : MonoBehaviour
         char[] charArray = s.ToCharArray();
         Array.Reverse(charArray);
         return new string(charArray);
+    }
+
+    public string ButtonString(string buttonName)
+    {
+        MultiPlatfromGUIManager.ControllerType ct = MultiPlatfromGUIManager.singleton.curControllerType;
+        int language = PlayerPrefs.GetInt("Language", 0);
+
+        if(buttonName == "SLIDE")
+        {
+            if (ct == MultiPlatfromGUIManager.ControllerType.mk)
+                return buttons[0, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.xb)
+                return buttons[1, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.ps)
+                return buttons[2, language];
+        }
+        if(buttonName == "PAUSE")
+        {
+            if (ct == MultiPlatfromGUIManager.ControllerType.mk)
+                return buttons[3, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.xb)
+                return buttons[4, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.ps)
+                return buttons[5, language];
+        }
+        if (buttonName == "GLIDE")
+        {
+            if (ct == MultiPlatfromGUIManager.ControllerType.mk)
+                return buttons[6, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.xb)
+                return buttons[7, language];
+            if (ct == MultiPlatfromGUIManager.ControllerType.ps)
+                return buttons[8, language];
+        }
+        return buttonName;
     }
 }

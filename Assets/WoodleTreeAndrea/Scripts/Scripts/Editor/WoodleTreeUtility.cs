@@ -1,11 +1,9 @@
-﻿
+﻿#if UNITY_EDITOR
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 public class WoodleTreeUtility
 {
@@ -18,7 +16,6 @@ public class WoodleTreeUtility
             cm.BakeChunkReferences();
     }
     */
-#if UNITY_EDITOR
     [MenuItem("WoodleTree/CombineMeshes")]
     public static void CombineMeshes()
     {
@@ -32,5 +29,6 @@ public class WoodleTreeUtility
         foreach (BlobShadowRaycaster sr in GameObject.FindObjectsOfType<BlobShadowRaycaster>())
             sr.RaycastShadow();
     }
-#endif
+
 }
+#endif

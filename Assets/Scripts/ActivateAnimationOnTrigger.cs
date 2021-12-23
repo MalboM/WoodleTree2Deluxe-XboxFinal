@@ -41,14 +41,7 @@ public class ActivateAnimationOnTrigger : MonoBehaviour
 
     IEnumerator WaitToUseSpline()
     {
-        for (float f = 0f; f < 3f; f += Time.deltaTime * Time.timeScale)
-        {
-            while (DataManager.isSuspended)
-                yield return null;
-
-            yield return null;
-        }
-
+        yield return new WaitForSeconds(3f);
         canUseSpline = true;
     }
 }

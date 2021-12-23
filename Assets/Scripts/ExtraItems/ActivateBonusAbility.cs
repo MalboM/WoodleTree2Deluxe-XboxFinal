@@ -1,58 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ActivateBonusAbility : MonoBehaviour {
+public class ActivateBonusAbility : MonoBehaviour
+{
 
-	public int itemID;
+    public int itemID;
     int promptID;
 
-	public int abilityID; //0 for triple jump, 1 for leaf slide, 2 for supercharge
-	public TPC tpc;
+    public int abilityID; //0 for triple jump, 1 for leaf slide, 2 for supercharge
+    public TPC tpc;
 
-	public GameObject icon;
-	public GameObject bought;
-	public GameObject priceObj;
+    public GameObject icon;
+    public GameObject bought;
+    public GameObject priceObj;
+    Text priceText;
 
-	bool touchedThis;
+    bool touchedThis;
     int curLang;
-
-    // items bought
-    int itemsBoughtCount;
-    int abiliesCount;
-
 
     Font originalFont;
     FontStyle originalFontStyle;
 
-	void Start()
-	{
-        originalFont = priceObj.GetComponent<TextMesh>().font;
-        originalFontStyle = priceObj.GetComponent<TextMesh>().fontStyle;
-
-        //
-        if (!PlayerPrefs.HasKey("PaidItemsCount"))
+    private void Awake()
+    {
+        foreach (Transform t in priceObj.GetComponentsInChildren<Transform>(true))
         {
-            PlayerPrefs.SetInt("PaidItemsCount", 0);
-            itemsBoughtCount = 0;
+            if (t.gameObject.GetComponent<Text>() != null)
+                priceText = t.gameObject.GetComponent<Text>();
         }
-        else
-            itemsBoughtCount = PlayerPrefs.GetInt("PaidItemsCount");
+        originalFont = priceText.font;
+        originalFontStyle = priceText.fontStyle;
+    }
 
-        //
-        if (!PlayerPrefs.HasKey("PowerUpsBought"))
-        {
-            PlayerPrefs.SetInt("PowerUpsBought", 0);
-            abiliesCount = 0;
-        }
-        else
-            abiliesCount = PlayerPrefs.GetInt("PowerUpsBought");
+    void Start()
+    {
 
-        //
         if (!PlayerPrefs.HasKey("PaidForItem" + itemID.ToString()))
         {
             PlayerPrefs.SetInt("PaidForItem" + itemID.ToString(), 0);
-        //    PlayerPrefs.Save();
+            //    PlayerPrefs.Save();
         }
         else
         {
@@ -77,7 +65,7 @@ public class ActivateBonusAbility : MonoBehaviour {
     {
         if (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString()) == 1)
         {
-            if(curLang != PlayerPrefs.GetInt("Language"))
+            if (curLang != PlayerPrefs.GetInt("Language"))
             {
                 curLang = PlayerPrefs.GetInt("Language");
                 SetPriceText();
@@ -85,54 +73,38 @@ public class ActivateBonusAbility : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other){
-		if (other.tag == "Player" && other.gameObject.name == "Woodle Character")
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && other.gameObject.name == "Woodle Character")
             ItemPromptManager.DisplayPrompt(promptID, itemID, null, this, null, (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString()) == 1), touchedThis);
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
         if (other.tag == "Player" && other.gameObject.name == "Woodle Character")
             ItemPromptManager.ExitPrompt(promptID);
     }
- 
-    //
-    bool allPowerupsTrophy;
-    //
-    public void TouchThis(){
-		touchedThis = true;
 
-		ActivateAbility ();
+    public void TouchThis()
+    {
+        touchedThis = true;
 
-		icon.SetActive (false);
-		bought.SetActive (true);
+        ActivateAbility();
 
-		PlayerPrefs.SetInt ("UsingItem" + itemID.ToString (), 1);
+        icon.SetActive(false);
+        bought.SetActive(true);
+
+        PlayerPrefs.SetInt("UsingItem" + itemID.ToString(), 1);
         //    PlayerPrefs.Save();
 
-        //
-        if (!PlayerPrefs.HasKey("PowerUpsBought"))
-            PlayerPrefs.SetInt("PowerUpsBought", abiliesCount);
-        else
-            abiliesCount = PlayerPrefs.GetInt("PowerUpsBought");
-        //
-        if (PlayerPrefs.GetInt ("PaidForItem" + itemID.ToString ()) == 0) {
-			PlayerPrefs.SetInt ("PaidForItem" + itemID.ToString (), 1);
-            SetPriceText();
-            //    PlayerPrefs.Save();
-            Transform t = this.transform;
-			while (t.gameObject.GetComponent<UnlockItemMarket> () == null && t.parent != null)
-				t = t.parent;
-			if (t.gameObject.GetComponent<UnlockItemMarket> () != null)
-				t.gameObject.GetComponent<UnlockItemMarket> ().DisplayIt ();
-		}
-        
+        if (PlayerPrefs.GetInt("PaidForItem" + itemID.ToString()) == 0)
+        {
+            PlayerPrefs.SetInt("PaidForItem" + itemID.ToString(), 1);
 
-        //
-        abiliesCount++;
-        PlayerPrefs.SetInt("PowerUpsBought", abiliesCount);
-        //
-
-
+            int amountBought = PlayerPrefs.GetInt("BoughtPowers", 0) + 1;
+            PlayerPrefs.SetInt("BoughtPowers", amountBought);
+            if (amountBought >= 4)
+            {
 #if UNITY_PS4
 
         //
@@ -153,58 +125,70 @@ public class ActivateBonusAbility : MonoBehaviour {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_POWER);
         }
 #endif
+            }
 
+            SetPriceText();
+            //    PlayerPrefs.Save();
+            Transform t = this.transform;
+            while (t.gameObject.GetComponent<UnlockItemMarket>() == null && t.parent != null)
+                t = t.parent;
+            if (t.gameObject.GetComponent<UnlockItemMarket>() != null)
+                t.gameObject.GetComponent<UnlockItemMarket>().DisplayIt();
+        }
     }
 
     void SetPriceText()
     {
-        priceObj.GetComponent<TextMesh>().text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, curLang);
-        if (curLang == 1 || curLang == 2 || curLang == 3 || curLang == 6 || curLang == 7 || curLang == 8 || curLang == 9 || curLang == 10 || curLang == 11 || curLang == 12)
-            priceObj.GetComponent<TextMesh>().fontSize = 50;
-        else
-            priceObj.GetComponent<TextMesh>().fontSize = 80;
+        priceText.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, curLang);
+        /*    if (curLang == 1 || curLang == 2 || curLang == 3 || curLang == 6 || curLang == 7 || curLang == 8 || curLang == 9 || curLang == 10 || curLang == 11 || curLang == 12)
+                priceText.fontSize = 50;
+            else
+                priceText.fontSize = 80;*/
         if (curLang == 11)
         {
-            priceObj.GetComponent<TextMesh>().font = TextTranslationManager.singleton.arabicFont;
-            priceObj.GetComponent<TextMesh>().fontStyle = FontStyle.Bold;
+            priceText.font = TextTranslationManager.singleton.arabicFont;
+            priceText.fontStyle = FontStyle.Bold;
         }
         else
         {
-            priceObj.GetComponent<TextMesh>().font = originalFont;
-            priceObj.GetComponent<TextMesh>().fontStyle = originalFontStyle;
+            priceText.font = originalFont;
+            priceText.fontStyle = originalFontStyle;
         }
     }
 
-	public void UnTouchThis(){
-		touchedThis = false;
+    public void UnTouchThis()
+    {
+        touchedThis = false;
 
-		bought.SetActive (false);
-		icon.SetActive (true);
+        bought.SetActive(false);
+        icon.SetActive(true);
 
-		PlayerPrefs.SetInt ("UsingItem" + itemID.ToString (), 0);
-    //    PlayerPrefs.Save();
+        PlayerPrefs.SetInt("UsingItem" + itemID.ToString(), 0);
+        //    PlayerPrefs.Save();
 
-        DeactivateAbility ();
-	}
+        DeactivateAbility();
+    }
 
-	void ActivateAbility(){
-		if (abilityID == 0)
-			tpc.hasTripleJump = true;
-		if (abilityID == 1)
-			tpc.hasLeafSlide = true;
-		if (abilityID == 2)
-			tpc.hasSuperLeaf = true;
+    void ActivateAbility()
+    {
+        if (abilityID == 0)
+            tpc.hasTripleJump = true;
+        if (abilityID == 1)
+            tpc.hasLeafSlide = true;
+        if (abilityID == 2)
+            tpc.hasSuperLeaf = true;
         if (abilityID == 3)
             tpc.hasUltraLeaf = true;
     }
 
-	void DeactivateAbility(){
-		if (abilityID == 0)
-			tpc.hasTripleJump = false;
-		if (abilityID == 1)
-			tpc.hasLeafSlide = false;
-		if (abilityID == 2)
-			tpc.hasSuperLeaf = false;
+    void DeactivateAbility()
+    {
+        if (abilityID == 0)
+            tpc.hasTripleJump = false;
+        if (abilityID == 1)
+            tpc.hasLeafSlide = false;
+        if (abilityID == 2)
+            tpc.hasSuperLeaf = false;
         if (abilityID == 3)
             tpc.hasUltraLeaf = false;
     }

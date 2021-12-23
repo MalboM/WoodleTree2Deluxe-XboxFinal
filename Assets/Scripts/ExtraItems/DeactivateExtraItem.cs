@@ -24,28 +24,18 @@ public class DeactivateExtraItem : MonoBehaviour {
                 firstChild.SetActive(activateInstead);
         }
 
-        StartCoroutine("CheckIfCollected");
+        InvokeRepeating("CheckIfCollected", 0f, 5f);
 	}
 
-    IEnumerator CheckIfCollected()
+    void CheckIfCollected()
     {
-        for (float f = 0f; f < 5f; f += Time.deltaTime * Time.timeScale)
-        {
-            while (DataManager.isSuspended)
-                yield return null;
-
-            yield return null;
-
-            if (!this.enabled)
-                StopCoroutine("CheckIfCollected");
-        }
+        if (!this.enabled)
+            CancelInvoke("CheckIfCollected");
 
         if (PlayerPrefs.GetInt(playerprefstocheck, 0) == 0)
         {
             if (firstChild.activeInHierarchy == activateInstead)
                 firstChild.SetActive(!activateInstead);
         }
-
-        StartCoroutine("CheckIfCollected");
     }
 }

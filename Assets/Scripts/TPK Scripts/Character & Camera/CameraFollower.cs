@@ -181,7 +181,20 @@ public class CameraFollower : MonoBehaviour {
     private bool firstPass;														//a bool that turns true after the first pass of the Update() function to check for error
 	[HideInInspector] public bool disableControl;
 
+    bool movingCameraToBack;
+    public AnimationCurve cameraMoveCurve;
+
+    int debugMovementType;
+    float moveWith;
+
+    int updateMode = 0;
+
+    bool attackZooming;
+    
 	void Start () {
+
+        debugMovementType = 0;
+
 		cam = this.GetComponent<Camera> ();
 
 		origDA = distanceAway;																															//The original values of 'distanceAway/Up' are assigned
@@ -233,6 +246,7 @@ public class CameraFollower : MonoBehaviour {
 	}
 
     void Update() {                                                 //Update() is only really used for errors and miscelaneous checks
+        moveWith = Time.smoothDeltaTime;
         if (!firstPass) {
             chara = PlayerManager.GetMainPlayer();
 			input = chara.input;
@@ -275,35 +289,99 @@ public class CameraFollower : MonoBehaviour {
                 freeX *= -1f;
             if(freeInvertYAxis || stationaryMode1 || stationaryMode2)
                 freeY *= -1f;
+
+            if (MultiPlatfromGUIManager.singleton.curControllerType == MultiPlatfromGUIManager.ControllerType.mk)
+            {
+                freeX *= 0.05f;
+                freeY *= 0.05f;
+            }
         }
+
+        if (!cam.allowMSAA)
+            cam.allowMSAA = true;
+        
+        /*
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            debugMovementType++;
+            if (debugMovementType >= 5)
+                debugMovementType = 0;
+
+            Debug.Log("MOVE WITH " + debugMovementType.ToString());
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            updateMode++;
+            if (updateMode >= 3)
+                updateMode = 0;
+
+            Debug.Log("UPDATE WITH " + updateMode.ToString());
+        }
+
+        if (debugMovementType == 0)
+            moveWith = 1f / 60f;
+        if (debugMovementType == 1)
+            moveWith = Time.deltaTime;
+        if (debugMovementType == 2)
+            moveWith = Time.smoothDeltaTime;
+        if (debugMovementType == 3)
+            moveWith = Time.fixedDeltaTime;
+        if (debugMovementType == 3)
+            moveWith = (Time.time - Time.fixedTime) / Time.fixedDeltaTime;
+        */
+
+        if (updateMode == 0)
+            MainCode();
     }
     
-    void LateUpdate() { 
-		if (!disableControl) {
-			if (cutTransition || targetTransition || transitionBackFromCutscene) {
-				freeY = 0f;
-				freeX = 0f;
-			}
+    void LateUpdate()
+    {
+        if (updateMode == 1)
+            MainCode();
+    }
 
-			if (chara.onGround) {
-				if (followingDescent)
-					followingDescent = false;
-				if (targetTransform.position.y > lookAtPosY + aboveThreshG || targetTransform.position.y < lookAtPosY - belowThreshG || targetTransform.parent != null || chara.inWindCol && chara.gliding) {
-					lookAtPosY = targetTransform.position.y;
-				}
-			}
-			if (!chara.onGround && !chara.jumping || chara.onGround && freeY != 0f) {
-				if (targetTransform.position.y < lookAtPosY - belowThreshA || followingDescent || chara.onGround && freeY != 0f) {
-					lookAtPosY = targetTransform.position.y;
-					if (!followingDescent)
-						followingDescent = true;
-				}
-			}
-			if (!chara.onGround) {
-				if (targetTransform.position.y > lookAtPosY + aboveThreshA) {
-					lookAtPosY += Mathf.Abs (targetTransform.position.y - lookAtPosY) - aboveThreshA;
-				}
-			}
+    void FixedUpdate()
+    {
+        if (updateMode == 2)
+            MainCode();
+    }
+
+    void MainCode()
+    {
+        if (!disableControl)
+        {
+            if (cutTransition || targetTransition || transitionBackFromCutscene)
+            {
+                freeY = 0f;
+                freeX = 0f;
+            }
+
+            if (chara.onGround)
+            {
+                if (followingDescent)
+                    followingDescent = false;
+                if (targetTransform.position.y > lookAtPosY + aboveThreshG || targetTransform.position.y < lookAtPosY - belowThreshG || targetTransform.parent != null || chara.inWindCol && chara.gliding)
+                {
+                    lookAtPosY = targetTransform.position.y;
+                }
+            }
+            if (!chara.onGround && !chara.jumping || chara.onGround && freeY != 0f)
+            {
+                if (targetTransform.position.y < lookAtPosY - belowThreshA || followingDescent || chara.onGround && freeY != 0f)
+                {
+                    lookAtPosY = targetTransform.position.y;
+                    if (!followingDescent)
+                        followingDescent = true;
+                }
+            }
+            if (!chara.onGround)
+            {
+                if (targetTransform.position.y > lookAtPosY + aboveThreshA)
+                {
+                    lookAtPosY += Mathf.Abs(targetTransform.position.y - lookAtPosY) - aboveThreshA;
+                }
+            }
             centerSpot = targetTransform.position;
             if (foxChara.activeInHierarchy)
             {
@@ -316,203 +394,257 @@ public class CameraFollower : MonoBehaviour {
                 centerSpot = Vector3.Lerp(centerSpot, targetTransform.position, 0.75f);
             }
 
-            lookAtPos = new Vector3 (Mathf.Lerp (lookAtPos.x, centerSpot.x, Time.smoothDeltaTime * 10f), 
-				Mathf.Lerp (lookAtPos.y, lookAtPosY, Time.smoothDeltaTime * 5f),
-				Mathf.Lerp (lookAtPos.z, centerSpot.z, Time.smoothDeltaTime * 10f));
+            lookAtPos = new Vector3(Mathf.Lerp(lookAtPos.x, centerSpot.x, moveWith * 10f),
+                Mathf.Lerp(lookAtPos.y, lookAtPosY, moveWith * 5f),
+                Mathf.Lerp(lookAtPos.z, centerSpot.z, moveWith * 10f));
 
-//////////When the camera is in BEHIND/ORBITING MODE
-			if (behindMode) {
-				////Setting Position
-				if (float.IsNaN (distanceAway) || float.IsNaN (distanceUp)) {                                         //The distance away/up can result as value that's not a number, so this counters that error
-					dontCheck = true;                                                                               //If it is the case that they're not numbers, the camera will not check for collisions
-					if (float.IsNaN (distanceAway))
-						distanceAway = origDA;
-					if (float.IsNaN (distanceUp))
-						distanceUp = origDU;
-				} else
-					dontCheck = false;
+            //////////When the camera is in BEHIND/ORBITING MODE
+            if (behindMode)
+            {
+                ////Setting Position
+                if (float.IsNaN(distanceAway) || float.IsNaN(distanceUp))
+                {                                         //The distance away/up can result as value that's not a number, so this counters that error
+                    dontCheck = true;                                                                               //If it is the case that they're not numbers, the camera will not check for collisions
+                    if (float.IsNaN(distanceAway))
+                        distanceAway = origDA;
+                    if (float.IsNaN(distanceUp))
+                        distanceUp = origDU;
+                }
+                else
+                    dontCheck = false;
 
-				if (cutTransition)
-					dontCheck = true;
+                if (cutTransition)
+                    dontCheck = true;
 
-				charaFacingDir = Vector3.Dot (new Vector3 (chara.transform.forward.x, 0f, chara.transform.forward.z), new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z));
+                charaFacingDir = Vector3.Dot(new Vector3(chara.transform.forward.x, 0f, chara.transform.forward.z), new Vector3(this.transform.forward.x, 0f, this.transform.forward.z));
 
-			/*	if (reverting) {
-					this.transform.eulerAngles = Vector3.Lerp (this.transform.eulerAngles,
-						new Vector3 (this.transform.eulerAngles.x, nextAngleY, this.transform.eulerAngles.z),
-						Time.fixedDeltaTime * 10f);
-					if (Mathf.Abs (this.transform.eulerAngles.y - nextAngleY) < 0.1f) {
-						if (nextAngleY >= 360f)
-							nextAngleY = 0f;
-						nextAngleY = Mathf.Round (nextAngleY);
-						this.transform.eulerAngles = new Vector3 (this.transform.eulerAngles.x, nextAngleY, this.transform.eulerAngles.z);
-					}
-					prevDU = Mathf.Lerp (prevDU, origDU, Time.smoothDeltaTime * 0.5f);
-				} else {*/
-				rotateFloat = 0f;
-				rotateFloat = 0f;
-				toTheBackRight = Quaternion.Euler (0f, -25f, 0f) * new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z);
-				toTheBackLeft = Quaternion.Euler (0f, 50f, 0f) * toTheBackRight;
+                /*	if (reverting) {
+                        this.transform.eulerAngles = Vector3.Lerp (this.transform.eulerAngles,
+                            new Vector3 (this.transform.eulerAngles.x, nextAngleY, this.transform.eulerAngles.z),
+                            Time.fixedDeltaTime * 10f);
+                        if (Mathf.Abs (this.transform.eulerAngles.y - nextAngleY) < 0.1f) {
+                            if (nextAngleY >= 360f)
+                                nextAngleY = 0f;
+                            nextAngleY = Mathf.Round (nextAngleY);
+                            this.transform.eulerAngles = new Vector3 (this.transform.eulerAngles.x, nextAngleY, this.transform.eulerAngles.z);
+                        }
+                        prevDU = Mathf.Lerp (prevDU, origDU, moveWith * 0.5f);
+                    } else {*/
+                rotateFloat = 0f;
+                rotateFloat = 0f;
+                toTheBackRight = Quaternion.Euler(0f, -25f, 0f) * new Vector3(this.transform.forward.x, 0f, this.transform.forward.z);
+                toTheBackLeft = Quaternion.Euler(0f, 50f, 0f) * toTheBackRight;
 
-				if (Physics.Linecast (chara.transform.position + (chara.transform.forward * chara.boxZ * 7f), chara.transform.position - (toTheBackRight * chara.boxZ * 10f),
-						out whiskerRay, whatIsAnObstruction)) {
-					if (whiskerRay.collider.tag != "NonObstructing" && chara.onGround && input.GetAxis ("LH") > 0.5f)
-						obsOnRight = true;
-					else
-						obsOnRight = false;
-				} else
-					obsOnRight = false;
-                    
-				if (Physics.Linecast (chara.transform.position + (chara.transform.forward * chara.boxZ * 7f), chara.transform.position - (toTheBackLeft * chara.boxZ * 10f),
-						out whiskerRay, whatIsAnObstruction)) {
-					if (whiskerRay.collider.tag != "NonObstructing" && chara.onGround && input.GetAxis ("LH") < -0.5f)
-						obsOnLeft = true;
-					else
-						obsOnLeft = false;
-				} else
-					obsOnLeft = false;
+                if (Physics.Linecast(chara.transform.position + (chara.transform.forward * chara.boxZ * 7f), chara.transform.position - (toTheBackRight * chara.boxZ * 10f),
+                        out whiskerRay, whatIsAnObstruction))
+                {
+                    if (whiskerRay.collider.tag != "NonObstructing" && chara.onGround && input.GetAxis("LH") > 0.5f)
+                        obsOnRight = true;
+                    else
+                        obsOnRight = false;
+                }
+                else
+                    obsOnRight = false;
 
-				if (obsOnLeft && obsOnRight) {
-					obsOnLeft = false;
-					obsOnRight = false;
-				}
-			//	if (obsOnLeft || obsOnRight)
-			//		hasMovedCam = true;
-                    
-				if (obsOnRight)
-					rotateFloat = .5f;
-				if (obsOnLeft)
-					rotateFloat = -.5f;
-				if (freeX != 0f)
-					rotateFloat = freeX;
-				if (prevDUSpeed != 1f && !prevDUChangeDelay)
-					prevDUSpeed = 1f;
-				if (freeY != 0f) {
-					zoomFloat = freeY;
-					prevDUChangeDelay = false;
-					StopCoroutine ("PrevDUChange");
-				} else {
-					if (!chara.onGround && !chara.frozen) {
-						if (charaRB.velocity.y > 2f) {
-							if (jumpLookValue == -0.8f)
-								jumpLookSpeed = 5f;
-							else
-								jumpLookSpeed = 2f;
-							jumpLookValue = -0.5f;
-						} else {
-							if (jumpLookValue == -0.5f)
-								jumpLookSpeed = 5f;
-							else
-								jumpLookSpeed = 2f;
-							jumpLookValue = -0.8f;
-						}
-						potentialZoomFloat = Mathf.Lerp (potentialZoomFloat, jumpLookValue * Mathf.Sign (charaRB.velocity.y), Time.deltaTime * jumpLookSpeed);
-						zoomFloat = potentialZoomFloat;
-						if (!dampCamera)
-							zoomFloat = 0f;
-				//		if (!hasMovedCam)
-				//			hasMovedCam = true;
-					} else {
-						if (potentialZoomFloat != 0f) {
-							potentialZoomFloat = 0f;
-							prevDUSpeed = 0.2f;
-							prevDUChangeDelay = true;
-							StopCoroutine ("PrevDUChange");
-							StartCoroutine ("PrevDUChange");
+                if (Physics.Linecast(chara.transform.position + (chara.transform.forward * chara.boxZ * 7f), chara.transform.position - (toTheBackLeft * chara.boxZ * 10f),
+                        out whiskerRay, whatIsAnObstruction))
+                {
+                    if (whiskerRay.collider.tag != "NonObstructing" && chara.onGround && input.GetAxis("LH") < -0.5f)
+                        obsOnLeft = true;
+                    else
+                        obsOnLeft = false;
+                }
+                else
+                    obsOnLeft = false;
+
+                if (obsOnLeft && obsOnRight)
+                {
+                    obsOnLeft = false;
+                    obsOnRight = false;
+                }
+                //	if (obsOnLeft || obsOnRight)
+                //		hasMovedCam = true;
+
+                if (obsOnRight)
+                    rotateFloat = .5f;
+                if (obsOnLeft)
+                    rotateFloat = -.5f;
+                if (freeX != 0f)
+                    rotateFloat = freeX;
+                if (prevDUSpeed != 1f && !prevDUChangeDelay)
+                    prevDUSpeed = 1f;
+                if (freeY != 0f)
+                {
+                    zoomFloat = freeY;
+                    prevDUChangeDelay = false;
+                    StopCoroutine("PrevDUChange");
+                }
+                else
+                {
+                    if (!chara.onGround && !chara.frozen && !movingCameraToBack)
+                    {
+                        if (charaRB.velocity.y > 2f)
+                        {
+                            if (jumpLookValue == -0.8f)
+                                jumpLookSpeed = 5f;
+                            else
+                                jumpLookSpeed = 2f;
+                            jumpLookValue = -0.5f;
+                        }
+                        else
+                        {
+                            if (jumpLookValue == -0.5f)
+                                jumpLookSpeed = 5f;
+                            else
+                                jumpLookSpeed = 2f;
+                            jumpLookValue = -0.8f;
+                        }
+                        potentialZoomFloat = Mathf.Lerp(potentialZoomFloat, jumpLookValue * Mathf.Sign(charaRB.velocity.y), Time.deltaTime * jumpLookSpeed);
+                        zoomFloat = potentialZoomFloat;
+                        if (!dampCamera)
+                            zoomFloat = 0f;
+                        //		if (!hasMovedCam)
+                        //			hasMovedCam = true;
+                    }
+                    else
+                    {
+                        if (potentialZoomFloat != 0f)
+                        {
+                            potentialZoomFloat = 0f;
+                            prevDUSpeed = 0.2f;
+                            prevDUChangeDelay = true;
+                            StopCoroutine("PrevDUChange");
+                            StartCoroutine("PrevDUChange");
                             prevDU = origDU;
-						}
-						zoomFloat = 0f;
-					}
-				}
-			//	}
-				RotateCamera (rotateFloat);
-				ZoomCamera (zoomFloat);
-                
-                if(foxChara.activeInHierarchy)
+                        }
+                        zoomFloat = 0f;
+                    }
+                }
+                //	}
+
+                if (!movingCameraToBack)
+                {
+                    RotateCamera(rotateFloat);
+                    ZoomCamera(zoomFloat);
+                }
+
+                if (foxChara.activeInHierarchy)
                     desiredPos += Vector3.up * (Mathf.Lerp(0f, 3f, (calculateDistance + 5f) / 30f));
 
-                if (!targetMode) {
-					if (firstPass && Vector3.Magnitude (new Vector3 (charaRB.velocity.x, 0f, charaRB.velocity.z)) >= lookAheadVeloThresh)
-						canLookAhead = 1f;
-					else
-						canLookAhead = 0f;
-					if (Vector3.Magnitude (charaRB.velocity) >= lookAheadVeloThresh)
-						lookAhead = Vector3.Lerp (lookAhead, (new Vector3 (this.transform.right.x, 0f, this.transform.right.z) * input.GetAxis ("LH") * lookAheadX * canLookAhead) +
-						(new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z) * input.GetAxis ("LV") * lookAheadY * canLookAhead),
-							Time.smoothDeltaTime * 5f);
-					else {
-						if (lookAhead != Vector3.zero) {
-							lookAhead = Vector3.Lerp (lookAhead, Vector3.zero, Time.smoothDeltaTime * 5f);
-							if (Mathf.Abs (Vector3.Distance (lookAhead, Vector3.zero)) <= 0.05f)
-								lookAhead = Vector3.zero;
-						}
-					}
-					if (targetTransition) {
-						PositionTransition ();
-						this.transform.forward = startForward;
-						this.transform.position = desiredPos;
-					} else {
-						desiredPos = lookAtPos - (new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z) * distanceAway) +
-						(Vector3.up * distanceUp) + lookAhead;
-                    
-						if (setToZoomOut) {
-							zoomMultiplier = Mathf.Lerp (zoomMultiplier, zoomDAmount, Time.smoothDeltaTime * 5f);
-							if (Mathf.Abs (zoomMultiplier - zoomDAmount) <= 0.01f)
-								zoomMultiplier = zoomDAmount;
-						} else {
-							zoomMultiplier = Mathf.Lerp (zoomMultiplier, 0f, Time.smoothDeltaTime * 5f);
-							if (Mathf.Abs (zoomMultiplier) <= 0.01f)
-								zoomMultiplier = 0f;
-						}
-						desiredPos -= this.transform.forward * zoomMultiplier;
-					}
-				} else {
-					if (targetTransition) {
-						PositionTransition ();
-						this.transform.forward = startForward;
-						this.transform.position = desiredPos;
-					} else 
-						desiredPos = centerSpot - (new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z) * distanceAway) + (Vector3.up * distanceUp);
-					
-				}
+                if (!targetMode)
+                {
+                    if (firstPass && Vector3.Magnitude(new Vector3(charaRB.velocity.x, 0f, charaRB.velocity.z)) >= lookAheadVeloThresh)
+                        canLookAhead = 1f;
+                    else
+                        canLookAhead = 0f;
+                    if (Vector3.Magnitude(charaRB.velocity) >= lookAheadVeloThresh)
+                        lookAhead = Vector3.Lerp(lookAhead, (new Vector3(this.transform.right.x, 0f, this.transform.right.z) * input.GetAxis("LH") * lookAheadX * canLookAhead) +
+                        (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z) * input.GetAxis("LV") * lookAheadY * canLookAhead),
+                            moveWith * 5f);
+                    else
+                    {
+                        if (lookAhead != Vector3.zero)
+                        {
+                            lookAhead = Vector3.Lerp(lookAhead, Vector3.zero, moveWith * 5f);
+                            if (Mathf.Abs(Vector3.Distance(lookAhead, Vector3.zero)) <= 0.05f)
+                                lookAhead = Vector3.zero;
+                        }
+                    }
+                    if (targetTransition)
+                    {
+                        PositionTransition();
+                        this.transform.forward = startForward;
+                        this.transform.position = desiredPos;
+                    }
+                    else
+                    {
+                        desiredPos = lookAtPos - (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z) * distanceAway) +
+                        (Vector3.up * distanceUp) + lookAhead;
 
-				////Check Collisions
-				if (!dontCheck)
-					CameraChecks (desiredPos);
+                        if (setToZoomOut)
+                        {
+                            zoomMultiplier = Mathf.Lerp(zoomMultiplier, zoomDAmount, moveWith * 5f);
+                            if (Mathf.Abs(zoomMultiplier - zoomDAmount) <= 0.01f)
+                                zoomMultiplier = zoomDAmount;
+                        }
+                        else
+                        {
+                            zoomMultiplier = Mathf.Lerp(zoomMultiplier, 0f, moveWith * 5f);
+                            if (Mathf.Abs(zoomMultiplier) <= 0.01f)
+                                zoomMultiplier = 0f;
+                        }
+                        desiredPos -= this.transform.forward * zoomMultiplier;
+                    }
+                }
+                else
+                {
+                    if (targetTransition)
+                    {
+                        PositionTransition();
+                        this.transform.forward = startForward;
+                        this.transform.position = desiredPos;
+                    }
+                    else
+                        desiredPos = centerSpot - (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z) * distanceAway) + (Vector3.up * distanceUp);
 
-				////Set Position
-				if (moveCamBack) {
-					this.transform.position = Vector3.Lerp (this.transform.position, desiredPos, Time.smoothDeltaTime * 10f);
-					if (Vector3.Distance (this.transform.position, desiredPos) < 0.5f)
-						moveCamBack = false;
-				} else {
-					if (cutTransition || transitionBackFromCutscene) {
-						PositionTransition ();
-						if (!tempTransAfter)
-							this.transform.forward = Vector3.Lerp (startForward, origForward, distTrans);
-						else {
-							camStationaryRel.transform.position = this.transform.position;
-							camStationaryRel.transform.LookAt (lookAtPos);
-							this.transform.forward = Vector3.Lerp (startForward, camStationaryRel.transform.forward, distTrans);
-						}
-					}
-					this.transform.position = desiredPos;
-				}
-            
-				if (inClosedSpace) {
-					if (cam.fieldOfView != closedSpaceFoV) {
-						cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, closedSpaceFoV, Time.smoothDeltaTime * 5f);
-						if (Mathf.Abs (cam.fieldOfView - closedSpaceFoV) < 0.1f)
-							cam.fieldOfView = closedSpaceFoV;
-					}
-				} else {
-					if (cam.fieldOfView < wideSpaceFoV) {
-						cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, wideSpaceFoV, Time.smoothDeltaTime * 5f);
-						if (Mathf.Abs (cam.fieldOfView - wideSpaceFoV) < 0.1f)
-							cam.fieldOfView = wideSpaceFoV;
-					} else
-						cam.fieldOfView = Mathf.Lerp (wideSpaceFoV, lookingUpFoV, (origDA - distanceAway) / awayMax);
-				}
+                }
+
+                ////Check Collisions
+                if (!dontCheck)
+                    CameraChecks(desiredPos);
+
+                ////Set Position
+                if (moveCamBack)
+                {
+                    if (!movingCameraToBack)
+                    {
+                        this.transform.position = Vector3.Lerp(this.transform.position, desiredPos, moveWith * 10f);
+                    }
+                    else
+                        moveCamBack = false;
+                    if (Vector3.Distance(this.transform.position, desiredPos) < 0.5f)
+                        moveCamBack = false;
+                }
+                else
+                {
+                    if (cutTransition || transitionBackFromCutscene)
+                    {
+                        PositionTransition();
+                        if (!tempTransAfter)
+                            this.transform.forward = Vector3.Lerp(startForward, origForward, distTrans);
+                        else
+                        {
+                            camStationaryRel.transform.position = this.transform.position;
+                            camStationaryRel.transform.LookAt(lookAtPos);
+                            this.transform.forward = Vector3.Lerp(startForward, camStationaryRel.transform.forward, distTrans);
+                        }
+                    }
+                    if (!movingCameraToBack)
+                    {
+                        this.transform.position = desiredPos;
+                    }
+                }
+
+                if (inClosedSpace)
+                {
+                    if (cam.fieldOfView != closedSpaceFoV)
+                    {
+                        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, closedSpaceFoV, moveWith * 5f);
+                        if (Mathf.Abs(cam.fieldOfView - closedSpaceFoV) < 0.1f)
+                            cam.fieldOfView = closedSpaceFoV;
+                    }
+                }
+                else
+                {
+                    if (cam.fieldOfView < wideSpaceFoV)
+                    {
+                        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wideSpaceFoV, moveWith * 5f);
+                        if (Mathf.Abs(cam.fieldOfView - wideSpaceFoV) < 0.1f)
+                            cam.fieldOfView = wideSpaceFoV;
+                    }
+                    else
+                        cam.fieldOfView = Mathf.Lerp(wideSpaceFoV, lookingUpFoV, (origDA - distanceAway) / awayMax);
+                }
 
                 /*
 				if (!hasMovedCam && freeY != 0f && freeX != 0f)
@@ -538,62 +670,67 @@ public class CameraFollower : MonoBehaviour {
                     MoveCameraToBack();
             }
 
-			////The stationary mode after a camera cut where the camera stays still and can be slightly controlled by the player
-			if (stationaryMode1) {
-				if (cutTransition) {
-					PositionTransition ();
+            ////The stationary mode after a camera cut where the camera stays still and can be slightly controlled by the player
+            if (stationaryMode1)
+            {
+                if (cutTransition)
+                {
+                    PositionTransition();
                     if (stillFollow)
                         cameraCutObj.transform.LookAt(chara.transform.position);
-                	this.transform.forward = Vector3.Lerp (startForward, cameraCutObj.transform.forward, distTrans);
+                    this.transform.forward = Vector3.Lerp(startForward, cameraCutObj.transform.forward, distTrans);
                     this.transform.position = desiredPos;
-				}
-                
-				mouseArea = new Vector2 (freeX, freeY);
-                
+                }
+
+                if (MultiPlatfromGUIManager.singleton.curControllerType != MultiPlatfromGUIManager.ControllerType.mk)
+                    mouseArea = new Vector2(freeX, freeY);
+
                 if (stillFollow)
                 {
                     camStationaryRel.transform.LookAt(chara.transform.position);
                     pointOfInt = (camStationaryRel.transform.up * mouseArea.y * cutHAngle) + (camStationaryRel.transform.right * mouseArea.x * cutVAngle);
-                    
+
                     finalPointOfInt = cameraCutObj.transform.position + camStationaryRel.transform.forward + pointOfInt;
-                    
+
                     //    finalPointOfInt = Vector3.Lerp(cameraCutObj.transform.position + camStationaryRel.transform.forward, cameraCutObj.transform.position + camStationaryRel.transform.forward + pointOfInt, Time.deltaTime * 50f);
                 }
                 else
                     finalPointOfInt = cameraCutObj.transform.position + cameraCutObj.transform.forward +
                                                  (cameraCutObj.transform.up * mouseArea.y * cutHAngle) + (cameraCutObj.transform.right * mouseArea.x * cutVAngle); ;
-                
-                camStationaryRel.transform.LookAt (finalPointOfInt);
-                if (Vector3.Magnitude(mouseArea) != 0f)
-                    this.transform.forward = Vector3.Lerp(this.transform.forward, camStationaryRel.transform.forward, Time.smoothDeltaTime * 10f);
-                else
-                    this.transform.forward = Vector3.Lerp(this.transform.forward, camStationaryRel.transform.forward, Time.smoothDeltaTime * 10f);
-				statAngle = Vector3.Angle (new Vector3 (0f, cameraCutObj.transform.forward.y, cameraCutObj.transform.forward.z), 
-					new Vector3 (0f, this.transform.forward.y, this.transform.forward.z));
-				if (this.transform.forward.y < cameraCutObj.transform.forward.y)
-					statAngle *= -1f;
-				desiredFOV = Mathf.Lerp (cutNearFoV, cutFarFoV, Input.mousePosition.y / Screen.height);
-				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, desiredFOV, Time.smoothDeltaTime);
-			}
 
-			////The stationary mode after a camera cut where the camera stays still and just looks at the character
-			if (stationaryMode2) {
-				if (cutTransition) {
-					PositionTransition ();
-					this.transform.forward = Vector3.Lerp (startForward, cameraCutObj.transform.forward, distTrans);
-					this.transform.position = desiredPos;
-				}
-				camStationaryRel.transform.LookAt (targetTransform.transform.position);
-				this.transform.forward = Vector3.Lerp (this.transform.forward, camStationaryRel.transform.forward, Time.smoothDeltaTime);
-				desiredFOV = Mathf.Lerp (cutNearFoV, cutFarFoV, Vector3.Distance (new Vector3 (lookAtPos.x, 0f, lookAtPos.z), new Vector3 (this.transform.position.x, 0f, this.transform.position.z)) / cutFarDist);
-				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, desiredFOV, Time.smoothDeltaTime);
-			}
-		}
+                camStationaryRel.transform.LookAt(finalPointOfInt);
+                if (Vector3.Magnitude(mouseArea) != 0f)
+                    this.transform.forward = Vector3.Lerp(this.transform.forward, camStationaryRel.transform.forward, moveWith * 10f);
+                else
+                    this.transform.forward = Vector3.Lerp(this.transform.forward, camStationaryRel.transform.forward, moveWith * 10f);
+                statAngle = Vector3.Angle(new Vector3(0f, cameraCutObj.transform.forward.y, cameraCutObj.transform.forward.z),
+                    new Vector3(0f, this.transform.forward.y, this.transform.forward.z));
+                if (this.transform.forward.y < cameraCutObj.transform.forward.y)
+                    statAngle *= -1f;
+                desiredFOV = Mathf.Lerp(cutNearFoV, cutFarFoV, Input.mousePosition.y / Screen.height);
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, desiredFOV, moveWith);
+            }
+
+            ////The stationary mode after a camera cut where the camera stays still and just looks at the character
+            if (stationaryMode2)
+            {
+                if (cutTransition)
+                {
+                    PositionTransition();
+                    this.transform.forward = Vector3.Lerp(startForward, cameraCutObj.transform.forward, distTrans);
+                    this.transform.position = desiredPos;
+                }
+                camStationaryRel.transform.LookAt(targetTransform.transform.position);
+                this.transform.forward = Vector3.Lerp(this.transform.forward, camStationaryRel.transform.forward, moveWith);
+                desiredFOV = Mathf.Lerp(cutNearFoV, cutFarFoV, Vector3.Distance(new Vector3(lookAtPos.x, 0f, lookAtPos.z), new Vector3(this.transform.position.x, 0f, this.transform.position.z)) / cutFarDist);
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, desiredFOV, moveWith);
+            }
+        }
 
         if (skyCam.fieldOfView != cam.fieldOfView)
             skyCam.fieldOfView = cam.fieldOfView;
 
-     //   chara.RelativeSet(lerpRelative);
+        //   chara.RelativeSet(lerpRelative);}
     }
 
     public static float Smooth(float source, float target, float rate, float dt){
@@ -602,32 +739,33 @@ public class CameraFollower : MonoBehaviour {
 
     void RotateCamera(float angle) {
 		if (dampCamera)
-            nextRotateAngle = Mathf.Lerp(nextRotateAngle, angle, Time.smoothDeltaTime * (25 / 5f));
+            nextRotateAngle = Mathf.Lerp(nextRotateAngle, angle, moveWith * 5f);
         else
 			nextRotateAngle = angle;
-        this.transform.RotateAround(lookAtPos, Vector3.up, freeRotateSpeed * nextRotateAngle);
+        this.transform.RotateAround(lookAtPos, Vector3.up, freeRotateSpeed * nextRotateAngle * moveWith * 60f);
     }
     
 	void ZoomCamera(float amount){
-        if (setToMoveDown)
-            amount = -Mathf.Abs(moveDownAmount);
-        if (setToMoveUp)
-            amount = moveUpAmount;
-    //    if (setToMoveDown || setToMoveUp)
-    //        hasMovedCam = true;
-        
+        if (!movingCameraToBack)
+        {
+            if (setToMoveDown)
+                amount = -Mathf.Abs(moveDownAmount);
+            if (setToMoveUp)
+                amount = moveUpAmount;
+        }
+
         if (dampCamera)
         {
             if (prevDU < upMin1 && prevDU >= upMin2)
             {
-                prevDU = Mathf.Lerp(prevDU, prevDU + (amount * zoomSensitivity), Time.fixedDeltaTime * 0.5f);
+                prevDU = Mathf.Lerp(prevDU, prevDU + (amount * zoomSensitivity * freeRotateSpeed), moveWith * 0.5f);
             }
             else
             {
-                prevDU = Mathf.Lerp(prevDU, prevDU + (amount * zoomSensitivity), Time.fixedDeltaTime * 10f);
+                prevDU = Mathf.Lerp(prevDU, prevDU + (amount * zoomSensitivity * freeRotateSpeed), moveWith * 10f);
             }
             prevDU = Mathf.Clamp(prevDU, upMin2, upMax);
-            distanceUp = Mathf.Lerp(distanceUp, prevDU, Time.smoothDeltaTime * 25f * prevDUSpeed);
+            distanceUp = Mathf.Lerp(distanceUp, prevDU, moveWith * 25f * prevDUSpeed);
         }
         else
         {
@@ -684,7 +822,9 @@ public class CameraFollower : MonoBehaviour {
         }
 
         if (!foxChara.activeInHierarchy)
+        {
             distanceAway = (gradientUp * distanceUp) - yDifUp;
+        }
         else
         {
             if (bushChara.activeInHierarchy)
@@ -709,14 +849,60 @@ public class CameraFollower : MonoBehaviour {
             distanceAway = ((gradientUp * distanceUp) - yDifUp) + Mathf.Lerp(0f, 10f, (calculateDistance + 5f) / 30f);
         }
 
+    //    Debug.Log("X");
+    //    Debug.Log(gradientAngle + " " + distanceUp + " " + yDifAngle + " " + hillRotation);
+    //    Debug.Log(this.transform.eulerAngles.x + " " + (((gradientAngle * distanceUp) - yDifAngle) + hillRotation));
         this.transform.eulerAngles = new Vector3(((gradientAngle * distanceUp) - yDifAngle) + hillRotation,
-                                                    this.transform.eulerAngles.y, this.transform.eulerAngles.z);
-	}
+                                                  this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+    }
 
     public void MoveCameraToBack()
     {
-        camerashift = Vector3.Cross(new Vector3(this.transform.forward.x, 0f, this.transform.forward.z), chara.transform.forward);
-        RotateCamera(Vector3.Angle(new Vector3(this.transform.forward.x, 0f, this.transform.forward.z), chara.transform.forward) * Mathf.Sign(camerashift.y) * 0.25f);
+        StopCoroutine("CameraMove");
+        StartCoroutine("CameraMove");
+    //    camerashift = Vector3.Cross(new Vector3(this.transform.forward.x, 0f, this.transform.forward.z), chara.transform.forward);
+    //    RotateCamera(Vector3.Angle(new Vector3(this.transform.forward.x, 0f, this.transform.forward.z), chara.transform.forward) * Mathf.Sign(camerashift.y) * 0.25f);
+    }
+
+    IEnumerator CameraMove()
+    {
+        movingCameraToBack = true;
+        Vector3 newForward = PlayerManager.GetMainPlayer().gameObject.transform.forward;
+        Vector3 startPos = this.transform.position;
+
+        /*
+        distanceAway = origDA;
+        distanceUp = origDU;
+        prevDU = origDU;
+        zoomFloat = 0f;
+        potentialZoomFloat = 0f;
+        */
+
+        for (int i = 0; i <= 30; i++)
+        {
+            float curXRot = this.transform.eulerAngles.x;
+            this.transform.position = Vector3.Lerp(startPos,
+                lookAtPos - (newForward * distanceAway) + (Vector3.up * distanceUp) + lookAhead,
+                cameraMoveCurve.Evaluate((float)i/30f));
+            this.transform.LookAt(targetTransform);
+
+            desiredPos = lookAtPos - (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z) * distanceAway) +
+            (Vector3.up * distanceUp) + lookAhead;
+            CameraChecks(desiredPos);
+        //    this.transform.LookAt(targetTransform);
+            this.transform.eulerAngles = new Vector3(curXRot, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            this.transform.position = desiredPos - (this.transform.forward * zoomMultiplier);
+            yield return null;
+        }
+        /*
+        distanceAway = origDA;
+        distanceUp = origDU;
+        prevDU = origDU;
+        zoomFloat = 0f;
+        potentialZoomFloat = 0f;
+        */
+
+        movingCameraToBack = false;
     }
 
     private bool CheckForRenderer(GameObject go)
@@ -777,7 +963,7 @@ public class CameraFollower : MonoBehaviour {
             if (Mathf.Abs(charaFacingDir) > 0.8f && chara.onGround &&
 				Physics.Raycast(chara.transform.position + (Vector3.up*chara.boxY) + (chara.transform.forward*chara.boxZ*3f), -Vector3.up, out g1, chara.boxY*2f, whatIsGround) &&
 				Physics.Raycast(chara.transform.position + (Vector3.up*chara.boxY) - (chara.transform.forward*chara.boxZ*2f), -Vector3.up, out g2, chara.boxY*2f, whatIsGround)){
-				hillDif = Mathf.Lerp(hillDif, g1.point.y - g2.point.y, Time.smoothDeltaTime);
+				hillDif = Mathf.Lerp(hillDif, g1.point.y - g2.point.y, moveWith);
 				if(hillDif != 0f)
 					hillRotation = hillDif * -10f;
 				else
@@ -785,19 +971,19 @@ public class CameraFollower : MonoBehaviour {
 			}
 
 	    ////////Camera looks down when the character is near a cliff (approaching a drop)	#IMPROVE Length + depth
-			if(charaFacingDir > 0.6f && chara.onGround &&
+			if(freeY == 0f && charaFacingDir > 0.6f && chara.onGround &&
 			   !Physics.Linecast(chara.transform.position, chara.transform.position + (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z)*cliffDistCheck),
                               whatIsGroundBelow) &&
 			   !Physics.Raycast(chara.transform.position + (new Vector3(this.transform.forward.x, 0f, this.transform.forward.z)*cliffDistCheck),
 			                Vector3.down, cliffDepthCheck, whatIsGroundBelow)){
-				ZoomCamera(1f);
+				ZoomCamera(moveWith * 60f);
 			}
 
 	    ////////Camera moves up when small obstacles are in the way
 			if (Physics.Raycast (lookAtPos, -new Vector3 (this.transform.forward.x, 0f, this.transform.forward.z), chara.boxZ * 5f, whatIsAnObstruction)
 				&& !Physics.Raycast(lookAtPos, -new Vector3(this.transform.forward.x, 0f, this.transform.forward.z) + (Vector3.up*.5f), chara.boxZ * 5f, whatIsAnObstruction))
             {
-                ZoomCamera (1f);
+                ZoomCamera (moveWith * 60f);
 			}
 		}
 	}
@@ -887,7 +1073,7 @@ public class CameraFollower : MonoBehaviour {
                         (Vector3.up * distanceUp) + lookAhead;
         }
         desiredPos = Vector3.Lerp(origTransPos, endTransPos, distTrans);
-        distTrans += Time.smoothDeltaTime;
+        distTrans += moveWith;
         if (distTrans >= 1f) {
             targetTransition = false;
             cutTransition = false;
@@ -937,5 +1123,34 @@ public class CameraFollower : MonoBehaviour {
     IEnumerator PrevDUChange() {
         yield return new WaitForSeconds(1f);
         prevDUChangeDelay = false;
+    }
+
+    public void AttackZoom()
+    {
+        if (!attackZooming)
+        {
+            attackZooming = true;
+            StartCoroutine("AttackZoomCoRo");
+        }
+    }
+
+    IEnumerator AttackZoomCoRo()
+    {
+        float addedZoom = 0f;
+
+    /*    for(float z = 0f; z <0.2f; z += Time.deltaTime)
+        {
+            addedZoom = z * 3f;
+            cam.fieldOfView -= addedZoom;
+            yield return null;
+        }*/
+        for (float z = 0f; z < 0.5f; z += (Time.deltaTime/(Time.timeScale+0.0001f)))
+        {
+            addedZoom = Mathf.Lerp(z * 5f, 0f, z / 0.5f);
+            cam.fieldOfView -= addedZoom;
+            yield return null;
+        }
+
+        attackZooming = false;
     }
 }

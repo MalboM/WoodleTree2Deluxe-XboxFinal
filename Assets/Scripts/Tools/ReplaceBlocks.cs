@@ -1,10 +1,8 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 [ExecuteInEditMode]
 public class ReplaceBlocks : MonoBehaviour {
@@ -20,9 +18,13 @@ public class ReplaceBlocks : MonoBehaviour {
     public GameObject newprefab;
     public GameObject newsmallPrefab;
 
+    // Use this for initialization
+    void Start () {
+		
+	}
 
     //S: 2.461947. M: 15.884. L: 216.7947.
-#if UNITY_EDITOR
+
     public void Replace() {
         if (theScale == 0f)
             theScale = 2f;
@@ -315,10 +317,9 @@ public class ReplaceBlocks : MonoBehaviour {
             }
         }
     }
-#endif
 }
 
-#if UNITY_EDITOR
+
 [CustomEditor(typeof(ReplaceBlocks))]
 public class BlocksEdit : Editor
 {

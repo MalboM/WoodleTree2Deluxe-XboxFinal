@@ -7,9 +7,9 @@ public class FPS : MonoBehaviour
     float deltaTime = 0.0f;
 
     void Start() {
-		if (limitFPSTo60) {
+	/*	if (limitFPSTo60) {
 			QualitySettings.vSyncCount = 0;
 			Application.targetFrameRate = 60;
-		}
+		}*/
     }
 }

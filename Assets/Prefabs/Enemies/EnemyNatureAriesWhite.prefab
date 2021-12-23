@@ -258,7 +258,8 @@ AudioSource:
   m_GameObject: {fileID: 124630}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243899822893694608, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 32ce59e71dee2494ab0f3b068bb73635, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.196
@@ -461,6 +462,7 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &154280
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,8 +673,11 @@ MonoBehaviour:
   berryRelease: {fileID: 8300000, guid: 552153702111922488a4d1b5a56bf0a5, type: 3}
   dieSound: {fileID: 8300000, guid: 30683befc5c970241b7d852053ef2aad, type: 3}
   useBigOuchSounds: 0
+  mixerGroup: {fileID: 243899822893694608, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   dontFreezeEnemy: 0
   parentToDisable: {fileID: 0}
+  hitByShield: 0
 --- !u!54 &54649965022195036
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -822,6 +827,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1117,6 +1123,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1247,6 +1254,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1324,6 +1332,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

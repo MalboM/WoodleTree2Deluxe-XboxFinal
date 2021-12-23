@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActivateItemsExtra : MonoBehaviour
-{
+public class ActivateItemsExtra : MonoBehaviour {
 
 
     public bool marmellade1;
@@ -32,9 +31,9 @@ public class ActivateItemsExtra : MonoBehaviour
     public bool map;
     public bool jukebox;
     public bool inbox;
-
+   
     public GameObject marmellade1obj;
-    public GameObject marmellade2obj;
+    public GameObject marmellade2obj; 
     public GameObject marmellade3obj;
     public GameObject plantjarobj;
     public GameObject plantjar2obj;
@@ -64,7 +63,7 @@ public class ActivateItemsExtra : MonoBehaviour
     void Start()
     {
 
-        if (PlayerPrefs.GetInt("marmellade1", 0) == 1)
+        if(PlayerPrefs.GetInt("marmellade1", 0) == 1)
         {
             marmellade1obj.SetActive(true);
         }

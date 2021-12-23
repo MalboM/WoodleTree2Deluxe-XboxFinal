@@ -121,11 +121,8 @@ public class DirectorWindow : EditorWindow
     protected void OnEnable()
     {
         EditorApplication.update = (EditorApplication.CallbackFunction)System.Delegate.Combine(EditorApplication.update, new EditorApplication.CallbackFunction(this.DirectorUpdate));
-#if UNITY_2017_2_OR_NEWER
-        EditorApplication.playModeStateChanged += PlayModeStateChanged;
-#else
-        EditorApplication.playmodeStateChanged = (EditorApplication.CallbackFunction)System.Delegate.Combine(EditorApplication.playmodeStateChanged, new EditorApplication.CallbackFunction(this.PlaymodeStateChanged));
-#endif
+        EditorApplication.playmodeStateChanged = (EditorApplication.CallbackFunction)System.Delegate.Combine(EditorApplication.playmodeStateChanged, new EditorApplication.CallbackFunction(this.PlaymodeStateChanged)); //TODO: Depricated in 2017.2
+
 
         GUISkin skin = ScriptableObject.CreateInstance<GUISkin>();
         skin = (EditorGUIUtility.isProSkin) ? EditorGUIUtility.Load("Cinema Suite/Cinema Director/" + PRO_SKIN + ".guiskin") as GUISkin : EditorGUIUtility.Load("Cinema Suite/Cinema Director/" + FREE_SKIN + ".guiskin") as GUISkin;
@@ -198,29 +195,19 @@ public class DirectorWindow : EditorWindow
         base.Repaint();
     }
 
-    #region EventHandlers
-
-#if UNITY_2017_2_OR_NEWER
-    /// <summary>
-    /// Handle the playmode state changed event.
-    /// </summary>
-    void PlayModeStateChanged(PlayModeStateChange state)
-    {
-        directorControl.InPreviewMode = false;
-    }
-#endif
+#region EventHandlers
 
     void directorControl_DragPerformed(object sender, CinemaDirectorDragArgs e)
     {
         Cutscene c = e.cutscene as Cutscene;
         if (c != null)
         {
-            if (e.references != null)
+            if(e.references != null)
             {
-                if (e.references.Length == 1)
+                if(e.references.Length == 1)
                 {
                     GameObject gameObject = e.references[0] as GameObject;
-                    if (gameObject != null)
+                    if(gameObject != null)
                     {
                         ActorTrackGroup atg = CutsceneItemFactory.CreateTrackGroup(c, typeof(ActorTrackGroup), string.Format("{0} Track Group", gameObject.name)) as ActorTrackGroup;
                         atg.Actor = gameObject.GetComponent<Transform>();
@@ -232,7 +219,7 @@ public class DirectorWindow : EditorWindow
         }
     }
 
-
+    
 
     void directorControl_ExitPreviewMode(object sender, CinemaDirectorArgs e)
     {
@@ -375,9 +362,9 @@ public class DirectorWindow : EditorWindow
             {
                 cutsceneNames[i] = new GUIContent(cachedCutscenes[i].name);
             }
-
+            
             // Sort alphabetically
-            Array.Sort(cutsceneNames, delegate (GUIContent content1, GUIContent content2)
+            Array.Sort(cutsceneNames, delegate(GUIContent content1, GUIContent content2)
             {
                 return string.Compare(content1.text, content2.text);
             });
@@ -395,7 +382,7 @@ public class DirectorWindow : EditorWindow
                 count = 1;
             }
 
-            Array.Sort(cachedCutscenes, delegate (Cutscene c1, Cutscene c2)
+            Array.Sort(cachedCutscenes, delegate(Cutscene c1, Cutscene c2)
             {
                 return string.Compare(c1.name, c2.name);
             });
@@ -508,7 +495,7 @@ public class DirectorWindow : EditorWindow
 
     private void chooseResizeOption(object userData)
     {
-        int selection = (int)userData;
+        int selection = (int) userData;
 
         directorControl.ResizeOption = (DirectorEditor.ResizeOption)selection;
     }
@@ -561,7 +548,7 @@ public class DirectorWindow : EditorWindow
         string filetype_png = ".png";
         string missing = " is missing from Resources folder.";
 
-        settingsImage = EditorGUIUtility.Load(dir + SETTINGS_ICON + suffix + filetype_png) as Texture;
+        settingsImage = EditorGUIUtility.Load(dir + SETTINGS_ICON + suffix + filetype_png)  as Texture;
         if (settingsImage == null)
         {
             Debug.Log(SETTINGS_ICON + suffix + missing);
@@ -596,7 +583,7 @@ public class DirectorWindow : EditorWindow
         {
             Debug.Log("Rolling edit icon missing from Resources folder.");
         }
-
+        
         rippleEditImage = EditorGUIUtility.Load(dir + "Director_RippleIcon" + filetype_png) as Texture;
         if (rippleEditImage == null)
         {
@@ -612,7 +599,7 @@ public class DirectorWindow : EditorWindow
         refreshImage = EditorGUIUtility.Load(dir + REFRESH_ICON + suffix + filetype_png) as Texture;
         if (refreshImage == null)
         {
-            Debug.Log(REFRESH_ICON + suffix + missing);
+            Debug.Log(REFRESH_ICON+suffix+missing);
         }
 
         titleImage = EditorGUIUtility.Load(dir + TITLE_ICON + suffix + filetype_png) as Texture;
@@ -722,13 +709,13 @@ public class DirectorWindow : EditorWindow
 
     public bool BetaFeaturesEnabled
     {
-        get
-        {
-            return betaFeaturesEnabled;
+        get 
+        { 
+            return betaFeaturesEnabled; 
         }
-        set
-        {
-            betaFeaturesEnabled = value;
+        set 
+        { 
+            betaFeaturesEnabled = value; 
         }
     }
 

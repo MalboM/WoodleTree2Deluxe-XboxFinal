@@ -14,6 +14,7 @@ public class CinemaActorCurveControl : CinemaCurveControl
 
     //Rotation Special Case
     private bool currentlyEditingRotation = false;
+    private CinemaActorClipCurve clipCurve;
 
     public override void UpdateCurveWrappers(CinemaClipCurveWrapper clipWrapper)
     {
@@ -34,7 +35,7 @@ public class CinemaActorCurveControl : CinemaCurveControl
         }
         else
         {
-
+            
             checkToAddNewKeyframes(clipCurve, state);
         }
     }
@@ -111,8 +112,8 @@ public class CinemaActorCurveControl : CinemaCurveControl
     private void checkToAddNewKeyframes(CinemaActorClipCurve clipCurve, DirectorControlState state)
     {
         if (state.IsInPreviewMode && IsEditing &&
-            clipCurve.Cutscene.State == Cutscene.CutsceneState.Paused && GUIUtility.hotControl == 0 &&
-            (clipCurve.Firetime <= state.ScrubberPosition &&
+            clipCurve.Cutscene.State == Cutscene.CutsceneState.Paused && GUIUtility.hotControl == 0 && 
+            (clipCurve.Firetime <= state.ScrubberPosition && 
             state.ScrubberPosition <= clipCurve.Firetime + clipCurve.Duration) && clipCurve.Actor != null)
         {
             Undo.RecordObject(clipCurve, "Auto Key Created");
@@ -122,25 +123,26 @@ public class CinemaActorCurveControl : CinemaCurveControl
                 MemberClipCurveData data = clipCurve.CurveData[i];
                 if (data.Type == string.Empty || data.PropertyName == string.Empty) continue;
 
+                Component component = clipCurve.Actor.GetComponent(data.Type);
                 object value = null;
 
                 //Specific hard-coded fix for the Rotation Curve Issue.
                 currentlyEditingRotation = data.PropertyName == "localEulerAngles";
-
-                Component component = clipCurve.Actor.GetComponent(data.Type);
 #if UNITY_2017_2_OR_NEWER
                 if (component != null)
                 {
                     Type type = component.GetType();
-
-                    // Deal with a special case, use the new TransformUtils to get the rotation value from the editor field.
-                    if (data.IsProperty && type == typeof(Transform) && data.PropertyName == "localEulerAngles")
-                    {                        
-                        value = UnityEditor.TransformUtils.GetInspectorRotation(component.transform); // TransformUtils added in 2017.2                        
-                    }
-                    else
+                    if (data.IsProperty)
                     {
-                        value = clipCurve.GetCurrentValue(component, data.PropertyName, data.IsProperty);
+                        // Deal with a special case, use the new TransformUtils to get the rotation value from the editor field.
+                        if (type == typeof(Transform) && data.PropertyName == "localEulerAngles")
+                        {
+                            value = UnityEditor.TransformUtils.GetInspectorRotation(component.transform); // TransformUtils added in 2017.2
+                        }
+                        else
+                        {
+                            value = clipCurve.GetCurrentValue(component, data.PropertyName, data.IsProperty);
+                        }
                     }
                 }
 #else
@@ -213,7 +215,8 @@ public class CinemaActorCurveControl : CinemaCurveControl
                         if (k.time == state.ScrubberPosition)
                         {
                             Keyframe newKeyframe = new Keyframe(k.time, quaternion.x, k.inTangent, k.outTangent);
-                            data.Curve1.MoveKey(j, newKeyframe);
+                            newKeyframe.tangentMode = k.tangentMode;
+                            AnimationCurveHelper.MoveKey(data.Curve1, j, newKeyframe);
                         }
                     }
 
@@ -223,7 +226,8 @@ public class CinemaActorCurveControl : CinemaCurveControl
                         if (k.time == state.ScrubberPosition)
                         {
                             Keyframe newKeyframe = new Keyframe(k.time, quaternion.y, k.inTangent, k.outTangent);
-                            data.Curve2.MoveKey(j, newKeyframe);
+                            newKeyframe.tangentMode = k.tangentMode;
+                            AnimationCurveHelper.MoveKey(data.Curve2, j, newKeyframe);
                         }
                     }
 
@@ -233,7 +237,8 @@ public class CinemaActorCurveControl : CinemaCurveControl
                         if (k.time == state.ScrubberPosition)
                         {
                             Keyframe newKeyframe = new Keyframe(k.time, quaternion.z, k.inTangent, k.outTangent);
-                            data.Curve3.MoveKey(j, newKeyframe);
+                            newKeyframe.tangentMode = k.tangentMode;
+                            AnimationCurveHelper.MoveKey(data.Curve3, j, newKeyframe);
                         }
                     }
 
@@ -243,7 +248,8 @@ public class CinemaActorCurveControl : CinemaCurveControl
                         if (k.time == state.ScrubberPosition)
                         {
                             Keyframe newKeyframe = new Keyframe(k.time, quaternion.w, k.inTangent, k.outTangent);
-                            data.Curve4.MoveKey(j, newKeyframe);
+                            newKeyframe.tangentMode = k.tangentMode;
+                            AnimationCurveHelper.MoveKey(data.Curve4, j, newKeyframe);
                         }
                     }
 
@@ -299,14 +305,15 @@ public class CinemaActorCurveControl : CinemaCurveControl
                     if (k.time == scrubberPosition)
                     {
                         Keyframe newKeyframe = new Keyframe(k.time, floatValue, k.inTangent, k.outTangent);
-                        curve.MoveKey(j, newKeyframe);
+                        newKeyframe.tangentMode = k.tangentMode;
+                        AnimationCurveHelper.MoveKey(curve, j, newKeyframe);
                         doesKeyExist = true;
                     }
                 }
                 if (!doesKeyExist)
                 {
                     Keyframe kf = new Keyframe(scrubberPosition, floatValue);
-                    curve.AddKey(kf);
+                    AnimationCurveHelper.AddKey(curve, kf);
                 }
             }
         }
@@ -328,14 +335,15 @@ public class CinemaActorCurveControl : CinemaCurveControl
                     if (k.time == scrubberPosition)
                     {
                         Keyframe newKeyframe = new Keyframe(k.time, value, k.inTangent, k.outTangent);
-                        curve.MoveKey(j, newKeyframe);
+                        newKeyframe.tangentMode = k.tangentMode;
+                        AnimationCurveHelper.MoveKey(curve, j, newKeyframe);
                         doesKeyExist = true;
                     }
                 }
                 if (!doesKeyExist)
                 {
                     Keyframe kf = new Keyframe(scrubberPosition, value);
-                    curve.AddKey(kf);
+                    AnimationCurveHelper.AddKey(curve, kf);
                 }
             }
         }

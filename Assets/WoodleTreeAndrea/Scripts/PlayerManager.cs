@@ -21,7 +21,6 @@ public class PlayerManager : MonoBehaviour
 
     void Awake()
     {
-        //
         if (singleton != null)
         {
             enabled = false;
@@ -35,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 
         singleton = this;
         singleton.players = this.players;
-        
+
         ps = players[0].ps;
 
         players[1].gameObject.SetActive(false);
@@ -44,71 +43,65 @@ public class PlayerManager : MonoBehaviour
         //    player = new Dictionary<int, TPC>();
     }
 
-    //
-    public void CallSuspend(bool suspend)
-    {
-        if (suspend)
-            PauseForSuspension();
-        else
-            UnpauseFromSuspension();
-    }
-
-    bool trpAct = false;
     private void LateUpdate()
     {
-     //   if (!ps.inPause && !ps.sS.inStart)
+        //   if (!ps.inPause && !ps.sS.inStart)
         {
             connectedControllers = ReInput.controllers.GetControllerCount(ControllerType.Joystick);
             if (testingWithKeyboard)
                 connectedControllers += 1;
 
-            bool actTrp = false;
-            if (!players[1].gameObject.activeInHierarchy && (inputPlayer2.GetButtonDown("Start") || inputPlayer2.GetButtonDown("Submit")) && (connectedControllers >= 2))
+            if (connectedControllers >= 2)
+            {
+
+            }
+
+            if (!players[1].gameObject.activeInHierarchy && (inputPlayer2.GetAnyButtonDown() || inputPlayer2.GetAnyButtonDown()) && (connectedControllers >= 2))
             {
                 players[1].gameObject.SetActive(true);
+                StartCoroutine(players[1].Invincibility());
                 ps.foxAnim.SetBool("activated", true);
-                actTrp = true;
             }
             if (!ps.foxAnim.GetBool("activated") && players[1].gameObject.activeInHierarchy && (connectedControllers >= 2))
                 ps.foxAnim.SetBool("activated", true);
             if (players[1].gameObject.activeInHierarchy && (connectedControllers < 2))
             {
-                players[1].gameObject.SetActive(false);
-                ps.foxAnim.SetBool("activated", false);
-                actTrp = true;
+                DeactivateCharacter(1);
+                //    players[1].gameObject.SetActive(false);
+                //    ps.foxAnim.SetBool("activated", false);
             }
 
-            if (!players[2].gameObject.activeInHierarchy && (inputPlayer3.GetButtonDown("Start") || inputPlayer3.GetButtonDown("Submit")) && (connectedControllers >= 3))
+            if (!players[2].gameObject.activeInHierarchy && (inputPlayer3.GetAnyButtonDown()) && (connectedControllers >= 3))
             {
                 players[2].gameObject.SetActive(true);
+                StartCoroutine(players[2].Invincibility());
                 ps.beaverAnim.SetBool("activated", true);
-                actTrp = true;
             }
             if (!ps.beaverAnim.GetBool("activated") && players[2].gameObject.activeInHierarchy && (connectedControllers >= 3))
                 ps.beaverAnim.SetBool("activated", true);
             if (players[2].gameObject.activeInHierarchy && (connectedControllers < 3))
             {
-                players[2].gameObject.SetActive(false);
-                ps.beaverAnim.SetBool("activated", false);
-                actTrp = true;
+                DeactivateCharacter(2);
+                //    players[2].gameObject.SetActive(false);
+                //    ps.beaverAnim.SetBool("activated", false);
             }
 
-            if (!players[3].gameObject.activeInHierarchy && (inputPlayer4.GetButtonDown("Start") || inputPlayer4.GetButtonDown("Submit")) && (connectedControllers == 4))
+            if (!players[3].gameObject.activeInHierarchy && (inputPlayer4.GetAnyButtonDown()) && (connectedControllers == 4))
             {
                 players[3].gameObject.SetActive(true);
+                StartCoroutine(players[3].Invincibility());
                 ps.bushAnim.SetBool("activated", true);
-                actTrp = true;
             }
             if (!ps.bushAnim.GetBool("activated") && players[3].gameObject.activeInHierarchy && (connectedControllers >= 4))
                 ps.bushAnim.SetBool("activated", true);
             if (players[3].gameObject.activeInHierarchy && (connectedControllers < 4))
             {
-                players[3].gameObject.SetActive(false);
-                ps.bushAnim.SetBool("activated", false);
-                actTrp = true;
+                DeactivateCharacter(3);
+                //    players[3].gameObject.SetActive(false);
+                //    ps.bushAnim.SetBool("activated", false);
             }
 
-            if (actTrp && !trpAct)
+        /*    if (actTrp && !trpAct)
             {
 #if UNITY_PS4
                 //
@@ -122,24 +115,24 @@ public class PlayerManager : MonoBehaviour
                 //
                 XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_FRIENDS);
 #endif
-            }
+            }*/
         }
     }
 
-    void OnControllerDisconnected (ControllerStatusChangedEventArgs args)
+    void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
     {
 
     }
-    
+
     public static void AddPlayer(TPC player, int index)
     {
         Debug.Log(index + "  " + Time.timeSinceLevelLoad);
         if (singleton == null)
         {
-            Debug.LogError("PlayerManager.AddPlayer("+ player.name + ", " + index.ToString() + ") was called but singleton was null! Aborting.");
+            Debug.LogError("PlayerManager.AddPlayer(" + player.name + ", " + index.ToString() + ") was called but singleton was null! Aborting.");
             return;
         }
-        
+
         singleton._AddPlayer(player, index);
     }
 
@@ -147,7 +140,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (singleton == null)
         {
-            Debug.LogError("PlayerManager.GetMainPlayer() was called but singleton was null! Aborting.");
+            //    Debug.LogError("PlayerManager.GetMainPlayer() was called but singleton was null! Aborting.");
             return null;
         }
 
@@ -189,51 +182,42 @@ public class PlayerManager : MonoBehaviour
 
     TPC _GetPlayer(int index)
     {
-        foreach(TPC tpc in players)
+        foreach (TPC tpc in players)
         {
             if (int.Parse(tpc.playerID) == index)
                 return tpc;
 
         }
-        
+
         Debug.LogWarning("PlayerManager.GetPlayer(" + index.ToString() + ") was called but no player exist at index = " + index.ToString());
         return null;
     }
 
-    public static void PauseForSuspension()
+    public static void DeactivateCharacter(int charaID)
     {
         if (singleton == null)
         {
-            Debug.LogError("PlayerManager.PauseForSuspension() was called but singleton was null! Aborting.");
+            Debug.LogError("PlayerManager.DeactivateCharacter(" + charaID.ToString() + ") was called but singleton was null! Aborting.");
             return;
         }
-
-        singleton._PauseForSuspension();
+        singleton._DeactivateCharacter(charaID);
     }
 
-    void _PauseForSuspension()
+    void _DeactivateCharacter(int charaID)
     {
-        Debug.Log("PauseForSuspension() called.");
-        PlayerManager.GetMainPlayer().ps.OpenPauseScreen();
-
-        //PAUSE ANY OTHER FUNCTIONS TO STOP/PAUSE
+        StartCoroutine("DeactivateWait", charaID);
     }
-    public static void UnpauseFromSuspension()
+
+    IEnumerator DeactivateWait(int charaID)
     {
-        if (singleton == null)
+        while (players[charaID].defeated || players[charaID].beingReset)
+            yield return null;
+
+        if (players[charaID].gameObject.activeInHierarchy && (connectedControllers < (charaID + 1)))
         {
-            Debug.LogError("PlayerManager.PauseForSuspension() was called but singleton was null! Aborting.");
-            return;
+            players[charaID].gameObject.SetActive(false);
+            ps.foxAnim.SetBool("activated", false);
         }
-
-        singleton._UnpauseFromSuspension();
-    }
-
-    void _UnpauseFromSuspension()
-    {
-        Debug.Log("UnpauseFromSuspension() called.");
-        PlayerManager.GetMainPlayer().ps.ClosePauseScreen(false);
-
-        //PAUSE ANY OTHER FUNCTIONS TO RESUME
+        yield return null;
     }
 }

@@ -105,4 +105,5 @@ Shader "WoodleTree/Unlit/Base/color_base_opt (Vertex Soft Particles)"
             ENDCG
         }                
 	}
+		FallBack "Diffuse"
 }

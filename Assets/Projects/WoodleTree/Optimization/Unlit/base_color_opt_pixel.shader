@@ -67,4 +67,5 @@ Shader "WoodleTree/Unlit/Base/color_base_opt (Pixel)"
 			ENDCG
 		}
 	}
+		FallBack "Diffuse"
 }

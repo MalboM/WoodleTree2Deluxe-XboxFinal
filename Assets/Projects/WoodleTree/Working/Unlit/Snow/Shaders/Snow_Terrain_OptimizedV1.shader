@@ -175,7 +175,7 @@ Shader "WoodleTree/Special/Snow_Terrain_OptimizedV1"
                 o.pos = mul(unity_MatrixVP, float4(o.worldPos, 1.));
 
                 // calculate camera world space right dir
-                float3 crossLight = normalize(mul(float3(1,0,0), (float3x3)UNITY_MATRIX_IT_MV));
+                float3 crossLight = normalize(mul(float3(1,0,0), UNITY_MATRIX_IT_MV));
                 o.worldCrossL = crossLight;
 
                 // world normal
@@ -282,7 +282,7 @@ Shader "WoodleTree/Special/Snow_Terrain_OptimizedV1"
 
                 // base color from BaseCol Texture
             #ifdef USE_MAIN_TEX
-                fixed3 diffuseCol = lerp(baseCol.rgb ,_TintColor.rgb, _Mixer);
+                fixed3 diffuseCol = lerp(baseCol ,_TintColor.rgb, _Mixer);
             #else
                 fixed3 diffuseCol = _TintColor.rgb; // interesting 6.0
             #endif
@@ -351,7 +351,7 @@ Shader "WoodleTree/Special/Snow_Terrain_OptimizedV1"
                 fixed spZ = tex2D(_ClipTex, uvZ/expSize).g;
                 fixed clipCol = spX * i.triblend.x + spY * i.triblend.y + spZ * i.triblend.z;
 
-                float emissive = lerp((float)0.0, (float)speckleCol*_SparkleF, (float)pow(1-saturate(clipCol), (float)_SpeckleSharpness));
+                float emissive = lerp(0.0, speckleCol*_SparkleF, pow(1-saturate(clipCol),_SpeckleSharpness));
 
                 //color = lerp(color, _SparkleColor.rgb, emissive/pow(dot(worldViewVec,worldViewVec), _SparkleFallof + EPSILON));
                 color += lerp(_SparkleColor.rgb*emissive, 0.0, saturate(dot(worldViewVec, worldViewVec) * (1.0 - _SparkleFallof)));
@@ -366,4 +366,5 @@ Shader "WoodleTree/Special/Snow_Terrain_OptimizedV1"
             ENDCG
         }
     }
+	FallBack "Diffuse"
 }

@@ -61,12 +61,12 @@ public class LoadLevelAdditive : MonoBehaviour
                 //       odm.DeactivateObject(noncolliderzone, null);
             }
 
-        /*    if (lptCollider != null)
+            if (lptCollider != null)
             {
                 lptCollider.gameObject.SetActive(false);
                 lptCollider.enabled = true;
                 lptCollider.gameObject.SetActive(true);
-            }*/
+            }
         }
 	}
 
@@ -90,9 +90,9 @@ public class LoadLevelAdditive : MonoBehaviour
                 FindFullLevel();
             if (fullSceneObject != null)
                 odm.DeactivateObject(fullSceneObject, null);
-            /*
+
             if (lptCollider != null)
-                lptCollider.enabled = false;*/
+                lptCollider.enabled = false;
         }
     }
 
@@ -149,7 +149,7 @@ public class LoadLevelAdditive : MonoBehaviour
         if (level == "Level7")
             checkedScene = CheckForLevel(10);
         if (level == "Level8")
-            checkedScene = CheckForLevel(11);
+            checkedScene = CheckForLevel(1);
 
         if (checkedScene > -1)
         {
@@ -263,7 +263,7 @@ public class LoadLevelAdditive : MonoBehaviour
         while (c <= 8)
         {
             int d = check + c;
-            if (d > 11)
+            if (d > 10)
                 d -= 8;
             if (SceneManager.GetSceneByBuildIndex(d).isLoaded)
                 return d;

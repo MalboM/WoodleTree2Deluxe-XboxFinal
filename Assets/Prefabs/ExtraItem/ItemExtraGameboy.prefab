@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e49d2109ad33445b06776690bac099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateInstead: 0
   playerprefstocheck: gameboy
 --- !u!1 &2077223290271711481
 GameObject:
@@ -162,6 +163,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -239,6 +241,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -309,7 +312,8 @@ AudioSource:
   m_GameObject: {fileID: 3051789253392610265}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243382132470434748, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c1dd01e0a1706e549bfb800500fcc67c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -5163,7 +5167,7 @@ ParticleSystem:
 --- !u!199 &9045667487710941484
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5187,6 +5191,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5231,7 +5236,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4299785580221812633}
-  - component: {fileID: 2283527654448740133}
   - component: {fileID: 4300269302947419811}
   m_Layer: 0
   m_Name: ItemExtraGameboy
@@ -5255,27 +5259,6 @@ Transform:
   m_Father: {fileID: 475264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 15.4616995, z: 0}
---- !u!205 &2283527654448740133
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8201287731982817860}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.010003895, y: -0.157, z: 0.026594564}
-  m_Size: 0.39775333
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.003400331
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8867329835996680985}
-    - renderer: {fileID: 4068151140916661711}
-    - renderer: {fileID: 9045667487710941484}
-  m_Enabled: 1
 --- !u!114 &4300269302947419811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5289,11 +5272,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testetstst: 0
-  timeToWait: 0
-  fullObjDistance: 0
-  lowObjDistance: 0
+  timeToWait: 2
+  fullObjDistance: 80
+  lowObjDistance: 81
   fullObj: {fileID: 3051789253392610265}
   lowObj: {fileID: 0}
   fullObjCharacter: {fileID: 0}
   shadowObj: {fileID: 0}
+  insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3

@@ -31,19 +31,10 @@ namespace ICode.Actions.UnityAnimator{
 		}
 
 		private void DoSetFloat(){
-			foreach (AnimatorControllerParameter param in animator.parameters)
-			{
-				if(param.name == parameter.Value)
-				{
-					if (dampTime.Value > 0)
-					{
-						animator.SetFloat(parameter.Value, value.Value, dampTime.Value, Time.deltaTime);
-					}
-					else
-					{
-						animator.SetFloat(parameter.Value, value.Value);
-					}
-				}
+			if (dampTime.Value > 0) {
+				animator.SetFloat (parameter.Value, value.Value,dampTime.Value,Time.deltaTime);
+			}else{
+				animator.SetFloat (parameter.Value, value.Value);
 			}
 		}
 	}

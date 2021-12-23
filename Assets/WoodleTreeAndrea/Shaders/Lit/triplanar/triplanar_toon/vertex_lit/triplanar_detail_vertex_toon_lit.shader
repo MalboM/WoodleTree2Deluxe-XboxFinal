@@ -108,4 +108,5 @@ Shader "WoodleTree/Lit/Triplanar/Toon/triplanar_detail_vertex_toon_lit"
 			ENDCG
 		}
 	}
+		Fallback "Diffuse"
 }

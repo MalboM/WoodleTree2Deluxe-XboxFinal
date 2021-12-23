@@ -201,7 +201,7 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 	{
 		if ( mat != null )
 		{
-	//		DestroyImmediate( mat );
+			DestroyImmediate( mat );
 			mat = null;
 		}
 	}
@@ -297,7 +297,7 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 		{
 			RenderTexture.active = null;
 			rt.Release();
-		//	DestroyImmediate( rt );
+			DestroyImmediate( rt );
 			rt = null;
 		}
 	}
@@ -306,7 +306,7 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 	{
 		if ( tex != null )
 		{
-		//	DestroyImmediate( tex );
+			DestroyImmediate( tex );
 			tex = null;
 		}
 	}
@@ -483,15 +483,14 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 				Camera actual = cam.GetComponent<Camera>();
 				if ( actual != null )
 					actual.targetTexture = null;
-				//	DestroyImmediate( cam );
-				cam.enabled = false;
+				DestroyImmediate( cam );
 			}
 		}
 
 		DestroyRenderTextures();
 		DestroyMaterials();
 #if TRIAL
-	//DestroyImmediate( m_watermark );
+	DestroyImmediate( m_watermark );
 #endif
 	}
 
@@ -689,9 +688,9 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 
 	internal static void TryUnregister( GameObject gameObj )
 	{
-	//	AmplifyMotionObjectBase comp = gameObj.GetComponent<AmplifyMotionObjectBase>();
-	//	if ( comp != null )
-	//		Destroy( comp );
+		AmplifyMotionObjectBase comp = gameObj.GetComponent<AmplifyMotionObjectBase>();
+		if ( comp != null )
+			Destroy( comp );
 	}
 
 	public void Register( GameObject gameObj )
@@ -773,8 +772,7 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 
 		if ( m_currentPostProcess != null && m_currentPostProcess.gameObject != highestReference.gameObject )
 		{
-			m_currentPostProcess.enabled = false;
-		//	DestroyImmediate( m_currentPostProcess );
+			DestroyImmediate( m_currentPostProcess );
 			m_currentPostProcess = null;
 		}
 
@@ -783,9 +781,8 @@ public class AmplifyMotionEffectBase : MonoBehaviour
 			AmplifyMotionPostProcess[] runtimes = gameObject.GetComponents<AmplifyMotionPostProcess>();
 			if ( runtimes != null && runtimes.Length > 0 )
 			{
-				for (int i = 0; i < runtimes.Length; i++)
-					runtimes[i].enabled = false;
-			//		DestroyImmediate( runtimes[ i ] );
+				for ( int i = 0; i < runtimes.Length; i++ )
+					DestroyImmediate( runtimes[ i ] );
 			}
 			m_currentPostProcess = highestReference.gameObject.AddComponent<AmplifyMotionPostProcess>();
 			m_currentPostProcess.Instance = this;

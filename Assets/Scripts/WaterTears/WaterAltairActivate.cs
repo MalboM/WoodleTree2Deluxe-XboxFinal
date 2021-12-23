@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WaterAltairActivate : MonoBehaviour {
+public class WaterAltairActivate : MonoBehaviour
+{
 
     public int levelID;
 
@@ -21,21 +22,24 @@ public class WaterAltairActivate : MonoBehaviour {
     PauseScreen ps;
 
     [HideInInspector] public bool levelcomplete;
-    
+
     // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (ps == null)
         {
             ps = PlayerManager.GetMainPlayer().ps;
             ps.CheckTears();
         }
 
-		if (!levelcomplete) {
+        if (!levelcomplete)
+        {
             if ((watertear1.activeSelf && watertear2.activeSelf && watertear3.activeSelf) || PlayerPrefs.GetInt("IntroWatched", 0) == 0)
             {
                 levelcomplete = true;
@@ -46,11 +50,9 @@ public class WaterAltairActivate : MonoBehaviour {
                         PlayerPrefs.SetInt("Played" + levelID.ToString() + "TreeCompletion", 1);
 
                         ps.CheckTears();
-                        
+
                         if (ps.tearCount == 24)
                         {
-                            WaterTearManager.AllTearsCutscene();
-                            //    GameObject.FindWithTag("Pause").transform.Find("Event Text").gameObject.GetComponent<TextTriggerMain>().SetText(5);
 #if UNITY_PS4
                             //
                             // check trophy
@@ -63,25 +65,31 @@ public class WaterAltairActivate : MonoBehaviour {
                             //
                             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);
 #endif
+                            WaterTearManager.AllTearsCutscene();
+                            //    GameObject.FindWithTag("Pause").transform.Find("Event Text").gameObject.GetComponent<TextTriggerMain>().SetText(5);
                         }
                         else
                         {
-                            if(levelID != 3 && ps.tearCount > 3)
+                            if (levelID != 3 && ps.tearCount > 3)
                                 GameObject.FindWithTag("Pause").transform.Find("Event Text").gameObject.GetComponent<TextTriggerMain>().SetText(4);
                         }
                     }
                 }
             }
-		} else {
-			if (PlayerPrefs.GetInt("IntroWatched", 0) == 1 && (!watertear1.activeSelf || !watertear2.activeSelf || !watertear3.activeSelf))
-				levelcomplete = false;
-		}
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("IntroWatched", 0) == 1 && (!watertear1.activeSelf || !watertear2.activeSelf || !watertear3.activeSelf))
+                levelcomplete = false;
+        }
 
-		if (levelcomplete) { 
-			if (treesage != null) {
-				treesage.SetActive (true);
-				treesagegrey.SetActive (false);
-			}
+        if (levelcomplete)
+        {
+            if (treesage != null)
+            {
+                treesage.SetActive(true);
+                treesagegrey.SetActive(false);
+            }
 
             if (!wateractive1.activeInHierarchy)
                 wateractive1.SetActive(true);
@@ -100,7 +108,8 @@ public class WaterAltairActivate : MonoBehaviour {
                 }
 
             }
-		} else
+        }
+        else
         {
             if (treesage != null)
             {
@@ -117,13 +126,13 @@ public class WaterAltairActivate : MonoBehaviour {
                 {
                     wateractive2.SetActive(false);
 
-                    if(watermain1 != null)
+                    if (watermain1 != null)
                     {
                         watermain1.SetActive(false);
                         watermain2.SetActive(false);
                     }
                 }
             }
-		}
+        }
     }
 }

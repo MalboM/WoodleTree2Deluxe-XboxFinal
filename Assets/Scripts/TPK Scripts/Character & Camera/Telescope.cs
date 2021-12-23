@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Telescope : MonoBehaviour {
 
 	public Camera cam;
+    PostProcessVolume ppV;
+    FloatParameter lensFloat;
 	public GameObject camPos;
 	public GameObject woodleMesh;
 	public GameObject lenseImage;
@@ -39,11 +42,13 @@ public class Telescope : MonoBehaviour {
 		input = ReInput.players.GetPlayer (0);
 		tpc = this.gameObject.GetComponent<TPC> ();
 		camF = cam.gameObject.GetComponent<CameraFollower> ();
-		fovlerper = 50f;
+        ppV = tpc.ps.optionsNew.ppVolume;
+        lensFloat = ppV.profile.GetSetting<LensDistortion>().intensity;
+        fovlerper = 50f;
 	}
 
 	void Update(){
-		if ((input.GetButtonDown ("Telescope") || (usingTelescope && input.GetButtonDown("Attack"))) && !transitioning && tpc.onGround && !ps.inPause && !tpc.challengeWarping && !camF.stationaryMode1 && !camF.stationaryMode2) {
+		if ((input.GetButtonDown ("Telescope") || (usingTelescope && input.GetButtonDown("Attack"))) && !transitioning && !tpc.inButtonCutscene && !tpc.inCutscene && tpc.onGround && !ps.inPause && !tpc.challengeWarping && !camF.stationaryMode1 && !camF.stationaryMode2) {
 			usingTelescope = !usingTelescope;
 			transitioning = true;
 			StartCoroutine ("Transition");
@@ -114,6 +119,7 @@ public class Telescope : MonoBehaviour {
             cam.transform.SetParent(camPos.transform);
             prevRot = cam.transform.localRotation;
         }
+
         float iterator = 0f;
 		if (usingTelescope) {
             justEntered = true;
@@ -128,6 +134,8 @@ public class Telescope : MonoBehaviour {
 			//	cam.transform.forward = Vector3.Lerp (cam.transform.forward, this.transform.forward, iterator);
 				lenseImage.transform.localScale = Vector3.Lerp (Vector3.one*3f, Vector3.one, iterator);
 				controlsParent.localPosition = Vector3.Lerp (Vector3.zero, new Vector3 (0f, 450f, 0f), iterator * iterator);
+                lensFloat.value = Mathf.Lerp(0f, 40f, iterator);
+                ppV.profile.GetSetting<LensDistortion>().intensity = lensFloat;
 				yield return null;
 			}
             if(woodleMesh != null) 
@@ -149,7 +157,9 @@ public class Telescope : MonoBehaviour {
 		//		cam.transform.position = Vector3.Lerp (startPos, origPos, (1f * t) / 60f);
 				//		cam.transform.localRotation = Quaternion.Lerp(prevRot, startRot, (t * 1f) / 60f);
 				controlsParent.localPosition = Vector3.Lerp (Vector3.zero, new Vector3 (0f, 450f, 0f), iterator * iterator);
-				yield return null;
+                lensFloat.value = Mathf.Lerp(0f, 40f, iterator);
+                ppV.profile.GetSetting<LensDistortion>().intensity = lensFloat;
+                yield return null;
 			}
 			tpc.disableControl = false;
             tpc.rb.isKinematic = false;

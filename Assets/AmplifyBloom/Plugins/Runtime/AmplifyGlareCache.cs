@@ -42,7 +42,6 @@ namespace AmplifyBloom
 			}
 		}
 
-		
 		public void Destroy()
 		{
 			for ( int i = 0; i < AmplifyGlare.MaxPasses; i++ )
@@ -87,7 +86,6 @@ namespace AmplifyBloom
 			}
 		}
 
-		
 		public void Destroy()
 		{
 			for ( int i = 0; i < AmplifyGlare.MaxStarLines; i++ )

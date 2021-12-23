@@ -139,4 +139,5 @@ Shader "WoodleTree/Tree/ShakeShader"
             ENDCG
         }
     }
+	FallBack "Diffuse"
 }

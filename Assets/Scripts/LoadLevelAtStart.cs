@@ -1,20 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-#if UNITY_SWITCH
-using nn;
-#endif
+using UnityEngine.Audio;
+using UnityEngine.Video;
+//using nn;
 
 public class LoadLevelAtStart : MonoBehaviour
 {
+    public bool dontLoad;
 
     public string level;
     public TextMesh texty;
 
     public float waitTime;
 
+    public VideoPlayer vPlayer;
+    public float vDelay;
+
+    public AudioSource mPlayer;
+    public float aDelay;
+
+    public AudioMixer[] audioMixers;
+
     void Awake()
     {
+        int currentResolution = PlayerPrefs.GetInt("Resolution", Screen.resolutions.Length - 1);
+        if (currentResolution >= Screen.resolutions.Length)
+            currentResolution = Screen.resolutions.Length - 1;
+        Resolution curRes = Screen.resolutions[currentResolution];
+        PlayerPrefs.SetInt("Resolution", currentResolution);
+        Screen.SetResolution(curRes.width, curRes.height, Screen.fullScreenMode);
+        
+        foreach (AudioMixer am in audioMixers)
+            am.SetFloat("effectsVol", -80f + ((PlayerPrefs.GetFloat("effectsVolume", 8f)) * 10f));
+        foreach (AudioMixer am in audioMixers)
+            am.SetFloat("musicVol", -80f + ((PlayerPrefs.GetFloat("musicVolume", 8f)) * 10f));
 
 #if (!UNITY_EDITOR && UNITY_SWITCH)
         PlayerPrefsSwitch.PlayerPrefsSwitch.Init();
@@ -135,23 +155,27 @@ public class LoadLevelAtStart : MonoBehaviour
                 PlayerPrefs.SetInt("SeenLogo", 0);
             }*/
 
-        
+
+
+
+
         StartCoroutine(LoadinglevelX());
+
+
     }
 
-    //
-    bool CanProceedToLoadGame;
-    //
-    public void Update()
-    {
-        
-    }
 
     IEnumerator LoadinglevelX()
     {
+        mPlayer.PlayDelayed(aDelay);
+
+        yield return new WaitForSeconds(vDelay);
+
+        vPlayer.Play();
 
         yield return new WaitForSeconds(waitTime);
 
-        SceneManager.LoadSceneAsync(level);
+        if(!dontLoad)
+            SceneManager.LoadSceneAsync(level);
     }
 }

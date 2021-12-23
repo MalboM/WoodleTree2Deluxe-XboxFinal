@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e49d2109ad33445b06776690bac099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateInstead: 0
   playerprefstocheck: statue1
 --- !u!1 &2295637237870308911
 GameObject:
@@ -85,7 +86,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7355646276023332689}
-  - component: {fileID: 8618626340504472187}
   - component: {fileID: 7147468637721778201}
   m_Layer: 0
   m_Name: ItemExtraStatue1
@@ -109,27 +109,6 @@ Transform:
   m_Father: {fileID: 418152}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 15.4616995, z: 0}
---- !u!205 &8618626340504472187
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4646852457360275812}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.009793974, y: -0.060999937, z: 0.045403197}
-  m_Size: 0.58984065
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.0036230977
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2311978943663781789}
-    - renderer: {fileID: 6986622988232688202}
-    - renderer: {fileID: 8931991724332317728}
-  m_Enabled: 1
 --- !u!114 &7147468637721778201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,14 +122,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testetstst: 0
-  timeToWait: 0
-  fullObjDistance: 0
-  lowObjDistance: 0
+  timeToWait: 2
+  fullObjDistance: 80
+  lowObjDistance: 81
   fullObj: {fileID: 4684073198664235592}
   lowObj: {fileID: 0}
   fullObjCharacter: {fileID: 0}
   shadowObj: {fileID: 0}
+  insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &4684073198664235592
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +190,8 @@ AudioSource:
   m_GameObject: {fileID: 4684073198664235592}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243382132470434748, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c1dd01e0a1706e549bfb800500fcc67c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -5032,7 +5014,7 @@ ParticleSystem:
 --- !u!199 &8931991724332317728
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5056,6 +5038,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5156,6 +5139,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5233,6 +5217,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

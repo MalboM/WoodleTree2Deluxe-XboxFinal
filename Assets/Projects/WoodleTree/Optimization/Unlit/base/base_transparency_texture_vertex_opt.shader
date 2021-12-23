@@ -78,7 +78,7 @@ Shader "WoodleTree/Unlit/Base/base_transparency_texture (Vertex Opt)"
 				fixed alpha = base_col.a;
 				base_col *= _TintColor * 2.0;
 
-				fixed3 col = lerp(base_col.rgb, _RimColor.rgb, (1. - i.uv.z) * _RimIntensityF);
+				fixed3 col = lerp(base_col.rgb, _RimColor, (1. - i.uv.z) * _RimIntensityF);
 
 				UNITY_APPLY_FOG(i.fogCoord, col);
 
@@ -93,4 +93,5 @@ Shader "WoodleTree/Unlit/Base/base_transparency_texture (Vertex Opt)"
 			ENDCG
 		}
 	}
+			FallBack "Diffuse"
 }

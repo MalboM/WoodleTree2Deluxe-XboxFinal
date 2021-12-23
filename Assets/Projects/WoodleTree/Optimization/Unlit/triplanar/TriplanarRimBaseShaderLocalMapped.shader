@@ -89,6 +89,7 @@ Shader "WoodleTree/Unlit/Triplanar/TriplanarRimBaseShaderLocalMapped"
             ENDCG
         }
     }
+			FallBack "Diffuse"
 }
 /*
 

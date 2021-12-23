@@ -1,6 +1,6 @@
 // Copyright (c) 2016 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
-// Based on Unity StandaloneInputModule.cs
-// https://bitbucket.org/Unity-Technologies/ui/src
+// Based on Unity StandaloneInputModule.cs, version 5.3
+// https://bitbucket.org/Unity-Technologies/ui/src/b5f9aae6ff7c2c63a521a1cb8b3e3da6939b191b/UnityEngine.UI/EventSystem/InputModules?at=5.3
 
 #region Defines
 #if UNITY_2020 || UNITY_2021 || UNITY_2022 || UNITY_2023 || UNITY_2024 || UNITY_2025
@@ -219,20 +219,6 @@ namespace Rewired.Integration.UnityUI {
         [SerializeField]
         [Tooltip("Allows touch input to be used to select elements.")]
         private bool m_allowTouchInput = true;
-        
-        /// <summary>
-        /// Deselects the current selection on mouse/touch click when the pointer is not over a selectable object.
-        /// </summary>
-        [SerializeField]
-        [Tooltip("Deselects the current selection on mouse/touch click when the pointer is not over a selectable object.")]
-        private bool m_deselectIfBackgroundClicked = true;
-
-        /// <summary>
-        /// Deselects the current selection on mouse/touch click before selecting the next object.
-        /// </summary>
-        [SerializeField]
-        [Tooltip("Deselects the current selection on mouse/touch click before selecting the next object.")]
-        private bool m_deselectBeforeSelecting = true;
 
         /// <summary>
         /// Forces the module to always be active.
@@ -355,30 +341,6 @@ namespace Rewired.Integration.UnityUI {
         }
 
         /// <summary>
-        /// Deselects the current selection on mouse/touch click when the pointer is not over a selectable object.
-        /// </summary>
-        public bool deselectIfBackgroundClicked {
-            get {
-                return m_deselectIfBackgroundClicked;
-            }
-            set {
-                m_deselectIfBackgroundClicked = value;
-            }
-        }
-
-        /// <summary>
-        /// Deselects the current selection on mouse/touch click before selecting the next object.
-        /// </summary>
-        private bool deselectBeforeSelecting {
-            get {
-                return m_deselectBeforeSelecting;
-            }
-            set {
-                m_deselectBeforeSelecting = value;
-            }
-        }
-
-        /// <summary>
         /// If enabled, Action Ids will be used to set the Actions. If disabled, string names will be used to set the Actions.
         /// </summary>
         public bool SetActionsById {
@@ -470,7 +432,7 @@ namespace Rewired.Integration.UnityUI {
                 return m_allowTouchInput;
             }
         }
-        
+
         #endregion
 
         [NonSerialized]
@@ -729,7 +691,7 @@ namespace Rewired.Integration.UnityUI {
                 pointerEvent.pressPosition = pointerEvent.position;
                 pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
 
-                HandleMouseTouchDeselectionOnSelectionChanged(currentOverGo, pointerEvent);
+                DeselectIfSelectionChanged(currentOverGo, pointerEvent);
 
                 if (pointerEvent.pointerEnter != currentOverGo) {
                     // send a pointer enter to the touched element if it isn't the one to select...
@@ -1011,7 +973,6 @@ namespace Rewired.Integration.UnityUI {
             ProcessMousePress(mouseData.GetButtonState(2).eventData);
             ProcessDrag(mouseData.GetButtonState(2).eventData.buttonData);
             IMouseInputSource mouseInputSource = GetMouseInputSource(playerId, pointerIndex);
-            if (mouseInputSource == null) return; // in case mouse source removed by user in event callback
             for(int i = 3; i < mouseInputSource.buttonCount; i++) {
                 ProcessMousePress(mouseData.GetButtonState(i).eventData);
                 ProcessDrag(mouseData.GetButtonState(i).eventData.buttonData);
@@ -1037,7 +998,6 @@ namespace Rewired.Integration.UnityUI {
         /// </summary>
         private void ProcessMousePress(MouseButtonEventData data) {
             var pointerEvent = data.buttonData;
-            if (GetMouseInputSource(pointerEvent.playerId, pointerEvent.inputSourceIndex) == null) return; // invalid mouse source
             var currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
 
             // PointerDown notification
@@ -1049,7 +1009,7 @@ namespace Rewired.Integration.UnityUI {
                 pointerEvent.pressPosition = pointerEvent.position;
                 pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
 
-                HandleMouseTouchDeselectionOnSelectionChanged(currentOverGo, pointerEvent);
+                DeselectIfSelectionChanged(currentOverGo, pointerEvent);
 
                 // search for the control that will receive the press
                 // if we can't find a press handler set the press
@@ -1122,25 +1082,6 @@ namespace Rewired.Integration.UnityUI {
                 if (currentOverGo != pointerEvent.pointerEnter) {
                     HandlePointerExitAndEnter(pointerEvent, null);
                     HandlePointerExitAndEnter(pointerEvent, currentOverGo);
-                }
-            }
-        }
-        
-        private void HandleMouseTouchDeselectionOnSelectionChanged(GameObject currentOverGo, BaseEventData pointerEvent) {
-            if (m_deselectIfBackgroundClicked && m_deselectBeforeSelecting) {
-                DeselectIfSelectionChanged(currentOverGo, pointerEvent);
-                return;
-            }
-            var selectHandlerGO = ExecuteEvents.GetEventHandler<ISelectHandler>(currentOverGo);
-            if (m_deselectIfBackgroundClicked) {
-                // Deselect only if no new object will be selected
-                if (selectHandlerGO != eventSystem.currentSelectedGameObject && selectHandlerGO != null) {
-                    eventSystem.SetSelectedGameObject(null, pointerEvent);
-                }
-            } else if(m_deselectBeforeSelecting) {
-                // Deselect only if there is a new selection
-                if (selectHandlerGO != null && selectHandlerGO != eventSystem.currentSelectedGameObject) {
-                    eventSystem.SetSelectedGameObject(null, pointerEvent);
                 }
             }
         }

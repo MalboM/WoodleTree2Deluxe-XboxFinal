@@ -4,6 +4,7 @@ using UnityEngine.PS4;
 #endif
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.Video;
 
 public class IntroVideo : MonoBehaviour
 {
@@ -181,7 +182,7 @@ public class IntroVideo : MonoBehaviour
 
     TextMesh text, textShadow;
     MeshRenderer mText, mShadow;
-    MovieTexture video;
+    VideoPlayer video;
     AudioSource vaudio;
     Renderer vRender;
     float videoTime;
@@ -193,11 +194,11 @@ public class IntroVideo : MonoBehaviour
     void Start()
     {
         GameObject.Find("PS4_PlayVideo").SetActive(false);
-        video = (MovieTexture)Resources.Load("Videos/Opening") as MovieTexture;
+        video = (VideoPlayer)Resources.Load("Videos/Opening") as VideoPlayer;
         vRender = GetComponent<MeshRenderer>();
         vaudio = gameObject.GetComponent<AudioSource>();
-        video.loop = false;        
-        vRender.material.mainTexture = video;
+        video.isLooping = false;        
+        vRender.material.mainTexture = video.texture;
         mText = GameObject.Find("TextLoad").GetComponent<MeshRenderer>();
         mText.enabled = false;
         //vRender.transform.localScale = new Vector3(1280, 720, 1);

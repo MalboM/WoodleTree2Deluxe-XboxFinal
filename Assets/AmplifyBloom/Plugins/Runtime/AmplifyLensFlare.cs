@@ -69,16 +69,15 @@ namespace AmplifyBloom
 
 		}
 
-		
 		public void Destroy()
 		{
 			if ( m_lensFlareGradTexture != null )
 			{
-				//	GameObject.DestroyImmediate( m_lensFlareGradTexture );
-					m_lensFlareGradTexture = null;
+				GameObject.DestroyImmediate( m_lensFlareGradTexture );
+				m_lensFlareGradTexture = null;
 			}
 		}
-		
+
 		public void CreateLUTexture()
 		{
 			m_lensFlareGradTexture = new Texture2D( LUTTextureWidth, 1, TextureFormat.ARGB32, false );

@@ -230,7 +230,7 @@ public class AmplifyColorBase : MonoBehaviour
 #if TRIAL
 		if ( watermark != null )
 		{
-		//	DestroyImmediate( watermark );
+			DestroyImmediate( watermark );
 			watermark = null;
 		}
 #endif
@@ -338,9 +338,8 @@ public class AmplifyColorBase : MonoBehaviour
 		}
 		else if ( actualTriggerProxy != null )
 		{
-			//	DestroyImmediate( actualTriggerProxy.gameObject );
-			actualTriggerProxy.gameObject.SetActive(false);
-				actualTriggerProxy = null;
+			DestroyImmediate( actualTriggerProxy.gameObject );
+			actualTriggerProxy = null;
 		}
 
 		if ( volumesBlendFinished )
@@ -706,7 +705,7 @@ public class AmplifyColorBase : MonoBehaviour
 			if ( obj.GetType() == typeof( RenderTexture ) )
 				( obj as RenderTexture ).Release();
 
-		//	DestroyImmediate( obj );
+			DestroyImmediate( obj );
 			obj = null;
 		}
 	}

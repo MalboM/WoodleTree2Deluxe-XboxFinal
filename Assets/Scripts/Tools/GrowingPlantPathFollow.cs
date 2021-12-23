@@ -29,10 +29,10 @@ public class GrowingPlantPathFollow : MonoBehaviour
         for (int p = 0; p < 4; p++)
             inputs[p] = ReInput.players.GetPlayer(p);
     }
-
+    
     void OnCollisionStay(Collision collision)
     {
-        if (plantAAOT.canUseSpline)
+        if(plantAAOT.canUseSpline)
         {
             foreach (ContactPoint cp in collision.contacts)
             {
@@ -88,7 +88,7 @@ public class GrowingPlantPathFollow : MonoBehaviour
             character.disableControl = false;
             coroutines[character.pID] = null;
             delayAttachment[character.pID] = true;
-
+            
 
             if (inputs[character.pID].GetButtonDown("Jump"))
             {

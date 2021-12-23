@@ -8,32 +8,29 @@ using CinemaDirector;
 using Rewired;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
-
-#if UNITY_SWITCH
-using nn;
-#endif
-
+//using nn;
 using UnityEditor;
 using UnityStandardAssets.ImageEffects;
 
-public class StartScreen : MonoBehaviour {
+public class StartScreen : MonoBehaviour
+{
 
     public bool loadOneAndSeven;
     public bool newLoading;
-//    public bool useConsole;
-//    public GameObject consoleObj;
+    public bool useConsole;
+    public GameObject consoleObj;
     [HideInInspector] public GameObject[] fullLevels;
 
-	[Header("MISC")]
-	public TPC tpc;
+    [Header("MISC")]
+    public TPC tpc;
     public TPC tpcFox;
     public TPC tpcBeaver;
     public TPC tpcBush;
-	public CameraFollower cam;
-	public GameObject camPos;
-	public PauseScreen ps;
+    public CameraFollower cam;
+    public GameObject camPos;
+    public PauseScreen ps;
     public ObjDeactivateManager odm;
-	Player input;
+    Player input;
 
     public LoadLevelAdditive firstLevelLoadZone;
     public LoadLevelAdditive seventhLevelLoadZone;
@@ -43,67 +40,72 @@ public class StartScreen : MonoBehaviour {
     public LoadLevelAdditive[] loadLevelAdditives;
 
     public PlayableDirector firstCutscene;
-	int introwatched;
+    int introwatched;
 
-	[HideInInspector] public bool inStart;
+    [HideInInspector] public bool inStart;
 
     public AtmosphereManager atmosphereManager;
 
     public BlueBerryIDCreator bbic;
     public string[] levelNames;
-    
-	[Header("ALL")]
-	public EventSystem es;
-	public GameObject mainScreen;
-	public GameObject optionsScreen;
-	public GameObject creditsScreen;
-	bool inMain;
-	bool inOptions;
-	bool inCredits;
-	public GameObject mainFirst;
-	public GameObject optionsFirst;
-	public GameObject creditsFirst;
-	GameObject prevSelected;
 
-	[Header("MAIN")]
-	public Text startText;
+    public GraphicRaycaster graphicRaycaster;
+
+    [Header("ALL")]
+    public EventSystem es;
+    public GameObject mainScreen;
+    public GameObject optionsScreen;
+    public GameObject creditsScreen;
+    bool inMain;
+    bool inOptions;
+    bool inCredits;
+    public GameObject mainFirst;
+    public GameObject optionsFirst;
+    public GameObject creditsFirst;
+    GameObject prevSelected;
+
+    [Header("MAIN")]
+    public Text startText;
     public GameObject[] startButtons;
     public GameObject titleText;
-	public Image loadIcon;
-	public Image loadFS;
-	public Animator loadAnim;
+    public Image loadIcon;
+    public Image loadFS;
+    public Animator loadAnim;
     public GameObject arrowIcon;
     TextToTranslate toTranslate;
 
     float startCamX;
     float startCamY;
 
-	[Header("OPTIONS")]
-	public GameObject ixTick;
-	public GameObject iyTick;
-	public GameObject vibTick;
+    [Header("OPTIONS")]
+    public GameObject ixTick;
+    public GameObject iyTick;
+    public GameObject vibTick;
     bool aaIsOn;
     public GameObject aaTick;
-    public Slider sensitivity;
+    //    public Slider sensitivity;
     public Slider effectsSlider;
     public Slider musicSlider;
     public AudioMixer[] audioMixers;
     public GameObject returnButton;
-	public Text returnText;
-	public GameObject ays;
-	public GameObject noButton;
-	public Text noText;
-	public GameObject yesButton;
-	public Text yesText;
-	public GameObject deleteButton;
-	public Text deleteText;
-	bool invertX;
-	bool invertY;
-	bool vibOn;
-	float camSense;
+    public Text returnText;
+    public GameObject ays;
+    public GameObject noButton;
+    public Text noText;
+    public GameObject yesButton;
+    public Text yesText;
+    public GameObject deleteButton;
+    public Text deleteText;
+    bool invertX;
+    bool invertY;
+    bool vibOn;
+    //	float camSense;
     float effects;
     float music;
     bool deletingFile;
+    public GameObject defaultsAYS;
+    public GameObject defaultsNo;
+    public GameObject defaultsButton;
 
     public ActivateItemsMasks[] aiM;
     public ActivateItemsLeafs[] aiL;
@@ -114,40 +116,36 @@ public class StartScreen : MonoBehaviour {
     public GameObject languagesFirst;
     public GameObject languageButton;
 
+    [HideInInspector] public OptionsNew optionsNew;
+    [HideInInspector] public bool remapperOpen;
+
     [Header("SOUNDS")]
-	public AudioClip highlightSound;
+    public AudioClip highlightSound;
     public AudioClip highlightDownSound;
     public AudioClip selectSound;
-	public AudioClip backSound;
-	public AudioClip startGameSound;
+    public AudioClip backSound;
+    public AudioClip startGameSound;
     public AudioClip toggleOnSound;
     public AudioClip toggleOffSound;
     AudioSource sound1;
-	AudioSource sound2;
-	AudioSource bgMusic;
-	int soundInt;
-	public GameObject musicToActivate;
+    AudioSource sound2;
+    AudioSource bgMusic;
+    int soundInt;
+    public GameObject musicToActivate;
 
-	[Header("LOW POLY LEVELS")]
-	public GameObject[] lowPolys;
+    [Header("LOW POLY LEVELS")]
+    public GameObject[] lowPolys;
     public GameObject lowPolyExt;
     public ActivateAtDistanceAndUnloadLevel[] aadul;
 
     Font originalFont;
     FontStyle originalFontStyle;
 
-    private void Awake()
-    {
-#if UNITY_XBOXONE
-        //XOneEventsManager.levelNames = levelNames;
-#endif
-    }
+    bool notMouseOver = false;
 
-    //
-    void Start ()
+    void Start()
     {
-
-        loadOneAndSeven = false;
+        //    Application.targetFrameRate = 60;
 
         mainScreen.SetActive(false);
         titleText.SetActive(false);
@@ -156,32 +154,31 @@ public class StartScreen : MonoBehaviour {
         if (loadOneAndSeven)
         {
             SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
-        //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
+            //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
 
         }
 
         inStart = true;
-		cam.disableControl = true;
-		tpc.disableControl = true;
+        cam.disableControl = true;
+        tpc.disableControl = true;
         tpcFox.disableControl = true;
         tpcBeaver.disableControl = true;
         tpcBush.disableControl = true;
-        input = ReInput.players.GetPlayer (0);
+        input = ReInput.players.GetPlayer(0);
 
-		AudioSource[] sources = this.gameObject.GetComponents<AudioSource> ();
-		sound1 = sources [0];
-		sound2 = sources [1];
-		bgMusic = sources [2];
-		soundInt = 0;
+        AudioSource[] sources = this.gameObject.GetComponents<AudioSource>();
+        sound1 = sources[0];
+        sound2 = sources[1];
+        bgMusic = sources[2];
+        soundInt = 0;
 
-		cam.transform.SetParent (camPos.transform);
-		cam.transform.localPosition = Vector3.zero;
-		cam.transform.localRotation = Quaternion.identity;
+        cam.transform.SetParent(camPos.transform);
+        cam.transform.localPosition = Vector3.zero;
+        cam.transform.localRotation = Quaternion.identity;
 
         if (!PlayerPrefs.HasKey("LastCheckpoint"))
-             PlayerPrefs.SetInt("LastCheckpoint", -1);
+            PlayerPrefs.SetInt("LastCheckpoint", -1);
 
-        /*
         if (!PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
         {
             foreach (string s in levelNames)
@@ -206,7 +203,7 @@ public class StartScreen : MonoBehaviour {
                 if (s == "Level8")
                     total = 80;
                 PlayerPrefs.SetInt(s + "BlueBerryTotal", total);
-                
+
                 string newString = "";
                 for (int i = 0; i < total; i++)
                 {
@@ -215,12 +212,100 @@ public class StartScreen : MonoBehaviour {
                 PlayerPrefs.SetString(s + "BlueBerry", newString);
             }
             PlayerPrefs.Save();
-            //
-#if UNITY_XBOXONE
-            //DataManager.xOneEventsManager.SaveProgs();
-#endif
-        }*/
+        }
 
+        if (!PlayerPrefs.HasKey("BlueBerryTotal"))
+        {
+            ps.CheckBlues();
+            PlayerPrefs.Save();
+        }
+
+        if (!PlayerPrefs.HasKey("HalfBlueBerries"))
+        {
+            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 465)
+            {
+                PlayerPrefs.SetInt("HalfBlueBerries", 1);
+                PlayerPrefs.Save();
+                ps.textMain.SetText(15);
+            }
+        }
+
+        toTranslate = this.gameObject.GetComponent<TextToTranslate>();
+
+        originalFont = startText.font;
+        originalFontStyle = startText.fontStyle;
+        toTranslate.SetTextElement(startText, null, TextTranslationManager.TextCollection.startMenu, PlayerPrefs.GetInt("IntroWatched", 0), "", false, false, originalFont, originalFontStyle);
+
+        if (PlayerPrefs.GetInt("SteamCheckedLanguage", 0) == 0)
+        {
+#if !UNITY_EDITOR
+        if (SteamManager.Initialized) {
+            switch (SteamApps.GetCurrentGameLanguage())
+            {
+                case "english":
+                    PlayerPrefs.SetInt("Language", 0);
+                    break;
+
+                case "russian":
+                    PlayerPrefs.SetInt("Language", 1);
+                    break;
+
+                case "spanish":
+                    PlayerPrefs.SetInt("Language", 2);
+                    break;
+
+                case "italian":
+                    PlayerPrefs.SetInt("Language", 3);
+                    break;
+
+                case "schinese":
+                    PlayerPrefs.SetInt("Language", 4);
+                    break;
+
+                case "french":
+                    PlayerPrefs.SetInt("Language", 5);
+                    break;
+
+                case "portuguese":
+                    PlayerPrefs.SetInt("Language", 6);
+                    break;
+
+                case "dutch":
+                    PlayerPrefs.SetInt("Language", 7);
+                    break;
+
+                case "german":
+                    PlayerPrefs.SetInt("Language", 8);
+                    break;
+
+                case "japanese":
+                    PlayerPrefs.SetInt("Language", 9);
+                    break;
+
+                case "turkish":
+                    PlayerPrefs.SetInt("Language", 10);
+                    break;
+
+                case "arabic":
+                    PlayerPrefs.SetInt("Language", 11);
+                    break;
+
+                case "polish":
+                    PlayerPrefs.SetInt("Language", 12);
+                    break;
+
+                case "danish":
+                    PlayerPrefs.SetInt("Language", 13);
+                    break;
+
+                case "koreana":
+                    PlayerPrefs.SetInt("Language", 14);
+                    break;
+            }
+            PlayerPrefs.SetInt("SteamCheckedLanguage", 1);
+        }
+#endif
+        }
         if (!PlayerPrefs.HasKey("BlueBerryTotal"))
         {
             ps.CheckBlues();
@@ -236,7 +321,7 @@ public class StartScreen : MonoBehaviour {
         originalFont = startText.font;
         originalFontStyle = startText.fontStyle;
         toTranslate.SetTextElement(startText, null, TextTranslationManager.TextCollection.startMenu, PlayerPrefs.GetInt("IntroWatched", 0), "", false, false, originalFont, originalFontStyle);
-        
+
         StartCoroutine(EndOfStart());
         //
 #if UNITY_XBOXONE
@@ -244,25 +329,43 @@ public class StartScreen : MonoBehaviour {
 #endif
     }
 
-    void Update ()
+    void Update()
     {
-		if (inStart) {
-			if (cam.transform.localScale != Vector3.zero) {
-				cam.transform.localPosition = Vector3.zero;
-				cam.transform.localRotation = Quaternion.identity;
+        if (useConsole && !consoleObj.activeInHierarchy)
+            consoleObj.SetActive(true);
 
+        if (inStart)
+        {
+            if (Cursor.visible && (input.GetAxis("UIH") != 0f || input.GetAxis("UIV") != 0f))
+            {
+                Cursor.visible = false;
+                graphicRaycaster.enabled = false;
+            }
+            if (!Cursor.visible && input.GetAxis("MouseMove") != 0f)
+            {
+                Cursor.visible = true;
+                graphicRaycaster.enabled = true;
+            }
+
+            if (cam.transform.localScale != Vector3.zero)
+            {
+                cam.transform.localPosition = Vector3.zero;
+                cam.transform.localRotation = Quaternion.identity;
+
+                /*
                 startCamX = Mathf.Lerp(startCamX, input.GetAxis("RH") * 40f, Time.deltaTime * 0.5f);
                 startCamY = Mathf.Lerp(startCamY, -input.GetAxis("RV") * 40f, Time.deltaTime * 0.5f);
 
                 cam.transform.localEulerAngles = new Vector3(startCamY, startCamX, 0f);
+                */
 
-                if (es.currentSelectedGameObject == mainFirst && input.GetButtonDown("Start"))
-                StartContinue();
+                if (es.currentSelectedGameObject == mainFirst && input.GetButtonDown("Start") && !remapperOpen)
+                    StartContinue();
 
-            //    cam.transform.RotateAround(cam.transform.right, startCamY);
-            //    cam.transform.RotateAround(cam.transform.up, startCamX);
+                //    cam.transform.RotateAround(cam.transform.right, startCamY);
+                //    cam.transform.RotateAround(cam.transform.up, startCamX);
             }
-
+#if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.J))
             {
                 for (int ca = 0; ca < CagedNPCManager.GetAmount(); ca++)
@@ -271,17 +374,19 @@ public class StartScreen : MonoBehaviour {
                     CagedNPCManager.SpecialCaseCheck(ca);
                 }
             }
-
-			if (inMain) {
+#endif
+            if (inMain)
+            {
                 toTranslate.SetTextElement(startText, null, TextTranslationManager.TextCollection.startMenu, PlayerPrefs.GetInt("IntroWatched", 0), "", false, false, originalFont, originalFontStyle);
-                
-				if (es.currentSelectedGameObject == null)
-					es.SetSelectedGameObject (mainFirst);
-			}
 
-			//OPTIONS SELECTION
-			if (inOptions) {
-				/*	if (es.currentSelectedGameObject == returnButton) {
+                if (es.currentSelectedGameObject == null)
+                    es.SetSelectedGameObject(mainFirst);
+            }
+
+            //OPTIONS SELECTION
+            if (inOptions)
+            {
+                /*	if (es.currentSelectedGameObject == returnButton) {
 					if (returnText.color != Color.grey)
 						returnText.color = Color.grey;
 				} else {
@@ -309,76 +414,90 @@ public class StartScreen : MonoBehaviour {
 					if (noText.color != Color.white)
 						noText.color = Color.white;
 				}*/
-			}
+            }
 
-			//NAVIGATION
-			if (input.GetButtonDown ("Back") && !deletingFile) {
-				if (inOptions || inCredits)
+            //NAVIGATION
+            if (input.GetButtonDown("Back") && !deletingFile)
+            {
+                if (inOptions || inCredits)
                 {
                     HDRumbleMain.PlayVibrationPreset(0, "K02_Patter2", 1f, 0, 0.2f);
-                    if (inOptions && ays.activeInHierarchy)
-                        CloseAYS();
-                    else
-                    {
-                        if (inOptions && languagesOpen)
-                            ToggleLanguagesList();
-                        else
-                            MainX(false);
-                    }
-				}
+                    GoBack();
+                }
             }
 
             if (input.GetButtonDown("Submit"))
                 HDRumbleMain.PlayVibrationPreset(0, "K01_Patter1", 1f, 0, 0.2f);
 
             //SOUNDS
-            if (prevSelected != es.currentSelectedGameObject && prevSelected != null && es.currentSelectedGameObject != null)
+            if (inStart && prevSelected != es.currentSelectedGameObject && prevSelected != null && es.currentSelectedGameObject != null
+                && (input.GetAxis("UIH") != 0f || input.GetAxis("UIV") != 0f))
             {
-                if (prevSelected.gameObject.transform.position.y < es.currentSelectedGameObject.transform.position.y)
-                    PlaySound(highlightDownSound);
-                else
-                    PlaySound(highlightSound);
-            //    Vibrate(0.05f, 0.2f);
-                prevSelected = es.currentSelectedGameObject;
-
-                if(inMain)
-                    MainButtonSelect();
+                notMouseOver = true;
+                MouseOverButton(es.currentSelectedGameObject);
             }
-		}
-	}
+        }
+    }
 
-	public void OpenStart(){
-		inStart = true;
-		cam.disableControl = true;
-		tpc.disableControl = true;
+    public void GoBack()
+    {
+        if (inOptions && ays.activeInHierarchy)
+            CloseAYS();
+        else
+        {
+            if (inOptions && languagesOpen)
+                ToggleLanguagesList();
+            else
+            {
+                if (remapperOpen)
+                    optionsNew.CloseButtonRemapper();
+                else
+                {
+                    if (defaultsAYS.activeInHierarchy)
+                        CloseDefaultsAYS();
+                    else
+                        MainX(false);
+                }
+            }
+        }
+    }
+
+    public void OpenStart()
+    {
+        inStart = true;
+        cam.disableControl = true;
+        tpc.disableControl = true;
         tpcFox.disableControl = true;
         tpcBeaver.disableControl = true;
         tpcBush.disableControl = true;
-        this.transform.GetChild (0).gameObject.SetActive (true);
+        this.transform.GetChild(0).gameObject.SetActive(true);
 
-		cam.transform.SetParent (camPos.transform);
-		cam.transform.localPosition = Vector3.zero;
-		cam.transform.localRotation = Quaternion.identity;
+        cam.transform.SetParent(camPos.transform);
+        cam.transform.localPosition = Vector3.zero;
+        cam.transform.localRotation = Quaternion.identity;
 
-		prevSelected = mainFirst;
-		MainX (true);
-	}
+        prevSelected = mainFirst;
+        MainX(true);
+    }
 
     public void StartContinue()
     {
-        //
         if (inStart)
         {
             inStart = false;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            foreach (EventTrigger et in mainFirst.transform.parent.gameObject.GetComponentsInChildren<EventTrigger>(true))
+                Destroy(et);
+
             cam.transform.SetParent(null);
             PlaySound(startGameSound);
             HDRumbleMain.PlayVibrationPreset(0, "P05_DampedFm2", 1.3f, 0, 0.2f);
             bgMusic.Stop();
 
             this.transform.GetChild(0).GetComponent<Animator>().Play("StartScreenFade", 0);
-
-            // temp
-            //Debug.LogError("loadOneAndSeven is " + loadOneAndSeven.ToString());
 
             if (loadOneAndSeven)
             {
@@ -392,28 +511,19 @@ public class StartScreen : MonoBehaviour {
                 }
             }
 
-            //
+
             if (PlayerPrefs.GetInt("IntroWatched", 0) == 0)
             {
-                StartCoroutine(LoadIt(2, 3));
+                StartCoroutine(LoadIt(-1, -1));
             }
             else
             {
                 Time.timeScale = 0f;
                 int whichCheckpoint = PlayerPrefs.GetInt("LastCheckpoint", 0);
-                
-                // temp
-                //Debug.LogError("last check point is " + whichCheckpoint);
-
-                //
                 if (whichCheckpoint != -1)
                 {
                     int checkForScene = PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0);
-
-                    // temp
-                    //Debug.LogError("check for scene is " + checkForScene);
-
-                    if ((!loadOneAndSeven && checkForScene != 2) || (loadOneAndSeven && (checkForScene != 2 && checkForScene != 4)) || whichCheckpoint == 2)
+                    if ((!loadOneAndSeven && checkForScene != 2) || (loadOneAndSeven && (checkForScene != 1 && checkForScene != 4)) || whichCheckpoint == 2)
                     {
                         ps.cantPause = true;
                         StartCoroutine(LoadIt(whichCheckpoint, checkForScene));
@@ -425,122 +535,167 @@ public class StartScreen : MonoBehaviour {
         }
     }
 
-	void InitializeValues(){
+    public void InitializeValues()
+    {
+        if (PlayerPrefs.GetInt("InvertX", 0) == 0)
+        {
+            invertX = false;
+        }
+        else
+            invertX = true;
+        cam.freeInvertXAxis = invertX;
+        ixTick.SetActive(invertX);
 
-        invertX = cam.freeInvertXAxis;
-		invertY = cam.freeInvertYAxis;
+        if (PlayerPrefs.GetInt("InvertY", 0) == 0)
+            invertY = false;
+        else
+            invertY = true;
+        cam.freeInvertYAxis = invertY;
+        iyTick.SetActive(invertY);
+
         if (PlayerPrefs.GetInt("Vibration", 1) == 0)
             vibOn = false;
         else
             vibOn = true;
-		camSense = cam.freeRotateSpeed;
+        //		camSense = cam.freeRotateSpeed;
 
         music = PlayerPrefs.GetFloat("musicVolume", 8f);
         effects = PlayerPrefs.GetFloat("effectsVolume", 8f);
 
+        /*
         if (PlayerPrefs.GetInt("AA", 1) == 0)
             aaIsOn = false;
         else
             aaIsOn = true;
+        foreach (Antialiasing aa in ps.antialiasing)
+            aa.enabled = aaIsOn;
+        */
 
         if (invertX)
-			ixTick.SetActive (true);
-		else
-			ixTick.SetActive (false);
+            ixTick.SetActive(true);
+        else
+            ixTick.SetActive(false);
 
-		if (invertY)
-			iyTick.SetActive (true);
-		else
-			iyTick.SetActive (false);
+        if (invertY)
+            iyTick.SetActive(true);
+        else
+            iyTick.SetActive(false);
 
-		if (vibOn)
-			vibTick.SetActive (true);
-		else
-			vibTick.SetActive (false);
+        if (vibOn)
+            vibTick.SetActive(true);
+        else
+            vibTick.SetActive(false);
 
         if (aaIsOn)
             aaTick.SetActive(true);
         else
             aaTick.SetActive(false);
 
-        sensitivity.value = camSense;
+        //    sensitivity.value = camSense;
 
         musicSlider.value = music;
         effectsSlider.value = effects;
     }
 
-	void OpenMain(){
-		inMain = true;
-		mainScreen.SetActive (true);	
-	}
+    void OpenMain()
+    {
+        inMain = true;
+        mainScreen.SetActive(true);
+    }
 
-	void CloseMain(){
-		inMain = false;
-		mainScreen.SetActive (false);
-	}
+    void CloseMain()
+    {
+        inMain = false;
+        mainScreen.SetActive(false);
+    }
 
-	void OpenOptions(){
-		inOptions = true;
-		InitializeValues ();
-		optionsScreen.SetActive (true);	
-	}
+    void OpenOptions()
+    {
+        inOptions = true;
+        InitializeValues();
+        optionsNew.SetInitialTextValues();
+        optionsNew.ResetOptionsScroll();
+        optionsScreen.SetActive(true);
+    }
 
-	void CloseOptions()
+    void CloseOptions()
     {
         if (inOptions)
-        {
             PlayerPrefs.Save();
-            //
+        inOptions = false;
+        optionsScreen.SetActive(false);
+
 #if UNITY_XBOXONE && !UNITY_EDITOR
             DataManager.xOneEventsManager.SaveProgs();
 #endif
-            //Debug.Log("PS4 OPTIONS SAVED");
-        }
+    }
 
-        inOptions = false;
-		optionsScreen.SetActive (false);
-	}
+    void OpenCredits()
+    {
+        inCredits = true;
+        creditsScreen.SetActive(true);
+    }
 
-	void OpenCredits(){
-		inCredits = true;
-		creditsScreen.SetActive (true);	
-	}
+    void CloseCredits()
+    {
+        inCredits = false;
+        creditsScreen.SetActive(false);
+    }
 
-	void CloseCredits(){
-		inCredits = false;
-		creditsScreen.SetActive (false);
-	}
-
-	public void MainX(bool firstTime){
-		CloseOptions ();
-		CloseCredits ();
-		OpenMain ();
-        if(firstTime)
+    public void MainX(bool firstTime)
+    {
+        CloseOptions();
+        CloseCredits();
+        OpenMain();
+        if (firstTime)
             mainScreen.SetActive(false);
-        es.SetSelectedGameObject (mainFirst);
-		prevSelected = es.currentSelectedGameObject;
+        es.SetSelectedGameObject(mainFirst);
+        prevSelected = es.currentSelectedGameObject;
         MainButtonSelect();
-		if(!firstTime)
-			PlaySound (backSound);
-	}
+        if (!firstTime)
+            PlaySound(backSound);
+    }
 
-	public void Options(){
-		CloseMain ();
-		CloseCredits ();
-		OpenOptions ();
-		es.SetSelectedGameObject (optionsFirst);
-		prevSelected = es.currentSelectedGameObject;
-		PlaySound (selectSound);
-	}
+    public void Options()
+    {
+        CloseMain();
+        CloseCredits();
+        OpenOptions();
+        es.SetSelectedGameObject(optionsFirst);
+        prevSelected = es.currentSelectedGameObject;
+        PlaySound(selectSound);
+    }
 
-	public void Credits(){
-		CloseOptions ();
-		CloseMain ();
-		OpenCredits ();
-		es.SetSelectedGameObject (creditsFirst);
-		prevSelected = es.currentSelectedGameObject;
-		PlaySound (selectSound);
-	}
+    public void Credits()
+    {
+        CloseOptions();
+        CloseMain();
+        OpenCredits();
+        es.SetSelectedGameObject(creditsFirst);
+        prevSelected = es.currentSelectedGameObject;
+        PlaySound(selectSound);
+    }
+
+    public void MouseOverButton(GameObject selected)
+    {
+        if (selected != null)
+        {
+            if (notMouseOver || Cursor.visible)
+            {
+                notMouseOver = false;
+                es.SetSelectedGameObject(selected);
+                if (prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+                    PlaySound(highlightDownSound);
+                else
+                    PlaySound(highlightSound);
+                //    Vibrate(0.05f, 0.2f);
+                prevSelected = selected;
+
+                if (inMain)
+                    MainButtonSelect();
+            }
+        }
+    }
 
     void MainButtonSelect()
     {
@@ -555,40 +710,54 @@ public class StartScreen : MonoBehaviour {
         }
     }
 
-	//OPTIONS
-	public void InvertX(){
-		invertX = !invertX;
+    public void QuitGame()
+    {
+        PlayerPrefs.Save();
+        if (!Application.isEditor)
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+    }
+
+    //OPTIONS
+    public void InvertX()
+    {
+        invertX = !invertX;
         if (invertX)
         {
             ixTick.SetActive(true);
             PlaySound(toggleOnSound);
+            PlayerPrefs.SetInt("InvertX", 1);
         }
         else
         {
             ixTick.SetActive(false);
             PlaySound(toggleOffSound);
+            PlayerPrefs.SetInt("InvertX", 0);
         }
-		cam.freeInvertXAxis = invertX;
-	}
+        cam.freeInvertXAxis = invertX;
+    }
 
-	public void InvertY(){
-		invertY = !invertY;
+    public void InvertY()
+    {
+        invertY = !invertY;
         if (invertY)
         {
             iyTick.SetActive(true);
             PlaySound(toggleOnSound);
+            PlayerPrefs.SetInt("InvertY", 1);
         }
         else
         {
             iyTick.SetActive(false);
             PlaySound(toggleOffSound);
+            PlayerPrefs.SetInt("InvertY", 0);
         }
-		cam.freeInvertYAxis = invertY;
-		PlaySound (selectSound);
-	}
+        cam.freeInvertYAxis = invertY;
+        PlaySound(selectSound);
+    }
 
-	public void Vibration(){
-		vibOn = !vibOn;
+    public void Vibration()
+    {
+        vibOn = !vibOn;
         if (vibOn)
         {
             vibTick.SetActive(true);
@@ -603,7 +772,7 @@ public class StartScreen : MonoBehaviour {
             PlayerPrefs.SetInt("Vibration", 1);
         else
             PlayerPrefs.SetInt("Vibration", 0);
-        PlaySound (selectSound);
+        PlaySound(selectSound);
     }
 
     public void AAToggle()
@@ -628,11 +797,11 @@ public class StartScreen : MonoBehaviour {
         }
     }
 
-    public void Sensitivity(){
-		camSense = sensitivity.value;
-		cam.freeRotateSpeed = camSense;
-		PlaySound (highlightSound);
-    }
+    /*   public void Sensitivity(){
+           camSense = sensitivity.value;
+           cam.freeRotateSpeed = camSense;
+           PlaySound (highlightSound);
+       }*/
 
     public void SetEffects()
     {
@@ -641,7 +810,7 @@ public class StartScreen : MonoBehaviour {
             am.SetFloat("effectsVol", -80f + ((PlayerPrefs.GetFloat("effectsVolume", 8f)) * 10f));
         PlaySound(highlightSound);
     }
-    
+
     public void SetMusic()
     {
         PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
@@ -650,23 +819,26 @@ public class StartScreen : MonoBehaviour {
         PlaySound(highlightSound);
     }
 
-    public void OpenAYS(){
-		ays.SetActive (true);
-		es.SetSelectedGameObject (noButton.gameObject);
-	}
+    public void OpenAYS()
+    {
+        ays.SetActive(true);
+        es.SetSelectedGameObject(noButton.gameObject);
+    }
 
-	public void CloseAYS(){
-		ays.SetActive (false);
-		es.SetSelectedGameObject (deleteButton.gameObject);
-	}
+    public void CloseAYS()
+    {
+        ays.SetActive(false);
+        es.SetSelectedGameObject(deleteButton.gameObject);
+    }
 
-	public void DeleteFile(){
+    public void DeleteFile()
+    {
         if (!deletingFile)
         {
             deletingFile = true;
             StartCoroutine(DeleteCoRo());
         }
-	}
+    }
 
     public void ToggleLanguagesList()
     {
@@ -695,11 +867,12 @@ public class StartScreen : MonoBehaviour {
         deleteButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
 
+        /*
         int vibInt = PlayerPrefs.GetInt("Vibration", 1);
         int aaInt = PlayerPrefs.GetInt("AA", 1);
         float musicFT = PlayerPrefs.GetFloat("musicVolume", 8f);
         float effectsFT = PlayerPrefs.GetFloat("effectsVolume", 8f);
-
+        */
 
         PlayerPrefs.SetInt("Berries", 0);
         PlayerPrefs.SetInt("BlueBerries", 0);
@@ -707,33 +880,9 @@ public class StartScreen : MonoBehaviour {
         foreach (string s in levelNames)
         {
             string newString = "";
-            int total = 140;
-            if (s == "ExternalWorld")
-                total = 100;
-            if (s == "Level1.2")
-                total = 80;
-            if (s == "Level2")
-                total = 90;
-            if (s == "Level3")
-                total = 80;
-            if (s == "Level4")
-                total = 80;
-            if (s == "Level5")
-                total = 80;
-            if (s == "Level6")
-                total = 120;
-            if (s == "Level7")
-                total = 80;
-            if (s == "Level8")
-                total = 80;
-            for (int bb = 0; bb < total; bb++)
-            {
-                PlayerPrefs.SetInt(s + "BlueBerry" + bb.ToString(), 0);
-                /*if (bb % 20 == 0)
-                    yield return null;*/
-            }
-       //         newString = newString.Insert(0, "0");
-       //    PlayerPrefs.SetString(s + "BlueBerry", newString);
+            for (int bb = 0; bb < PlayerPrefs.GetInt(s + "BlueBerryTotal"); bb++)
+                newString = newString.Insert(0, "0");
+            PlayerPrefs.SetString(s + "BlueBerry", newString);
         }
 
         yield return null;
@@ -748,12 +897,10 @@ public class StartScreen : MonoBehaviour {
                     curBB.GetComponent<BlueBerryIDCreator>().ReEnableBerries();
             }
         }
+        PlayerPrefs.SetInt("TotalRedBerries", 0);
         PlayerPrefs.SetInt("AllBlueBerries", 0);
         PlayerPrefs.SetInt("BlueBerryTotal", 0);
-        PlayerPrefs.SetInt("RedBerryTotal", 0);
-        PlayerPrefs.SetInt("WoodleFriends", 0);
-        PlayerPrefs.SetInt("IsThere", 0);
-        PlayerPrefs.SetInt("Top", 0);
+        PlayerPrefs.SetInt("HalfBlueBerries", 0);
 
         //TEARS
         for (int lvl = 1; lvl <= 8; lvl++)
@@ -818,26 +965,12 @@ public class StartScreen : MonoBehaviour {
         PlayerPrefs.SetInt("CollectablesTotal", 0);
         GameObject.Find("Collectables").GetComponent<ActivateItemsExtra>().DeactivateAllInHouse();
 
-        // ITEMS TAKEN
-        PlayerPrefs.SetInt("PaidForItem", 0);
-        
-        // ITEMS TAKEN
-        PlayerPrefs.SetInt("PaidItemsCount", 0);
-        PlayerPrefs.SetInt("PowerUpsBought", 0);
-
         //CAGES
         for (int ca = 0; ca < CagedNPCManager.GetAmount(); ca++)
         {
             PlayerPrefs.SetInt("Cage" + ca.ToString(), 0);
             CagedNPCManager.SpecialCaseCheck(ca);
         }
-
-        // ENEMIES
-        PlayerPrefs.SetInt("DarkEnemiesKilledCount", 0);
-        PlayerPrefs.SetInt("DarkEnemiesAchiev", 0);
-        PlayerPrefs.SetInt("NormalEnemiesKilledCount", 0);
-        PlayerPrefs.SetInt("NormalEnemiesAchiev", 0);
-
 
         //CHALLENGES
         for (int ch = 0; ch <= 11; ch++)
@@ -864,13 +997,23 @@ public class StartScreen : MonoBehaviour {
         PlayerPrefs.SetInt("WrongLeafBlockBlack", 0);
         PlayerPrefs.SetInt("AllTears", 0);
 
-        PlayerPrefs.SetInt("Vibration", vibInt);
-        PlayerPrefs.SetFloat("musicVolume", musicFT);
-        PlayerPrefs.SetFloat("effectsVolume", effectsFT);
-        PlayerPrefs.SetInt("AA", aaInt);
+        /*PlayerPrefs.SetInt("Vibration", vibInt);
+          PlayerPrefs.SetFloat("musicVolume", musicFT);
+          PlayerPrefs.SetFloat("effectsVolume", effectsFT);
+          PlayerPrefs.SetInt("AA", aaInt);*/
 
         PlayerPrefs.SetInt("Checkpoint0", 1);
         PlayerPrefs.SetInt("Checkpoint0Scene", 2);
+
+        //ACHIEVEMENTS
+        PlayerPrefs.SetInt("DarkKilled", 0);
+        PlayerPrefs.SetInt("NaturalKilled", 0);
+        PlayerPrefs.SetInt("BoughtItems", 0);
+        PlayerPrefs.SetInt("BoughtPowers", 0);
+        PlayerPrefs.GetInt("PTree26", 0);
+        PlayerPrefs.GetInt("PTree27", 0);
+        PlayerPrefs.GetInt("PTree28", 0);
+        PlayerPrefs.GetInt("PTree29", 0);
 
         tpc.berryCount = 0;
         tpc.blueberryCount = 0;
@@ -896,16 +1039,15 @@ public class StartScreen : MonoBehaviour {
         WaterTearManager.UpdateTears();
 
         PlayerPrefs.Save();
-        //
-#if UNITY_XBOXONE && !UNITY_EDITOR
-        DataManager.xOneEventsManager.SaveProgs();
-#endif
 
         deletingFile = false;
 
         deleteButton.gameObject.SetActive(true);
         noButton.gameObject.SetActive(true);
 
+#if UNITY_XBOXONE && !UNITY_EDITOR
+        DataManager.xOneEventsManager.SaveProgs();
+#endif
         CloseAYS();
     }
 
@@ -933,7 +1075,7 @@ public class StartScreen : MonoBehaviour {
         }
     }
 
-	IEnumerator FadeIn()
+    IEnumerator FadeIn()
     {
         /*
         loadAnim.SetBool("Loading", true);
@@ -1010,22 +1152,21 @@ public class StartScreen : MonoBehaviour {
             loadFS.color = Color.Lerp(Color.clear, Color.black, (f * 1f) / 60f);
             yield return null;
         }
-	}
+    }
 
     IEnumerator LoadIt(int whichCheckpoint, int sceneToGoTo)
     {
+    //    Debug.Log("LOADING: " + whichCheckpoint + " @ " + sceneToGoTo);
+    //    UnityEditor.EditorApplication.isPaused = true;
         for (int lol = 1; lol <= 60; lol++)
             yield return null;
-
-        // temp
-        Debug.LogError("load  " + sceneToGoTo);
 
         loadAnim.SetBool("Loading", true);
         loadIcon.fillAmount = 0f;
 
         if (tpc != null && tpc.GetComponentInParent<OneWayManager>() != null)
             tpc.GetComponentInParent<OneWayManager>().currentlyChecking = true;
-        
+
         for (int f = 1; f <= 60; f++)
         {
             AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
@@ -1033,53 +1174,42 @@ public class StartScreen : MonoBehaviour {
             yield return null;
         }
         this.transform.GetChild(0).gameObject.SetActive(false);
-        
+
         cam.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 
         if (newLoading)
         {
-        /*    float xf = 0f;
-            for (int x = 2; x <= 10; x++)
-            {
-                xf = x * 1f;
-                AsyncOperation async1 = new AsyncOperation();
-                async1 = SceneManager.LoadSceneAsync(x, LoadSceneMode.Additive);
-
-                while (!async1.isDone)
+            /*    float xf = 0f;
+                for (int x = 2; x <= 10; x++)
                 {
-                    loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, ((xf - 2f) / 9f) + (async1.progress / 9f), 0.8f);
-                    yield return null;
-                }
-            }
+                    xf = x * 1f;
+                    AsyncOperation async1 = new AsyncOperation();
+                    async1 = SceneManager.LoadSceneAsync(x, LoadSceneMode.Additive);
 
-            yield return new WaitForEndOfFrame();
-            fullLevels = GameObject.FindGameObjectsWithTag("WholeLevel");
-            foreach (GameObject g in fullLevels)
-            {
-                if (g.scene.buildIndex != sceneToGoTo)
-                    g.SetActive(false);
-            }*/
+                    while (!async1.isDone)
+                    {
+                        loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, ((xf - 2f) / 9f) + (async1.progress / 9f), 0.8f);
+                        yield return null;
+                    }
+                }
+
+                yield return new WaitForEndOfFrame();
+                fullLevels = GameObject.FindGameObjectsWithTag("WholeLevel");
+                foreach (GameObject g in fullLevels)
+                {
+                    if (g.scene.buildIndex != sceneToGoTo)
+                        g.SetActive(false);
+                }*/
         }
         else
         {
-
-
             if (sceneToGoTo > 4)
             {
-                bool sceneToUnloadIsValid = false;
-                foreach (Scene s in SceneManager.GetAllScenes())
-                {
-                    if (s.buildIndex == 4 && s.isLoaded)
-                        sceneToUnloadIsValid = true;
-                }
-                if (sceneToUnloadIsValid)
-                {
-                    AsyncOperation async0 = new AsyncOperation();
-                    async0 = SceneManager.UnloadSceneAsync(4);
+                AsyncOperation async0 = new AsyncOperation();
+                async0 = SceneManager.UnloadSceneAsync(4);
 
-                    while (!async0.isDone)
-                        yield return null;
-                }
+                while (!async0.isDone)
+                    yield return null;
             }
             yield return null;
 
@@ -1087,7 +1217,7 @@ public class StartScreen : MonoBehaviour {
             {
                 AsyncOperation async1 = new AsyncOperation();
                 async1 = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
-                
+
                 while (!async1.isDone)
                 {
                     if (whichCheckpoint > 2)
@@ -1097,7 +1227,7 @@ public class StartScreen : MonoBehaviour {
                     yield return null;
                 }
             }
-            if (sceneToGoTo > 3)
+            if (sceneToGoTo > 4)
             {
                 AsyncOperation async2 = new AsyncOperation();
                 async2 = SceneManager.LoadSceneAsync(sceneToGoTo, LoadSceneMode.Additive);
@@ -1111,7 +1241,7 @@ public class StartScreen : MonoBehaviour {
             }
         }
 
-        
+
         if (curLPT != null)
         {
             yield return null;
@@ -1119,14 +1249,14 @@ public class StartScreen : MonoBehaviour {
             yield return null;
             curLPT.EnterTrigger();
         }
-        
+
         if (whichCheckpoint == 0 || whichCheckpoint == 1)
         {
             lowPolyTriggers[0].currentlyInside = false;
             lowPolyTriggers[0].EnterTrigger();
         }
 
-   //     lowPolyTriggers[0].enabled = false;
+        //     lowPolyTriggers[0].enabled = false;
 
         if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
             lowPolyTriggers[1].EnterTrigger();
@@ -1143,7 +1273,7 @@ public class StartScreen : MonoBehaviour {
                 atmosphereManager.EnterTrigger(2);
                 atmosphereManager.curLevel = "Level5";
             }
-        //    lowPolyTriggers[5].EnterTrigger();
+            lowPolyTriggers[5].EnterTrigger();
         }
         if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
             lowPolyTriggers[6].EnterTrigger();
@@ -1151,42 +1281,26 @@ public class StartScreen : MonoBehaviour {
             lowPolyTriggers[7].EnterTrigger();
         if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26)
             lowPolyTriggers[8].EnterTrigger();
-        
+
         if (whichCheckpoint != 16 && whichCheckpoint != 17 && whichCheckpoint != 37 && atmosphereManager.curLevel == "Level5")
         {
             atmosphereManager.ExitTrigger();
             atmosphereManager.curLevel = "";
         }
-        
+
         if (PlayerPrefs.GetInt("IntroWatched", 0) == 1)
         {
             Time.timeScale = 1f;
-            if (PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f) == 0f && PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f) == 0f && PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f) == 0f)
-            {
-                bool foundCP = false;
-                foreach(GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
-                {
-                    if(g.GetComponent<Checkpoint>().checkpointID == whichCheckpoint)
-                    {
-                        tpc.gameObject.transform.position = g.transform.position;
-                        foundCP = true;
-                    }
-                }
-                if (!foundCP)
-                    tpc.gameObject.transform.position = new Vector3(-5.08f, 2.841f, 53.54f);
-            }
-            else
-            {
-                tpc.gameObject.transform.position = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
-                    PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
-            }
+            tpc.gameObject.transform.position = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
+                PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
             tpcFox.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
             tpcBeaver.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
             tpcBush.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
             cam.disableControl = false;
             tpc.rb.isKinematic = true;
 
-            if (PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) > 3){
+            if (PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) > 3)
+            {
                 LoadLevelAdditive lla = loadLevelAdditives[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) - 4];
                 if (lla.lptCollider != null)
                     lla.lptCollider.enabled = true;
@@ -1219,24 +1333,22 @@ public class StartScreen : MonoBehaviour {
 
             yield return new WaitForSeconds(1f);
             tpc.GetComponentInParent<OneWayManager>().CheckOneWays();
-            
-            
+
             while (!CheckpointLoaded())
                 yield return null;
-            
+
             tpc.rb.isKinematic = false;
 
             loadAnim.SetBool("Loading", false);
             tpc.transform.forward = cam.transform.forward;
             for (int f = 59; f >= 0; f--)
             {
-                if(f == 30)
+                if (f == 30)
                     EndLoading(whichCheckpoint);
                 AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
                 loadFS.color = Color.Lerp(Color.clear, Color.black, (f * 1f) / 60f);
                 yield return null;
             }
-            
         }
         else
         {
@@ -1252,15 +1364,16 @@ public class StartScreen : MonoBehaviour {
             loadFS.color = Color.clear;
             PlayerPrefs.SetInt("IntroWatched", 1);
             PlayerPrefs.SetInt("LastCheckpoint", 0);
-        //    PlayerPrefs.Save();
+            //    PlayerPrefs.Save();
             ps.StartCutscene(firstCutscene, Vector3.one);
             WaterTearManager.UpdateTears();
 
             yield return new WaitForSeconds(1f);
             tpc.GetComponentInParent<OneWayManager>().CheckOneWays();
         }
-        
-        if (whichCheckpoint >= 3 && whichCheckpoint <= 5)
+
+
+        if (whichCheckpoint >= 4 && whichCheckpoint <= 5)
             tpc.ps.ShowLevelTitle("Level1.2");
         if (sceneToGoTo == 5)
             tpc.ps.ShowLevelTitle("Level2");
@@ -1295,7 +1408,7 @@ public class StartScreen : MonoBehaviour {
     }
 
     IEnumerator EndOfStart()
-    {/*
+    {
         bool foundOldData = false;
         foreach (string s in levelNames)
         {
@@ -1335,7 +1448,7 @@ public class StartScreen : MonoBehaviour {
             PlayerPrefs.SetInt("BlueBerries", totalBB);
             tpc.blueberryText.text = totalBB.ToString();
             PlayerPrefs.Save();
-        }*/
+        }
 
         yield return null;
 
@@ -1345,14 +1458,11 @@ public class StartScreen : MonoBehaviour {
         SetCheckpointScenes();
 
         StartCoroutine(FadeIn());
-
-        //AUTO START
-   //     yield return new WaitForSeconds(5f);
-   //     StartContinue();
     }
 
-	void EndLoading(int whichCheckpoint){
-		tpc.inCutscene = false;
+    void EndLoading(int whichCheckpoint)
+    {
+        tpc.inCutscene = false;
         tpcFox.inCutscene = false;
         tpcBeaver.inCutscene = false;
         tpcBush.inCutscene = false;
@@ -1361,6 +1471,18 @@ public class StartScreen : MonoBehaviour {
         tpcBeaver.disableControl = false;
         tpcBush.disableControl = false;
         ps.cantPause = false;
+    }
+
+    public void OpenDefaultsAYS()
+    {
+        defaultsAYS.SetActive(true);
+        es.SetSelectedGameObject(defaultsNo);
+    }
+
+    public void CloseDefaultsAYS()
+    {
+        defaultsAYS.SetActive(false);
+        es.SetSelectedGameObject(defaultsButton);
     }
 
     public void SetCheckpointScenes()
@@ -1428,11 +1550,9 @@ public class StartScreen : MonoBehaviour {
         PlayerPrefs.SetInt("Checkpoint34Scene", 11);
         PlayerPrefs.SetInt("Checkpoint35Scene", 11);
 
-    //    PlayerPrefs.Save();
+        //    PlayerPrefs.Save();
     }
 
-
-    //
     void ReUnlockAchievsAfterConnection()
     {
 #if UNITY_XBOXONE
@@ -1548,90 +1668,6 @@ public class StartScreen : MonoBehaviour {
 
         if (PlayerPrefs.GetInt("PowerUpsBought", 0) >= 4)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_POWER);
-#endif
-    }
-
-
-
-    public void CheckTears()
-    {
-        int tearCount = 0;
-
-        if (PlayerPrefs.GetInt("Vase1Level1", 0) == 1)
-            tearCount++;
-         
-        if (PlayerPrefs.GetInt("Vase2Level1", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level1", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level2", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level2", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level2", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level3", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level3", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level3", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level4", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level4", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level4", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level5", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level5", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level5", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level6", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level6", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level6", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level7", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level7", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level7", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase1Level8", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase2Level8", 0) == 1)
-            tearCount++;
-
-        if (PlayerPrefs.GetInt("Vase3Level8", 0) == 1)
-            tearCount++;
-#if UNITY_XBOX_ONE
-        //
-        if (tearCount >= 24)
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);   
 #endif
     }
 }

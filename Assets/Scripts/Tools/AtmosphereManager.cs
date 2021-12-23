@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AtmosphereManager : MonoBehaviour
-{
+public class AtmosphereManager : MonoBehaviour {
 
     public MeshRenderer cloudRenderer;
     public MeshRenderer skyRenderer;
     public Camera mainCamera;
 
-    [HideInInspector] public enum WeatherEffect { none, rain, snow, wind, sandstorm };
+    [HideInInspector] public enum WeatherEffect { none, rain, snow, wind, sandstorm};
 
-    [System.Serializable]
-    public class AtmoshphereSettings
+    [System.Serializable] public class AtmoshphereSettings
     {
         public Color cloudColor = Color.white;
         public Color fogColor = Color.white;
@@ -37,6 +35,9 @@ public class AtmosphereManager : MonoBehaviour
     float startRotation;
     float curRotation;
 
+    AtmoshphereSettings curSettings;
+    bool transitioning;
+
     WeatherEffect curWeatherEffect;
     [HideInInspector] public int triggerCount;
 
@@ -46,7 +47,7 @@ public class AtmosphereManager : MonoBehaviour
     ParticleSystem rainPS;
     ParticleSystem.EmissionModule rainEM;
     ParticleSystem.MainModule rainMM;
-
+    
     public GameObject snowEffect;
     ParticleSystem snowPS;
     ParticleSystem.EmissionModule snowEM;
@@ -76,18 +77,18 @@ public class AtmosphereManager : MonoBehaviour
         skyRenderer.material = skyMat;
 
         RenderSettings.fogMode = FogMode.Linear;
-        //   RenderSettings.fogMode = FogMode.ExponentialSquared;
+     //   RenderSettings.fogMode = FogMode.ExponentialSquared;
 
         RenderSettings.fogColor = defaultSettings.fogColor;
         skyMat.SetColor("_Color", RenderSettings.fogColor);
         cloudMat.SetColor("_Color", defaultSettings.cloudColor);
-        mainCamera.farClipPlane = defaultSettings.farClipPlaneDistance;
-        if (defaultSettings.fogStartDistance >= defaultSettings.fogDistance)
-            defaultSettings.fogStartDistance = defaultSettings.fogDistance - 1f;
-        RenderSettings.fogStartDistance = defaultSettings.fogStartDistance;
-        RenderSettings.fogEndDistance = defaultSettings.fogDistance;
+        mainCamera.farClipPlane = defaultSettings.farClipPlaneDistance + ((float)PlayerPrefs.GetInt("AddedDistance", 2) * 50f);
+            if (defaultSettings.fogStartDistance >= defaultSettings.fogDistance)
+                defaultSettings.fogStartDistance = defaultSettings.fogDistance - 1f;
+            RenderSettings.fogStartDistance = defaultSettings.fogStartDistance;
+            RenderSettings.fogEndDistance = defaultSettings.fogDistance;
 
-        //    RenderSettings.fogDensity = defaultSettings.fogDensity;
+    //    RenderSettings.fogDensity = defaultSettings.fogDensity;
 
         curWeatherEffect = WeatherEffect.none;
         curRotation = defaultSettings.rotationSpeed;
@@ -111,6 +112,8 @@ public class AtmosphereManager : MonoBehaviour
         sandstormMM = sandstormPS.main;
 
         chara = PlayerManager.GetMainPlayer().gameObject;
+
+        curSettings = defaultSettings;
     }
 
     private void LateUpdate()
@@ -123,6 +126,11 @@ public class AtmosphereManager : MonoBehaviour
         if (curWeatherObj != null)
             curWeatherObj.transform.position = chara.transform.position;
 
+        if (!transitioning)
+        {
+            if (mainCamera.farClipPlane != curSettings.farClipPlaneDistance + ((float)PlayerPrefs.GetInt("AddedDistance", 2) * 50f))
+                mainCamera.farClipPlane = curSettings.farClipPlaneDistance + ((float)PlayerPrefs.GetInt("AddedDistance", 2) * 50f);
+        }
     }
 
     public void EnterTrigger(int levelID)
@@ -147,14 +155,13 @@ public class AtmosphereManager : MonoBehaviour
 
     void ChangeWeather(WeatherEffect newEffect)
     {
-        if (newEffect != curWeatherEffect)
-        {
+        if(newEffect != curWeatherEffect) {
 
             //Remove Old
-            if (curWeatherEffect != WeatherEffect.none)
+            if(curWeatherEffect != WeatherEffect.none)
             {
                 StopCoroutine("DeactivateDelay");
-                if (curWeatherEffect == WeatherEffect.rain)
+                if(curWeatherEffect == WeatherEffect.rain)
                 {
                     curWeatherObj = null;
                     rainEM.enabled = false;
@@ -185,9 +192,9 @@ public class AtmosphereManager : MonoBehaviour
             }
 
             //Start New
-            if (newEffect != WeatherEffect.none)
+            if(newEffect != WeatherEffect.none)
             {
-                if (newEffect == WeatherEffect.rain)
+                if(newEffect == WeatherEffect.rain)
                 {
                     curWeatherObj = rainEffect;
                     rainEffect.SetActive(true);
@@ -227,13 +234,17 @@ public class AtmosphereManager : MonoBehaviour
 
     IEnumerator Transition(AtmoshphereSettings endSettings)
     {
+        transitioning = true;
+
+        curSettings = endSettings;
+
         startSettings.cloudColor = cloudMat.GetColor("_Color");
         startSettings.fogColor = RenderSettings.fogColor;
         startSettings.farClipPlaneDistance = mainCamera.farClipPlane;
-        startSettings.fogStartDistance = RenderSettings.fogStartDistance;
-        startSettings.fogDistance = RenderSettings.fogEndDistance;
-        //   startSettings.fogDensity = RenderSettings.fogDensity;
-        //   startSettings.rotationSpeed = curRotation;
+           startSettings.fogStartDistance = RenderSettings.fogStartDistance;
+           startSettings.fogDistance = RenderSettings.fogEndDistance;
+     //   startSettings.fogDensity = RenderSettings.fogDensity;
+     //   startSettings.rotationSpeed = curRotation;
 
         if (endSettings.fogStartDistance >= endSettings.fogDistance)
             endSettings.fogStartDistance = endSettings.fogDistance - 1f;
@@ -264,13 +275,15 @@ public class AtmosphereManager : MonoBehaviour
             else
                 cloudMat.SetColor("_Color", Color.Lerp(startSettings.cloudColor, endSettings.cloudColor, iterator));
 
-            mainCamera.farClipPlane = Mathf.Lerp(startSettings.farClipPlaneDistance, endSettings.farClipPlaneDistance, iterator);
+            mainCamera.farClipPlane = Mathf.Lerp(startSettings.farClipPlaneDistance, endSettings.farClipPlaneDistance + ((float)PlayerPrefs.GetInt("AddedDistance", 2) * 50f), iterator);
             RenderSettings.fogStartDistance = Mathf.Lerp(startSettings.fogStartDistance, endSettings.fogStartDistance, iterator);
             RenderSettings.fogEndDistance = Mathf.Lerp(startSettings.fogDistance, endSettings.fogDistance, iterator);
-            //    RenderSettings.fogDensity = Mathf.Lerp(startSettings.fogDensity, endSettings.fogDensity, iterator);
+        //    RenderSettings.fogDensity = Mathf.Lerp(startSettings.fogDensity, endSettings.fogDensity, iterator);
             curRotation = Mathf.Lerp(startSettings.rotationSpeed, endSettings.rotationSpeed, iterator);
             yield return null;
         }
+
+        transitioning = false;
     }
 
     IEnumerator DeactivateDelay(GameObject obj)

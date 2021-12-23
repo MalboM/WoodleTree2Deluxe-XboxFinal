@@ -98,6 +98,29 @@ namespace CinemaDirector
             return value;
         }
 
+        private void updateKeyframeTime(float oldTime, float newTime)
+        {
+            for (int i = 0; i < curveData.Count; i++)
+            {
+                int curveCount = UnityPropertyTypeInfo.GetCurveCount(curveData[i].PropertyType);
+                for (int j = 0; j < curveCount; j++)
+                {
+                    AnimationCurve animationCurve = curveData[i].GetCurve(j);
+                    for (int k = 0; k < animationCurve.length; k++)
+                    {
+                        Keyframe kf = animationCurve.keys[k];
+
+                        if (Mathf.Abs(kf.time - oldTime) < 0.00001)
+                        {
+                            Keyframe newKeyframe = new Keyframe(newTime, kf.value, kf.inTangent, kf.outTangent);
+                            newKeyframe.tangentMode = kf.tangentMode;
+                            AnimationCurveHelper.MoveKey(animationCurve, k, newKeyframe);
+                        }
+                    }
+                }
+            }
+        }
+
         public void TranslateCurves(float amount)
         {
             base.Firetime += amount;
@@ -113,7 +136,8 @@ namespace CinemaDirector
                         {
                             Keyframe kf = animationCurve.keys[k];
                             Keyframe newKeyframe = new Keyframe(kf.time + amount, kf.value, kf.inTangent, kf.outTangent);
-                            animationCurve.MoveKey(k, newKeyframe);
+                            newKeyframe.tangentMode = kf.tangentMode;
+                            AnimationCurveHelper.MoveKey(animationCurve, k, newKeyframe);
                         }
                     }
                     else
@@ -122,11 +146,27 @@ namespace CinemaDirector
                         {
                             Keyframe kf = animationCurve.keys[k];
                             Keyframe newKeyframe = new Keyframe(kf.time + amount, kf.value, kf.inTangent, kf.outTangent);
-                            animationCurve.MoveKey(k, newKeyframe);
+                            newKeyframe.tangentMode = kf.tangentMode;
+                            AnimationCurveHelper.MoveKey(animationCurve, k, newKeyframe);
                         }
                     }
                 }
             }
+        }
+
+        public void AlterFiretime(float firetime, float duration)
+        {
+            updateKeyframeTime(base.Firetime, firetime);
+            base.Firetime = firetime;
+
+            //updateKeyframeTime(base.Firetime + base.Duration, base.Firetime + duration);
+            base.Duration = duration;
+        }
+
+        public void AlterDuration(float duration)
+        {
+            updateKeyframeTime(base.Firetime + base.Duration, base.Firetime + duration);
+            base.Duration = duration;
         }
     }
 }

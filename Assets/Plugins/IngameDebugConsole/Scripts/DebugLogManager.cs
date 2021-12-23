@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Collections;
 using System.Collections.Generic;
 
 // Receives debug entries and custom events (e.g. Clear, Collapse, Filter by Type)
@@ -135,7 +134,7 @@ namespace IngameDebugConsole
 
 		// If the last log item is completely visible (scrollbar is at the bottom),
 		// scrollbar will remain at the bottom when new debug entries are received
-		public bool snapToBottom = true;
+		private bool snapToBottom = true;
 
 		// List of unique debug entries (duplicates of entries are not kept)
 		private List<DebugLogEntry> collapsedLogEntries;
@@ -197,13 +196,10 @@ namespace IngameDebugConsole
 				// If it is a singleton object, don't destroy it between scene changes
 				if( singleton )
 					DontDestroyOnLoad( gameObject );
-
-                FilterWarningButtonPressed();
 			}
 			else if( this != instance )
 			{
-				//	Destroy( gameObject );
-				gameObject.SetActive(false);
+				Destroy( gameObject );
 				return;
 			}
 
@@ -575,9 +571,8 @@ namespace IngameDebugConsole
 				bool isInfoEnabled = ( logFilter & DebugLogFilter.Info ) == DebugLogFilter.Info;
 				bool isWarningEnabled = ( logFilter & DebugLogFilter.Warning ) == DebugLogFilter.Warning;
 				bool isErrorEnabled = ( logFilter & DebugLogFilter.Error ) == DebugLogFilter.Error;
-                isWarningEnabled = false;
 
-                if ( isCollapseOn )
+				if( isCollapseOn )
 				{
 					indicesOfListEntriesToShow.Clear();
 					for( int i = 0; i < collapsedLogEntries.Count; i++ )

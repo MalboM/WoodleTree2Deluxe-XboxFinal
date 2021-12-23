@@ -6,6 +6,8 @@ using Rewired;
 public class HDRumbleMain : MonoBehaviour
 {
     [HideInInspector] public static HDRumbleMain singleton;
+
+    public HDRumblePlayer[] hDRumblePlayers;
     
     void Awake()
     {
@@ -39,10 +41,13 @@ public class HDRumbleMain : MonoBehaviour
         {
             foreach (Joystick j in ReInput.players.GetPlayer(playerID).controllers.Joysticks)
             {
-                if (!j.supportsVibration)
-                    continue;
-                if (j.vibrationMotorCount > 0)
-                    j.SetVibration(motorIndex, intensityMultiplier/2f, duration);
+                if (playerID != 0 || MultiPlatfromGUIManager.singleton.curControllerType != MultiPlatfromGUIManager.ControllerType.mk)
+                {
+                    if (!j.supportsVibration)
+                        continue;
+                    if (j.vibrationMotorCount > 0)
+                        j.SetVibration(motorIndex, (intensityMultiplier - 0.15f) / 2f, duration);
+                }
             }
         }
     }

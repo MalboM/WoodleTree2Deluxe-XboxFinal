@@ -104,4 +104,5 @@ Shader "WoodleTree/Unlit/Base/base_texture (CamAlphaBlend - VertDist)"
             ENDCG
         }
     }
+		FallBack "Diffuse"
 }

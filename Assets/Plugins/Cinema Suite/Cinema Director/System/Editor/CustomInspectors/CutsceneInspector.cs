@@ -11,6 +11,7 @@ using CinemaDirectorControl.Utility;
 public class CutsceneInspector : Editor
 {
     private SerializedProperty duration;
+    private SerializedProperty skipCSAnim;
     private SerializedProperty isLooping;
     private SerializedProperty isSkippable;
     private SerializedProperty canOptimize;
@@ -23,6 +24,7 @@ public class CutsceneInspector : Editor
 
     #region Language
         GUIContent durationContent = new GUIContent("Duration", "The duration of the cutscene in seconds.");
+        GUIContent skipCSAnimContent = new GUIContent("Skip Cutscene Animator", "Animator for on-screen prompt of skipping cutscenes.");
         GUIContent loopingContent = new GUIContent("Loop", "Will the Cutscene loop when finished playing.");
         GUIContent skippableContent = new GUIContent("Skippable", "Can the Cutscene be skipped.");
         GUIContent optimizeContent = new GUIContent("Optimize", "Enable when Cutscene does not have Track Groups added/removed during playtime.");
@@ -42,7 +44,7 @@ public class CutsceneInspector : Editor
         }
         if (inspectorIcon == null)
         {
-            Debug.Log("Inspector icon missing from Resources folder.");
+        //    Debug.Log("Inspector icon missing from Resources folder.");
         }
     }
 
@@ -52,6 +54,7 @@ public class CutsceneInspector : Editor
     private void OnEnable()
     {
         this.duration = base.serializedObject.FindProperty("duration");
+        this.skipCSAnim = base.serializedObject.FindProperty("skipCSAnim");
         this.isLooping = base.serializedObject.FindProperty("isLooping");
         this.isSkippable = base.serializedObject.FindProperty("isSkippable");
         this.canOptimize = base.serializedObject.FindProperty("canOptimize");
@@ -74,6 +77,7 @@ public class CutsceneInspector : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.PropertyField(this.duration, durationContent);
+        EditorGUILayout.PropertyField(this.skipCSAnim, skipCSAnimContent);
         EditorGUILayout.PropertyField(this.isLooping, loopingContent);
         EditorGUILayout.PropertyField(this.isSkippable, skippableContent);
         EditorGUILayout.PropertyField(this.canOptimize, optimizeContent);

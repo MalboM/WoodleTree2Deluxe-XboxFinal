@@ -13,7 +13,7 @@ namespace CinemaDirector
     {
         [SerializeField]
         [Tooltip("The target that the Actor should look at.")]
-        public GameObject LookAtTarget;
+        GameObject LookAtTarget;
 
         // Options for reverting in editor.
         [SerializeField]

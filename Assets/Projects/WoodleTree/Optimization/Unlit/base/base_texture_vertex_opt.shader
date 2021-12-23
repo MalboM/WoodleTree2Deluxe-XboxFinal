@@ -81,4 +81,5 @@ Shader "WoodleTree/Unlit/Base/base_texture (Vertex Opt)"
 			ENDCG
 		}
 	}
+			FallBack "Diffuse"
 }

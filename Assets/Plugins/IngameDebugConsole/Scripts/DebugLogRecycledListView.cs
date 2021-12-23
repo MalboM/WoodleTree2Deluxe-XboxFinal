@@ -23,7 +23,7 @@ namespace IngameDebugConsole
 		[SerializeField]
 		private Color logItemSelectedColor;
 
-		[HideInInspector] public DebugLogManager manager;
+		private DebugLogManager manager;
 
 		private float logItemHeight, _1OverLogItemHeight;
 		private float viewportHeight;
@@ -32,7 +32,7 @@ namespace IngameDebugConsole
 		private List<DebugLogEntry> collapsedLogEntries = null;
 
 		// Indices of debug entries to show in collapsedLogEntries
-		[HideInInspector] public DebugLogIndexList indicesOfEntriesToShow = null;
+		private DebugLogIndexList indicesOfEntriesToShow = null;
 
 		private int indexOfSelectedLogEntry = int.MaxValue;
 		private float positionOfSelectedLogEntry = float.MaxValue;

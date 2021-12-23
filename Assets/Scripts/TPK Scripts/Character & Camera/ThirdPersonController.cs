@@ -998,7 +998,7 @@ public class ThirdPersonController : MonoBehaviour
                 sound.clip = attackChargedSound;
                 sound.PlayDelayed(0f);
                 if(!turnOffVibration)
-                   XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+                    GamePad.SetVibration(pIx, 0f, 0f);
                 chargingAttack = false;
                 CancelAttack();
             }
@@ -1660,7 +1660,7 @@ public class ThirdPersonController : MonoBehaviour
 
     private void CancelAttack(){
         if(!turnOffVibration)
-           XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+            GamePad.SetVibration(pIx, 0f, 0f);
         startedAttack = false;
         attackPressOnly = false;
         isHoldingAttack = false;
@@ -1906,10 +1906,9 @@ public class ThirdPersonController : MonoBehaviour
 
     IEnumerator Charging() {
         if (leafNo != 4){
-           
             yield return new WaitForSeconds(0.3f);
             if(!turnOffVibration)
-                XInputDotNetPure.GamePad.SetVibration(pIx, 0.35f, 0f);
+                GamePad.SetVibration(pIx, 0.35f, 0f);
             if (leafNo == 1 || leafNo == 2)
                 yield return new WaitForSeconds(0.3f);
         }
@@ -1918,7 +1917,7 @@ public class ThirdPersonController : MonoBehaviour
             chargingAttack = false;
             yield return new WaitForSeconds(0.5f);
             if (!turnOffVibration)
-                XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+                GamePad.SetVibration(pIx, 0f, 0f);
             sound.clip = attackChargedSound;
             sound.PlayDelayed(0f);
             yield return new WaitForSeconds(0.2f);
@@ -1982,18 +1981,18 @@ public class ThirdPersonController : MonoBehaviour
 
     IEnumerator QuickRumble(float intensity, float length){
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, intensity, 0f);
+            GamePad.SetVibration(pIx, intensity, 0f);
         yield return new WaitForSeconds(length);
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+            GamePad.SetVibration(pIx, 0f, 0f);
     }
 
     IEnumerator WindBall(int index, GameObject[] wbArray, float lifetime){
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, 0.35f, 0f);
+            GamePad.SetVibration(pIx, 0.35f, 0f);
         yield return new WaitForSeconds(0.3f);
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+            GamePad.SetVibration(pIx, 0f, 0f);
         yield return new WaitForSeconds(lifetime);
         wbArray[index].gameObject.SetActive(false);
     }
@@ -2021,13 +2020,13 @@ public class ThirdPersonController : MonoBehaviour
     IEnumerator DeactiveAttack() {
         yield return new WaitForSeconds(0.4f);
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, 0.35f, 0f);
+            GamePad.SetVibration(pIx, 0.35f, 0f);
         yield return new WaitForSeconds(0.15f);
         leafAS.activeAttack = false;
         CancelAttack();
         yield return new WaitForSeconds(0.25f);
         if (!turnOffVibration)
-            XInputDotNetPure.GamePad.SetVibration(pIx, 0f, 0f);
+            GamePad.SetVibration(pIx, 0f, 0f);
     }
 
     IEnumerator PlayingInstrument(){

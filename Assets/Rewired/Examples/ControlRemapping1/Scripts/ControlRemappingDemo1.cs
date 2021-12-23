@@ -64,6 +64,7 @@ namespace Rewired.Demos {
             inputMapper.options.ignoreMouseXAxis = true;
             inputMapper.options.ignoreMouseYAxis = true;
             Initialize();
+            Close();
         }
 
         private void OnEnable() {
@@ -83,7 +84,8 @@ namespace Rewired.Demos {
             ReInput.ControllerDisconnectedEvent += JoystickDisconnected; // final disconnect that runs after joystick has been fully removed
             ResetAll();
             initialized = true;
-            ReInput.userDataStore.Load(); // load saved user maps on start if there are any to load
+            if(ReInput.userDataStore != null)
+                ReInput.userDataStore.Load(); // load saved user maps on start if there are any to load
 
             if(ReInput.unityJoystickIdentificationRequired) {
                 IdentifyAllJoysticks();
@@ -128,11 +130,6 @@ namespace Rewired.Demos {
 
             HandleMenuControl();
 
-            if(!showMenu) {
-                DrawInitialScreen();
-                return;
-            }
-
             SetGUIStateStart();
 
             // Process queue
@@ -167,40 +164,34 @@ namespace Rewired.Demos {
             }
         }
 
-        private void Close() {
-
+        public void Close()
+        {
+            if (ReInput.userDataStore != null)
+            {
+                ReInput.userDataStore.Save();
+            }
             ClearWorkingVars();
             showMenu = false;
         }
 
-        private void Open() {
+        public void Open()
+        {
+            if (ReInput.userDataStore != null)
+            {
+                ReInput.userDataStore.Load();
+            }
             showMenu = true;
         }
 
         #endregion
 
         #region Draw
-
-        private void DrawInitialScreen() {
-            GUIContent content;
-            ActionElementMap map = ReInput.players.GetSystemPlayer().controllers.maps.GetFirstElementMapWithAction("Menu", true);
-
-            if(map != null) {
-                content = new GUIContent("Press " + map.elementIdentifierName + " to open the menu.");
-            } else {
-                content = new GUIContent("There is no element assigned to open the menu!");
-            }
-
-            // Draw the box
-            GUILayout.BeginArea(GetScreenCenteredRect(300, 50));
-            GUILayout.Box(content, style_centeredBox, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
-            GUILayout.EndArea();
-        }
+        
 
         private void DrawPage() {
             if(GUI.enabled != pageGUIState) GUI.enabled = pageGUIState;
 
-            Rect screenRect = new Rect((Screen.width - (Screen.width * 0.9f)) * 0.5f, (Screen.height - (Screen.height * 0.9f)) * 0.5f, Screen.width * 0.9f, Screen.height * 0.9f);
+            Rect screenRect = new Rect((Screen.width - (Screen.width * 0.9f)) * 0.1f, (Screen.height - (Screen.height * 0.9f)) * 0.1f, Screen.width * 0.9f, Screen.height * 0.9f);
             GUILayout.BeginArea(screenRect);
 
             // Player Selector
@@ -242,7 +233,7 @@ namespace Rewired.Demos {
             GUILayout.Label("Players:");
             GUILayout.BeginHorizontal();
 
-            foreach(Player player in ReInput.players.GetPlayers(true)) {
+            foreach(Player player in ReInput.players.GetPlayers(false)) {
                 if(selectedPlayer == null) selectedPlayer = player;  // if no player selected, select first
 
                 bool prevValue = player == selectedPlayer ? true : false;
@@ -442,68 +433,80 @@ namespace Rewired.Demos {
             foreach(InputAction action in ReInput.mapping.ActionsInCategory(actionCategory.id)) {
                 string name = action.descriptiveName != string.Empty ? action.descriptiveName : action.name;
 
-                if(action.type == InputActionType.Button) {
+                if (name != "Levitate" && !name.Contains("MouseMove"))
+                {
 
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(name, GUILayout.Width(labelWidth));
-                    DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap); // Add assignment button
-
-                    // Write out assigned elements
-                    foreach(ActionElementMap elementMap in selectedMap.AllMaps) {
-                        if(elementMap.actionId != action.id) continue;
-                        DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap, elementMap);
-                    }
-                    GUILayout.EndHorizontal();
-
-                } else if(action.type == InputActionType.Axis) { // Axis
-
-                    // Draw main axis label and actions assigned to the full axis
-                    if(selectedController.type != ControllerType.Keyboard) { // don't draw this for keyboards since keys can only be assigned to the +/- axes anyway
+                    if (action.type == InputActionType.Button)
+                    {
 
                         GUILayout.BeginHorizontal();
                         GUILayout.Label(name, GUILayout.Width(labelWidth));
-                        DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Full, selectedController, selectedMap); // Add assignment button
+                        DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap); // Add assignment button
 
                         // Write out assigned elements
-                        foreach(ActionElementMap elementMap in selectedMap.AllMaps) {
-                            if(elementMap.actionId != action.id) continue;
-                            if(elementMap.elementType == ControllerElementType.Button) continue; // skip buttons, will handle below
-                            if(elementMap.axisType == AxisType.Split) continue; // skip split axes, will handle below
-                            DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Full, selectedController, selectedMap, elementMap);
-                            DrawInvertButton(selectedPlayer.id, action, Pole.Positive, selectedController, selectedMap, elementMap);
+                        foreach (ActionElementMap elementMap in selectedMap.AllMaps)
+                        {
+                            if (elementMap.actionId != action.id) continue;
+                            DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap, elementMap);
+                        }
+                        GUILayout.EndHorizontal();
+
+                    }
+                    else if (action.type == InputActionType.Axis)
+                    { // Axis
+
+                        // Draw main axis label and actions assigned to the full axis
+                        if (selectedController.type != ControllerType.Keyboard)
+                        { // don't draw this for keyboards since keys can only be assigned to the +/- axes anyway
+
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Label(name, GUILayout.Width(labelWidth));
+                            DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Full, selectedController, selectedMap); // Add assignment button
+
+                            // Write out assigned elements
+                            foreach (ActionElementMap elementMap in selectedMap.AllMaps)
+                            {
+                                if (elementMap.actionId != action.id) continue;
+                                if (elementMap.elementType == ControllerElementType.Button) continue; // skip buttons, will handle below
+                                if (elementMap.axisType == AxisType.Split) continue; // skip split axes, will handle below
+                                DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Full, selectedController, selectedMap, elementMap);
+                                DrawInvertButton(selectedPlayer.id, action, Pole.Positive, selectedController, selectedMap, elementMap);
+                            }
+                            GUILayout.EndHorizontal();
+                        }
+
+                        // Positive action
+                        string positiveName = action.positiveDescriptiveName != string.Empty ? action.positiveDescriptiveName : action.descriptiveName + " +";
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label(positiveName, GUILayout.Width(labelWidth));
+                        DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap); // Add assignment button
+
+                        // Write out assigned elements
+                        foreach (ActionElementMap elementMap in selectedMap.AllMaps)
+                        {
+                            if (elementMap.actionId != action.id) continue;
+                            if (elementMap.axisContribution != Pole.Positive) continue; // axis contribution is incorrect, skip
+                            if (elementMap.axisType == AxisType.Normal) continue; // normal axes handled above
+                            DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap, elementMap);
+                        }
+                        GUILayout.EndHorizontal();
+
+                        // Negative action
+                        string negativeName = action.negativeDescriptiveName != string.Empty ? action.negativeDescriptiveName : action.descriptiveName + " -";
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label(negativeName, GUILayout.Width(labelWidth));
+                        DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Negative, selectedController, selectedMap); // Add assignment button
+
+                        // Write out assigned elements
+                        foreach (ActionElementMap elementMap in selectedMap.AllMaps)
+                        {
+                            if (elementMap.actionId != action.id) continue;
+                            if (elementMap.axisContribution != Pole.Negative) continue; // axis contribution is incorrect, skip
+                            if (elementMap.axisType == AxisType.Normal) continue; // normal axes handled above
+                            DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Negative, selectedController, selectedMap, elementMap);
                         }
                         GUILayout.EndHorizontal();
                     }
-
-                    // Positive action
-                    string positiveName = action.positiveDescriptiveName != string.Empty ? action.positiveDescriptiveName : action.descriptiveName + " +";
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(positiveName, GUILayout.Width(labelWidth));
-                    DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap); // Add assignment button
-
-                    // Write out assigned elements
-                    foreach(ActionElementMap elementMap in selectedMap.AllMaps) {
-                        if(elementMap.actionId != action.id) continue;
-                        if(elementMap.axisContribution != Pole.Positive) continue; // axis contribution is incorrect, skip
-                        if(elementMap.axisType == AxisType.Normal) continue; // normal axes handled above
-                        DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Positive, selectedController, selectedMap, elementMap);
-                    }
-                    GUILayout.EndHorizontal();
-
-                    // Negative action
-                    string negativeName = action.negativeDescriptiveName != string.Empty ? action.negativeDescriptiveName : action.descriptiveName + " -";
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(negativeName, GUILayout.Width(labelWidth));
-                    DrawAddActionMapButton(selectedPlayer.id, action, AxisRange.Negative, selectedController, selectedMap); // Add assignment button
-
-                    // Write out assigned elements
-                    foreach(ActionElementMap elementMap in selectedMap.AllMaps) {
-                        if(elementMap.actionId != action.id) continue;
-                        if(elementMap.axisContribution != Pole.Negative) continue; // axis contribution is incorrect, skip
-                        if(elementMap.axisType == AxisType.Normal) continue; // normal axes handled above
-                        DrawActionAssignmentButton(selectedPlayer.id, action, AxisRange.Negative, selectedController, selectedMap, elementMap);
-                    }
-                    GUILayout.EndHorizontal();
                 }
             }
 
@@ -1357,7 +1360,7 @@ namespace Rewired.Demos {
             ClearWorkingVars();
 
             // Open the menu if its closed
-            Open();
+        //    Open();
 
             // Enqueue the joysticks up for identification
             foreach(Joystick joystick in ReInput.controllers.Joysticks) {

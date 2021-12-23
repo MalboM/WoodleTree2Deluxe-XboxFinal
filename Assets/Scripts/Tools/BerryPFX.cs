@@ -15,6 +15,7 @@ public class BerryPFX : MonoBehaviour
 
     public GameObject[] enemyKilledPFX;
     private ParticleSystem.EmissionModule[] enemyKilledEMs;
+    Coroutine[] ekCRs;
 
     GameObject[] objToFollow;
 
@@ -45,6 +46,7 @@ public class BerryPFX : MonoBehaviour
         }
 
         enemyKilledEMs = new ParticleSystem.EmissionModule[16];
+        ekCRs = new Coroutine[16];
 
         for (int x = 0; x < 16; x++)
         {
@@ -54,7 +56,7 @@ public class BerryPFX : MonoBehaviour
         objToFollow = new GameObject[16];
     }
 
-    public void PlayEffect(int col, Vector3 pos, GameObject obj, Vector3 cutsomScale, bool hasICodeScript)
+    public void PlayEffect(int col, Vector3 pos, GameObject obj, Vector3 cutsomScale, bool hasICodeScript, bool isWindball)
     {
         if (col == 0) //red
         {
@@ -101,9 +103,8 @@ public class BerryPFX : MonoBehaviour
         {
             for (int y = 0; y < enemyKilledPFX.Length; y++)
             {
-                if (!enemyKilledEMs[y].enabled)
+                if (!enemyKilledEMs[y].enabled && ekCRs[y] == null)
                 {
-                    objToFollow[y] = obj;
                     enemyKilledEMs[y].enabled = true;
                     enemyKilledPFX[y].GetComponent<ParticleSystem>().Play();
                     if(cutsomScale != Vector3.zero)
@@ -111,7 +112,14 @@ public class BerryPFX : MonoBehaviour
                     else
                         enemyKilledPFX[y].transform.localScale = obj.transform.lossyScale;
                     StartCoroutine("DeactivateAfterEK", y);
-                    StartCoroutine(EKFXFollow(y, hasICodeScript));
+
+                    if (!isWindball)
+                    {
+                        objToFollow[y] = obj;
+                        ekCRs[y] = StartCoroutine(EKFXFollow(y, hasICodeScript));
+                    }
+                    else
+                        enemyKilledPFX[y].transform.position = pos;
                     return;
                 }
             }
@@ -150,6 +158,7 @@ public class BerryPFX : MonoBehaviour
             }
             yield return null;
         }
+        ekCRs[index] = null;
     }
 
     IEnumerator DeactivateAfterEK(int index)

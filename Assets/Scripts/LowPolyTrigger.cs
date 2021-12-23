@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LowPolyTrigger : MonoBehaviour
-{
+public class LowPolyTrigger : MonoBehaviour {
 
     public GameObject fullObj;
     public GameObject lowPoly;
@@ -34,7 +33,7 @@ public class LowPolyTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == PlayerManager.GetMainPlayer().gameObject)
+        if(other.gameObject == PlayerManager.GetMainPlayer().gameObject)
         {
             EnterTrigger();
         }
@@ -139,28 +138,6 @@ public class LowPolyTrigger : MonoBehaviour
                 if (odm.justActivatedPlazaLow)
                     odm.justActivatedPlazaLow = false;
                 StartCoroutine("WaitToDeactLow");
-            }
-        }
-    }
-
-    void Update()
-    {
-        if(fullPlaza == null)
-        {
-            if(fullObj == null)
-            {
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
-                {
-                    if (g.name == fullObjName)
-                    {
-                        fullObj = g.gameObject;
-                    }
-                }
-            }
-            if(fullObj != null)
-            {
-                if (!lowPoly.gameObject.activeSelf && !fullObj.gameObject.activeSelf)
-                    fullObj.SetActive(true);
             }
         }
     }

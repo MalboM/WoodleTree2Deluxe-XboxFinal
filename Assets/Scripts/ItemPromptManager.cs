@@ -6,7 +6,7 @@ using Rewired;
 
 public class ItemPromptManager : MonoBehaviour
 {
-    [System.Serializable] public class MarketItemInfo { public int itemID; public int price; public bool useBlueBerries; public TextMesh textMesh; }
+    [System.Serializable] public class MarketItemInfo { public int itemID; public int price; public bool useBlueBerries; public Text priceText; }
     public MarketItemInfo[] marketItems;
 
     static ItemPromptManager singleton;
@@ -83,14 +83,14 @@ public class ItemPromptManager : MonoBehaviour
         inPromptTrigger = new Dictionary<int, bool>(itemPrompts.Count);
         input = ReInput.players.GetPlayer(0);
 
-        soldFont = marketItems[0].textMesh.font;
+        soldFont = marketItems[0].priceText.font;
         titleFont = promptTitle.font;
         infoFont = promptInfo.font;
         yesFont = yesText.font;
         noFont = noText.font;
         priceFont = priceText.font;
 
-        soldFontStyle = marketItems[0].textMesh.fontStyle;
+        soldFontStyle = marketItems[0].priceText.fontStyle;
         titleFontStyle = promptTitle.fontStyle;
         infoFontStyle = promptInfo.fontStyle;
         yesFontStyle = yesText.fontStyle;
@@ -285,25 +285,25 @@ public class ItemPromptManager : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("PaidForItem" + mi.itemID.ToString(), 0) == 1)
         {
-            mi.textMesh.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, PlayerPrefs.GetInt("Language"));
+            mi.priceText.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 2, PlayerPrefs.GetInt("Language"));
         }
         else
         {
             if (mi.price == -1)
-                mi.textMesh.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 3, PlayerPrefs.GetInt("Language"));
+                mi.priceText.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.itemPrompts, 3, PlayerPrefs.GetInt("Language"));
             else
-                mi.textMesh.text = mi.price.ToString();
+                mi.priceText.text = mi.price.ToString();
         }
 
         if (PlayerPrefs.GetInt("Language") == 11)
         {
-            mi.textMesh.font = TextTranslationManager.singleton.arabicFont;
-            mi.textMesh.fontStyle = FontStyle.Bold;
+            mi.priceText.font = TextTranslationManager.singleton.arabicFont;
+            mi.priceText.fontStyle = FontStyle.Bold;
         }
         else
         {
-            mi.textMesh.font = soldFont;
-            mi.textMesh.fontStyle = soldFontStyle;
+            mi.priceText.font = soldFont;
+            mi.priceText.fontStyle = soldFontStyle;
         }
     }
 
@@ -458,62 +458,6 @@ public class ItemPromptManager : MonoBehaviour
                 yesText.font = TextTranslationManager.singleton.arabicFont;
                 noText.font = TextTranslationManager.singleton.arabicFont;
                 priceText.font = TextTranslationManager.singleton.arabicFont;
-
-                promptTitle.fontStyle = FontStyle.Bold;
-                promptInfo.fontStyle = FontStyle.Bold;
-                yesText.fontStyle = FontStyle.Bold;
-                noText.fontStyle = FontStyle.Bold;
-                priceText.fontStyle = FontStyle.Bold;
-            }
-            else if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Russian)
-            {
-                promptTitle.font = TextTranslationManager.singleton.cyrillicFont;
-                promptInfo.font = TextTranslationManager.singleton.cyrillicFont;
-                yesText.font = TextTranslationManager.singleton.cyrillicFont;
-                noText.font = TextTranslationManager.singleton.cyrillicFont;
-                priceText.font = TextTranslationManager.singleton.cyrillicFont;
-
-                promptTitle.fontStyle = FontStyle.Bold;
-                promptInfo.fontStyle = FontStyle.Bold;
-                yesText.fontStyle = FontStyle.Bold;
-                noText.fontStyle = FontStyle.Bold;
-                priceText.fontStyle = FontStyle.Bold;
-            }
-            else if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Korean)
-            {
-                promptTitle.font = TextTranslationManager.singleton.koreanFont;
-                promptInfo.font = TextTranslationManager.singleton.koreanFont;
-                yesText.font = TextTranslationManager.singleton.koreanFont;
-                noText.font = TextTranslationManager.singleton.koreanFont;
-                priceText.font = TextTranslationManager.singleton.koreanFont;
-
-                promptTitle.fontStyle = FontStyle.Bold;
-                promptInfo.fontStyle = FontStyle.Bold;
-                yesText.fontStyle = FontStyle.Bold;
-                noText.fontStyle = FontStyle.Bold;
-                priceText.fontStyle = FontStyle.Bold;
-            }
-            else if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Chinese)
-            {
-                promptTitle.font = TextTranslationManager.singleton.chineseFont;
-                promptInfo.font = TextTranslationManager.singleton.chineseFont;
-                yesText.font = TextTranslationManager.singleton.chineseFont;
-                noText.font = TextTranslationManager.singleton.chineseFont;
-                priceText.font = TextTranslationManager.singleton.chineseFont;
-
-                promptTitle.fontStyle = FontStyle.Bold;
-                promptInfo.fontStyle = FontStyle.Bold;
-                yesText.fontStyle = FontStyle.Bold;
-                noText.fontStyle = FontStyle.Bold;
-                priceText.fontStyle = FontStyle.Bold;
-            }
-            else if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Japanese)
-            {
-                promptTitle.font = TextTranslationManager.singleton.japaneseFont;
-                promptInfo.font = TextTranslationManager.singleton.japaneseFont;
-                yesText.font = TextTranslationManager.singleton.japaneseFont;
-                noText.font = TextTranslationManager.singleton.japaneseFont;
-                priceText.font = TextTranslationManager.singleton.japaneseFont;
 
                 promptTitle.fontStyle = FontStyle.Bold;
                 promptInfo.fontStyle = FontStyle.Bold;

@@ -181,7 +181,7 @@ Shader "WoodleTree/Unlit/Silhouette/Disabled/Snow_Terrain_OptimizedV1"
                 o.pos = mul(unity_MatrixVP, float4(o.worldPos, 1.));
 
                 // calculate camera world space right dir
-                float3 crossLight = normalize(mul(float4(1,0,0,0), UNITY_MATRIX_IT_MV));
+                float3 crossLight = normalize(mul(float3(1,0,0), UNITY_MATRIX_IT_MV));
                 o.worldCrossL = crossLight;
 
                 // world normal
@@ -357,7 +357,7 @@ Shader "WoodleTree/Unlit/Silhouette/Disabled/Snow_Terrain_OptimizedV1"
                 fixed spZ = tex2D(_ClipTex, uvZ/expSize).g;
                 fixed clipCol = spX * i.triblend.x + spY * i.triblend.y + spZ * i.triblend.z;
 
-                float emissive = lerp(0.0, (float)speckleCol*_SparkleF, (float)pow(1-saturate(clipCol),_SpeckleSharpness));
+                float emissive = lerp(0.0, speckleCol*_SparkleF, pow(1-saturate(clipCol),_SpeckleSharpness));
 
                 //color = lerp(color, _SparkleColor.rgb, emissive/pow(dot(worldViewVec,worldViewVec), _SparkleFallof + EPSILON));
                 color += lerp(_SparkleColor.rgb*emissive, 0.0, saturate(dot(worldViewVec, worldViewVec) * (1.0 - _SparkleFallof)));
@@ -372,4 +372,5 @@ Shader "WoodleTree/Unlit/Silhouette/Disabled/Snow_Terrain_OptimizedV1"
             ENDCG
         }
     }
+	FallBack "Diffuse"
 }

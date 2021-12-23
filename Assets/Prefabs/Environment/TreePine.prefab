@@ -55,6 +55,7 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3
 --- !u!1 &621737435883997946
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +121,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -174,7 +176,8 @@ AudioSource:
   m_GameObject: {fileID: 3132396386852375192}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243206808097846298, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 7c68327d5187f1e4d9cd6f416360b9eb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -359,6 +362,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -378,6 +382,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4265657324769936}
     m_Modifications:
+    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
+      propertyPath: m_Name
+      value: TreePineLow
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -421,18 +437,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
-      propertyPath: m_Name
-      value: TreePineLow
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 28cb6cef6b4fdf44a96386e5542147cb, type: 3}
       propertyPath: m_CastShadows
@@ -485,6 +489,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4265657324769936}
     m_Modifications:
+    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Name
+      value: TreePine
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_TagString
+      value: FallingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Name
+      value: TreePine3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
+      propertyPath: m_Name
+      value: TreePine6
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -528,46 +572,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Name
-      value: TreePine
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_TagString
-      value: FallingPlatform
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Name
-      value: TreePine3
-      objectReference: {fileID: 0}
-    - target: {fileID: 100014, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100014, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
-      propertyPath: m_Name
-      value: TreePine6
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: c90e6c746bcd7ee46aa4c5f741294672, type: 3}
       propertyPath: m_CastShadows

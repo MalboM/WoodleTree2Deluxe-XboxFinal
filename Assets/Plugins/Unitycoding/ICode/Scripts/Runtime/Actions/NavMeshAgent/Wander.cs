@@ -28,24 +28,27 @@ namespace ICode.Actions.UnityNavMeshAgent
 		[DefaultValueAttribute (2.0f)]
 		public FsmFloat turnRate;
 
-		
-		public override void OnEnter ()
-		{
-			base.OnEnter ();
-			agent.speed = speed.Value;
-			agent.angularSpeed = angularSpeed.Value;
-			agent.enabled = true;
-			#if UNITY_5_6_OR_NEWER
-			agent.isStopped=false;
-			#else
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            if (agent.isOnNavMesh)
+            {
+                agent.speed = speed.Value;
+                agent.angularSpeed = angularSpeed.Value;
+                agent.enabled = true;
+#if UNITY_5_6_OR_NEWER
+                agent.isStopped = false;
+#else
 			agent.Resume ();
-			#endif
-			agent.destination = startPosition.IsNone ? GetNextPosition () : GetNextPositionWithin (startPosition.Value);
-		}
+#endif
+                agent.destination = startPosition.IsNone ? GetNextPosition() : GetNextPositionWithin(startPosition.Value);
+            }
+        }
 
 		public override void OnUpdate ()
 		{
-			if (agent.remainingDistance < threshold.Value) {
+			if (agent.isOnNavMesh && agent.remainingDistance < threshold.Value) {
 				agent.destination = startPosition.IsNone ? GetNextPosition () : GetNextPositionWithin (startPosition.Value);
 			}
 		}

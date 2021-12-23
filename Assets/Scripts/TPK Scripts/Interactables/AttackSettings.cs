@@ -21,6 +21,7 @@ public class AttackSettings : MonoBehaviour {
     [HideInInspector] public Collider thisCollider;
 
     RaycastHit raycast;
+    float timeOfLastHit;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class AttackSettings : MonoBehaviour {
 
     private void Update()
     {
-        if (!isWindball)
+        if (tpc != null && !isWindball)
         {
             if (!activeAttack && !tpc.isHoldingLeaf && hitColliders.Count != 0)
             {
@@ -84,9 +85,16 @@ public class AttackSettings : MonoBehaviour {
                 if (this.gameObject.name == "Stone Attack")
                     StartCoroutine(StoneBounce());
 
+
+            //    if (currentEnemy.debugTest)
+            //        Debug.Log("PRE-HIT " + tpc.input.GetButtonDown("Attack"));
+
                 if (currentEnemy != null && !currentEnemy.invincible && !currentEnemy.damageOnly)
                 {
-                    tpc.HitAnEnemy(other.gameObject.transform.position, isWindball, currentEnemy.infiniteHealth);
+             //       if (currentEnemy.debugTest)
+            //            Debug.Log("HIT " + Time.realtimeSinceStartup + " " + currentEnemy.health);
+
+                    bool defeated = false;
 
                     if (!isWindball && tpc.pID == 0)
                     {
@@ -99,12 +107,23 @@ public class AttackSettings : MonoBehaviour {
                     currentEnemy.health -= (attackAmount + addedAttack);
                     if (currentEnemy.health <= 0 && !currentEnemy.infiniteHealth)
                     {
+                        defeated = true;
                         currentEnemy.Death();
                     }
                     else
                     {
                         currentEnemy.BeenHit(isWindball, tpc.pID);
                     }
+
+                    bool bigEnemy = false;
+                    if (currentEnemy.gameObject.name.ToLower().Contains("big") || currentEnemy.gameObject.name.ToLower().Contains("giga"))
+                        bigEnemy = true;
+
+
+                    if (currentEnemy.anim == null)
+                        tpc.HitAnEnemy(other.gameObject.transform.position, isWindball, currentEnemy.infiniteHealth, null, defeated, bigEnemy);
+                    else
+                        tpc.HitAnEnemy(other.gameObject.transform.position, isWindball, currentEnemy.infiniteHealth, currentEnemy.anim, defeated, bigEnemy);
                 }
             }
 
@@ -123,7 +142,7 @@ public class AttackSettings : MonoBehaviour {
 
     void StopWindball()
     {
-        tpc.berryPFX.PlayEffect(3, this.transform.position, this.gameObject, Vector3.zero, false);
+        tpc.berryPFX.PlayEffect(3, this.transform.position, this.gameObject, Vector3.zero, false, true);
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         foreach (Renderer r in this.gameObject.GetComponentsInChildren<Renderer>())
             r.enabled = false;

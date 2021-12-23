@@ -162,7 +162,7 @@
       <li><a href="#time-comparison">Time comparisons to Time.time don't match</a></li>
       <li><a href="#ongui-getbuttondown">OnGUI may return GetButtonDown/Up true for multiple frames</a></li>
       <li><a href="#digital-axis-smoothing">When a keyboard key or D-Pad is pressed, GetAxis value ramps up/down slowly instead instantly returning 1/-1</a></li>
-      <li><a href="#rewired-standalone-input-module-issues">RewiredStandaloneInputModule issues</a></li>
+      <li><a href="#rewired-standalone-input-module-issues">RewiredStandaloneInputModue issues</a></li>
       <li><a href="#high-cpu-usage-deep-profile">High CPU usage in profiler when using Deep Profile</a></li>
       
       <li><a href="#unity-alpha-beta-preview-experimental">Alpha, beta versions of Unity, experimental/preview features of Unity are not supported</a></li>
@@ -175,7 +175,6 @@
       <li><a href="#null-reference-during-recompile">Null reference exception when recompiling scripts in the editor at runtime</a></li>
       <li><a href="#compile-errors-ps4-xbone">Compile errors in PS4, XBox One, WiiU, or other special platforms</a></li>
       <li><a href="#missing-files">Some component of Rewired is missing (RewiredStandloneInputModule, Control Mapper, etc.)</a></li>
-      <li><a href="#data-files-missing">&quot;Data Files is missing&quot; error</a></li>
       <li><a href="#clean-reinstall">Doing a clean reinstall of Rewired</a></li>
     </ul>
 <h3><a href="#windows">Windows:</a></h3>
@@ -195,18 +194,11 @@
     </ul>
     <h3><a href="#android">Android:</a></h3>
     <ul>
-      <li><a href="#android-joystick-keyboard-keys">Joystick buttons  activate keyboard keys on Android</a>    </li>
-    </ul>
-    <h3><a href="#ios">iOS:</a></h3>
+      <li><a href="#android-joystick-keyboard-keys">Joystick buttons  activate keyboard keys on Android</a></li>
+      </ul>
+    <h3><a href="#tvos">tvOS:</a></h3>
     <ul>
-      <li><a href="#ios-xbox-ps4-controllers">iOS 13 Xbox, PS4 Controller support</a></li>
-      <li><a href="#ios-controllers-not-detected">Game controllers not detected</a></li>
-    </ul>
-<h3><a href="#tvos">tvOS:</a></h3>
-    <ul>
-      <li><a href="#tvos-controllers-not-detected"> Game controllers not detected</a></li>
       <li><a href="#tvos-joystick-keyboard-keys">Joystick buttons  activate keyboard keys on tvOS</a></li>
-      <li><a href="#tvos-playermouse-pointer-siri-remote">PlayerMouse software pointer does not work with Apple TV Siri Remote</a></li>
     </ul>
 <h3><a href="#xbox-one">Xbox One:</a></h3>
 <ul>
@@ -568,7 +560,7 @@ things. All of this information is visible in the Debug Information tool:</p>
   </ul>
 <p>&nbsp;</p>
 <hr />
-<h3><a name="rewired-standalone-input-module-issues" id="rewired-standalone-input-module-issues"></a>RewiredStandaloneInputModule issues</h3>
+<h3><a name="rewired-standalone-input-module-issues" id="rewired-standalone-input-module-issues"></a>RewiredStandaloneInputModue issues</h3>
 <p><a href="RewiredStandaloneInputModule.html#troubleshooting">Please see Rewired Standalone Input Module - Troubleshooting</a>.</p>
 <p>&nbsp;</p>
 <hr />
@@ -722,15 +714,6 @@ void CacheRewiredPlayer() {
   <li>If the files are still missing, delete and reinstall Rewired from the Unity Asset Store. First, delete the entire Rewired folder from the project. This will not destroy any of your input configuration data which is stored in the Rewired Input Manager game object, not in the Rewired project folder.  Then re-install Rewired from the Unity Asset Store.<br />
     <strong>Important:</strong> After deleting the Rewired folder DO NOT save your scene or project until after you have re-installed Rewired. If you save your scene or project while Rewired is deleted, serialzed data on gameobjects in your scene may be erased by Unity because the Rewired classes no longer exist. Once Rewired is re-installed, it should be safe to save your scene, but                                  it would be safer to quit and restart Unity before doing so. </li>
   </ol>
-<hr />
-<h3><a name="data-files-missing" id="data-files-missing"></a>&quot;Data Files is missing&quot; error</h3>
-<p>This can happen for two reasons:</p>
-<ol>
-  <li> The Data Files field in the Rewired Input Manager inspector is blank.</li>
-  <li>Serialization errors in some versions of Unity after upgrading Rewired or importing a ControllerDataFiles that replaces the original while the Unity Editor is open.</li>
-</ol>
-<p>If #1, link the Data Files field to the ControllerDataFiles included with Rewired at Assets/Rewired/Internal/Data/Controllers/ControllerDataFiles.</p>
-<p>If #2, close the Unity Editor and re-launch it.</p>
 <p>&nbsp;</p>
 <hr />
 <h3><a name="clean-reinstall" id="clean-reinstall"></a>Doing a clean reinstall of Rewired</h3>
@@ -856,49 +839,8 @@ Int64* args, IntPtr method)
 <p>&nbsp;</p>
 <hr />
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<hr />
-<h3>&nbsp;</h3>
-<h2><a name="ios" id="ios"></a>iOS</h2>
-<p>&nbsp;</p>
-<h3><a name="ios-xbox-ps4-controllers" id="ios-xbox-ps4-controllers"></a>iOS 13 Xbox, PS4 Controller Support</h3>
-<p>Apple will be adding support to iOS 13  for Xbox and Playstation 4 controllers.</p>
-<ol>
-  <li>These controllers DO work already with no changes in Rewired.</li>
-  <li>The controllers are treated as every other MFI controller because Apple has chosen to expose them as MFI controllers.</li>
-  <li>Rewired has no explicit support for these controllers on iOS. It inherited support through the fact they chose to treat them as MFI controllers. There currently has been no update to Rewired to support these <br />
-    controllers in any other way than as generic MFI controllers.</li>
-  <li><strong>Extra buttons added in iOS 13 (stick buttons, options, menu) do not currently work because they are not currently supported by Unity.</strong></li>
-  <li>Controller.name can be used to identify which MFI controller this is so you can display device specific glyphs. Rewired cannot use the iOS 13 ProductCategory function.  <a href="TestedPlatforms.html">Rewired on iOS uses UnityEngine.Input for all input as shown here, so Apple API calls don't apply.</a></li>
-  <li>You must make your Controller Map for the Gamepad Template or the iOS MFI Controller profiles. Controller Maps created for Xbox One Controller, Xbox 360 Controller, or DualShock 4 will not be used on iOS because, to Rewired, these controllers are all simply MFI controllers.</li>
-  <li>IF I decide to change the current system implement these new controllers as separate controller definitions for the sole purpose of reporting button element names based on the specific device, that will be done in a future version and listed on the supported controllers page. There are also some very significant disadvantages to doing this including making user mappings no longer universal across MFI devices (when a user changes a mapping for a SteelSeries Nimbus MFI controller, then swaps out with a DS4 or Xbox One controller, it will not inherit those mappings made for the other MFI controller because they would now use different device profiles).</li>
-</ol>
-<p><strong>To determine device type to display device-specific glyphs:</strong></p>
-<p>Controller.name will return the following for these devices:<br />
-  Xbox One:  &quot;Xbox Wireless Controller&quot;<br />
-  DualShock 4: 
-  &quot;DUALSHOCK 4 Wireless Controller&quot;</p>
-<p>Use that to display different graphics for the elements on the MFI controller.</p>
-<p><strong>IMPORTANT:</strong><br />
-  This behavior may change in a future version of Rewired to load different controller definitions for Xbox and PlayStation controllers requiring you to change the way glyphs are implemented.</p>
-<p>&nbsp;</p>
-<hr />
-<h3><a name="ios-controllers-not-detected" id="ios-controllers-not-detected"></a>Game controllers not detected</h3>
-<p>In Unity versions 5.3.0+, game controllers no longer work in Unity because the XCode project Unity builds does not automatically reference the required GameController framework.</p>
-<p>Solution: Manually add a reference to the GameController or GameKit framework in XCode.</p>
-<p><a href="http://forum.unity3d.com/threads/no-mfi-controller-detected.384892/#post-2502963">More details of this issue and the solution can be found here</a>.</p>
-<p>&nbsp;</p>
-<hr />
-<p>&nbsp;</p>
 <h2><a name="tvos" id="tvos"></a>tvOS</h2>
 <p></p>
-<h3><a name="tvos-controllers-not-detected" id="tvos-controllers-not-detected"></a>Game controllers not detected</h3>
-<p>In Unity versions 5.3.0+, game controllers no longer work in Unity because the XCode project Unity builds does not automatically reference the required GameController framework.</p>
-<p>Solution: Manually add a reference to the GameController or GameKit framework in XCode.</p>
-<p><a href="http://forum.unity3d.com/threads/no-mfi-controller-detected.384892/#post-2502963">More details of this issue and the solution can be found here</a>.</p>
-<p>&nbsp;</p>
-<hr />
 <h3><a name="tvos-joystick-keyboard-keys" id="tvos-joystick-keyboard-keys"></a>Joystick buttons  activate keyboard keys on tvOS</h3>
 <p>Rewired uses Unity input as the input source in tvOS so it is subject to its limitations. tvOS joysticks return keyboard keycode values for certain buttons on the controller such as Left Shoulder, Right Shoulder,  etc. These keyboard values are in additon to  a joystick button value. This can be problematic if you've developed your game for both desktop PCs and tvOS and have keyboard maps already set up for the desktop and you want to use the same input scheme for a tvOS build. When you press one of these buttons, if it also has an Action assigned through a keyboard map, you may get 2 values returned -- one for the keyboard map and one for the joystick map.</p>
 <p>An easy way to prevent this is to set <a href="http://guavaman.com/projects/rewired/docs/api-reference/html/P_Rewired_Controller_enabled.htm">ReInput.controllers.Keyboard.enabled</a> = false to disable all keyboard input on tvOS. In addition to solving this issue, disabling keyboard input improves performance slightly.</p>
@@ -908,17 +850,7 @@ Int64* args, IntPtr method)
     Rewired.ReInput.controllers.Keyboard.enabled = false; <span class="comment">// Disable keyboard input on tvOS platform</span>
 #endif
 }</pre>
-<p>&nbsp;</p>
-<hr />
-<h3><a name="tvos-playermouse-pointer-siri-remote" id="tvos-playermouse-pointer-siri-remote"></a>PlayerMouse software pointer does not work with Apple TV Siri Remote</h3>
-<p>The Rewired Standalone Input Module works in the same was as the original Unity Standalone Input Module. Touch input takes precedence over mouse input, so if any touch input is detected, mouse input will not be processed.</p>
-<p>The Apple TV Siri Remote generates touch input when you touch or swipe anywhere on the touchpad. If you have set up a <a href="PlayerControllers.html#player-mouse">PlayerMouse </a>to allow you to move a software pointer with the Siri Remote's touchpad, you must disable touch support on the Rewired Standalone Input Module, otherwise the touch events will be processed and the PlayerMouse will not move when you interact with the remote's touchpad.</p>
-<p>The Rewired Standalone Input Module's &quot;Touch Supported&quot; option must be disabled on TV OS for PlayerMouse to work properly with the Apple TV Siri Remote. </p>
-<pre class="code">
-<span class="comment">// Disable touch input on the RewiredStandaloneInputModule on tvOS if using PlayerMouse</span>
-#if UNITY_TVOS
-    (EventSystem.current.currentInputModule as Rewired.Integration.UnityUI.RewiredStandaloneInputModule).allowTouchInput = false;
-#endif</pre>
+<p></p>
 <p>&nbsp;</p>
 <hr />
 <p>&nbsp;</p>
@@ -1124,7 +1056,7 @@ Int64* args, IntPtr method)
         
     </div>
   <div class="footer clearfix">
-   	<p class="left">Copyright &copy;2014-2019 <a href="http://guavaman.com" title="Guavaman Enterprises">Guavaman Enterprises</a>. All rights reserved. No materials may be reproduced without permission.</p>
+   	<p class="left">Copyright &copy;2014-2018 <a href="http://guavaman.com" title="Guavaman Enterprises">Guavaman Enterprises</a>. All rights reserved. No materials may be reproduced without permission.</p>
   	<p class="right"><a href="http://guavaman.com/projects/rewired" title="Return to Rewired Website">Return to Rewired Website</a></p>
   </div>
   <!-- end .content --></div>

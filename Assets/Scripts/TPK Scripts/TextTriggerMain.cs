@@ -24,11 +24,14 @@ public class TextTriggerMain : MonoBehaviour {
     int curMiniDraw;
 
     Font originalFont;
+    PauseScreen ps;
 
     void Start()
     {
         anim = this.gameObject.GetComponent<Animator>();
         theText = this.transform.Find("Image").Find("Text").gameObject.GetComponent<Text>();
+
+        ps = PlayerManager.GetMainPlayer().ps;
 
         originalFont = theText.font;
 
@@ -40,24 +43,31 @@ public class TextTriggerMain : MonoBehaviour {
         }
     }
 
+    /*
+    int checkFrom = 0;
+    int checkUpTo = 16;
     int tempy = 0;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
+            if (tempy < checkFrom)
+                tempy = checkFrom;
+
             SetText(tempy);
             tempy++;
-            if (tempy >= 14)
-                tempy = 0;
+            if (tempy >= checkUpTo)
+                tempy = checkFrom;
         }
     }
+    */
 
     public void SetText(int curID)
     {
         if(curID < TextTranslationManager.singleton.textPrompts.Length) {
-            if (!currentlyDisplaying){
+            if (!currentlyDisplaying && !ps.sS.inStart)
+            {
                 currentlyDisplaying = true;
-                textID = curID;
                 theText.text = "";
                 curMiniDraw = -1;
                 for(int check = 0; check < textMiniDraws.Length; check++)
@@ -65,6 +75,7 @@ public class TextTriggerMain : MonoBehaviour {
                     if (textMiniDraws[check].textID == curID)
                         curMiniDraw = check;
                 }
+                textID = curID;
                 StartCoroutine(PlayAnimation(curMiniDraw));
             }
             else {
@@ -97,62 +108,35 @@ public class TextTriggerMain : MonoBehaviour {
             miniDrawParent.SetActive(false);
         yield return new WaitForSeconds(1f);
         string fullText = TextTranslationManager.GetText(TextTranslationManager.TextCollection.textPrompts, textID, PlayerPrefs.GetInt("Language"));
-        if (PlayerPrefs.GetInt("Language") == 9)
-            theText.fontSize = 50;
+
+        if (textID == 15)
+            theText.fontSize = 45;
         else
-            theText.fontSize = 60;
+        {
+            if (textID == 14)
+                theText.fontSize = 50;
+            else
+            {
+                if (PlayerPrefs.GetInt("Language") == 9)
+                    theText.fontSize = 50;
+                else
+                    theText.fontSize = 60;
+            }
+        }
+
         if (PlayerPrefs.GetInt("Language") == 11)
         {
             theText.alignment = TextAnchor.UpperRight;
             if (theText.lineSpacing > 0f)
                 theText.lineSpacing *= -1f;
-            //
             theText.font = TextTranslationManager.singleton.arabicFont;
         }
         else
         {
-            //
-            if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Chinese)
-            {
-                theText.font = TextTranslationManager.singleton.chineseFont;
-                theText.fontStyle = FontStyle.Bold;
-                theText.alignment = TextAnchor.UpperLeft;
-                if (theText.lineSpacing < 0f)
-                    theText.lineSpacing *= -1f;
-            }
-            else
-              if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Japanese)
-            {
-                theText.font = TextTranslationManager.singleton.japaneseFont;
-                theText.fontStyle = FontStyle.Bold;
-                theText.alignment = TextAnchor.UpperLeft;
-                if (theText.lineSpacing < 0f)
-                    theText.lineSpacing *= -1f;
-            }
-            else
-                if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Korean)
-            {
-                theText.font = TextTranslationManager.singleton.koreanFont;
-                theText.fontStyle = FontStyle.Bold;
-                theText.alignment = TextAnchor.UpperLeft;
-                if (theText.lineSpacing < 0f)
-                    theText.lineSpacing *= -1f;
-            }
-            else
-              if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Russian)
-            {
-                theText.font = TextTranslationManager.singleton.cyrillicFont;
-                theText.alignment = TextAnchor.UpperLeft;
-                if (theText.lineSpacing < 0f)
-                    theText.lineSpacing *= -1f;
-            }
-            else
-            {
-                theText.alignment = TextAnchor.UpperLeft;
-                if (theText.lineSpacing < 0f)
-                    theText.lineSpacing *= -1f;
-                theText.font = originalFont;
-            }
+            theText.alignment = TextAnchor.UpperLeft;
+            if (theText.lineSpacing < 0f)
+                theText.lineSpacing *= -1f;
+            theText.font = originalFont;
         }
         for (int t = 0; t < fullText.Length; t++){
             theText.text = theText.text + fullText[t];
@@ -170,7 +154,7 @@ public class TextTriggerMain : MonoBehaviour {
     }
 
     IEnumerator WaitToPlay() {
-        while (currentlyDisplaying)
+        while (currentlyDisplaying || ps.sS.inStart)
             yield return null;
         int ni = cycle;
         int checker = 0;

@@ -193,7 +193,7 @@ internal class SkinnedState : AmplifyMotion.MotionState
 
 		if ( m_clonedMesh != null )
 		{
-		//	Mesh.Destroy( m_clonedMesh );
+			Mesh.Destroy( m_clonedMesh );
 			m_clonedMesh = null;
 		}
 
@@ -339,7 +339,7 @@ internal class SkinnedState : AmplifyMotion.MotionState
 	{
 		if ( m_gpuSkinDeformMat != null )
 		{
-		//	Material.DestroyImmediate( m_gpuSkinDeformMat );
+			Material.DestroyImmediate( m_gpuSkinDeformMat );
 			m_gpuSkinDeformMat = null;
 		}
 

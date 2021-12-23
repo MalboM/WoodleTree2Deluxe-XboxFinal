@@ -37,15 +37,15 @@ public class Collectible : MonoBehaviour
                 if (collectibleType == "Berry")
                 {
                     chara = other.gameObject.GetComponent<TPC>();
-                    chara.berryPFX.PlayEffect(0, this.transform.position, null, Vector3.zero, false);
+                    chara.berryPFX.PlayEffect(0, this.transform.position, null, Vector3.zero, false, false);
                     this.bagpack = chara.dayPack;
                     this.origPos = this.transform.position;
                     if (sphereCol != null)
                         sphereCol.enabled = false;
                     if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
                         value *= 2;
+                    AddToTotalBerries(value);
                     chara.berryCount += value;
-                    CheckPSTrophies(value, chara);
                     BerrySpawnManager.PlayBerryNoise(false);
                     chara.UpdateBerryHUDRed();
                     this.movingBerry = true;
@@ -55,22 +55,22 @@ public class Collectible : MonoBehaviour
                 if (collectibleType == "BigBerry")
                 {
                     chara = other.gameObject.GetComponent<TPC>();
-                    chara.berryPFX.PlayEffect(0, this.transform.position, null, Vector3.zero, false);
+                    chara.berryPFX.PlayEffect(0, this.transform.position, null, Vector3.zero, false, false);
                     this.bagpack = chara.dayPack;
                     this.origPos = this.transform.position;
                     if (sphereCol != null)
                         sphereCol.enabled = false;
                     value = 5;
                     if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
-                        value = 10;
+                        value *= 2;
+                    AddToTotalBerries(value);
                     StartCoroutine(MultiCollect(value));
-                    CheckPSTrophies(value, chara);
                     BerrySpawnManager.PlayBerryNoise(true);
                     this.movingBerry = true;
                     this.berryIt = 0;
                     StartCoroutine(MoveBerry());
                 }
-            /*    if (collectibleType == "BlueBerry")
+                if (collectibleType == "BlueBerry")
                 {
                     if (PlayerPrefs.GetInt("FirstBlueBerry", 0) == 0)
                     {
@@ -79,7 +79,7 @@ public class Collectible : MonoBehaviour
                     }
 
                     chara = other.gameObject.GetComponent<TPC>();
-                    chara.berryPFX.PlayEffect(1, this.transform.position, null, Vector3.zero, false);
+                    chara.berryPFX.PlayEffect(1, this.transform.position, null, Vector3.zero, false, false);
                     this.bagpack = chara.dayPack;
                     this.origPos = this.transform.position;
                     if (sphereCol != null)
@@ -90,16 +90,16 @@ public class Collectible : MonoBehaviour
                     this.movingBerry = true;
                     this.berryIt = 0;
                     StartCoroutine(MoveBerry());
-                }*/
+                }
             }
         }
     }
 
-    void CheckPSTrophies(int amount, TPC tpc)
+    void AddToTotalBerries(int valueToAdd)
     {
-        int totalRBCount = PlayerPrefs.GetInt("RedBerryTotal", tpc.berryCount);
-        totalRBCount += amount;
-        PlayerPrefs.SetInt("RedBerryTotal", totalRBCount);
+        int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", chara.berryCount);
+        totalRedBerries += valueToAdd;
+        PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
 
 #if UNITY_PS4
             //
@@ -138,7 +138,6 @@ public class Collectible : MonoBehaviour
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
         }
 #endif
-
     }
 
     IEnumerator MoveBerry()
@@ -164,7 +163,7 @@ public class Collectible : MonoBehaviour
         }
 
         if (chara.gameObject.name == "Woodle Character")
-            chara.berryPFX.PlayEffect(2, this.transform.position, null, Vector3.zero, false);
+            chara.berryPFX.PlayEffect(2, this.transform.position, null, Vector3.zero, false, false);
 
         if (hasParentShadow)
             this.transform.parent.parent.Find("BlobShadowProjector").gameObject.SetActive(false);

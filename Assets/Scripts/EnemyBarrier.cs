@@ -94,7 +94,9 @@ public class EnemyBarrier : MonoBehaviour
 
         GameObject.FindWithTag("Pause").transform.Find("Bars").GetComponent<Animator>().SetBool("barsToggle", false);
 
-        for(int f = 0; f <= 60; f++)
+        yield return new WaitForSeconds(0.5f);
+
+        for (int f = 0; f <= 60; f++)
         {
             camF.transform.position = Vector3.Lerp(camF.transform.position, origPos, f / 60f);
             camF.transform.rotation = Quaternion.Lerp(camF.transform.rotation, origRot, f / 60f);

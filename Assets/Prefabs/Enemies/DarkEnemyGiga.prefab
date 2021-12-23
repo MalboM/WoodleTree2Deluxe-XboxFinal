@@ -155,6 +155,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -225,6 +226,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -363,8 +365,10 @@ MonoBehaviour:
   berryRelease: {fileID: 8300000, guid: 552153702111922488a4d1b5a56bf0a5, type: 3}
   dieSound: {fileID: 8300000, guid: 30683befc5c970241b7d852053ef2aad, type: 3}
   useBigOuchSounds: 1
+  mixerGroup: {fileID: 0}
   dontFreezeEnemy: 0
   parentToDisable: {fileID: 0}
+  hitByShield: 0
 --- !u!195 &3148152248183116404
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -753,6 +757,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -986,6 +991,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1402,7 +1408,8 @@ AudioSource:
   m_GameObject: {fileID: 2956505863377183412}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243899822893694608, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 93cd9cbf03ff5844392769472276a58a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -1529,7 +1536,8 @@ AudioSource:
   m_GameObject: {fileID: 2956505863377339506}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243899822893694608, guid: b569fb3b29ac30747998940d5e034286,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: b4dd522f2bce19f4e93d0a1615647827, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1671,3 +1679,4 @@ MonoBehaviour:
   shadowObj: {fileID: 0}
   insideChunk: 1
   animationComponent: {fileID: 0}
+  distanceMultiplier: 1.3

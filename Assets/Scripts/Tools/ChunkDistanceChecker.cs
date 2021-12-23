@@ -5,8 +5,7 @@ using UnityEngine;
 public class ChunkDistanceChecker : MonoBehaviour
 {
 
-    [System.Serializable]
-    public class ChunkChild { public Vector3 chunkPos; public List<GameObject> chunkObjects = new List<GameObject>(); public bool inChunk; }
+    [System.Serializable] public class ChunkChild { public Vector3 chunkPos; public List<GameObject> chunkObjects = new List<GameObject>(); public bool inChunk; }
 
     public List<ChunkChild> chunkChildren = new List<ChunkChild>();
 
@@ -54,7 +53,7 @@ public class ChunkDistanceChecker : MonoBehaviour
         owm = PlayerManager.GetMainPlayer().GetComponentInParent<OneWayManager>();
         if (owm != null)
         {
-            while (owm.currentlyChecking)
+            while(owm.currentlyChecking)
                 yield return null;
         }
         else
@@ -71,7 +70,7 @@ public class ChunkDistanceChecker : MonoBehaviour
             paras[2] = totalInterval;
             totalInterval += interval;
             StartCoroutine("CheckDistance", paras);
-            //    yield return new WaitForSeconds(interval);
+        //    yield return new WaitForSeconds(interval);
         }
     }
 
@@ -87,7 +86,7 @@ public class ChunkDistanceChecker : MonoBehaviour
             activationDistanceToUse = activationDistance * activationDistance;
             origAD = activationDistance;
         }
-
+        
         if (chara)
         {
             distanceMultiplier = Mathf.Lerp(1f, 2f, (float)PlayerPrefs.GetInt("ObjectDetails", 2) / 8f);

@@ -15,7 +15,7 @@ public class CageObject : MonoBehaviour
     public GameObject cage;
     public GameObject npc;
     public GameObject npcAddOn;
-    
+
     public Text npcText;
 
     public Animator npcAnimator;
@@ -31,8 +31,8 @@ public class CageObject : MonoBehaviour
 
     private void Awake()
     {
-    //    if(debugResetPref)
-    //        PlayerPrefs.SetInt("Cage" + cageID.ToString(), 0);
+        //    if(debugResetPref)
+        //        PlayerPrefs.SetInt("Cage" + cageID.ToString(), 0);
     }
 
     private void OnEnable()
@@ -63,23 +63,47 @@ public class CageObject : MonoBehaviour
 
             CagedNPCManager.RunThroughNPCs();
 
-            if(cageID >= 4)
+            if (cageID >= 4)
                 CountFreedFlowers();
-        //    CagedNPCManager.SpecialCaseCheck(cageID);
+            //    CagedNPCManager.SpecialCaseCheck(cageID);
         }
 
         audioSource.enabled = true;
-        
+
         npcText.gameObject.transform.parent.parent.parent.parent.gameObject.GetComponent<NPCInteraction>().textID = freeTextID;
 
-        if(npcAnimator != null && victoryAnimationName != "")
+        if (npcAnimator != null && victoryAnimationName != "")
             npcAnimator.Play(victoryAnimationName, 0);
 
         tpc = PlayerManager.GetMainPlayer();
         woodle = tpc.gameObject;
 
+        if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
+            berryReward *= 2;
+
+        int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", tpc.berryCount);
+        totalRedBerries += berryReward;
+        PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
+
+#if UNITY_PS4
+            //
+            // check trophy
+            if (totalRBCount >= 100)
+            {
+                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_RED_BERRIES);
+            }
+            //
+            if (totalRBCount >= 1000)
+            {
+                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_1000_RED_BERRIES);
+            }
+            //
+            if (totalRBCount >= 3000)
+            {
+                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_3000_RED_BERRIES);
+            }
+#endif
         StartCoroutine(BerryReward(berryReward));
-        CheckPSTrophies(berryReward);
 
         if (npcAnimator != null)
             npcRenderer = npcAnimator.GetComponentInChildren<Renderer>();
@@ -107,15 +131,15 @@ public class CageObject : MonoBehaviour
     void ToggleObjects(bool activate)
     {
         cage.SetActive(activate);
-        if(npc != null)
+        if (npc != null)
             npc.SetActive(activate);
         npcAddOn.SetActive(activate);
     }
 
     IEnumerator BerryReward(int amount)
     {
-        if(amount >= 5)
-            tpc.berryCount+= 5;
+        if (amount >= 5)
+            tpc.berryCount += 5;
         else
             tpc.berryCount += amount;
         tpc.UpdateBerryHUDRed();
@@ -126,34 +150,6 @@ public class CageObject : MonoBehaviour
             StartCoroutine(BerryReward(amount));
     }
 
-    void CheckPSTrophies(int amount)
-    {
-        int totalRBCount = PlayerPrefs.GetInt("RedBerryTotal", tpc.berryCount);
-        totalRBCount += amount;
-        PlayerPrefs.SetInt("RedBerryTotal", totalRBCount);
-
-#if UNITY_PS4
-            //
-            // check trophy
-            if (totalRBCount >= 100)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_RED_BERRIES);
-            }
-            //
-            if (totalRBCount >= 1000)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_1000_RED_BERRIES);
-            }
-            //
-            if (totalRBCount >= 3000)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_3000_RED_BERRIES);
-            }
-#endif
-    }
-
-
-    bool trpSet = false;
     void CountFreedFlowers()
     {
         int counted = 0;

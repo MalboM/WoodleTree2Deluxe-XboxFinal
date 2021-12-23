@@ -8,13 +8,12 @@ using Rewired;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
 using UnityStandardAssets.ImageEffects;
-#if UNITY_SWITCH
-using nn.hid;
-#endif
+//using nn.hid;
 using Beffio.Dithering;
 using System.Linq;
 
-public class PauseScreen : MonoBehaviour {
+public class PauseScreen : MonoBehaviour
+{
 
     public bool enableDebugTab;
     double cutTime;
@@ -59,6 +58,20 @@ public class PauseScreen : MonoBehaviour {
     public Animator bushAnim;
 
     public Animator challengeWarpAnim;
+
+    public Animator racePromptAnim;
+    public Animator raceCountdownAnim;
+    public Image whiteFade;
+    public Animator raceResultsAnim;
+    public Image raceResultsIcon;
+    public Animator raceQuitAnim;
+    public Text raceRewardText;
+
+    public GraphicRaycaster graphicRaycaster;
+
+    public GameObject quitAYS;
+    public GameObject quitFirst;
+    public GameObject quitSelector;
 
     [Header("TABS")]
     public GameObject itemsTab;
@@ -112,6 +125,7 @@ public class PauseScreen : MonoBehaviour {
     public Text waterTears;
     public Text collectables;
     [HideInInspector] public int currentBBCount;
+    public GameObject bbFinderIcon;
 
     [Header("MAP")]
     public GameObject firstMap;
@@ -141,17 +155,18 @@ public class PauseScreen : MonoBehaviour {
     public Image[] challengesIcons;
     public Color challengesFoundColour;
     public Color challengescClearedColour;
+    public GameObject mapAYSSelection;
 
     [Header("OPTIONS")]
-	public GameObject firstOptions;
-	public GameObject ixTick;
-	public GameObject iyTick;
-	public GameObject vibTick;
+    public GameObject firstOptions;
+    public GameObject ixTick;
+    public GameObject iyTick;
+    public GameObject vibTick;
     public GameObject styTick;
     [HideInInspector] public bool stying;
 
     int currentLevelID;
-    
+
     bool dPlzExt;
     GameObject fullExt;
 
@@ -159,26 +174,26 @@ public class PauseScreen : MonoBehaviour {
     public Slider effectsSlider;
     public Slider musicSlider;
     public AudioMixer[] audioMixers;
-    public GameObject ays;
-	public GameObject returnButton;
-	public Text returnText;
-	public GameObject yesButton;
-	public GameObject noButton;
-	public Text yesText;
-	public Text noText;
-	public Image loadIcon;
-	public Image loadFS;
-	public Animator loadAnim;
+    public GameObject returnButton;
+    public Text returnText;
+    public GameObject yesButton;
+    public GameObject noButton;
+    public Text yesText;
+    public Text noText;
+    public Image loadIcon;
+    public Image loadFS;
+    public Animator loadAnim;
     public Dropdown qualityT;
     bool invertX;
-	bool invertY;
-	bool vibOn;
-	float camSense;
+    bool invertY;
+    bool vibOn;
     float effects;
     [HideInInspector] public float music;
     float clip;
 
-    public Button vibrationButton;
+    public Button aaLButton;
+    public Button aaRButton;
+    public Button aaAButton;
     public Button filterButton;
 
     bool languagesOpen;
@@ -186,24 +201,31 @@ public class PauseScreen : MonoBehaviour {
     public GameObject languagesFirst;
     public GameObject languageButton;
 
+    [HideInInspector] public OptionsNew optionsNew;
+    [HideInInspector] public bool remapperOpen;
+
+    public GameObject defaultsAYS;
+    public GameObject defaultsNo;
+    public GameObject defaultsButton;
+
     [Header("SOUNDS")]
-	public AudioClip highlightSound;
+    public AudioClip highlightSound;
     public AudioClip highlightDownSound;
     public AudioClip selectSound;
-	public AudioClip tabRSound;
+    public AudioClip tabRSound;
     public AudioClip tabLSound;
     public AudioClip warpSound;
-	public AudioClip openSound;
-	public AudioClip closeSound;
-	public AudioClip exitSound;
+    public AudioClip openSound;
+    public AudioClip closeSound;
+    public AudioClip exitSound;
     public AudioClip toggleOnSound;
     public AudioClip toggleOffSound;
-	AudioSource sound1;
-	AudioSource sound2;
-	int soundInt;
+    AudioSource sound1;
+    AudioSource sound2;
+    int soundInt;
 
-	[HideInInspector] public bool cantPause;
-	[HideInInspector] public bool inLoad;
+    [HideInInspector] public bool cantPause;
+    [HideInInspector] public bool inLoad;
 
     [HideInInspector] public int tearCount;
 
@@ -220,11 +242,17 @@ public class PauseScreen : MonoBehaviour {
     FontStyle titlesFontStyle;
     FontStyle levelTitlesFontStyle;
 
-    void Start () {
-		if (!PlayerPrefs.HasKey ("Checkpoint37")) {
-			for (int cp = 0; cp <= 37; cp++)
-				PlayerPrefs.SetInt ("Checkpoint" + cp.ToString (), 0);
-        //    PlayerPrefs.Save();
+    [HideInInspector] public bool notMouseOver = false;
+
+    bool quitin;
+
+    void Start()
+    {
+        if (!PlayerPrefs.HasKey("Checkpoint37"))
+        {
+            for (int cp = 0; cp <= 37; cp++)
+                PlayerPrefs.SetInt("Checkpoint" + cp.ToString(), 0);
+            //    PlayerPrefs.Save();
         }
 
         originalMapFont = mapMarkerText.font;
@@ -235,26 +263,42 @@ public class PauseScreen : MonoBehaviour {
         titlesFontStyle = titleText.fontStyle;
         levelTitlesFontStyle = levelTitlesText.fontStyle;
 
-        AudioSource[] sources = this.gameObject.GetComponents<AudioSource> ();
-		sound1 = sources [0];
-		sound2 = sources [1];
-		soundInt = 0;
+        AudioSource[] sources = this.gameObject.GetComponents<AudioSource>();
+        sound1 = sources[0];
+        sound2 = sources[1];
+        soundInt = 0;
         stying = false;
         deactivatedAll = false;
-        main.SetActive (false);
+        main.SetActive(false);
 
         toActDD.ClearOptions();
         toActDD.options.Add(new Dropdown.OptionData() { text = "NOTHING TO SELECT" });
 
-    //    sS.consoleObj.SetActive(false);
+        sS.consoleObj.SetActive(false);
         fpsObj.SetActive(false);
 
         textToTranslate = this.gameObject.GetComponent<TextToTranslate>();
         currentLevelTitle = -1;
     }
 
-	void Update () {
-        if (tpc == null) {
+    private void Awake()
+    {
+        ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
+    }
+
+    void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
+    {
+        if (!sS.inStart && !inPause)
+        {
+            inPause = true;
+            OpenPauseScreen(false);
+        }
+    }
+
+    void Update()
+    {
+        if (tpc == null)
+        {
             if (woodle == null)
             {
                 foreach (GameObject g in GameObject.FindGameObjectsWithTag("Player"))
@@ -263,169 +307,51 @@ public class PauseScreen : MonoBehaviour {
                         woodle = g;
                 }
             }
-			tpc = woodle.gameObject.GetComponent<TPC> ();
+            tpc = woodle.gameObject.GetComponent<TPC>();
 
             multiTPC[0] = PlayerManager.GetPlayer(1);
             multiTPC[1] = PlayerManager.GetPlayer(2);
             multiTPC[2] = PlayerManager.GetPlayer(3);
 
             tpc.ps = this;
-			input = ReInput.players.GetPlayer (0);
-            InitializeValues ();
-		} else {
-            if (currentCutscene != null)
+            input = ReInput.players.GetPlayer(0);
+            InitializeValues();
+        }
+        else
+        {
+            if (!quitin)
             {
-                if (currentCutscene != WaterTearManager.GetFinalCutscene() && input.GetButtonDown("Start"))
-                    SkipCutscene(currentCutscene);
-
-                if (Input.GetKeyDown(KeyCode.J))
+                if (currentCutscene != null)
                 {
-                    currentCutscene.time = cutTime;
-                }
-                if (Input.GetKeyDown(KeyCode.K))
-                {
-                    cutTime = currentCutscene.time;
-                }
-            }
-            else
-            {
-                if (!sS.inStart)
-                {
-                    if (fullExt == null)
+                    if (currentCutscene != WaterTearManager.GetFinalCutscene() && input.GetAnyButtonDown())
+                        SkipCutscene(currentCutscene);
+#if UNITY_EDITOR
+                    if (Input.GetKeyDown(KeyCode.J))
                     {
-                        foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
-                        {
-                            if (g.name == "External Full")
-                                fullExt = g.gameObject;
-                        }
+                        currentCutscene.time = cutTime;
                     }
-                }
-
-                if (!sS.inStart && (input.GetButtonDown("Start") || inPause && input.GetButtonDown("Back")) && !tpc.defeated && !tpc.anim.GetCurrentAnimatorStateInfo(0).IsName("Defeat") && !tpc.inCutscene && !cantPause && !tpc.challengeWarping && !telescope.usingTelescope && !telescope.transitioning && !ItemPromptManager.IsDisplaying())
-                {
-                    if (inPause && (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3))
+                    if (Input.GetKeyDown(KeyCode.K))
                     {
-                        if (levelDD.transform.childCount > 3)
-                            levelDD.Hide();
-                        if (toActDD.transform.childCount > 3)
-                            toActDD.Hide();
+                        cutTime = currentCutscene.time;
                     }
-                    else
-                    {
-                        if (input.GetButtonDown("Start") && !languagesOpen)
-                        {
-                            inPause = !inPause;
-                            if (inPause)
-                                OpenPauseScreen();
-                            else
-                                ClosePauseScreen(true);
-                        }
-                    }
+#endif
                 }
-
-                if (npcFlowers.activeSelf && PlayerPrefs.GetInt("AllFlowers", 0) == 1)
-                    npcFlowers.SetActive(false);
-                if (!npcFlowers.activeSelf && PlayerPrefs.GetInt("AllFlowers", 0) == 0)
-                    npcFlowers.SetActive(true);
-
-                if (inPause)
+                else
                 {
-                    //NAVIGATION
-                    if (input.GetButtonDown("GUIL") && !languagesOpen)
+                    if (!sS.inStart)
                     {
-                        PlaySound(tabLSound);
-                        if (enableDebugTab && inDebug)
+                        if (fullExt == null)
                         {
-                            CloseDebugTab();
-                            OpenOptionsTab();
-                        }
-                        else
-                        {
-                            if (inMap)
+                            foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
                             {
-                                CloseMapTab();
-                                OpenItemsTab();
-                            }
-                            else
-                            {
-                                if (inItems)
-                                {
-                                    CloseItemsTab();
-                                    if (enableDebugTab)
-                                        OpenDebugTab();
-                                    else
-                                        OpenOptionsTab();
-                                }
-                                else
-                                {
-                                    if (inOptions)
-                                    {
-                                        if (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3)
-                                        {
-                                            if (levelDD.transform.childCount > 3)
-                                                levelDD.Hide();
-                                            if (toActDD.transform.childCount > 3)
-                                                toActDD.Hide();
-                                        }
-                                        else
-                                        {
-                                            CloseOptionsTab();
-                                            OpenMapTab();
-                                        }
-                                    }
-                                }
+                                if (g.name == "External Full")
+                                    fullExt = g.gameObject;
                             }
                         }
                     }
-                    if (input.GetButtonDown("GUIR") && !languagesOpen)
+
+                    if (!sS.inStart && (input.GetButtonDown("Start") || input.GetButtonDown("Items") || (inPause && input.GetButtonDown("Back"))) && !tpc.defeated && !tpc.anim.GetCurrentAnimatorStateInfo(0).IsName("Defeat") && !tpc.inCutscene && !cantPause && !tpc.challengeWarping && !telescope.usingTelescope && !telescope.transitioning && !ItemPromptManager.IsDisplaying())
                     {
-                        PlaySound(tabRSound);
-                        if (enableDebugTab && inDebug)
-                        {
-                            CloseDebugTab();
-                            OpenItemsTab();
-                        }
-                        else
-                        {
-                            if (inMap)
-                            {
-                                CloseMapTab();
-                                OpenOptionsTab();
-                            }
-                            else
-                            {
-                                if (inItems)
-                                {
-                                    CloseItemsTab();
-                                    OpenMapTab();
-                                }
-                                else
-                                {
-                                    if (inOptions)
-                                    {
-                                        if (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3)
-                                        {
-                                            if (levelDD.transform.childCount > 3)
-                                                levelDD.Hide();
-                                            if (toActDD.transform.childCount > 3)
-                                                toActDD.Hide();
-                                        }
-                                        else
-                                        {
-                                            CloseOptionsTab();
-                                            if (enableDebugTab)
-                                                OpenDebugTab();
-                                            else
-                                                OpenItemsTab();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (input.GetButtonDown("Back"))
-                    {
-                        HDRumbleMain.PlayVibrationPreset(0, "K02_Patter2", 1f, 0, 0.2f);
                         if (inPause && (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3))
                         {
                             if (levelDD.transform.childCount > 3)
@@ -435,149 +361,379 @@ public class PauseScreen : MonoBehaviour {
                         }
                         else
                         {
-                            if (mapAYS.activeInHierarchy)
-                                CancelWarp();
-                            else
+                            if ((input.GetButtonDown("Start") || input.GetButtonDown("Items")) && !languagesOpen && !remapperOpen && !defaultsAYS.activeInHierarchy)
                             {
-                                if (languagesOpen)
-                                    ToggleLanguagesList();
+                                inPause = !inPause;
+                                if (inPause)
+                                    OpenPauseScreen(input.GetButtonDown("Items"));
                                 else
-                                {
-                                    inPause = false;
                                     ClosePauseScreen(true);
-                                }
                             }
                         }
                     }
 
-                    if (input.GetButtonDown("Submit"))
-                        HDRumbleMain.PlayVibrationPreset(0, "K01_Patter1", 1f, 0, 0.2f);
+                    if (npcFlowers.activeSelf && PlayerPrefs.GetInt("AllFlowers", 0) == 1)
+                        npcFlowers.SetActive(false);
+                    if (!npcFlowers.activeSelf && PlayerPrefs.GetInt("AllFlowers", 0) == 0)
+                        npcFlowers.SetActive(true);
 
-                    //MAP MOVEMENT
-                    if (inMap)
+                    if (inPause)
                     {
-                        textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.pause, 0, "", false, true, titlesFont, titlesFontStyle);
-
-                        if (curES != null && es.currentSelectedGameObject != curES && !mapAYS.activeInHierarchy)
+                        if (Cursor.visible && (input.GetAxis("UIH") != 0f || input.GetAxis("UIV") != 0f))
                         {
-                            curES = es.currentSelectedGameObject;
+                            Cursor.visible = false;
+                            graphicRaycaster.enabled = false;
+                        }
+                        if (!Cursor.visible && input.GetAxis("MouseMove") != 0f)
+                        {
+                            Cursor.visible = true;
+                            graphicRaycaster.enabled = true;
+                        }
+
+                        //NAVIGATION
+                        if (input.GetButtonDown("GUIL") && !languagesOpen && !remapperOpen && !quitAYS.activeInHierarchy && !defaultsAYS.activeInHierarchy)
+                        {
+                            MenuLeftPage();
+                        }
+                        if (input.GetButtonDown("GUIR") && !languagesOpen && !remapperOpen && !quitAYS.activeInHierarchy && !defaultsAYS.activeInHierarchy)
+                        {
+                            MenuRightPage();
+                        }
+                        if (input.GetButtonDown("Run") && !quitAYS.activeInHierarchy && !languagesOpen && !remapperOpen && !defaultsAYS.activeInHierarchy)
+                            QuitGameAYS();
+                        if (input.GetButtonDown("Back") && (!Input.GetKeyDown(KeyCode.Escape) || (quitAYS.activeInHierarchy || languagesOpen || remapperOpen || (defaultsAYS.activeInHierarchy))))
+                        {
+                            GoBack();
+                        }
+
+                        if (input.GetButtonDown("Submit"))
+                            HDRumbleMain.PlayVibrationPreset(0, "K01_Patter1", 1f, 0, 0.2f);
+
+                        //MAP MOVEMENT
+                        if (inMap)
+                        {
+                            textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.pause, 0, "", false, true, titlesFont, titlesFontStyle);
+
+                            if (es.currentSelectedGameObject != null && es.currentSelectedGameObject.transform.parent.name == "Checkpoints")
+                            {
+                                if (curES != null && es.currentSelectedGameObject != curES && !mapAYS.activeInHierarchy)
+                                {
+                                    curES = es.currentSelectedGameObject;
+                                    if (curES != null)
+                                    {
+                                        mapIcon.transform.SetParent(curES.transform);
+                                        DisplayMarkerText(int.Parse(curES.name));
+                                        //	PlaySound (highlightSound);
+                                    }
+                                }
+                                if (mapIcon.transform.localPosition.y >= 5000f)
+                                    mapIcon.transform.localPosition = Vector3.zero;
+                                else
+                                    mapIcon.transform.localPosition = Vector3.Lerp(mapIcon.transform.localPosition, Vector3.zero, 0.2f);
+                            }
+                            else
+                                mapIcon.transform.localPosition = Vector3.up * 10000f;
+
+                            if (input.GetAxis("MapZoom") != 0f)
+                            {
+
+                                if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+                                    curMapScale = Mathf.Clamp(curMapScale + (input.GetAxis("MapZoom") * 10f * mapScaleSpeed), 1f, 2f);
+                                else
+                                    curMapScale = Mathf.Clamp(curMapScale + (input.GetAxis("MapZoom") * mapScaleSpeed), 1f, 2f);
+
+                                mapRect.transform.localScale = Vector3.one * curMapScale;
+
+                                foreach (GameObject g in altScaleObjs)
+                                    g.transform.localScale = Vector3.one / curMapScale;
+                            }
+
                             if (curES != null)
                             {
-                                mapIcon.transform.SetParent(curES.transform);
-                                DisplayMarkerText(int.Parse(curES.name));
-                                //	PlaySound (highlightSound);
+
+                                //LERP THIS POSITION
+                                mapRect.anchoredPosition = Vector2.Lerp(mapRect.anchoredPosition, new Vector2(Mathf.Lerp(0f, -curES.GetComponent<RectTransform>().anchoredPosition.x, curMapScale - 1f), Mathf.Lerp(0f, -curES.GetComponent<RectTransform>().anchoredPosition.y, curMapScale - 1f)), 0.2f);
+
+                                //    mapRect.anchoredPosition = new Vector2(Mathf.Clamp(mapRect.anchoredPosition.x, (mapRect.rect.width / 2f) * (curMapScale - 1f), mapRect.rect.width - ((mapRect.rect.width / 2f) * (curMapScale - 1f))),
+                                //        Mathf.Clamp(mapRect.anchoredPosition.y, (mapRect.rect.height / 2f) * (curMapScale - 1f), mapRect.rect.height - ((mapRect.rect.height / 2f) * (curMapScale - 1f))));
+                            }
+
+                            if (mapAYS.activeInHierarchy && es.currentSelectedGameObject != null)
+                            {
+                                mapAYSSelection.transform.position = es.currentSelectedGameObject.transform.position;
+                            }
+
+                            if (quitAYS.activeInHierarchy && es.currentSelectedGameObject != null)
+                            {
+                                quitSelector.transform.position = es.currentSelectedGameObject.transform.position;
                             }
                         }
-                        mapIcon.transform.localPosition = Vector3.Lerp(mapIcon.transform.localPosition, Vector3.zero, 0.2f);
 
-                        if (input.GetAxis("RV") != 0f)
+                        //ITEMS
+                        if (inItems)
+                            textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.pause, 1, "", false, true, titlesFont, titlesFontStyle);
+
+                        //OPTIONS SELECTION
+                        if (inOptions)
                         {
-                            curMapScale = Mathf.Clamp(curMapScale + (input.GetAxis("RV") * mapScaleSpeed), 1f, 2f);
-                            mapRect.transform.localScale = Vector3.one * curMapScale;
-
-                            foreach (GameObject g in altScaleObjs)
-                                g.transform.localScale = Vector3.one / curMapScale;
+                            textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.common, 0, "", false, true, titlesFont, titlesFontStyle);
+                            /*	if (es.currentSelectedGameObject == returnButton) {
+                                    if (returnText.color != Color.grey)
+                                        returnText.color = Color.grey;
+                                } else {
+                                    if (returnText.color != Color.white)
+                                        returnText.color = Color.white;
+                                }
+                                if (es.currentSelectedGameObject == yesButton) {
+                                    if (yesText.color != Color.grey)
+                                        yesText.color = Color.grey;
+                                } else {
+                                    if (yesText.color != Color.white)
+                                        yesText.color = Color.white;
+                                }
+                                if (es.currentSelectedGameObject == noButton) {
+                                    if (noText.color != Color.grey)
+                                        noText.color = Color.grey;
+                                } else {
+                                    if (noText.color != Color.white)
+                                        noText.color = Color.white;
+                                }*/
                         }
 
-                        if (curES != null)
+                        //SOUNDS
+                        if (es.currentSelectedGameObject != null && prevSelected != es.currentSelectedGameObject)
                         {
-
-                            //LERP THIS POSITION
-                            mapRect.anchoredPosition = Vector2.Lerp(mapRect.anchoredPosition, new Vector2(Mathf.Lerp(0f, -curES.GetComponent<RectTransform>().anchoredPosition.x, curMapScale - 1f), Mathf.Lerp(0f, -curES.GetComponent<RectTransform>().anchoredPosition.y, curMapScale - 1f)), 0.2f);
-
-                            //    mapRect.anchoredPosition = new Vector2(Mathf.Clamp(mapRect.anchoredPosition.x, (mapRect.rect.width / 2f) * (curMapScale - 1f), mapRect.rect.width - ((mapRect.rect.width / 2f) * (curMapScale - 1f))),
-                            //        Mathf.Clamp(mapRect.anchoredPosition.y, (mapRect.rect.height / 2f) * (curMapScale - 1f), mapRect.rect.height - ((mapRect.rect.height / 2f) * (curMapScale - 1f))));
+                            notMouseOver = true;
+                            MouseOverButton(es.currentSelectedGameObject);
                         }
-                    }
-
-                    //ITEMS
-                    if(inItems)
-                        textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.pause, 1, "", false, true, titlesFont, titlesFontStyle);
-                    
-                    //OPTIONS SELECTION
-                    if (inOptions)
-                    {
-                        textToTranslate.SetTextElement(titleText, null, TextTranslationManager.TextCollection.common, 0, "", false, true, titlesFont, titlesFontStyle);
-                        /*	if (es.currentSelectedGameObject == returnButton) {
-                                if (returnText.color != Color.grey)
-                                    returnText.color = Color.grey;
-                            } else {
-                                if (returnText.color != Color.white)
-                                    returnText.color = Color.white;
-                            }
-                            if (es.currentSelectedGameObject == yesButton) {
-                                if (yesText.color != Color.grey)
-                                    yesText.color = Color.grey;
-                            } else {
-                                if (yesText.color != Color.white)
-                                    yesText.color = Color.white;
-                            }
-                            if (es.currentSelectedGameObject == noButton) {
-                                if (noText.color != Color.grey)
-                                    noText.color = Color.grey;
-                            } else {
-                                if (noText.color != Color.white)
-                                    noText.color = Color.white;
-                            }*/
-                    }
-
-                    //SOUNDS
-                    if (prevSelected != es.currentSelectedGameObject)
-                    {
-                        if (!justOpenedMap)
-                        {
-                            if (prevSelected != null && es.currentSelectedGameObject != null &&
-                                prevSelected.gameObject.transform.position.y < es.currentSelectedGameObject.transform.position.y)
-                                PlaySound(highlightDownSound);
-                            else
-                                PlaySound(highlightSound);
-                            //    Vibrate(0.05f, 0.2f);
-                        }
-                        else
-                            justOpenedMap = false;
-                        prevSelected = es.currentSelectedGameObject;
                     }
                 }
             }
-		}
-	}
+        }
+    }
 
-	void InitializeValues(){
+    public void GoBack()
+    {
+        HDRumbleMain.PlayVibrationPreset(0, "K02_Patter2", 1f, 0, 0.2f);
+        if (inPause && (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3))
+        {
+            if (levelDD.transform.childCount > 3)
+                levelDD.Hide();
+            if (toActDD.transform.childCount > 3)
+                toActDD.Hide();
+        }
+        else
+        {
+            if (quitAYS.activeInHierarchy)
+            {
+                quitAYS.SetActive(false);
+                if (inMap)
+                    es.SetSelectedGameObject(firstMap);
+                if (inOptions)
+                    es.SetSelectedGameObject(firstOptions);
+            }
+            else
+            {
+                if (mapAYS.activeInHierarchy)
+                    CancelWarp();
+                else
+                {
+                    if (languagesOpen)
+                        ToggleLanguagesList();
+                    else
+                    {
+                        if (remapperOpen)
+                            optionsNew.CloseButtonRemapper();
+                        else
+                        {
+                            if (defaultsAYS.activeInHierarchy)
+                                CloseDefaultsAYS();
+                            else
+                            {
+                                inPause = false;
+                                ClosePauseScreen(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void MenuLeftPage()
+    {
+        PlaySound(tabLSound);
+        if (enableDebugTab && inDebug)
+        {
+            CloseDebugTab();
+            OpenOptionsTab();
+        }
+        else
+        {
+            if (inMap)
+            {
+                CloseMapTab();
+                OpenItemsTab();
+            }
+            else
+            {
+                if (inItems)
+                {
+                    CloseItemsTab();
+                    if (enableDebugTab)
+                        OpenDebugTab();
+                    else
+                        OpenOptionsTab();
+                }
+                else
+                {
+                    if (inOptions)
+                    {
+                        if (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3)
+                        {
+                            if (levelDD.transform.childCount > 3)
+                                levelDD.Hide();
+                            if (toActDD.transform.childCount > 3)
+                                toActDD.Hide();
+                        }
+                        else
+                        {
+                            CloseOptionsTab();
+                            OpenMapTab();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void MenuRightPage()
+    {
+        PlaySound(tabRSound);
+        if (enableDebugTab && inDebug)
+        {
+            CloseDebugTab();
+            OpenItemsTab();
+        }
+        else
+        {
+            if (inMap)
+            {
+                CloseMapTab();
+                OpenOptionsTab();
+            }
+            else
+            {
+                if (inItems)
+                {
+                    CloseItemsTab();
+                    OpenMapTab();
+                }
+                else
+                {
+                    if (inOptions)
+                    {
+                        if (levelDD.transform.childCount > 3 || toActDD.transform.childCount > 3)
+                        {
+                            if (levelDD.transform.childCount > 3)
+                                levelDD.Hide();
+                            if (toActDD.transform.childCount > 3)
+                                toActDD.Hide();
+                        }
+                        else
+                        {
+                            CloseOptionsTab();
+                            if (enableDebugTab)
+                                OpenDebugTab();
+                            else
+                                OpenItemsTab();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void MouseOverButton(GameObject selected)
+    {
+        if (selected != null)
+        {
+            if (notMouseOver || Cursor.visible)
+            {
+                notMouseOver = false;
+                es.SetSelectedGameObject(selected);
+                if (!justOpenedMap)
+                {
+                    if (prevSelected != null &&
+                        prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+                        PlaySound(highlightDownSound);
+                    else
+                        PlaySound(highlightSound);
+                    //    Vibrate(0.05f, 0.2f);
+                }
+                else
+                    justOpenedMap = false;
+                prevSelected = selected;
+            }
+        }
+    }
+
+    public void InitializeValues()
+    {
         if (cam != null)
         {
-            invertX = cam.freeInvertXAxis;
-            invertY = cam.freeInvertYAxis;
-            if (PlayerPrefs.GetInt("Vibration", 1) == 0)
-                vibOn = false;
+            if (PlayerPrefs.GetInt("InvertX", 0) == 0)
+                invertX = false;
             else
-                vibOn = true;
-            camSense = cam.freeRotateSpeed;
+                invertX = true;
+            cam.freeInvertXAxis = invertX;
+            ixTick.SetActive(invertX);
+
+            if (PlayerPrefs.GetInt("InvertY", 0) == 0)
+                invertY = false;
+            else
+                invertY = true;
+            cam.freeInvertYAxis = invertY;
+            iyTick.SetActive(invertX);
+
+            sensitivity.value = (float)PlayerPrefs.GetInt("Sensitivity", 4);
+            cam.freeRotateSpeed = sensitivity.value;
+
             clip = 40f;
         }
-        
+
+        if (PlayerPrefs.GetInt("Vibration", 1) == 0)
+            vibOn = false;
+        else
+            vibOn = true;
+
         music = PlayerPrefs.GetFloat("musicVolume", 8f);
         effects = PlayerPrefs.GetFloat("effectsVolume", 8f);
 
+        /*
         if (PlayerPrefs.GetInt("AA", 1) == 0)
             aaIsOn = false;
         else
             aaIsOn = true;
+        foreach (Antialiasing aa in antialiasing)
+            aa.enabled = aaIsOn;
+        */
 
         if (invertX)
-			ixTick.SetActive (true);
-		else
-			ixTick.SetActive (false);
+            ixTick.SetActive(true);
+        else
+            ixTick.SetActive(false);
 
-		if (invertY)
-			iyTick.SetActive (true);
-		else
-			iyTick.SetActive (false);
+        if (invertY)
+            iyTick.SetActive(true);
+        else
+            iyTick.SetActive(false);
 
-		if (vibOn)
-			vibTick.SetActive (true);
-		else
-			vibTick.SetActive (false);
-        
+        if (vibOn)
+            vibTick.SetActive(true);
+        else
+            vibTick.SetActive(false);
+
         if (stying)
             styTick.SetActive(true);
         else
@@ -604,64 +760,77 @@ public class PauseScreen : MonoBehaviour {
             expandTick.SetActive(false);
 
 
-        sensitivity.value = camSense;
+
         clippin.value = Mathf.RoundToInt(clip);
-        clipText.text = (clip*10f).ToString();
+        clipText.text = (clip * 10f).ToString();
         musicSlider.value = music;
         effectsSlider.value = effects;
     }
 
-	public void OpenPauseScreen(){
-		Time.timeScale = 0f;
+    public void OpenPauseScreen(bool goToItems)
+    {
+
+        Cursor.lockState = CursorLockMode.None;
+        graphicRaycaster.enabled = true;
+
+        Time.timeScale = 0f;
         foreach (AudioMixer am in audioMixers)
             am.SetFloat("musicVol", -80f + ((PlayerPrefs.GetFloat("musicVolume", 8f)) * 10f));
-        PlaySound (openSound);
-		inPause = true;
+        PlaySound(openSound);
+        inPause = true;
         HDRumbleMain.PlayVibrationPreset(0, "D12_DoubleThump1", 1f, 0, 0.2f);
-        main.SetActive (true);
-		tpc.disableControl = true;
+        main.SetActive(true);
+        tpc.disableControl = true;
         foreach (TPC mtpc in multiTPC)
             mtpc.disableControl = true;
-		cam.disableControl = true;
-		OpenMapTab ();
+        cam.disableControl = true;
+        if (goToItems)
+            OpenItemsTab();
+        else
+            OpenMapTab();
         languagesOpen = false;
     }
 
-	public void ClosePauseScreen(bool playSound)
+    public void ClosePauseScreen(bool playSound)
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         Time.timeScale = 1f;
         foreach (AudioMixer am in audioMixers)
             am.SetFloat("musicVol", -80f + (PlayerPrefs.GetFloat("musicVolume", 8f) * 10f));
         if (playSound)
-			PlaySound (closeSound);
-		inPause = false;
+            PlaySound(closeSound);
+        inPause = false;
+        quitAYS.SetActive(false);
         StartCoroutine("PauseDelay");
-	}
+    }
 
-	public void OpenMapTab(){
+    public void OpenMapTab()
+    {
         justOpenedMap = true;
-        CloseItemsTab ();
-		CloseOptionsTab ();
+        CloseItemsTab();
+        CloseOptionsTab();
         CloseDebugTab();
-        mapTab.SetActive (true);
+        mapTab.SetActive(true);
         dotWhite.transform.position = dots[1].transform.position;
-		inMap = true;
+        inMap = true;
         DisplayMarkerText(0);
         //	selectIcon.transform.SetParent (selectPos [1].transform);
         //	selectIcon.transform.localPosition = Vector3.zero;
-        ays.SetActive (false);
-		curES = firstMap;
-		if (curES != null) {
-			mapIcon.transform.SetParent (curES.transform);
-			mapIcon.transform.localPosition = Vector3.zero;
-		} else
-			mapIcon.transform.localPosition = Vector3.one * 10000f;
-		prevSelected = es.currentSelectedGameObject;
-		CheckCheckpoints ();
-		es.SetSelectedGameObject (firstMap);
-        Debug.Log("CHECKING BLUES FOR MAP TAB");
+        curES = firstMap;
+        if (curES != null)
+        {
+            mapIcon.transform.SetParent(curES.transform);
+            mapIcon.transform.localPosition = Vector3.zero;
+        }
+        else
+            mapIcon.transform.localPosition = Vector3.one * 10000f;
+        prevSelected = es.currentSelectedGameObject;
+        CheckCheckpoints();
+        es.SetSelectedGameObject(firstMap);
         CheckBlues();
-		CheckTears ();
+        CheckTears();
         mapRect.localScale = Vector3.one;
         mapRect.anchoredPosition = Vector2.zero;
 
@@ -685,57 +854,77 @@ public class PauseScreen : MonoBehaviour {
         UpdateChallengePortalIcons();
     }
 
-	public void CloseMapTab(){
-		mapTab.SetActive (false);
+    public void CloseMapTab()
+    {
+        mapTab.SetActive(false);
         mapAYS.SetActive(false);
         inMap = false;
-	}
+    }
 
-	public void OpenItemsTab(){
-		CloseMapTab ();
-		CloseOptionsTab ();
+    public void OpenItemsTab()
+    {
+        CloseMapTab();
+        CloseOptionsTab();
         CloseDebugTab();
-        itemsTab.SetActive (true);
+        itemsTab.SetActive(true);
         dotWhite.transform.position = dots[0].transform.position;
         inItems = true;
-	//	selectIcon.transform.SetParent (selectPos [0].transform);
-	//	selectIcon.transform.localPosition = Vector3.zero;
+        //	selectIcon.transform.SetParent (selectPos [0].transform);
+        //	selectIcon.transform.localPosition = Vector3.zero;
 
-		SetBerries ();
-        Debug.Log("SET BLUEBERRIES FOR ITEMS TAB");
-		SetBlueBerries ();
-		SetWaterTears ();
-		SetCollectables ();
-	}
+        if (PlayerPrefs.GetInt("HalfBlueBerries", 0) == 1)
+            bbFinderIcon.SetActive(true);
+        else
+            bbFinderIcon.SetActive(false);
 
-	public void CloseItemsTab(){
-		itemsTab.SetActive (false);
-		inItems = false;
-	}
+        SetBerries();
+        SetBlueBerries();
+        SetWaterTears();
+        SetCollectables();
+    }
 
-	public void OpenOptionsTab(){
-		CloseItemsTab ();
-		CloseMapTab ();
+    public void CloseItemsTab()
+    {
+        itemsTab.SetActive(false);
+        inItems = false;
+    }
+
+    public void OpenOptionsTab()
+    {
+        CloseItemsTab();
+        CloseMapTab();
         CloseDebugTab();
-        optionsTab.SetActive (true);
+        optionsTab.SetActive(true);
+        optionsNew.SetInitialTextValues();
+        optionsNew.ResetOptionsScroll();
         dotWhite.transform.position = dots[2].transform.position;
         inOptions = true;
         //	selectIcon.transform.SetParent (selectPos [2].transform);
         //	selectIcon.transform.localPosition = Vector3.zero;
-        
+
         if (PlayerPrefs.GetInt("FinalBossDefeated", 0) == 0)
         {
             filterButton.transform.parent.gameObject.SetActive(false);
 
             Navigation nav = sensitivity.navigation;
             nav.mode = Navigation.Mode.Explicit;
-            nav.selectOnUp = vibrationButton;
+            nav.selectOnUp = aaLButton;
             sensitivity.navigation = nav;
 
-            Navigation nav2 = vibrationButton.navigation;
+            Navigation nav2 = aaLButton.navigation;
             nav2.mode = Navigation.Mode.Explicit;
             nav2.selectOnDown = sensitivity;
-            vibrationButton.navigation = nav2;
+            aaLButton.navigation = nav2;
+
+            Navigation nav3 = aaRButton.navigation;
+            nav3.mode = Navigation.Mode.Explicit;
+            nav3.selectOnDown = sensitivity;
+            aaRButton.navigation = nav3;
+
+            Navigation nav4 = aaAButton.navigation;
+            nav4.mode = Navigation.Mode.Explicit;
+            nav4.selectOnDown = sensitivity;
+            aaAButton.navigation = nav4;
         }
         else
         {
@@ -746,22 +935,32 @@ public class PauseScreen : MonoBehaviour {
             nav.selectOnUp = filterButton;
             sensitivity.navigation = nav;
 
-            Navigation nav2 = vibrationButton.navigation;
+            Navigation nav2 = aaLButton.navigation;
             nav2.mode = Navigation.Mode.Explicit;
             nav2.selectOnDown = filterButton;
-            vibrationButton.navigation = nav2;
+            aaLButton.navigation = nav2;
+
+            Navigation nav3 = aaRButton.navigation;
+            nav3.mode = Navigation.Mode.Explicit;
+            nav3.selectOnDown = filterButton;
+            aaRButton.navigation = nav3;
+
+            Navigation nav4 = aaAButton.navigation;
+            nav4.mode = Navigation.Mode.Explicit;
+            nav4.selectOnDown = filterButton;
+            aaAButton.navigation = nav4;
         }
 
-        InitializeValues ();
-		es.SetSelectedGameObject (firstOptions);
-		prevSelected = es.currentSelectedGameObject;
-	}
+        InitializeValues();
+        es.SetSelectedGameObject(firstOptions);
+        prevSelected = es.currentSelectedGameObject;
+    }
 
-	public void CloseOptionsTab(){
+    public void CloseOptionsTab()
+    {
         if (inOptions)
             PlayerPrefs.Save();
-		ays.SetActive (false);
-		inOptions = false;
+        inOptions = false;
         optionsTab.SetActive(false);
     }
 
@@ -792,16 +991,30 @@ public class PauseScreen : MonoBehaviour {
         debugTab.SetActive(false);
     }
 
-    //ITEMS
-    public void SetBerries(){
-		berries.text = PlayerPrefs.GetInt ("Berries", 0).ToString ();
-	}
+    public void QuitGameAYS()
+    {
+        quitAYS.SetActive(true);
+        es.SetSelectedGameObject(quitFirst);
+        quitSelector.transform.position = es.currentSelectedGameObject.transform.position;
+    }
 
-	public void SetBlueBerries(){
-        Debug.Log("SETTING BLUEBERRIES");
-        CheckBlues();
-        Debug.Log("TOTAL COUNTED (2): " + currentBBCount.ToString());
-        int amount = currentBBCount;
+    public void QuitGame()
+    {
+        PlayerPrefs.Save();
+        quitin = true;
+        if (!Application.isEditor)
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+    }
+
+    //ITEMS
+    public void SetBerries()
+    {
+        berries.text = PlayerPrefs.GetInt("Berries", 0).ToString();
+    }
+
+    public void SetBlueBerries()
+    {
+        int amount = PlayerPrefs.GetInt("BlueBerryTotal", 0);
         if (amount < 10)
             blueBerries.text = "00" + amount.ToString();
         else
@@ -811,23 +1024,24 @@ public class PauseScreen : MonoBehaviour {
             else
                 blueBerries.text = amount.ToString();
         }
-        Debug.Log("SET TEXT: " + blueBerries.text);
     }
 
-	public void SetWaterTears(){
-		int tearsCollected = 0;
-		for (int lvl = 1; lvl <= 8; lvl++) {
-			for (int tearNo = 1; tearNo <= 3; tearNo++)
-				tearsCollected += PlayerPrefs.GetInt ("Vase" + tearNo.ToString () + "Level" + lvl.ToString (), 0);
-		}
-        if(tearsCollected < 10)
+    public void SetWaterTears()
+    {
+        int tearsCollected = 0;
+        for (int lvl = 1; lvl <= 8; lvl++)
+        {
+            for (int tearNo = 1; tearNo <= 3; tearNo++)
+                tearsCollected += PlayerPrefs.GetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 0);
+        }
+        if (tearsCollected < 10)
             waterTears.text = "0" + tearsCollected.ToString();
         else
             waterTears.text = tearsCollected.ToString();
     }
 
-    bool collectableAllTrophy, collectableHalfTrophy;
-	public void SetCollectables(){
+    public void SetCollectables()
+    {
         int counted = PlayerPrefs.GetInt("marmellade1", 0) +
         PlayerPrefs.GetInt("marmellade2", 0) +
         PlayerPrefs.GetInt("marmellade3", 0) +
@@ -855,12 +1069,7 @@ public class PauseScreen : MonoBehaviour {
         PlayerPrefs.GetInt("map", 0) +
         PlayerPrefs.GetInt("jukebox", 0) +
         PlayerPrefs.GetInt("inbox", 0);
-
-        if(counted < 10)
-            collectables.text = "0" + counted.ToString();
-        else
-            collectables.text = counted.ToString();
-
+        /*
         if (counted >= 27 && !collectableAllTrophy)
         {
             //
@@ -895,12 +1104,17 @@ public class PauseScreen : MonoBehaviour {
             // check trophy musicians if all cages are 1 countedPrefs = 4
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WONDERFUL_WOODLE_HOUSE);
 #endif
-        }
+        }*/
 
+        if (counted < 10)
+            collectables.text = "0" + counted.ToString();
+        else
+            collectables.text = counted.ToString();
     }
 
     //MAPS
-    public void SelectWarp(){
+    public void SelectWarp()
+    {
         curWarp = es.currentSelectedGameObject;
 
         mapAYS.SetActive(true);
@@ -920,11 +1134,12 @@ public class PauseScreen : MonoBehaviour {
         es.SetSelectedGameObject(curWarp);
     }
 
-	public void Warp(int whichCheckpoint){
+    public void Warp(int whichCheckpoint)
+    {
         warping = true;
         bool extsceneLoaded = false;
-		bool sceneLoaded = false;
-		int checkForScene = PlayerPrefs.GetInt ("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0);
+        bool sceneLoaded = false;
+        int checkForScene = PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0);
         if (checkForScene == 0)
         {
             sS.SetCheckpointScenes();
@@ -934,41 +1149,51 @@ public class PauseScreen : MonoBehaviour {
         TPCSettings(tpc);
         foreach (TPC mtpc in multiTPC)
         {
-            if(mtpc.gameObject.activeInHierarchy)
+            if (mtpc.gameObject.activeInHierarchy)
                 TPCSettings(mtpc);
         }
-        
+
         underwaterCameraTrigger.TurnOffWaterEffect();
-        foreach (Scene s in SceneManager.GetAllScenes()) {
-			if (s.buildIndex == 3)
-				extsceneLoaded = true;
-			if (s.buildIndex == checkForScene)
-				sceneLoaded = true;
-		}
-		if ((!extsceneLoaded && whichCheckpoint >= 3) || !sceneLoaded) {
-			ClosePauseScreen (false);
-			tpc.disableControl = true;
+        foreach (Scene s in SceneManager.GetAllScenes())
+        {
+            if (s.buildIndex == 2)
+                extsceneLoaded = true;
+            if (s.buildIndex == checkForScene)
+                sceneLoaded = true;
+        }
+        if ((!extsceneLoaded && whichCheckpoint >= 2) || !sceneLoaded)
+        {
+            ClosePauseScreen(false);
+            tpc.disableControl = true;
             foreach (TPC mtpc in multiTPC)
                 mtpc.disableControl = true;
             cam.disableControl = true;
-			StartCoroutine (LoadIt (checkForScene, whichCheckpoint, extsceneLoaded, sceneLoaded));
-		}
+
+            if (!sceneLoaded && tpc.beingReset)
+            {
+                while (atmosphereManager.triggerCount > 0)
+                    atmosphereManager.ExitTrigger();
+                atmosphereManager.curLevel = "";
+            }
+
+            StartCoroutine(LoadIt(checkForScene, whichCheckpoint, extsceneLoaded, sceneLoaded));
+        }
         else
         {
-            ClosePauseScreen (false);
-			tpc.disableControl = true;
+            ClosePauseScreen(false);
+            tpc.disableControl = true;
             foreach (TPC mtpc in multiTPC)
                 mtpc.disableControl = true;
             cam.disableControl = true;
-			StartCoroutine (ShortLoad (whichCheckpoint));
-		}
+            StartCoroutine(ShortLoad(whichCheckpoint));
+        }
 
         if (checkForScene == 8)
         {
             sS.loadLevelAdditives[4].entTrig.colliderToActivate.enabled = true;
             sS.loadLevelAdditives[4].lptCollider.enabled = true;
         }
-	}
+    }
 
     void TPCSettings(TPC toChange)
     {
@@ -987,65 +1212,46 @@ public class PauseScreen : MonoBehaviour {
         toChange.anim.Play("Idle", 0);
     }
 
-	void CheckCheckpoints(){
-		int c = 0;
-		firstMap = null;
-		foreach (GameObject g in mapPos) {
-			if (c == 0 || PlayerPrefs.GetInt ("Checkpoint" + c) == 1) {
-				g.SetActive (true);
-				if (firstMap == null)
-					firstMap = g;
-			}else
-				g.SetActive (false);
-			c++;
-		}
-	}
+    void CheckCheckpoints()
+    {
+        int c = 0;
+        firstMap = null;
+        foreach (GameObject g in mapPos)
+        {
+            if (c == 0 || PlayerPrefs.GetInt("Checkpoint" + c) == 1)
+            {
+                g.SetActive(true);
+                if (firstMap == null)
+                    firstMap = g;
+            }
+            else
+                g.SetActive(false);
+            c++;
+        }
+    }
 
-	void CheckpointsActivate(){
-		foreach (GameObject g in mapPos)
-			g.SetActive (true);
+    void CheckpointsActivate()
+    {
+        foreach (GameObject g in mapPos)
+            g.SetActive(true);
     }
 
     public void CheckBlues()
     {
         currentBBCount = 0;
         int lvlCount = 0;
-        //     PlayerPrefs.SetInt("BlueBerryTotal", 0);
-        Debug.Log("CHECKING BLUES: " + sS.levelNames.Length + " x "+ sS.levelNames[0] +" x " + PlayerPrefs.GetInt(sS.levelNames[0] + "BlueBerryTotal"));
+        PlayerPrefs.SetInt("BlueBerryTotal", 0);
         foreach (string s in sS.levelNames)
         {
-            int localBBCount = 0;
-            int bb = 0;
-            int total = 140;
-            if (s == "ExternalWorld")
-                total = 100;
-            if (s == "Level1.2")
-                total = 80;
-            if (s == "Level2")
-                total = 90;
-            if (s == "Level3")
-                total = 80;
-            if (s == "Level4")
-                total = 80;
-            if (s == "Level5")
-                total = 80;
-            if (s == "Level6")
-                total = 120;
-            if (s == "Level7")
-                total = 80;
-            if (s == "Level8")
-                total = 80;
-            for (bb = 0; bb < total; bb++)
+            currentBBCount = 0;
+            for (int bb = 0; bb < PlayerPrefs.GetInt(s + "BlueBerryTotal"); bb++)
             {
-                localBBCount += PlayerPrefs.GetInt(s + "BlueBerry" + bb.ToString());
-            //    if (PlayerPrefs.GetInt(s + "BlueBerry" + bb.ToString()) == 1)
-            //        localBBCount++;
+                if (PlayerPrefs.GetString(s + "BlueBerry")[bb].ToString() == "1")
+                    currentBBCount++;
             }
-            if (lvlCount == 0 && localBBCount == 0)
-                Debug.Log("STILL NOT COUNTED | "+ bb.ToString() + " |  2:" + PlayerPrefs.GetInt(s + "BlueBerry2") +" 30:"+ PlayerPrefs.GetInt(s + "BlueBerry30") +" 31:"+ PlayerPrefs.GetInt(s + "BlueBerry31"));
 
             blueCounters[lvlCount].text = "";
-            if (localBBCount < 10)
+            if (currentBBCount < 10)
             {
                 if (lvlCount == 0 || lvlCount == 1 || lvlCount == 7)
                     blueCounters[lvlCount].text = "00";
@@ -1054,196 +1260,196 @@ public class PauseScreen : MonoBehaviour {
             }
             else
             {
-                if (localBBCount < 100)
+                if (currentBBCount < 100)
                 {
                     if (lvlCount == 0 || lvlCount == 1 || lvlCount == 7)
                         blueCounters[lvlCount].text = "0";
                 }
             }
-            blueCounters[lvlCount].text += localBBCount.ToString();
-            currentBBCount += localBBCount;
+            blueCounters[lvlCount].text += currentBBCount.ToString();
             lvlCount++;
+            PlayerPrefs.SetInt("BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal") + currentBBCount);
         }
-        PlayerPrefs.SetInt("BlueBerryTotal", currentBBCount);
-        Debug.Log("TOTAL COUNTED (1): " + PlayerPrefs.GetInt("BlueBerryTotal").ToString() +" . " + currentBBCount.ToString());
 
         //   if(enableDebugTab)
         //       currentBBCount = 930;
     }
 
 
-    public void CheckTears(){
+    public void CheckTears()
+    {
         tearCount = 0;
 
         if (PlayerPrefs.GetInt("Vase1Level1", 0) == 0)
             waterTearsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        else{
+        else
+        {
             tearCount++;
             waterTearsParent.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
         }
-		if (PlayerPrefs.GetInt ("Vase2Level1", 0) == 0)
-			waterTearsParent.transform.GetChild (1).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level1", 0) == 0)
+            waterTearsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level1", 0) == 0)
-			waterTearsParent.transform.GetChild (2).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level1", 0) == 0)
+            waterTearsParent.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level2", 0) == 0)
-			waterTearsParent.transform.GetChild (3).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level2", 0) == 0)
+            waterTearsParent.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level2", 0) == 0)
-			waterTearsParent.transform.GetChild (4).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level2", 0) == 0)
+            waterTearsParent.transform.GetChild(4).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(4).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level2", 0) == 0)
-			waterTearsParent.transform.GetChild (5).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level2", 0) == 0)
+            waterTearsParent.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level3", 0) == 0)
-			waterTearsParent.transform.GetChild (6).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level3", 0) == 0)
+            waterTearsParent.transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(6).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level3", 0) == 0)
-			waterTearsParent.transform.GetChild (7).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level3", 0) == 0)
+            waterTearsParent.transform.GetChild(7).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(7).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level3", 0) == 0)
-			waterTearsParent.transform.GetChild (8).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level3", 0) == 0)
+            waterTearsParent.transform.GetChild(8).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(8).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level4", 0) == 0)
-			waterTearsParent.transform.GetChild (9).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level4", 0) == 0)
+            waterTearsParent.transform.GetChild(9).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(9).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level4", 0) == 0)
-			waterTearsParent.transform.GetChild (10).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level4", 0) == 0)
+            waterTearsParent.transform.GetChild(10).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(10).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level4", 0) == 0)
-			waterTearsParent.transform.GetChild (11).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level4", 0) == 0)
+            waterTearsParent.transform.GetChild(11).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(11).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level5", 0) == 0)
-			waterTearsParent.transform.GetChild (12).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level5", 0) == 0)
+            waterTearsParent.transform.GetChild(12).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(12).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level5", 0) == 0)
-			waterTearsParent.transform.GetChild (13).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level5", 0) == 0)
+            waterTearsParent.transform.GetChild(13).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(13).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level5", 0) == 0)
-			waterTearsParent.transform.GetChild (14).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level5", 0) == 0)
+            waterTearsParent.transform.GetChild(14).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(14).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level6", 0) == 0)
-			waterTearsParent.transform.GetChild (15).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level6", 0) == 0)
+            waterTearsParent.transform.GetChild(15).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(15).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level6", 0) == 0)
-			waterTearsParent.transform.GetChild (16).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level6", 0) == 0)
+            waterTearsParent.transform.GetChild(16).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(16).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level6", 0) == 0)
-			waterTearsParent.transform.GetChild (17).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level6", 0) == 0)
+            waterTearsParent.transform.GetChild(17).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(17).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level7", 0) == 0)
-			waterTearsParent.transform.GetChild (18).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level7", 0) == 0)
+            waterTearsParent.transform.GetChild(18).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(18).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level7", 0) == 0)
-			waterTearsParent.transform.GetChild (19).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level7", 0) == 0)
+            waterTearsParent.transform.GetChild(19).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(19).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level7", 0) == 0)
-			waterTearsParent.transform.GetChild (20).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level7", 0) == 0)
+            waterTearsParent.transform.GetChild(20).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(20).GetChild(0).gameObject.SetActive(true);
         }
 
-        if (PlayerPrefs.GetInt ("Vase1Level8", 0) == 0)
-			waterTearsParent.transform.GetChild (21).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase1Level8", 0) == 0)
+            waterTearsParent.transform.GetChild(21).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(21).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase2Level8", 0) == 0)
-			waterTearsParent.transform.GetChild (22).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase2Level8", 0) == 0)
+            waterTearsParent.transform.GetChild(22).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
             waterTearsParent.transform.GetChild(22).GetChild(0).gameObject.SetActive(true);
         }
-        if (PlayerPrefs.GetInt ("Vase3Level8", 0) == 0)
-			waterTearsParent.transform.GetChild (23).GetChild (0).gameObject.SetActive (false);
+        if (PlayerPrefs.GetInt("Vase3Level8", 0) == 0)
+            waterTearsParent.transform.GetChild(23).GetChild(0).gameObject.SetActive(false);
         else
         {
             tearCount++;
@@ -1253,7 +1459,7 @@ public class PauseScreen : MonoBehaviour {
 
     public void UpdateChallengePortalIcons()
     {
-        for(int ch = 0; ch <= 11; ch++)
+        for (int ch = 0; ch <= 11; ch++)
         {
             if (PlayerPrefs.GetInt("Challenge" + ch.ToString() + "Found", 0) == 0)
                 challengesIcons[ch].gameObject.SetActive(false);
@@ -1269,39 +1475,46 @@ public class PauseScreen : MonoBehaviour {
         }
     }
 
-	//OPTIONS
-	public void InvertX(){
-		invertX = !invertX;
+    //OPTIONS
+    public void InvertX()
+    {
+        invertX = !invertX;
         if (invertX)
         {
             ixTick.SetActive(true);
             PlaySound(toggleOnSound);
+            PlayerPrefs.SetInt("InvertX", 1);
         }
         else
         {
             ixTick.SetActive(false);
             PlaySound(toggleOffSound);
+            PlayerPrefs.SetInt("InvertX", 0);
         }
-		cam.freeInvertXAxis = invertX;
-	}
+        cam.freeInvertXAxis = invertX;
+    }
 
-	public void InvertY(){
-		invertY = !invertY;
+    public void InvertY()
+    {
+        invertY = !invertY;
         if (invertY)
         {
             iyTick.SetActive(true);
             PlaySound(toggleOnSound);
+            PlayerPrefs.SetInt("InvertY", 1);
         }
         else
         {
             iyTick.SetActive(false);
             PlaySound(toggleOffSound);
+            PlayerPrefs.SetInt("InvertY", 0);
         }
-		cam.freeInvertYAxis = invertY;
-	}
+        cam.freeInvertYAxis = invertY;
+    }
 
-	public void Vibration(){
-		vibOn = !vibOn;
+    public void Vibration()
+    {
+        vibOn = !vibOn;
         if (vibOn)
         {
             vibTick.SetActive(true);
@@ -1312,21 +1525,22 @@ public class PauseScreen : MonoBehaviour {
             vibTick.SetActive(false);
             PlaySound(toggleOffSound);
         }
-        if(vibOn)   
+        if (vibOn)
             PlayerPrefs.SetInt("Vibration", 1);
         else
             PlayerPrefs.SetInt("Vibration", 0);
     }
 
-	public void Sensitivity(){
-		camSense = sensitivity.value;
-		cam.freeRotateSpeed = camSense;
-		PlaySound (highlightSound);
+    public void Sensitivity()
+    {
+        cam.freeRotateSpeed = sensitivity.value;
+        PlayerPrefs.SetInt("Sensitivity", Mathf.RoundToInt(sensitivity.value));
+        PlaySound(highlightSound);
     }
 
     public void ClippingSet()
     {
-        clip = clippin.value*10f;
+        clip = clippin.value * 10f;
         cam.GetComponent<Camera>().farClipPlane = clip;
         // 200 = 0.01 | 400 = 0.005 | 100 = 0.02
         RenderSettings.fogEndDistance = clip;
@@ -1350,32 +1564,35 @@ public class PauseScreen : MonoBehaviour {
         PlaySound(highlightSound);
     }
 
-    public void OpenAYS(){
-		ays.SetActive (true);
-		es.SetSelectedGameObject (yesButton);
-		PlaySound (selectSound);
-	}
+    public void OpenAYS()
+    {
+        es.SetSelectedGameObject(yesButton);
+        PlaySound(selectSound);
+    }
 
-	public void CloseAYS(){
-		ays.SetActive (false);
-		es.SetSelectedGameObject (returnButton);
-		PlaySound (selectSound);
-	}
+    public void CloseAYS()
+    {
+        es.SetSelectedGameObject(returnButton);
+        PlaySound(selectSound);
+    }
 
-	public void ExitToMenu(){
-		PlaySound (exitSound);
-		ClosePauseScreen (false);
+    public void ExitToMenu()
+    {
+        PlaySound(exitSound);
+        ClosePauseScreen(false);
 
-        if (SceneManager.GetAllScenes ().Length > 1) {
-			foreach (Scene s in SceneManager.GetAllScenes ()) {
-                if (s.buildIndex != 2)
+        if (SceneManager.GetAllScenes().Length > 1)
+        {
+            foreach (Scene s in SceneManager.GetAllScenes())
+            {
+                if (s.buildIndex != 1)
                 {
-                //    Debug.Log("PS Exit: " + s.buildIndex);
+                    //    Debug.Log("PS Exit: " + s.buildIndex);
                     SceneManager.UnloadSceneAsync(s.buildIndex);
                 }
-			}
-		}
-		StartCoroutine (LoadIt (2, -1, false, false));
+            }
+        }
+        StartCoroutine(LoadIt(1, -1, false, false));
     }
 
     public void QualityChange()
@@ -1398,7 +1615,7 @@ public class PauseScreen : MonoBehaviour {
             stylizerCS.enabled = false;
         }
     }
-    
+
     public void AAToggle()
     {
         if (!aaIsOn)
@@ -1417,7 +1634,7 @@ public class PauseScreen : MonoBehaviour {
             PlaySound(toggleOffSound);
             foreach (Antialiasing aa in antialiasing)
                 aa.enabled = false;
-            PlayerPrefs.SetInt("AA", 0);
+            PlayerPrefs.SetInt("AA", 1);
         }
     }
 
@@ -1449,7 +1666,7 @@ public class PauseScreen : MonoBehaviour {
         {
             dguiIsOn = true;
             dguiTick.SetActive(true);
-        //    sS.consoleObj.SetActive(true);
+            sS.consoleObj.SetActive(true);
             fpsObj.SetActive(true);
         }
         else
@@ -1461,12 +1678,12 @@ public class PauseScreen : MonoBehaviour {
             expandIsOn = true;
             ExpandToggle();
 
-        //    sS.consoleObj.SetActive(false);
+            sS.consoleObj.SetActive(false);
         }
     }
 
     public void ExpandToggle()
-    {
+    {/*
         if (!expandIsOn)
         {
             if (dguiIsOn)
@@ -1483,7 +1700,7 @@ public class PauseScreen : MonoBehaviour {
             expandTick.SetActive(false);
             popupManager.Show();
             popupManager.debugManager.Hide();
-        }
+        }*/
     }
 
     public void CollectThreeTears()
@@ -1511,7 +1728,7 @@ public class PauseScreen : MonoBehaviour {
                 PlayerPrefs.SetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 1);
             PlayerPrefs.SetInt("Played" + lvl.ToString() + "TreeCompletion", 1);
         }
-        
+
         CheckTears();
         WaterTearManager.UpdateTears();
 
@@ -1528,7 +1745,7 @@ public class PauseScreen : MonoBehaviour {
         {
             for (int tearNo = 1; tearNo <= 3; tearNo++)
             {
-                if(lvl != 4 || tearNo != 1)
+                if (lvl != 4 || tearNo != 1)
                     PlayerPrefs.SetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 1);
             }
             if (lvl != 4)
@@ -1543,14 +1760,14 @@ public class PauseScreen : MonoBehaviour {
     public void DeactivateThemAll()
     {
         deactivatedAll = !deactivatedAll;
-        
+
         actTick.SetActive(deactivatedAll);
 
         CheckToActivates();
 
-        for(int x = 0; x < 10; x++)
+        for (int x = 0; x < 10; x++)
         {
-            if(toactives[x] != null)
+            if (toactives[x] != null)
             {
                 deactToActs[x] = deactivatedAll;
                 toActivateTicks[x].SetActive(deactivatedAll);
@@ -1563,7 +1780,7 @@ public class PauseScreen : MonoBehaviour {
     {
         CheckToActivates();
 
-        if(toactives[id] != null)
+        if (toactives[id] != null)
         {
             deactToActs[id] = !deactToActs[id];
             toActivateTicks[id].SetActive(deactToActs[id]);
@@ -1620,7 +1837,7 @@ public class PauseScreen : MonoBehaviour {
     public void DeactivateSelected()
     {
         int id = -1;
-        for(int i = 0; i < toactives[currentLevelID].transform.childCount; i++)
+        for (int i = 0; i < toactives[currentLevelID].transform.childCount; i++)
         {
             if (toactives[currentLevelID].transform.GetChild(i).name == toActDD.captionText.text)
                 id = i;
@@ -1684,6 +1901,28 @@ public class PauseScreen : MonoBehaviour {
         tpc.blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
     }
 
+    public void ToggleWhiteFade(bool fadeIn)
+    {
+        StartCoroutine(WhiteFade(fadeIn));
+    }
+
+    IEnumerator WhiteFade(bool fadeIn)
+    {
+        Color startColor = new Color(0f, 0f, 0f, 0f);
+        Color endColor = Color.white;
+        if (!fadeIn)
+        {
+            endColor = new Color(0f, 0f, 0f, 0f);
+            startColor = Color.white;
+        }
+
+        for (float f = 0f; f < 1f; f += Time.deltaTime)
+        {
+            whiteFade.color = Color.Lerp(startColor, endColor, f);
+            yield return null;
+        }
+    }
+
     //SOUNDS
     void PlaySound(AudioClip c)
     {
@@ -1712,21 +1951,22 @@ public class PauseScreen : MonoBehaviour {
         debugCPTick.SetActive(true);
         for (int cp = 0; cp <= 37; cp++)
             PlayerPrefs.SetInt("Checkpoint" + cp.ToString(), 1);
-    //    PlayerPrefs.Save();
+        //    PlayerPrefs.Save();
         sS.SetCheckpointScenes();
     }
 
-	IEnumerator ShortLoad(int whichCheckpoint){
-		cantPause = true;
-		loadAnim.SetBool("Loading", true);
-		loadIcon.fillAmount = 0;
+    IEnumerator ShortLoad(int whichCheckpoint)
+    {
+        cantPause = true;
+        loadAnim.SetBool("Loading", true);
+        loadIcon.fillAmount = 0;
 
         if (tpc != null && tpc.GetComponentInParent<OneWayManager>() != null)
             tpc.GetComponentInParent<OneWayManager>().currentlyChecking = true;
 
         if (cam.stationaryMode1 || cam.stationaryMode2)
-			cam.ExitCameraCut();
-		Time.timeScale = 0f;
+            cam.ExitCameraCut();
+        Time.timeScale = 0f;
         for (int s = 0; s <= 60; s++)
         {
             AudioListener.volume = Mathf.Lerp(1f, 0f, (s * 1f) / 60f);
@@ -1734,7 +1974,7 @@ public class PauseScreen : MonoBehaviour {
             loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, (s * 1f) / 180f, 0.8f);
             yield return null;
         }
-        
+
         int countLoaded = SceneManager.sceneCount;
         for (int i = 0; i < countLoaded; i++)
         {
@@ -1759,45 +1999,39 @@ public class PauseScreen : MonoBehaviour {
             if (g.scene.buildIndex == PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0))
                 g.SetActive(true);
         }
-        foreach(GameObject g in lowerPolyLevels)
+        foreach (GameObject g in lowerPolyLevels)
         {
             if (!g.activeInHierarchy)
                 g.SetActive(true);
         }
-        if(PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4 >= 0)
+        if (PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4 >= 0)
             lowerPolyLevels[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4].gameObject.SetActive(false);
 
-		Time.timeScale = 1f;
-		cam.disableControl = false;
+        Time.timeScale = 1f;
+        cam.disableControl = false;
 
         yield return null;
-        foreach(GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
         {
             if (g.GetComponent<Checkpoint>().checkpointID == whichCheckpoint)
-                //changed to true
-                g.GetComponent<Checkpoint>().ActivateCheckpoint(true);
+                g.GetComponent<Checkpoint>().ActivateCheckpoint();
         }
 
         yield return null;
-        Vector3 newPos = new Vector3 (PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "X", 0f),
-			PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "Z", 0f));
-		tpc.gameObject.transform.position = newPos;
-		PlayerPrefs.SetInt ("LastCheckpoint", whichCheckpoint);
+        Vector3 newPos = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
+            PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
+        tpc.gameObject.transform.position = newPos;
+        PlayerPrefs.SetInt("LastCheckpoint", whichCheckpoint);
         //    PlayerPrefs.Save();
-        
-        if(whichCheckpoint <= 2) {
+
+        if (whichCheckpoint <= 2)
+        {
             if (plazaMain != null)
-            {
-                if (!plazaMain.activeSelf)
-                    plazaMain.SetActive(true);
-                if (!plazaMain.transform.parent.gameObject.activeSelf)
-                    plazaMain.transform.parent.gameObject.SetActive(true);
                 odm.ActivateObject(plazaMain);
-            }
             if (plazaLow != null)
                 odm.DeactivateObject(plazaLow, null);
         }
-        
+
         if (curLPT != null)
             curLPT.ExitTrigger();
 
@@ -1805,7 +2039,7 @@ public class PauseScreen : MonoBehaviour {
 
         if (atmosphereManager.curAtmoID == 10 || (whichCheckpoint != 16 && whichCheckpoint != 17 && whichCheckpoint != 37 && atmosphereManager.curLevel == "Level5"))
         {
-            while(atmosphereManager.triggerCount > 0)
+            while (atmosphereManager.triggerCount > 0)
                 atmosphereManager.ExitTrigger();
             atmosphereManager.curLevel = "";
         }
@@ -1838,7 +2072,7 @@ public class PauseScreen : MonoBehaviour {
                 atmosphereManager.EnterTrigger(2);
                 atmosphereManager.curLevel = "Level5";
             }
-        //    lowPolyTriggers[5].EnterTrigger();
+            lowPolyTriggers[5].EnterTrigger();
         }
 
         //6
@@ -1853,12 +2087,13 @@ public class PauseScreen : MonoBehaviour {
         if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
             lowPolyTriggers[8].EnterTrigger();
 
-        for (int s = 60; s <= 120; s++) {
-			loadIcon.fillAmount = Mathf.Lerp (loadIcon.fillAmount, (s*1f)/180f, 0.8f);
-			yield return null;
-		}
+        for (int s = 60; s <= 120; s++)
+        {
+            loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, (s * 1f) / 180f, 0.8f);
+            yield return null;
+        }
 
-        if(tpc.gameObject.GetComponentInParent<OneWayManager>() != null)
+        if (tpc.gameObject.GetComponentInParent<OneWayManager>() != null)
             tpc.gameObject.GetComponentInParent<OneWayManager>().CheckOneWays();
 
         tpc.gameObject.transform.position = newPos;
@@ -1884,23 +2119,25 @@ public class PauseScreen : MonoBehaviour {
         while (!CheckpointLoaded())
             yield return null;
 
-        for (int s = 120; s <= 180; s++) {
-		//	tpc.gameObject.transform.position = newPos;
-			AudioListener.volume = Mathf.Lerp(0f, 1f, ((s-120) * 1f) / 60f);
-			loadFS.color = Color.Lerp (Color.black, Color.clear, ((s-120) * 1f) / 60f);
-			loadIcon.fillAmount = Mathf.Lerp (loadIcon.fillAmount, (s*1f)/180f, 0.8f);
-			yield return null;
+        tpc.anim.enabled = true;
+        for (int s = 120; s <= 180; s++)
+        {
+            //	tpc.gameObject.transform.position = newPos;
+            AudioListener.volume = Mathf.Lerp(0f, 1f, ((s - 120) * 1f) / 60f);
+            loadFS.color = Color.Lerp(Color.black, Color.clear, ((s - 120) * 1f) / 60f);
+            loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, (s * 1f) / 180f, 0.8f);
+            yield return null;
         }
-        loadAnim.SetBool ("Loading", false);
+        loadAnim.SetBool("Loading", false);
 
         while (tpc.beingReset)
             yield return null;
-        
+
         tpc.disableControl = false;
         foreach (TPC mtpc in multiTPC)
             mtpc.disableControl = false;
         tpc.rb.velocity = Vector3.zero;
-        
+
         foreach (AudioMixer am in audioMixers)
             am.SetFloat("musicVol", -80f + (PlayerPrefs.GetFloat("musicVolume", 8f) * 10f));
 
@@ -1908,250 +2145,273 @@ public class PauseScreen : MonoBehaviour {
         warping = false;
     }
 
-	IEnumerator LoadIt(int whichLevel, int whichCheckpoint, bool extSceneLoaded, bool sceneLoaded){
-        cantPause = true;
-		loadAnim.SetBool("Loading", true);
-		loadIcon.fillAmount = 0f;
+    IEnumerator LoadIt(int whichLevel, int whichCheckpoint, bool extSceneLoaded, bool sceneLoaded)
+    {
+        if (!cantPause)
+        {
+            cantPause = true;
+            loadAnim.SetBool("Loading", true);
+            loadIcon.fillAmount = 0f;
 
-        if (tpc != null && tpc.GetComponentInParent<OneWayManager>() != null)
-            tpc.GetComponentInParent<OneWayManager>().currentlyChecking = true;
+            if (tpc != null && tpc.GetComponentInParent<OneWayManager>() != null)
+                tpc.GetComponentInParent<OneWayManager>().currentlyChecking = true;
 
-        if (cam.stationaryMode1 || cam.stationaryMode2) {
-			cam.ExitCameraCut();
-			GetComponent<Camera>().transform.eulerAngles = new Vector3(GetComponent<Camera>().transform.eulerAngles.x, 0f, GetComponent<Camera>().transform.eulerAngles.z);
-		}
-
-		Time.timeScale = 0f;
-
-		for (int f = 1; f <= 60; f++) {
-			AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
-			loadFS.color = Color.Lerp (Color.clear, Color.black, (f * 1f) / 60f);
-			yield return null;
-		}
-
-        int countLoaded = SceneManager.sceneCount;
-        for (int i = 0; i < countLoaded; i++) {
-            if (SceneManager.GetSceneAt(i).name.Contains("Challenges"))
+            if (cam.stationaryMode1 || cam.stationaryMode2)
             {
-                tpc.challengePortal = null;
+                cam.ExitCameraCut();
+                GetComponent<Camera>().transform.eulerAngles = new Vector3(GetComponent<Camera>().transform.eulerAngles.x, 0f, GetComponent<Camera>().transform.eulerAngles.z);
+            }
 
-                AsyncOperation async = new AsyncOperation();
-                async = SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i));
+            Time.timeScale = 0f;
 
-                while (!async.isDone)
+            for (int f = 1; f <= 60; f++)
+            {
+                AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
+                loadFS.color = Color.Lerp(Color.clear, Color.black, (f * 1f) / 60f);
+                yield return null;
+            }
+
+            int countLoaded = SceneManager.sceneCount;
+            for (int i = 0; i < countLoaded; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name.Contains("Challenges"))
+                {
+                    tpc.challengePortal = null;
+
+                    AsyncOperation async = new AsyncOperation();
+                    async = SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i));
+
+                    while (!async.isDone)
+                        yield return null;
+
+                    if (!fullExt.activeInHierarchy)
+                        fullExt.SetActive(true);
+                }
+            }
+
+            if (whichCheckpoint == -1)
+            {
+                while (loadFS.color != Color.black)
                     yield return null;
 
-                if (!fullExt.activeInHierarchy)
-                    fullExt.SetActive(true);
-            }
-        }
-
-        if (whichCheckpoint == -1) {
-			while (loadFS.color != Color.black)
-				yield return null;
-
-            AsyncOperation async = new AsyncOperation();
-            async = SceneManager.LoadSceneAsync (2, LoadSceneMode.Single);
-
-			async.allowSceneActivation = false;
-			while (!async.isDone) {
-				loadIcon.fillAmount = Mathf.Lerp (loadIcon.fillAmount, async.progress, 0.8f);
-				if (async.progress >= 0.9f) {
-					Time.timeScale = 1f;
-					async.allowSceneActivation = true;
-				}
-				yield return null;
-            }
-        } else {
-			float totalFill = 1f;
-			if (!extSceneLoaded && !sceneLoaded)
-				totalFill = 2f;
-
-			if (!extSceneLoaded) {
                 AsyncOperation async = new AsyncOperation();
-                async = SceneManager.LoadSceneAsync (3, LoadSceneMode.Additive);
+                async = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
 
-				while (!async.isDone) {
-					loadIcon.fillAmount = Mathf.Lerp (loadIcon.fillAmount, async.progress/totalFill, 0.8f);
-					yield return null;
-				}
-
-                odm.DeactivateObject(externalLowPoly, null);
+                async.allowSceneActivation = false;
+                while (!async.isDone)
+                {
+                    loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress, 0.8f);
+                    if (async.progress >= 0.9f)
+                    {
+                        Time.timeScale = 1f;
+                        async.allowSceneActivation = true;
+                    }
+                    yield return null;
+                }
             }
+            else
+            {
+                float totalFill = 1f;
+                if (!extSceneLoaded && !sceneLoaded)
+                    totalFill = 2f;
 
-            if (!sceneLoaded) {
-                int checkedScene = -1;
-                checkedScene = CheckForLevel(whichLevel);
-                
-                if (checkedScene > -1)
+                if (!extSceneLoaded)
                 {
                     AsyncOperation async = new AsyncOperation();
-                    async = SceneManager.UnloadSceneAsync(checkedScene);
+                    async = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
 
                     while (!async.isDone)
                     {
-                        loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress, 0.85f) / 2f;
+                        loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress / totalFill, 0.8f);
                         yield return null;
                     }
-                    AsyncOperation async2 = new AsyncOperation();
-                    async2 = SceneManager.LoadSceneAsync(whichLevel, LoadSceneMode.Additive);
 
-                    while (!async2.isDone)
-                    {
-                        loadIcon.fillAmount = (Mathf.Lerp(loadIcon.fillAmount, async2.progress, 0.85f) / 2f) + 0.5f;
-                        yield return null;
-                    }
+                    odm.DeactivateObject(externalLowPoly, null);
                 }
-                else
+
+                if (!sceneLoaded)
                 {
-                    AsyncOperation async = new AsyncOperation();
-                    async = SceneManager.LoadSceneAsync(whichLevel, LoadSceneMode.Additive);
-                    while (!async.isDone)
+                    int checkedScene = -1;
+                    checkedScene = CheckForLevel(whichLevel);
+
+                    if (checkedScene > -1)
                     {
-                        if (totalFill == 2f)
-                            loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, 0.5f + (async.progress / totalFill), 0.8f);
-                        else
-                            loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress, 0.8f);
-                        yield return null;
+                        AsyncOperation async = new AsyncOperation();
+                        async = SceneManager.UnloadSceneAsync(checkedScene);
+
+                        while (!async.isDone)
+                        {
+                            loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress, 0.85f) / 2f;
+                            yield return null;
+                        }
+
+                        lowerPolyLevels[checkedScene - 4].SetActive(true);
+                        foreach (Transform t in lowerPolyLevels[checkedScene - 4].GetComponentsInChildren<Transform>(true))
+                            t.gameObject.SetActive(true);
+
+                        AsyncOperation async2 = new AsyncOperation();
+                        async2 = SceneManager.LoadSceneAsync(whichLevel, LoadSceneMode.Additive);
+
+                        while (!async2.isDone)
+                        {
+                            loadIcon.fillAmount = (Mathf.Lerp(loadIcon.fillAmount, async2.progress, 0.85f) / 2f) + 0.5f;
+                            yield return null;
+                        }
+                    }
+                    else
+                    {
+                        AsyncOperation async = new AsyncOperation();
+                        async = SceneManager.LoadSceneAsync(whichLevel, LoadSceneMode.Additive);
+                        while (!async.isDone)
+                        {
+                            if (totalFill == 2f)
+                                loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, 0.5f + (async.progress / totalFill), 0.8f);
+                            else
+                                loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async.progress, 0.8f);
+                            yield return null;
+                        }
                     }
                 }
-            }
 
-            yield return null;
-            foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
-            {
-                if (g.GetComponent<Checkpoint>().checkpointID == whichCheckpoint)
-                    //changed to true
-                    g.GetComponent<Checkpoint>().ActivateCheckpoint(true);
-            }
-            yield return null;
-            Vector3 newPos = new Vector3(PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "X", 0f),
-				PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat ("Checkpoint" + whichCheckpoint + "Z", 0f));
-			tpc.gameObject.transform.position = newPos;
-			PlayerPrefs.SetInt ("LastCheckpoint", whichCheckpoint);
-        //    PlayerPrefs.Save();
-            
-            tpc.gameObject.GetComponentInParent<OneWayManager>().CheckOneWays();
-
-            if (curLPT != null)
-                curLPT.ExitTrigger();
-
-            for (float f = 0f; f < 2.1f; f += (1 / 60f))
                 yield return null;
-
-            foreach (LowPolyTrigger lpt in lowPolyTriggers)
-                lpt.currentlyInside = false;
-
-            if (whichCheckpoint != 16 && whichCheckpoint != 17 && whichCheckpoint != 37 && atmosphereManager.curLevel == "Level5")
-            {
-                while (atmosphereManager.triggerCount > 0)
-                    atmosphereManager.ExitTrigger();
-                atmosphereManager.curLevel = "";
-            }
-
-            //PLAZA
-            if (whichCheckpoint == 0 || whichCheckpoint == 1)
-                lowPolyTriggers[0].EnterTrigger();
-
-            //1
-            if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
-                lowPolyTriggers[1].EnterTrigger();
-
-            //2
-            if (whichCheckpoint == 7 || whichCheckpoint == 8 || whichCheckpoint == 33)
-                lowPolyTriggers[2].EnterTrigger();
-
-            //3
-            if (whichCheckpoint == 10 || whichCheckpoint == 11)
-                lowPolyTriggers[3].EnterTrigger();
-
-            //4
-            if (whichCheckpoint == 13 || whichCheckpoint == 14 || whichCheckpoint == 30 || whichCheckpoint == 31)
-                lowPolyTriggers[4].EnterTrigger();
-
-            //5
-            if (whichCheckpoint == 16 || whichCheckpoint == 17 || whichCheckpoint == 37)
-            {
-                if (atmosphereManager.curLevel != "Level5")
+                foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
                 {
-                    atmosphereManager.EnterTrigger(2);
-                    atmosphereManager.curLevel = "Level5";
+                    if (g.GetComponent<Checkpoint>().checkpointID == whichCheckpoint)
+                        g.GetComponent<Checkpoint>().ActivateCheckpoint();
                 }
-             //   lowPolyTriggers[5].EnterTrigger();
-            }
-
-            //6
-            if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
-                lowPolyTriggers[6].EnterTrigger();
-
-            //7
-            if (whichCheckpoint == 22 || whichCheckpoint == 23 || whichCheckpoint == 28 || whichCheckpoint == 29)
-                lowPolyTriggers[7].EnterTrigger();
-
-            //9
-            if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
-                lowPolyTriggers[8].EnterTrigger();
-
-
-            Time.timeScale = 1f;
-			cam.disableControl = false;
-
-            //	yield return new WaitForSeconds (5f);
-            while (!CheckpointLoaded())
                 yield return null;
+                Vector3 newPos = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
+                    PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
+                tpc.gameObject.transform.position = newPos;
+                PlayerPrefs.SetInt("LastCheckpoint", whichCheckpoint);
+                //    PlayerPrefs.Save();
 
-            if (whichLevel > 2)
-                odm.DeactivateObject(lowerPolyLevels[whichLevel - 3].gameObject, null);
-            loadAnim.SetBool("Loading", false);
-            
+                tpc.gameObject.GetComponentInParent<OneWayManager>().CheckOneWays();
 
-            for (int f = 59; f >= 0; f--) {
-				tpc.gameObject.transform.position = newPos;
-				AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
-				loadFS.color = Color.Lerp (Color.clear, Color.black, (f * 1f) / 60f);
-				yield return null;
+                if (curLPT != null)
+                    curLPT.ExitTrigger();
+
+                for (float f = 0f; f < 2.1f; f += (1 / 60f))
+                    yield return null;
+
+                foreach (LowPolyTrigger lpt in lowPolyTriggers)
+                    lpt.currentlyInside = false;
+
+                if (whichCheckpoint != 16 && whichCheckpoint != 17 && whichCheckpoint != 37 && atmosphereManager.curLevel == "Level5")
+                {
+                    while (atmosphereManager.triggerCount > 0)
+                        atmosphereManager.ExitTrigger();
+                    atmosphereManager.curLevel = "";
+                }
+
+                //PLAZA
+                if (whichCheckpoint == 0 || whichCheckpoint == 1)
+                    lowPolyTriggers[0].EnterTrigger();
+
+                //1
+                if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
+                    lowPolyTriggers[1].EnterTrigger();
+
+                //2
+                if (whichCheckpoint == 7 || whichCheckpoint == 8 || whichCheckpoint == 33)
+                    lowPolyTriggers[2].EnterTrigger();
+
+                //3
+                if (whichCheckpoint == 10 || whichCheckpoint == 11)
+                    lowPolyTriggers[3].EnterTrigger();
+
+                //4
+                if (whichCheckpoint == 13 || whichCheckpoint == 14 || whichCheckpoint == 30 || whichCheckpoint == 31)
+                    lowPolyTriggers[4].EnterTrigger();
+
+                //5
+                if (whichCheckpoint == 16 || whichCheckpoint == 17 || whichCheckpoint == 37)
+                {
+                    if (atmosphereManager.curLevel != "Level5")
+                    {
+                        atmosphereManager.EnterTrigger(2);
+                        atmosphereManager.curLevel = "Level5";
+                    }
+                    lowPolyTriggers[5].EnterTrigger();
+                }
+
+                //6
+                if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
+                    lowPolyTriggers[6].EnterTrigger();
+
+                //7
+                if (whichCheckpoint == 22 || whichCheckpoint == 23 || whichCheckpoint == 28 || whichCheckpoint == 29)
+                    lowPolyTriggers[7].EnterTrigger();
+
+                //9
+                if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
+                    lowPolyTriggers[8].EnterTrigger();
+
+
+                Time.timeScale = 1f;
+                cam.disableControl = false;
+
+                //	yield return new WaitForSeconds (5f);
+                while (!CheckpointLoaded())
+                    yield return null;
+                tpc.anim.enabled = true;
+
+                if (whichLevel > 2)
+                    odm.DeactivateObject(lowerPolyLevels[whichLevel - 3].gameObject, null);
+                loadAnim.SetBool("Loading", false);
+
+
+                for (int f = 59; f >= 0; f--)
+                {
+                    tpc.gameObject.transform.position = newPos;
+                    AudioListener.volume = Mathf.Lerp(1f, 0f, (f * 1f) / 60f);
+                    loadFS.color = Color.Lerp(Color.clear, Color.black, (f * 1f) / 60f);
+                    yield return null;
+                }
+                PositionMultiCharacters();
+
+                while (tpc.beingReset)
+                    yield return null;
+
+                tpc.disableControl = false;
+                tpc.ExitWaterFS();
+                tpc.ExitRiverForce();
+                foreach (TPC mtpc in multiTPC)
+                {
+                    mtpc.disableControl = false;
+                    mtpc.ExitWaterFS();
+                    mtpc.ExitRiverForce();
+                }
+                tpc.rb.velocity = Vector3.zero;
+                cantPause = false;
+
+                if (whichLevel == 3)
+                    tpc.ps.ShowLevelTitle("Level1.2");
+                if (whichLevel == 4)
+                    tpc.ps.ShowLevelTitle("Level2");
+                if (whichLevel == 5)
+                    tpc.ps.ShowLevelTitle("Level3");
+                if (whichLevel == 6)
+                    tpc.ps.ShowLevelTitle("Level4");
+                if (whichLevel == 7)
+                    tpc.ps.ShowLevelTitle("Level5");
+                if (whichLevel == 8)
+                    tpc.ps.ShowLevelTitle("Level6");
+                if (whichLevel == 9)
+                    tpc.ps.ShowLevelTitle("Level7");
+                if (whichLevel == 10)
+                    tpc.ps.ShowLevelTitle("Level8");
             }
-            PositionMultiCharacters();
 
-            while (tpc.beingReset)
-                yield return null;
+            foreach (AudioMixer am in audioMixers)
+                am.SetFloat("musicVol", -80f + (PlayerPrefs.GetFloat("musicVolume", 8f) * 10f));
 
-            tpc.disableControl = false;
-            tpc.ExitWaterFS();
-            tpc.ExitRiverForce();
-            foreach (TPC mtpc in multiTPC)
-            {
-                mtpc.disableControl = false;
-                mtpc.ExitWaterFS();
-                mtpc.ExitRiverForce();
-            }
-            tpc.rb.velocity = Vector3.zero;
-			cantPause = false;
-            
-            if (whichLevel == 3)
-                tpc.ps.ShowLevelTitle("Level1.2");
-            if (whichLevel == 4)
-                tpc.ps.ShowLevelTitle("Level2");
-            if (whichLevel == 5)
-                tpc.ps.ShowLevelTitle("Level3");
-            if (whichLevel == 6)
-                tpc.ps.ShowLevelTitle("Level4");
-            if (whichLevel == 7)
-                tpc.ps.ShowLevelTitle("Level5");
-            if (whichLevel == 8)
-                tpc.ps.ShowLevelTitle("Level6");
-            if (whichLevel == 9)
-                tpc.ps.ShowLevelTitle("Level7");
-            if (whichLevel == 10)
-                tpc.ps.ShowLevelTitle("Level8");
+            warping = false;
         }
-
-        foreach (AudioMixer am in audioMixers)
-            am.SetFloat("musicVol", -80f + (PlayerPrefs.GetFloat("musicVolume", 8f) * 10f));
-
-        warping = false;
+        //    else
+        //        Debug.Log("DOUBLE WARP AVOIDED FOR " + whichLevel +" "+ whichCheckpoint +" "+ extSceneLoaded +" "+ sceneLoaded);
     }
-    
+
     private bool CheckpointLoaded()
     {
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
@@ -2163,12 +2423,12 @@ public class PauseScreen : MonoBehaviour {
     }
 
     private int CheckForLevel(int check)
-    {  //4 - 11
-        int c = 1;     
+    {  //3 - 10
+        int c = 1;
         while (c <= 8) // c = 8 - (amount of extra levels you want loaded at once);
         {
             int d = check + c;
-            if (d > 11)
+            if (d > 10)
                 d -= 8;
             if (SceneManager.GetSceneByBuildIndex(d).isLoaded)
                 return d;
@@ -2177,9 +2437,9 @@ public class PauseScreen : MonoBehaviour {
         return -1;
     }
 
-   public void PositionMultiCharacters()
+    public void PositionMultiCharacters()
     {
-        foreach(TPC mtpc in multiTPC)
+        foreach (TPC mtpc in multiTPC)
             mtpc.transform.position = woodle.transform.position + (Vector3.up * 2f);
     }
 
@@ -2332,34 +2592,6 @@ public class PauseScreen : MonoBehaviour {
             mapMarkerText.fontStyle = FontStyle.Bold;
         }
         else
-        if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Chinese)
-        {
-            mapMarkerText.font = TextTranslationManager.singleton.chineseFont;
-            mapMarkerText.fontStyle = FontStyle.Bold;
-            mapMarkerText.fontSize = 110;
-        }
-        else
-                if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Japanese)
-        {
-            mapMarkerText.font = TextTranslationManager.singleton.japaneseFont;
-            mapMarkerText.fontStyle = FontStyle.Bold;
-            mapMarkerText.fontSize = 110;
-        }
-        else
-                if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Korean)
-        {
-            mapMarkerText.font = TextTranslationManager.singleton.koreanFont;
-            mapMarkerText.fontStyle = FontStyle.Bold;
-            mapMarkerText.fontSize = 110;
-        }
-        else
-                if (PlayerPrefs.GetInt("Language") == (int)LANGUAGES.Russian)
-        {
-            mapMarkerText.font = TextTranslationManager.singleton.cyrillicFont;
-            mapMarkerText.fontStyle = FontStyle.Bold;
-            mapMarkerText.fontSize = 110;
-        }
-        else
         {
             mapMarkerText.font = originalMapFont;
             mapMarkerText.fontStyle = originalMapFontStyle;
@@ -2386,9 +2618,12 @@ public class PauseScreen : MonoBehaviour {
         }
         else
         {
-            cutscene.time = cutscene.duration;
-            StopCoroutine("WaitForCutscene");
-            EndOfCutscene(cutscene);
+            if (input.GetButtonDown("Start"))
+            {
+                cutscene.time = cutscene.duration;
+                StopCoroutine("WaitForCutscene");
+                EndOfCutscene(cutscene);
+            }
         }
     }
 
@@ -2466,25 +2701,37 @@ public class PauseScreen : MonoBehaviour {
             levelID = 6;
         if (levelName == "Level8")
             levelID = 7;
-        
+
         StopCoroutine("LevelTitleCoRo");
-        StartCoroutine("LevelTitleCoRo", levelID);   
+        StartCoroutine("LevelTitleCoRo", levelID);
     }
 
     IEnumerator LevelTitleCoRo(int id)
     {
         while (!levelTitlesAnim.GetCurrentAnimatorStateInfo(0).IsName("Off"))
             yield return null;
-        
+
         yield return new WaitForSeconds(0f);
 
         if (currentLevelTitle != id)
         {
             currentLevelTitle = id;
-            
+
             textToTranslate.SetTextElement(levelTitlesText, null, TextTranslationManager.TextCollection.levelTitles, id, "", false, false, levelTitlesFont, levelTitlesFontStyle);
 
             levelTitlesAnim.Play("Animate", 0);
         }
+    }
+
+    public void OpenDefaultsAYS()
+    {
+        defaultsAYS.SetActive(true);
+        es.SetSelectedGameObject(defaultsNo);
+    }
+
+    public void CloseDefaultsAYS()
+    {
+        defaultsAYS.SetActive(false);
+        es.SetSelectedGameObject(defaultsButton);
     }
 }

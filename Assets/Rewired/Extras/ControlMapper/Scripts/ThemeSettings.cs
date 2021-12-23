@@ -1,7 +1,4 @@
-// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
-
-//#define REWIRED_CONTROL_MAPPER_USE_TMPRO
-
+﻿// Copyright (c) 2015 Augie R. Maddox, Guavaman Enterprises. All rights reserved.
 #if UNITY_2020 || UNITY_2021 || UNITY_2022 || UNITY_2023 || UNITY_2024 || UNITY_2025
 #define UNITY_2020_PLUS
 #endif
@@ -20,13 +17,6 @@ namespace Rewired.UI.ControlMapper {
     using UnityEngine.UI;
     using System.Collections.Generic;
     using Rewired;
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-    using Text = TMPro.TMP_Text;
-    using Font = TMPro.TMP_FontAsset;
-#else
-    using Text = UnityEngine.UI.Text;
-    using Font = UnityEngine.Font;
-#endif
 
     [System.Serializable]
     public class ThemeSettings : ScriptableObject {
@@ -196,16 +186,11 @@ namespace Rewired.UI.ControlMapper {
             item.lineSpacing = settings.lineSpacing;
             if(settings.sizeMultiplier != 1.0f) {
                 item.fontSize = (int)(item.fontSize * settings.sizeMultiplier);
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-                item.fontSizeMax = (int)(item.fontSizeMax * settings.sizeMultiplier);
-                item.fontSizeMin = (int)(item.fontSizeMin * settings.sizeMultiplier);
-#else
                 item.resizeTextMaxSize = (int)(item.resizeTextMaxSize * settings.sizeMultiplier);
                 item.resizeTextMinSize = (int)(item.resizeTextMinSize * settings.sizeMultiplier);
-#endif
             }
             if(settings.style != FontStyleOverride.Default) {
-                item.fontStyle = GetFontStyle(settings.style);
+                item.fontStyle = (FontStyle)((int)settings.style - 1);
             }
         }
 
@@ -216,28 +201,6 @@ namespace Rewired.UI.ControlMapper {
             item.SetDisabledStateColor(_invertToggleDisabledColor);
             item.Refresh();
         }
-
-#if REWIRED_CONTROL_MAPPER_USE_TMPRO
-        private static TMPro.FontStyles GetFontStyle(FontStyleOverride style) {
-            switch(style) {
-                case FontStyleOverride.Bold:
-                    return TMPro.FontStyles.Bold;
-                case FontStyleOverride.BoldAndItalic:
-                    return TMPro.FontStyles.Bold | TMPro.FontStyles.Italic;
-                case FontStyleOverride.Italic:
-                    return TMPro.FontStyles.Italic;
-                case FontStyleOverride.Default:
-                case FontStyleOverride.Normal:
-                    return TMPro.FontStyles.Normal;
-                default:
-                    throw new System.NotImplementedException();
-            }
-        }
-#else
-        private static FontStyle GetFontStyle(FontStyleOverride style) {
-                return (FontStyle)((int)style - 1);
-        }
-#endif
 
         [System.Serializable]
         private abstract class SelectableSettings_Base {
