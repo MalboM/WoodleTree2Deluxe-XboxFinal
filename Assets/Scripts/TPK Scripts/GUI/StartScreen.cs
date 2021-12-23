@@ -153,7 +153,7 @@ public class StartScreen : MonoBehaviour
 
         if (loadOneAndSeven)
         {
-            SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
+         //   SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
             //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
 
         }
@@ -501,14 +501,14 @@ public class StartScreen : MonoBehaviour
 
             if (loadOneAndSeven)
             {
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
+            /*    foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
                 {
                     if (g.name == "Level1.2")
                     {
                         firstLevelLoadZone.fullSceneObject = g.gameObject;
                         odm.DeactivateObject(g.gameObject, null);
                     }
-                }
+                }*/
             }
 
 
@@ -523,13 +523,13 @@ public class StartScreen : MonoBehaviour
                 if (whichCheckpoint != -1)
                 {
                     int checkForScene = PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0);
-                    if ((!loadOneAndSeven && checkForScene != 2) || (loadOneAndSeven && (checkForScene != 1 && checkForScene != 4)) || whichCheckpoint == 2)
+                //    if ((!loadOneAndSeven && checkForScene != 2) || (loadOneAndSeven && (checkForScene != 1 && checkForScene != 4)) || whichCheckpoint == 2)
                     {
                         ps.cantPause = true;
                         StartCoroutine(LoadIt(whichCheckpoint, checkForScene));
                     }
-                    else
-                        StartCoroutine(LoadIt(whichCheckpoint, -1));
+                //    else
+                 //       StartCoroutine(LoadIt(whichCheckpoint, -1));
                 }
             }
         }
@@ -1213,7 +1213,7 @@ public class StartScreen : MonoBehaviour
             }
             yield return null;
 
-            if (whichCheckpoint >= 2 || sceneToGoTo == -1)
+       //     if (whichCheckpoint >= 2 || sceneToGoTo == -1)
             {
                 AsyncOperation async1 = new AsyncOperation();
                 async1 = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
@@ -1227,7 +1227,8 @@ public class StartScreen : MonoBehaviour
                     yield return null;
                 }
             }
-            if (sceneToGoTo > 4)
+            Debug.Log(sceneToGoTo);
+            if (sceneToGoTo > 3)
             {
                 AsyncOperation async2 = new AsyncOperation();
                 async2 = SceneManager.LoadSceneAsync(sceneToGoTo, LoadSceneMode.Additive);
