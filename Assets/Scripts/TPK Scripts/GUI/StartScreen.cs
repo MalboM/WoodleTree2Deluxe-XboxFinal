@@ -1227,7 +1227,7 @@ public class StartScreen : MonoBehaviour
                     yield return null;
                 }
             }
-            Debug.Log(sceneToGoTo);
+        //    Debug.Log(sceneToGoTo);
             if (sceneToGoTo > 3)
             {
                 AsyncOperation async2 = new AsyncOperation();

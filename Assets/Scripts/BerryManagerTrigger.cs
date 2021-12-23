@@ -74,46 +74,46 @@ public class BerryManagerTrigger : MonoBehaviour
             int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", tpc.berryCount);
             totalRedBerries += valueToAdd;
             PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
-/*
+
 #if UNITY_PS4
             //
             // check trophy
-            if (totalRBCount >= 100)
+       //     if (totalRBCount >= 100)
             {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_RED_BERRIES);
+             //   PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_RED_BERRIES);
             }
             //
-            if (totalRBCount >= 1000)
+       //     if (totalRBCount >= 1000)
             {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_1000_RED_BERRIES);
+             //   PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_1000_RED_BERRIES);
             }
             //
-            if (totalRBCount >= 3000)
+        //    if (totalRBCount >= 3000)
             {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_3000_RED_BERRIES);
+            //    PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_3000_RED_BERRIES);
             }
 #endif
 #if UNITY_XBOXONE
 
         // check trophy
-        if (totalRBCount >= 100)
+    //    if (totalRBCount >= 100)
         {
             // check friend trophy
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
         }
         //
-        if (totalRBCount >= 1000)
+    //    if (totalRBCount >= 1000)
         {
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
         }
         //
-        if (totalRBCount >= 3000)
+    //    if (totalRBCount >= 3000)
         {
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
         }
        
 #endif
-*/
+
         }
 
         if (berryType == BerryType.blue)
