@@ -2424,11 +2424,11 @@ public class PauseScreen : MonoBehaviour
 
     private int CheckForLevel(int check)
     {  //3 - 10
-        int c = 1;
-        while (c <= 8) // c = 8 - (amount of extra levels you want loaded at once);
+        int c = 2;
+        while (c <= 9)
         {
             int d = check + c;
-            if (d > 10)
+            if (d > 11)
                 d -= 8;
             if (SceneManager.GetSceneByBuildIndex(d).isLoaded)
                 return d;

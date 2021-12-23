@@ -52,97 +52,117 @@ public class LowPolyTrigger : MonoBehaviour {
 
     public void EnterTrigger()
     {
-        if (!currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping)
+        if (!currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl)
         {
-            currentlyInside = true;
-            if (fullObj == null)
-            {
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
-                {
-                    if (g.name == fullObjName)
-                    {
-                        fullObj = g.gameObject;
-                    }
-                }
-            }
-
-
-            if (lowPoly != null)
-            {
-                odm.StopCoroutine("WaitToDeactLowExt");
-                odm.DeactivateObject(lowPoly, extLowPolyKeepEnabled);
-            }
-
-            if (fullObj != null)
-            {
-                StartCoroutine("WaitToDeactFullExt");
-            }
-            /*
-            foreach (GameObject t in allLowPolyChildren)
-            {
-                if (t != lowPoly)
-                {
-                    foreach (GameObject g in extLowPolyKeepEnabled)
-                    {
-                        if (g == t.gameObject)
-                        {
-                            t.gameObject.SetActive(true);
-                        }
-                    }
-                }
-            }
-            */
-            if (plazaDisable)
-            {
-                StopCoroutine("WaitToDeactLow");
-                odm.ActivateObject(lowPolyPlaza);
-                odm.justActivatedPlazaLow = true;
-                StartCoroutine("WaitToDeactFull");
-            }
-            startScreenScript.curLPT = this;
-            pauseScreenScript.curLPT = this;
+        //    Debug.Log("X: " + this.gameObject.name);
+            StopCoroutine("EnterTriggerCoRo");
+            StopCoroutine("ExitTriggerCoRo");
+            StartCoroutine("EnterTriggerCoRo");
         }
+    }
+
+    IEnumerator EnterTriggerCoRo()
+    {
+        yield return null;
+        yield return null;
+
+        currentlyInside = true;
+        if (fullObj == null)
+        {
+            foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
+            {
+                if (g.name == fullObjName)
+                {
+                    fullObj = g.gameObject;
+                }
+            }
+        }
+
+
+        if (lowPoly != null)
+        {
+            odm.StopCoroutine("WaitToDeactLowExt");
+            odm.DeactivateObject(lowPoly, extLowPolyKeepEnabled);
+        }
+
+        if (fullObj != null)
+        {
+            StartCoroutine("WaitToDeactFullExt");
+        }
+        /*
+        foreach (GameObject t in allLowPolyChildren)
+        {
+            if (t != lowPoly)
+            {
+                foreach (GameObject g in extLowPolyKeepEnabled)
+                {
+                    if (g == t.gameObject)
+                    {
+                        t.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+        */
+        if (plazaDisable)
+        {
+            StopCoroutine("WaitToDeactLow");
+            odm.ActivateObject(lowPolyPlaza);
+            odm.justActivatedPlazaLow = true;
+            StartCoroutine("WaitToDeactFull");
+        }
+        startScreenScript.curLPT = this;
+        pauseScreenScript.curLPT = this;
     }
 
     public void ExitTrigger()
     {
-        if (currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping)
+        if (currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl)
         {
-            currentlyInside = false;
-            if (fullObj == null)
+         //   Debug.Log("Y: " + this.gameObject.name);
+            StopCoroutine("EnterTriggerCoRo");
+            StopCoroutine("ExitTriggerCoRo");
+            StartCoroutine("ExitTriggerCoRo");
+        }
+    }
+    IEnumerator ExitTriggerCoRo()
+    {
+        yield return null;
+        yield return null;
+        currentlyInside = false;
+        if (fullObj == null)
+        {
+            foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
             {
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("WholeLevel"))
+                if (g.name == fullObjName)
                 {
-                    if (g.name == fullObjName)
-                    {
-                        fullObj = g.gameObject;
-                    }
+                    fullObj = g.gameObject;
                 }
             }
-            if (fullObj != null)
-            {
-                StopCoroutine("WaitToDeactFullExt");
-                odm.ActivateObject(fullObj);
-            }
+        }
+        if (fullObj != null)
+        {
+            StopCoroutine("WaitToDeactFullExt");
+            odm.ActivateObject(fullObj);
+        }
 
-            if (lowPoly != null)
-            {
-                odm.StartCoroutine("WaitToDeactLowExt", lowPoly);
-            }
+        if (lowPoly != null)
+        {
+            odm.StartCoroutine("WaitToDeactLowExt", lowPoly);
+        }
 
-            if (plazaDisable)
-            {
-                StopCoroutine("WaitToDeactFull");
-                odm.ActivateObject(fullPlaza);
+        if (plazaDisable)
+        {
+            StopCoroutine("WaitToDeactFull");
+            odm.ActivateObject(fullPlaza);
 
-                if (odm.justActivatedPlazaLow)
-                    odm.justActivatedPlazaLow = false;
-                StartCoroutine("WaitToDeactLow");
-            }
+            if (odm.justActivatedPlazaLow)
+                odm.justActivatedPlazaLow = false;
+            StartCoroutine("WaitToDeactLow");
         }
     }
 
-    IEnumerator WaitToDeactFull()
+        IEnumerator WaitToDeactFull()
     {
         yield return new WaitForSeconds(2f);
         odm.DeactivateObject(fullPlaza, null);

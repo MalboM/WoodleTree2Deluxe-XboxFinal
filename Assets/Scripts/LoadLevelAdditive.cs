@@ -32,68 +32,85 @@ public class LoadLevelAdditive : MonoBehaviour
 	}
     
     void OnTriggerEnter(Collider other){
-        if (!insideThisTrigger && other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis))
+        if (!insideThisTrigger && other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis))
         {
-       //     if (level == "Level5")
-         //       Debug.Log("ENTER LEVEL LOAD");
-
-            if(entTrig)
-                entTrig.keepOn = true;
-            
-            tpc = other.gameObject.GetComponent<TPC>();
-        //    tpc.ps.ShowLevelTitle(level);
-
-            if (!SceneManager.GetSceneByName(level).isLoaded)
-            {
-                tpcBeaver = PlayerManager.GetPlayer(1);
-                cam = tpc.cam.GetComponent<CameraFollower>();
-                StartCoroutine(Loadinglevel());
-            }
-            else
-            {
-                if (fullSceneObject == null)
-                    FindFullLevel();
-                if (fullSceneObject != null)
-                    odm.ActivateObject(fullSceneObject);
-
-                StartCoroutine("WaitToDeact");
-                //   if (noncolliderzone != null)
-                //       odm.DeactivateObject(noncolliderzone, null);
-            }
-
-            if (lptCollider != null)
-            {
-                lptCollider.gameObject.SetActive(false);
-                lptCollider.enabled = true;
-                lptCollider.gameObject.SetActive(true);
-            }
+            StopCoroutine("EnterTriggerCoRo");
+            StopCoroutine("ExitTriggerCoRo");
+            StartCoroutine("EnterTriggerCoRo", other);
         }
 	}
 
-    private void OnTriggerExit(Collider other)
+    IEnumerator EnterTriggerCoRo(Collider other)
     {
-        if (other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && (entTrig == null || entTrig.isInsideThis))
+        yield return null;
+        yield return null;
+        //     if (level == "Level5")
+    //    Debug.Log("ENTER LEVEL LOAD: " + Time.timeSinceLevelLoad);
+
+        if (entTrig)
+            entTrig.keepOn = true;
+
+        tpc = other.gameObject.GetComponent<TPC>();
+        //    tpc.ps.ShowLevelTitle(level);
+
+        if (!SceneManager.GetSceneByName(level).isLoaded)
         {
-       //     if (level == "Level5")
-       //         Debug.Log("EXIT LEVEL LOAD");
-            if (entTrig)
-            {
-                entTrig.keepOn = false;
-            //    Debug.Log(entTrig.isInsideThis +"  "+ entTrig.colliderToActivate.enabled);
-                if (!entTrig.isInsideThis)
-                    entTrig.colliderToActivate.enabled = false;
-            }
-            StopCoroutine("WaitToDeact");
-            if (noncolliderzone != null)
-                odm.ActivateObject(noncolliderzone);
+            tpcBeaver = PlayerManager.GetPlayer(1);
+            cam = tpc.cam.GetComponent<CameraFollower>();
+            StartCoroutine(Loadinglevel());
+        }
+        else
+        {
             if (fullSceneObject == null)
                 FindFullLevel();
             if (fullSceneObject != null)
-                odm.DeactivateObject(fullSceneObject, null);
+                odm.ActivateObject(fullSceneObject);
 
-            if (lptCollider != null)
-                lptCollider.enabled = false;
+            StartCoroutine("WaitToDeact");
+            //   if (noncolliderzone != null)
+            //       odm.DeactivateObject(noncolliderzone, null);
         }
+
+        if (lptCollider != null)
+        {
+            lptCollider.gameObject.SetActive(false);
+            lptCollider.enabled = true;
+            lptCollider.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis))
+        {
+            //     if (level == "Level5")
+       //     Debug.Log("EXIT LEVEL LOAD: " + Time.timeSinceLevelLoad);
+            StopCoroutine("EnterTriggerCoRo");
+            StopCoroutine("ExitTriggerCoRo");
+            StartCoroutine("ExitTriggerCoRo");
+        }
+    }
+    IEnumerator ExitTriggerCoRo()
+    {
+        yield return null;
+        yield return null;
+        if (entTrig)
+        {
+            entTrig.keepOn = false;
+            //    Debug.Log(entTrig.isInsideThis +"  "+ entTrig.colliderToActivate.enabled);
+            if (!entTrig.isInsideThis)
+                entTrig.colliderToActivate.enabled = false;
+        }
+        StopCoroutine("WaitToDeact");
+        if (noncolliderzone != null)
+            odm.ActivateObject(noncolliderzone);
+        if (fullSceneObject == null)
+            FindFullLevel();
+        if (fullSceneObject != null)
+            odm.DeactivateObject(fullSceneObject, null);
+
+        if (lptCollider != null)
+            lptCollider.enabled = false;
     }
 
     bool IsInAnotherTrigger()
@@ -149,7 +166,7 @@ public class LoadLevelAdditive : MonoBehaviour
         if (level == "Level7")
             checkedScene = CheckForLevel(10);
         if (level == "Level8")
-            checkedScene = CheckForLevel(1);
+            checkedScene = CheckForLevel(11);
 
         if (checkedScene > -1)
         {
@@ -259,11 +276,11 @@ public class LoadLevelAdditive : MonoBehaviour
 
     private int CheckForLevel(int check)
     {  //3 - 10
-        int c = 1;
-        while (c <= 8)
+        int c = 2;
+        while (c <= 9)
         {
             int d = check + c;
-            if (d > 10)
+            if (d > 11)
                 d -= 8;
             if (SceneManager.GetSceneByBuildIndex(d).isLoaded)
                 return d;
