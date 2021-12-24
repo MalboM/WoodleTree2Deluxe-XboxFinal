@@ -32,7 +32,7 @@ public class LoadLevelAdditive : MonoBehaviour
 	}
     
     void OnTriggerEnter(Collider other){
-        if (!insideThisTrigger && other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis))
+        if (!insideThisTrigger && other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis || PlayerManager.GetMainPlayer().ps.warping))
         {
             StopCoroutine("EnterTriggerCoRo");
             StopCoroutine("ExitTriggerCoRo");
@@ -45,10 +45,14 @@ public class LoadLevelAdditive : MonoBehaviour
         yield return null;
         yield return null;
         //     if (level == "Level5")
-    //    Debug.Log("ENTER LEVEL LOAD: " + Time.timeSinceLevelLoad);
+        Debug.Log("ENTER LEVEL LOAD: " + this.gameObject.name);
 
         if (entTrig)
+        {
+            if (!entTrig.isInsideThis && PlayerManager.GetMainPlayer().ps.warping)
+                entTrig.isInsideThis = true;
             entTrig.keepOn = true;
+        }
 
         tpc = other.gameObject.GetComponent<TPC>();
         //    tpc.ps.ShowLevelTitle(level);
@@ -84,7 +88,7 @@ public class LoadLevelAdditive : MonoBehaviour
         if (other.gameObject == PlayerManager.GetMainPlayer().gameObject && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl && (entTrig == null || entTrig.isInsideThis))
         {
             //     if (level == "Level5")
-       //     Debug.Log("EXIT LEVEL LOAD: " + Time.timeSinceLevelLoad);
+            Debug.Log("EXIT LEVEL LOAD: " + this.gameObject.name);
             StopCoroutine("EnterTriggerCoRo");
             StopCoroutine("ExitTriggerCoRo");
             StartCoroutine("ExitTriggerCoRo");

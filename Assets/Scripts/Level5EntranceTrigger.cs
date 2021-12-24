@@ -20,7 +20,7 @@ public class Level5EntranceTrigger : MonoBehaviour
     {
         if (other.gameObject == character)
         {
-            //    Debug.Log("IN");
+                Debug.Log("IN");
             colliderToActivate.enabled = true;
             isInsideThis = true;
         }
@@ -31,7 +31,7 @@ public class Level5EntranceTrigger : MonoBehaviour
     {
         if (!keepOn && other.gameObject == character)
         {
-            //    Debug.Log("OUT");
+                Debug.Log("OUT");
             colliderToActivate.enabled = false;
             if (lla != null)
                 lla.lptCollider.enabled = false;

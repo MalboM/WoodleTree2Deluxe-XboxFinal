@@ -1957,6 +1957,7 @@ public class PauseScreen : MonoBehaviour
 
     IEnumerator ShortLoad(int whichCheckpoint)
     {
+        Debug.Log("PAUSE LOADING: " +  whichCheckpoint);
         cantPause = true;
         loadAnim.SetBool("Loading", true);
         loadIcon.fillAmount = 0;
@@ -2005,7 +2006,10 @@ public class PauseScreen : MonoBehaviour
                 g.SetActive(true);
         }
         if (PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4 >= 0)
+        {
+            Debug.Log("LOW POLY TOGGLE: " + PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) + " > " + lowerPolyLevels[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4].gameObject.name);
             lowerPolyLevels[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint + "Scene", 0) - 4].gameObject.SetActive(false);
+        }
 
         Time.timeScale = 1f;
         cam.disableControl = false;
@@ -2086,7 +2090,7 @@ public class PauseScreen : MonoBehaviour
         //9
         if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
             lowPolyTriggers[8].EnterTrigger();
-
+        
         for (int s = 60; s <= 120; s++)
         {
             loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, (s * 1f) / 180f, 0.8f);
@@ -2098,7 +2102,7 @@ public class PauseScreen : MonoBehaviour
 
         tpc.gameObject.transform.position = newPos;
         PositionMultiCharacters();
-
+        
         yield return null;
 
         tpc.disableControl = true;
@@ -2110,15 +2114,18 @@ public class PauseScreen : MonoBehaviour
             mtpc.ExitWaterFS();
             mtpc.ExitRiverForce();
         }
-
+        
         yield return null;
 
         tpc.rb.velocity = Vector3.zero;
 
         //    yield return new WaitForSeconds(3f);
+        
         while (!CheckpointLoaded())
+        {
             yield return null;
-
+        }
+        
         tpc.anim.enabled = true;
         for (int s = 120; s <= 180; s++)
         {
@@ -2129,7 +2136,7 @@ public class PauseScreen : MonoBehaviour
             yield return null;
         }
         loadAnim.SetBool("Loading", false);
-
+        
         while (tpc.beingReset)
             yield return null;
 
@@ -2147,6 +2154,7 @@ public class PauseScreen : MonoBehaviour
 
     IEnumerator LoadIt(int whichLevel, int whichCheckpoint, bool extSceneLoaded, bool sceneLoaded)
     {
+        Debug.Log("PAUSE LOADING: " + whichLevel + " @ " + whichCheckpoint +" | " + extSceneLoaded +" | "+ sceneLoaded);
         if (!cantPause)
         {
             cantPause = true;
@@ -2414,9 +2422,9 @@ public class PauseScreen : MonoBehaviour
 
     private bool CheckpointLoaded()
     {
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
+        foreach (Checkpoint c in Resources.FindObjectsOfTypeAll<Checkpoint>())
         {
-            if (g.GetComponent<Checkpoint>().checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
+            if (c.checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
                 return true;
         }
         return false;

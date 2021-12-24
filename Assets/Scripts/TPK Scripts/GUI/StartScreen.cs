@@ -1157,7 +1157,7 @@ public class StartScreen : MonoBehaviour
 
     IEnumerator LoadIt(int whichCheckpoint, int sceneToGoTo)
     {
-    //    Debug.Log("LOADING: " + whichCheckpoint + " @ " + sceneToGoTo);
+        Debug.Log("LOADING: " + whichCheckpoint + " @ " + sceneToGoTo);
     //    UnityEditor.EditorApplication.isPaused = true;
         for (int lol = 1; lol <= 60; lol++)
             yield return null;
@@ -1204,14 +1204,14 @@ public class StartScreen : MonoBehaviour
         }
         else
         {
-            if (sceneToGoTo > 4)
+        /*    if (sceneToGoTo > 4 && SceneManager.GetSceneByBuildIndex(4))
             {
                 AsyncOperation async0 = new AsyncOperation();
                 async0 = SceneManager.UnloadSceneAsync(4);
 
                 while (!async0.isDone)
                     yield return null;
-            }
+            }*/
             yield return null;
 
        //     if (whichCheckpoint >= 2 || sceneToGoTo == -1)

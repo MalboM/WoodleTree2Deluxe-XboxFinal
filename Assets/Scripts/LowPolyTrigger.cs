@@ -54,7 +54,7 @@ public class LowPolyTrigger : MonoBehaviour {
     {
         if (!currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl)
         {
-        //    Debug.Log("X: " + this.gameObject.name);
+            Debug.Log("X: " + this.gameObject.name);
             StopCoroutine("EnterTriggerCoRo");
             StopCoroutine("ExitTriggerCoRo");
             StartCoroutine("EnterTriggerCoRo");
@@ -119,7 +119,7 @@ public class LowPolyTrigger : MonoBehaviour {
     {
         if (currentlyInside && !PlayerManager.GetMainPlayer().challengeWarping && !PlayerManager.GetMainPlayer().inCutscene && !PlayerManager.GetMainPlayer().disableControl)
         {
-         //   Debug.Log("Y: " + this.gameObject.name);
+            Debug.Log("Y: " + this.gameObject.name);
             StopCoroutine("EnterTriggerCoRo");
             StopCoroutine("ExitTriggerCoRo");
             StartCoroutine("ExitTriggerCoRo");
