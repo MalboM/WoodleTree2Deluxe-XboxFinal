@@ -68,8 +68,36 @@ public class OptionsNew : MonoBehaviour
     bool dontPlaySound;
     int curLanguage;
 
+    [Header("Options GUI", order = 0)]
+
+    [Header("Ivert X", order = 1)]
+    [SerializeField] List<GameObject> invertXTicks;
+
+    [Header("Ivert Y")]
+    [SerializeField] List<GameObject> invertYTicks;
+
+    [Header("Vibration")]
+    [SerializeField] List<GameObject> vibrationTicks;
+
+    [Header("Anti-Aliasing")]
+    [SerializeField] List<GameObject> aATicks;
+
+    [Header("V-Sync")]
+    [SerializeField] List<GameObject> vSyncTicks;
+
+    [Header("Run by Default")]
+    [SerializeField] List<GameObject> runTicks;
+
+    [Header("Bloom")]
+    [SerializeField] List<GameObject> bloomTicks2;
+
+    [Header("Ambient Occlusion")]
+    [SerializeField] List<GameObject> ambientOcclusionTicks;
+
     void Start()
     {
+        Debug.Log(gameObject);
+
         tpc = PlayerManager.GetMainPlayer();
         es = pauseScreen.es;
         QualitySettings.SetQualityLevel(0, true);

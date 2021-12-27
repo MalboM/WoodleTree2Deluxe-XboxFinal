@@ -24,12 +24,12 @@ public class LoadLevelAtStart : MonoBehaviour
 
     void Awake()
     {
-        int currentResolution = PlayerPrefs.GetInt("Resolution", Screen.resolutions.Length - 1);
+     /*   int currentResolution = PlayerPrefs.GetInt("Resolution", Screen.resolutions.Length - 1);
         if (currentResolution >= Screen.resolutions.Length)
             currentResolution = Screen.resolutions.Length - 1;
         Resolution curRes = Screen.resolutions[currentResolution];
         PlayerPrefs.SetInt("Resolution", currentResolution);
-        Screen.SetResolution(curRes.width, curRes.height, Screen.fullScreenMode);
+        Screen.SetResolution(curRes.width, curRes.height, Screen.fullScreenMode); */
         
         foreach (AudioMixer am in audioMixers)
             am.SetFloat("effectsVol", -80f + ((PlayerPrefs.GetFloat("effectsVolume", 8f)) * 10f));

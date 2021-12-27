@@ -1164,11 +1164,16 @@ public class StartScreen : MonoBehaviour
         for (int lol = 1; lol <= 60; lol++)
             yield return null;
 
+        Debug.LogError("A");
+
         loadAnim.SetBool("Loading", true);
         loadIcon.fillAmount = 0f;
 
         if (tpc != null && tpc.GetComponentInParent<OneWayManager>() != null)
             tpc.GetComponentInParent<OneWayManager>().currentlyChecking = true;
+
+        Debug.LogError("B");
+
 
         for (int f = 1; f <= 60; f++)
         {
@@ -1180,8 +1185,13 @@ public class StartScreen : MonoBehaviour
 
         cam.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 
+        Debug.LogError("C");
+
+
         if (newLoading)
         {
+            Debug.LogError("D");
+
             /*    float xf = 0f;
                 for (int x = 2; x <= 10; x++)
                 {
@@ -1206,14 +1216,16 @@ public class StartScreen : MonoBehaviour
         }
         else
         {
-        /*    if (sceneToGoTo > 4 && SceneManager.GetSceneByBuildIndex(4))
-            {
-                AsyncOperation async0 = new AsyncOperation();
-                async0 = SceneManager.UnloadSceneAsync(4);
+            Debug.LogError("E");
 
-                while (!async0.isDone)
-                    yield return null;
-            }*/
+            /*    if (sceneToGoTo > 4 && SceneManager.GetSceneByBuildIndex(4))
+                {
+                    AsyncOperation async0 = new AsyncOperation();
+                    async0 = SceneManager.UnloadSceneAsync(4);
+
+                    while (!async0.isDone)
+                        yield return null;
+                }*/
             yield return null;
 
        //     if (whichCheckpoint >= 2 || sceneToGoTo == -1)
@@ -1229,8 +1241,11 @@ public class StartScreen : MonoBehaviour
                         loadIcon.fillAmount = Mathf.Lerp(loadIcon.fillAmount, async1.progress, 0.8f);
                     yield return null;
                 }
+
+                Debug.LogError("F");
+
             }
-        //    Debug.Log(sceneToGoTo);
+            //    Debug.Log(sceneToGoTo);
             if (sceneToGoTo > 3)
             {
                 AsyncOperation async2 = new AsyncOperation();
@@ -1243,6 +1258,9 @@ public class StartScreen : MonoBehaviour
                 }
                 lowPolys[sceneToGoTo - 4].SetActive(false);
             }
+
+            Debug.LogError("G");
+
         }
 
 
@@ -1254,11 +1272,17 @@ public class StartScreen : MonoBehaviour
             curLPT.EnterTriggerForced();
         }
 
+        Debug.LogError("H");
+
+
         if (whichCheckpoint == 0 || whichCheckpoint == 1)
         {
             lowPolyTriggers[0].currentlyInside = false;
             lowPolyTriggers[0].EnterTriggerForced();
         }
+
+        Debug.LogError("I");
+
 
         //     lowPolyTriggers[0].enabled = false;
 
@@ -1292,8 +1316,13 @@ public class StartScreen : MonoBehaviour
             atmosphereManager.curLevel = "";
         }
 
+        Debug.LogError("L");
+
+
         if (PlayerPrefs.GetInt("IntroWatched", 0) == 1)
         {
+            Debug.LogError("M");
+
             Time.timeScale = 1f;
             tpc.gameObject.transform.position = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
                 PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
@@ -1305,16 +1334,24 @@ public class StartScreen : MonoBehaviour
 
             if (PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) > 3)
             {
+                Debug.LogError("N");
+
                 LoadLevelAdditive lla = loadLevelAdditives[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) - 4];
                 if (lla.lptCollider != null)
                     lla.lptCollider.enabled = true;
+
+                Debug.LogError("N-1");
 
                 lla.FindFullLevel();
                 if (lla.fullSceneObject != null)
                     odm.ActivateObject(lla.fullSceneObject);
 
+                Debug.LogError("N-2");
+
                 if (lla.entTrig)
                     lla.entTrig.colliderToActivate.enabled = true;
+
+                Debug.LogError("N-3");
 
                 lowPolys[PlayerPrefs.GetInt("Checkpoint" + whichCheckpoint.ToString() + "Scene", 0) - 4].SetActive(false);
             }
@@ -1334,12 +1371,17 @@ public class StartScreen : MonoBehaviour
             */
 
             //    yield return new WaitForSeconds(5f);
+            Debug.LogError("N-4");
 
             yield return new WaitForSeconds(1f);
             tpc.GetComponentInParent<OneWayManager>().CheckOneWays();
 
+            Debug.LogError("N-5");
+
             while (!CheckpointLoaded())
                 yield return null;
+
+            Debug.LogError("O");
 
             tpc.rb.isKinematic = false;
 
@@ -1353,9 +1395,16 @@ public class StartScreen : MonoBehaviour
                 loadFS.color = Color.Lerp(Color.clear, Color.black, (f * 1f) / 60f);
                 yield return null;
             }
+
+
+            Debug.LogError("P");
+
         }
         else
         {
+            Debug.LogError("Q");
+
+
             loadAnim.SetBool("Loading", false);
             for (int f = 59; f >= 0; f--)
             {
@@ -1363,6 +1412,9 @@ public class StartScreen : MonoBehaviour
                 loadFS.color = Color.Lerp(Color.white, Color.black, (f * 1f) / 60f);
                 yield return null;
             }
+
+            Debug.LogError("R");
+
 
             Time.timeScale = 1f;
             loadFS.color = Color.clear;
@@ -1374,6 +1426,9 @@ public class StartScreen : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
             tpc.GetComponentInParent<OneWayManager>().CheckOneWays();
+
+            Debug.LogError("S");
+
         }
 
 
@@ -1400,6 +1455,9 @@ public class StartScreen : MonoBehaviour
             lowPolyExt.SetActive(true);
         */
         isLoading = false;
+
+        Debug.LogError("T");
+
     }
 
     private bool CheckpointLoaded()
