@@ -1155,8 +1155,10 @@ public class StartScreen : MonoBehaviour
         }
     }
 
+    [HideInInspector] public bool isLoading;
     IEnumerator LoadIt(int whichCheckpoint, int sceneToGoTo)
     {
+        isLoading = true;
         Debug.Log("LOADING: " + whichCheckpoint + " @ " + sceneToGoTo);
     //    UnityEditor.EditorApplication.isPaused = true;
         for (int lol = 1; lol <= 60; lol++)
@@ -1249,25 +1251,25 @@ public class StartScreen : MonoBehaviour
             yield return null;
             yield return null;
             yield return null;
-            curLPT.EnterTrigger();
+            curLPT.EnterTriggerForced();
         }
 
         if (whichCheckpoint == 0 || whichCheckpoint == 1)
         {
             lowPolyTriggers[0].currentlyInside = false;
-            lowPolyTriggers[0].EnterTrigger();
+            lowPolyTriggers[0].EnterTriggerForced();
         }
 
         //     lowPolyTriggers[0].enabled = false;
 
         if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
-            lowPolyTriggers[1].EnterTrigger();
+            lowPolyTriggers[1].EnterTriggerForced();
         if (whichCheckpoint == 7 || whichCheckpoint == 8)
-            lowPolyTriggers[2].EnterTrigger();
+            lowPolyTriggers[2].EnterTriggerForced();
         if (whichCheckpoint == 10 || whichCheckpoint == 11)
-            lowPolyTriggers[3].EnterTrigger();
+            lowPolyTriggers[3].EnterTriggerForced();
         if (whichCheckpoint == 13 || whichCheckpoint == 14)
-            lowPolyTriggers[4].EnterTrigger();
+            lowPolyTriggers[4].EnterTriggerForced();
         if (whichCheckpoint == 16 || whichCheckpoint == 17 || whichCheckpoint == 37)
         {
             if (atmosphereManager.curLevel != "Level5")
@@ -1275,14 +1277,14 @@ public class StartScreen : MonoBehaviour
                 atmosphereManager.EnterTrigger(2);
                 atmosphereManager.curLevel = "Level5";
             }
-            lowPolyTriggers[5].EnterTrigger();
+            lowPolyTriggers[5].EnterTriggerForced();
         }
         if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
-            lowPolyTriggers[6].EnterTrigger();
+            lowPolyTriggers[6].EnterTriggerForced();
         if (whichCheckpoint == 22 || whichCheckpoint == 23)
-            lowPolyTriggers[7].EnterTrigger();
+            lowPolyTriggers[7].EnterTriggerForced();
         if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26)
-            lowPolyTriggers[8].EnterTrigger();
+            lowPolyTriggers[8].EnterTriggerForced();
 
         if (whichCheckpoint != 16 && whichCheckpoint != 17 && whichCheckpoint != 37 && atmosphereManager.curLevel == "Level5")
         {
@@ -1397,6 +1399,7 @@ public class StartScreen : MonoBehaviour
         if(whichCheckpoint != 2 && whichCheckpoint != 6 && whichCheckpoint != 12 && whichCheckpoint != 15 && whichCheckpoint != 21)
             lowPolyExt.SetActive(true);
         */
+        isLoading = false;
     }
 
     private bool CheckpointLoaded()

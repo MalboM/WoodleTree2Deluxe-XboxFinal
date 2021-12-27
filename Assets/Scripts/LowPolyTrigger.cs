@@ -59,6 +59,16 @@ public class LowPolyTrigger : MonoBehaviour {
             StopCoroutine("ExitTriggerCoRo");
             StartCoroutine("EnterTriggerCoRo");
         }
+        else
+            Debug.Log("X FAIL: " + this.gameObject.name + " | " + !currentlyInside +" "+ !PlayerManager.GetMainPlayer().challengeWarping + " " + !PlayerManager.GetMainPlayer().inCutscene + " " + !PlayerManager.GetMainPlayer().disableControl);
+    }
+
+    public void EnterTriggerForced()
+    {
+        Debug.Log("X FORCED: " + this.gameObject.name);
+        StopCoroutine("EnterTriggerCoRo");
+        StopCoroutine("ExitTriggerCoRo");
+        StartCoroutine("EnterTriggerCoRo");
     }
 
     IEnumerator EnterTriggerCoRo()
@@ -124,7 +134,18 @@ public class LowPolyTrigger : MonoBehaviour {
             StopCoroutine("ExitTriggerCoRo");
             StartCoroutine("ExitTriggerCoRo");
         }
+        else
+            Debug.Log("Y FAIL: " + this.gameObject.name + " | " + currentlyInside + " " + !PlayerManager.GetMainPlayer().challengeWarping + " " + !PlayerManager.GetMainPlayer().inCutscene + " " + !PlayerManager.GetMainPlayer().disableControl);
     }
+
+    public void ExitTriggerForced()
+    {
+        Debug.Log("Y FORCED: " + this.gameObject.name);
+        StopCoroutine("EnterTriggerCoRo");
+        StopCoroutine("ExitTriggerCoRo");
+        StartCoroutine("ExitTriggerCoRo");
+    }
+
     IEnumerator ExitTriggerCoRo()
     {
         yield return null;

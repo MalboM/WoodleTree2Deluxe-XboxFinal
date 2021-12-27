@@ -2037,7 +2037,7 @@ public class PauseScreen : MonoBehaviour
         }
 
         if (curLPT != null)
-            curLPT.ExitTrigger();
+            curLPT.ExitTriggerForced();
 
         yield return null;
 
@@ -2050,23 +2050,23 @@ public class PauseScreen : MonoBehaviour
 
         //PLAZA
         if (whichCheckpoint == 0 || whichCheckpoint == 1)
-            lowPolyTriggers[0].EnterTrigger();
+            lowPolyTriggers[0].EnterTriggerForced();
 
         //1
         if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
-            lowPolyTriggers[1].EnterTrigger();
+            lowPolyTriggers[1].EnterTriggerForced();
 
         //2
         if (whichCheckpoint == 7 || whichCheckpoint == 8 || whichCheckpoint == 33)
-            lowPolyTriggers[2].EnterTrigger();
+            lowPolyTriggers[2].EnterTriggerForced();
 
         //3
         if (whichCheckpoint == 10 || whichCheckpoint == 11)
-            lowPolyTriggers[3].EnterTrigger();
+            lowPolyTriggers[3].EnterTriggerForced();
 
         //4
         if (whichCheckpoint == 13 || whichCheckpoint == 14 || whichCheckpoint == 30 || whichCheckpoint == 31)
-            lowPolyTriggers[4].EnterTrigger();
+            lowPolyTriggers[4].EnterTriggerForced();
 
         //5
         if (whichCheckpoint == 16 || whichCheckpoint == 17 || whichCheckpoint == 37)
@@ -2076,20 +2076,20 @@ public class PauseScreen : MonoBehaviour
                 atmosphereManager.EnterTrigger(2);
                 atmosphereManager.curLevel = "Level5";
             }
-            lowPolyTriggers[5].EnterTrigger();
+            lowPolyTriggers[5].EnterTriggerForced();
         }
 
         //6
         if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
-            lowPolyTriggers[6].EnterTrigger();
+            lowPolyTriggers[6].EnterTriggerForced();
 
         //7
         if (whichCheckpoint == 22 || whichCheckpoint == 23 || whichCheckpoint == 28 || whichCheckpoint == 29)
-            lowPolyTriggers[7].EnterTrigger();
+            lowPolyTriggers[7].EnterTriggerForced();
 
         //9
         if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
-            lowPolyTriggers[8].EnterTrigger();
+            lowPolyTriggers[8].EnterTriggerForced();
         
         for (int s = 60; s <= 120; s++)
         {
@@ -2297,7 +2297,7 @@ public class PauseScreen : MonoBehaviour
                 tpc.gameObject.GetComponentInParent<OneWayManager>().CheckOneWays();
 
                 if (curLPT != null)
-                    curLPT.ExitTrigger();
+                    curLPT.ExitTriggerForced();
 
                 for (float f = 0f; f < 2.1f; f += (1 / 60f))
                     yield return null;
@@ -2314,23 +2314,23 @@ public class PauseScreen : MonoBehaviour
 
                 //PLAZA
                 if (whichCheckpoint == 0 || whichCheckpoint == 1)
-                    lowPolyTriggers[0].EnterTrigger();
+                    lowPolyTriggers[0].EnterTriggerForced();
 
                 //1
                 if (whichCheckpoint == 3 || whichCheckpoint == 4 || whichCheckpoint == 5)
-                    lowPolyTriggers[1].EnterTrigger();
+                    lowPolyTriggers[1].EnterTriggerForced();
 
                 //2
                 if (whichCheckpoint == 7 || whichCheckpoint == 8 || whichCheckpoint == 33)
-                    lowPolyTriggers[2].EnterTrigger();
+                    lowPolyTriggers[2].EnterTriggerForced();
 
                 //3
                 if (whichCheckpoint == 10 || whichCheckpoint == 11)
-                    lowPolyTriggers[3].EnterTrigger();
+                    lowPolyTriggers[3].EnterTriggerForced();
 
                 //4
                 if (whichCheckpoint == 13 || whichCheckpoint == 14 || whichCheckpoint == 30 || whichCheckpoint == 31)
-                    lowPolyTriggers[4].EnterTrigger();
+                    lowPolyTriggers[4].EnterTriggerForced();
 
                 //5
                 if (whichCheckpoint == 16 || whichCheckpoint == 17 || whichCheckpoint == 37)
@@ -2340,20 +2340,20 @@ public class PauseScreen : MonoBehaviour
                         atmosphereManager.EnterTrigger(2);
                         atmosphereManager.curLevel = "Level5";
                     }
-                    lowPolyTriggers[5].EnterTrigger();
+                    lowPolyTriggers[5].EnterTriggerForced();
                 }
 
                 //6
                 if (whichCheckpoint == 18 || whichCheckpoint == 19 || whichCheckpoint == 20 || whichCheckpoint == 27)
-                    lowPolyTriggers[6].EnterTrigger();
+                    lowPolyTriggers[6].EnterTriggerForced();
 
                 //7
                 if (whichCheckpoint == 22 || whichCheckpoint == 23 || whichCheckpoint == 28 || whichCheckpoint == 29)
-                    lowPolyTriggers[7].EnterTrigger();
+                    lowPolyTriggers[7].EnterTriggerForced();
 
                 //9
                 if (whichCheckpoint == 24 || whichCheckpoint == 25 || whichCheckpoint == 26 || whichCheckpoint == 34 || whichCheckpoint == 35)
-                    lowPolyTriggers[8].EnterTrigger();
+                    lowPolyTriggers[8].EnterTriggerForced();
 
 
                 Time.timeScale = 1f;
