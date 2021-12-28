@@ -1324,11 +1324,6 @@ public class StartScreen : MonoBehaviour
             Debug.LogError("M");
 
             Time.timeScale = 1f;
-            tpc.gameObject.transform.position = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
-                PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
-            tpcFox.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
-            tpcBeaver.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
-            tpcBush.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
             cam.disableControl = false;
             tpc.rb.isKinematic = true;
 
@@ -1380,6 +1375,22 @@ public class StartScreen : MonoBehaviour
 
             while (!CheckpointLoaded())
                 yield return null;
+
+
+            Debug.LogError("N-6");
+
+            Vector3 newPos = new Vector3(checkpointToSpawnAt.checkpointposition.transform.position.x, 
+                checkpointToSpawnAt.transform.position.y + 1f, 
+                checkpointToSpawnAt.checkpointposition.transform.position.z);
+            tpc.gameObject.transform.position = newPos;
+
+            tpcFox.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
+            tpcBeaver.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
+            tpcBush.gameObject.transform.position = tpc.gameObject.transform.position + (Vector3.up * 4f);
+
+            Debug.LogError("N-7 | Spawning at: (" + newPos.x +", " + newPos.y + ", "+ newPos.z +")");
+
+            yield return new WaitForSeconds(1f);
 
             Debug.LogError("O");
 
@@ -1460,12 +1471,16 @@ public class StartScreen : MonoBehaviour
 
     }
 
+    Checkpoint checkpointToSpawnAt;
     private bool CheckpointLoaded()
     {
         foreach (Checkpoint c in Resources.FindObjectsOfTypeAll<Checkpoint>())
         {
             if (c.checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
+            {
+                checkpointToSpawnAt = c;
                 return true;
+            }
         }
         return false;
     }/*

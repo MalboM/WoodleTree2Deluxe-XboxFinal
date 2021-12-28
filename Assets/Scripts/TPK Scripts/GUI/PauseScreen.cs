@@ -2022,9 +2022,7 @@ public class PauseScreen : MonoBehaviour
         }
 
         yield return null;
-        Vector3 newPos = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
-            PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
-        tpc.gameObject.transform.position = newPos;
+
         PlayerPrefs.SetInt("LastCheckpoint", whichCheckpoint);
         //    PlayerPrefs.Save();
 
@@ -2099,8 +2097,7 @@ public class PauseScreen : MonoBehaviour
 
         if (tpc.gameObject.GetComponentInParent<OneWayManager>() != null)
             tpc.gameObject.GetComponentInParent<OneWayManager>().CheckOneWays();
-
-        tpc.gameObject.transform.position = newPos;
+        
         PositionMultiCharacters();
         
         yield return null;
@@ -2122,10 +2119,15 @@ public class PauseScreen : MonoBehaviour
         //    yield return new WaitForSeconds(3f);
         
         while (!CheckpointLoaded())
-        {
             yield return null;
-        }
-        
+
+        Vector3 newPos = new Vector3(checkpointToSpawnAt.checkpointposition.transform.position.x,
+            checkpointToSpawnAt.transform.position.y + 1f,
+            checkpointToSpawnAt.checkpointposition.transform.position.z);
+        tpc.gameObject.transform.position = newPos;
+
+        yield return new WaitForSeconds(5f);
+
         tpc.anim.enabled = true;
         for (int s = 120; s <= 180; s++)
         {
@@ -2288,9 +2290,6 @@ public class PauseScreen : MonoBehaviour
                         g.GetComponent<Checkpoint>().ActivateCheckpoint();
                 }
                 yield return null;
-                Vector3 newPos = new Vector3(PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "X", 0f),
-                    PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Y", 0f), PlayerPrefs.GetFloat("Checkpoint" + whichCheckpoint + "Z", 0f));
-                tpc.gameObject.transform.position = newPos;
                 PlayerPrefs.SetInt("LastCheckpoint", whichCheckpoint);
                 //    PlayerPrefs.Save();
 
@@ -2362,6 +2361,13 @@ public class PauseScreen : MonoBehaviour
                 //	yield return new WaitForSeconds (5f);
                 while (!CheckpointLoaded())
                     yield return null;
+                
+                Vector3 newPos = new Vector3(checkpointToSpawnAt.checkpointposition.transform.position.x, 
+                    checkpointToSpawnAt.transform.position.y + 1f, 
+                    checkpointToSpawnAt.checkpointposition.transform.position.z);
+                tpc.gameObject.transform.position = newPos;
+                yield return new WaitForSeconds(5f);
+
                 tpc.anim.enabled = true;
 
                 if (whichLevel > 2)
@@ -2420,12 +2426,16 @@ public class PauseScreen : MonoBehaviour
         //        Debug.Log("DOUBLE WARP AVOIDED FOR " + whichLevel +" "+ whichCheckpoint +" "+ extSceneLoaded +" "+ sceneLoaded);
     }
 
+    Checkpoint checkpointToSpawnAt;
     private bool CheckpointLoaded()
     {
         foreach (Checkpoint c in Resources.FindObjectsOfTypeAll<Checkpoint>())
         {
             if (c.checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
+            {
+                checkpointToSpawnAt = c;
                 return true;
+            }
         }
         return false;
     }
