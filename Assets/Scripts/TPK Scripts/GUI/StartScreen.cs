@@ -1404,13 +1404,22 @@ public class StartScreen : MonoBehaviour
 
     private bool CheckpointLoaded()
     {
+        foreach (Checkpoint c in Resources.FindObjectsOfTypeAll<Checkpoint>())
+        {
+            if (c.checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
+                return true;
+        }
+        return false;
+    }/*
+    private bool CheckpointLoaded()
+    {
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("Checkpoint"))
         {
             if (g.GetComponent<Checkpoint>().checkpointID == PlayerPrefs.GetInt("LastCheckpoint", 0))
                 return true;
         }
         return false;
-    }
+    }*/
 
     IEnumerator EndOfStart()
     {
