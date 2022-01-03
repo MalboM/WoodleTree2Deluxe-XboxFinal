@@ -646,6 +646,7 @@ public class XOneEventsManager : MonoBehaviour
         PlayerPrefs.SetInt("Berries", 0);
         PlayerPrefs.SetInt("BlueBerries", 0);
 
+
         foreach (string s in levelNames)
         {
             string newString = "";
@@ -668,6 +669,8 @@ public class XOneEventsManager : MonoBehaviour
                 total = 80;
             if (s == "Level8")
                 total = 80;
+
+            //DELETE ALL BLUE BERRIES COLLECTED
             for (int bb = 0; bb < total; bb++)
             {
                 PlayerPrefs.SetInt(s + "BlueBerry" + bb.ToString(), 0);
@@ -907,8 +910,59 @@ public class XOneEventsManager : MonoBehaviour
     }
 
 
-    //
-    //void SavingCoRo()
+    public void SaveBlueBerry(string BerryID, int BerryValue)
+    {
+        StartCoroutine(SaveBlueBerryCo(BerryID, BerryValue));
+    }
+
+    IEnumerator SaveBlueBerryCo(string BerryID, int BerryValue)
+    {
+        isSaving = true;
+
+        storageSavedBytes.Clear();
+
+        StorageKeyValue.storageInstance = mainStorage;
+
+        DataMap dataMap = DataMap.Create();
+
+        SetStorageString(dataMap, "Berries", PlayerPrefs.GetInt("Berries"));
+        SetStorageString(dataMap, "BlueBerries", PlayerPrefs.GetInt("BlueBerries"));
+        
+        SetStorageString(dataMap, "AllBlueBerries", PlayerPrefs.GetInt("AllBlueBerries"));
+        SetStorageString(dataMap, "BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal"));
+
+        SetStorageString(dataMap, BerryID, BerryValue);
+
+        yield return null;
+
+        byte[] byteArr = new byte[0];
+
+        XmlSerializer serializer = new XmlSerializer(typeof(XONESavedItems), new XmlRootAttribute("prefs"));
+        
+        try
+        {
+            using (var ms = new System.IO.MemoryStream())
+            {
+                XONESavedItems xoneSavedItems = new XONESavedItems();
+                xoneSavedItems.Items = storageSavedBytes.Select(kv => new XONESavedItem() { key = kv.Key, value = kv.Value }).ToArray();
+                foreach (XONESavedItem it in xoneSavedItems.Items)
+                    Debug.Log("\n***** Serializing " + it.key.ToString() + " with value " + it.value.ToString());
+                //
+                serializer.Serialize(ms, xoneSavedItems);
+                byteArr = ms.ToArray();
+                Debug.Log("***** Data serialized");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("**** Serialization error : " + ex.InnerException.ToString());
+        }
+
+        dataMap.AddOrReplaceBuffer("WoodleTree2", byteArr);
+        
+        SaveStorage(dataMap);
+    }
+
     IEnumerator SavingCoRo()
     {
         //
@@ -939,37 +993,11 @@ public class XOneEventsManager : MonoBehaviour
 
         yield return null;
 
-        //
         foreach (string s in levelNames)
         {
-            int total = 140;
-            if (s == "ExternalWorld")
-                total = 100;
-            if (s == "Level1.2")
-                total = 80;
-            if (s == "Level2")
-                total = 90;
-            if (s == "Level3")
-                total = 80;
-            if (s == "Level4")
-                total = 80;
-            if (s == "Level5")
-                total = 80;
-            if (s == "Level6")
-                total = 120;
-            if (s == "Level7")
-                total = 80;
-            if (s == "Level8")
-                total = 80;
-            for (int bb = 0; bb < total; bb++)
-            {
-                SetStorageString(map, s + "BlueBerry" + bb.ToString(), PlayerPrefs.GetInt(s + "BlueBerry" + bb.ToString()));
-                if (bb % 20 == 0)
-                    yield return null;
-            }
-
-            //        SetStorageString(map, s + "BlueBerry", PlayerPrefs.GetString(s + "BlueBerry"));
+            SetStorageString(map, s + "BlueBerry", PlayerPrefs.GetString(s + "BlueBerry"));
         }
+
         //TEARS
         for (int lvl = 1; lvl <= 8; lvl++)
         {
@@ -1242,9 +1270,15 @@ public class XOneEventsManager : MonoBehaviour
 
         // test save
 
+
+        foreach (string s in levelNames)
+        {
+            LoadIntPref(view, s + "BlueBerry");
+        }
+
         //
         //YAN MODIFIC 2
-        foreach (string s in levelNames) {
+        /*foreach (string s in levelNames) {
             //        LoadStringPref(view, s + "BlueBerry");
             int total = 140;
             if (s == "ExternalWorld")
@@ -1265,9 +1299,11 @@ public class XOneEventsManager : MonoBehaviour
                 total = 80;
             if (s == "Level8")
                 total = 80;
+
+            //LOAD ALL BLUE BERRIES COLLECTED
             for (int bb = 0; bb < total; bb++)
                 LoadIntPref(view, s + "BlueBerry" + bb.ToString());
-        }
+        }*/
 
         //TEARS
         for (int lvl = 1; lvl <= 8; lvl++)

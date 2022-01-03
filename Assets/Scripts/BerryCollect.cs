@@ -38,6 +38,7 @@ public class BerryCollect : MonoBehaviour {
     void OnEnable ()
     {
         this.GetComponent<SphereCollider>().enabled = true;
+
         if(initAmount != 0)
             amount = initAmount;
     }
@@ -52,12 +53,22 @@ public class BerryCollect : MonoBehaviour {
             collected = true;
 
            if (berryType == BerryManagerTrigger.BerryType.blue)
-            {
+           {
                 string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry");
                 string temp2 = temp1.Remove(id, 1);
                 string temp3 = temp2.Insert(id, "1");
                 PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", temp3);
-            }
+
+#if UNITY_XBOXONE && !UNITY_EDITOR
+
+                DataManager.xOneEventsManager.SaveBlueBerry
+                    (
+                        PlayerPrefs.GetString(gameObject.scene.name + "BlueBerry" + temp3.ToString()),
+                        PlayerPrefs.GetInt(gameObject.scene.name + "BlueBerry" + temp3.ToString())
+                    );
+#endif
+
+           }
 
             StartCoroutine("MultiCollect", other.gameObject.GetComponent<TPC>().initialParent.GetComponent<BerryManagerTrigger>());
         }
