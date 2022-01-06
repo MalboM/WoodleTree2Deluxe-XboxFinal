@@ -63,12 +63,11 @@ public class BerryCollect : MonoBehaviour {
 
                 DataManager.xOneEventsManager.SaveBlueBerry
                     (
-                        PlayerPrefs.GetString(gameObject.scene.name + "BlueBerry" + temp3.ToString()),
-                        PlayerPrefs.GetInt(gameObject.scene.name + "BlueBerry" + temp3.ToString())
+                        (gameObject.scene.name + "BlueBerry"), PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry")
                     );
 #endif
 
-           }
+            }
 
             StartCoroutine("MultiCollect", other.gameObject.GetComponent<TPC>().initialParent.GetComponent<BerryManagerTrigger>());
         }

@@ -672,13 +672,8 @@ public class XOneEventsManager : MonoBehaviour
 
             //DELETE ALL BLUE BERRIES COLLECTED
             for (int bb = 0; bb < total; bb++)
-            {
-                PlayerPrefs.SetInt(s + "BlueBerry" + bb.ToString(), 0);
-                /*if (bb % 20 == 0)
-                    yield return null;*/
-            }
-            //         newString = newString.Insert(0, "0");
-            //    PlayerPrefs.SetString(s + "BlueBerry", newString);
+                newString = newString.Insert(0, "0");
+            PlayerPrefs.SetString(s + "BlueBerry", newString);
         }
 
         //
@@ -910,12 +905,12 @@ public class XOneEventsManager : MonoBehaviour
     }
 
 
-    public void SaveBlueBerry(string BerryID, int BerryValue)
+    public void SaveBlueBerry(string BerryID, string BerryValue)
     {
         StartCoroutine(SaveBlueBerryCo(BerryID, BerryValue));
     }
 
-    IEnumerator SaveBlueBerryCo(string BerryID, int BerryValue)
+    IEnumerator SaveBlueBerryCo(string BerryID, string BerryValue)
     {
         isSaving = true;
 
@@ -1273,7 +1268,7 @@ public class XOneEventsManager : MonoBehaviour
 
         foreach (string s in levelNames)
         {
-            LoadIntPref(view, s + "BlueBerry");
+            LoadStringPref(view, s + "BlueBerry");
         }
 
         //
@@ -1700,4 +1695,4 @@ public class XOneEventsManager : MonoBehaviour
     }
 
 #endif
-    }
+}
