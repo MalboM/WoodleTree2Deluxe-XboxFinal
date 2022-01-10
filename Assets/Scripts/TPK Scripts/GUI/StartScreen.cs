@@ -179,6 +179,7 @@ public class StartScreen : MonoBehaviour
         if (!PlayerPrefs.HasKey("LastCheckpoint"))
             PlayerPrefs.SetInt("LastCheckpoint", -1);
 
+        Debug.LogError("YAN: StartScreen. Init BB? " + !PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"));
         if (!PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
         {
             foreach (string s in levelNames)
@@ -210,6 +211,7 @@ public class StartScreen : MonoBehaviour
                     newString = newString.Insert(0, "0");
                 }
                 PlayerPrefs.SetString(s + "BlueBerry", newString);
+                Debug.LogError("YAN: Init BB Pref for " + s +" : "+ newString);
             }
             PlayerPrefs.Save();
         }

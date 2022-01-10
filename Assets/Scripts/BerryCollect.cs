@@ -52,11 +52,18 @@ public class BerryCollect : MonoBehaviour {
             //    else
             collected = true;
 
-           if (berryType == BerryManagerTrigger.BerryType.blue)
+            Debug.LogError("YAN: BerryCollect. Collect BB ID: " + id.ToString());
+
+            if (berryType == BerryManagerTrigger.BerryType.blue)
            {
                 string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry");
+
+                Debug.LogError("YAN: BerryCollect. BB Pref orig value: " + temp1);
+
                 string temp2 = temp1.Remove(id, 1);
                 string temp3 = temp2.Insert(id, "1");
+
+                Debug.LogError("YAN: BerryCollect. BB Pref new value: " + temp3);
                 PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", temp3);
 
 #if UNITY_XBOXONE && !UNITY_EDITOR
