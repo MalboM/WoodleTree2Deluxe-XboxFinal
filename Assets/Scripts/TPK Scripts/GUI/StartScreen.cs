@@ -8,9 +8,8 @@ using CinemaDirector;
 using Rewired;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
-//using nn;
+
 using UnityEditor;
-using UnityStandardAssets.ImageEffects;
 
 public class StartScreen : MonoBehaviour
 {
@@ -96,9 +95,6 @@ public class StartScreen : MonoBehaviour
     public Text yesText;
     public GameObject deleteButton;
     public Text deleteText;
-    bool invertX;
-    bool invertY;
-    bool vibOn;
     //	float camSense;
     float effects;
     float music;
@@ -454,7 +450,8 @@ public class StartScreen : MonoBehaviour
             else
             {
                 if (remapperOpen)
-                    optionsNew.CloseButtonRemapper();
+                    Debug.Log("");
+                    //optionsNew.CloseButtonRemapper();
                 else
                 {
                     if (defaultsAYS.activeInHierarchy)
@@ -541,62 +538,6 @@ public class StartScreen : MonoBehaviour
 
     public void InitializeValues()
     {
-        if (PlayerPrefs.GetInt("InvertX", 0) == 0)
-        {
-            invertX = false;
-        }
-        else
-            invertX = true;
-        cam.freeInvertXAxis = invertX;
-        ixTick.SetActive(invertX);
-
-        if (PlayerPrefs.GetInt("InvertY", 0) == 0)
-            invertY = false;
-        else
-            invertY = true;
-        cam.freeInvertYAxis = invertY;
-        iyTick.SetActive(invertY);
-
-        if (PlayerPrefs.GetInt("Vibration", 1) == 0)
-            vibOn = false;
-        else
-            vibOn = true;
-        //		camSense = cam.freeRotateSpeed;
-
-        music = PlayerPrefs.GetFloat("musicVolume", 8f);
-        effects = PlayerPrefs.GetFloat("effectsVolume", 8f);
-
-        /*
-        if (PlayerPrefs.GetInt("AA", 1) == 0)
-            aaIsOn = false;
-        else
-            aaIsOn = true;
-        foreach (Antialiasing aa in ps.antialiasing)
-            aa.enabled = aaIsOn;
-        */
-
-        if (invertX)
-            ixTick.SetActive(true);
-        else
-            ixTick.SetActive(false);
-
-        if (invertY)
-            iyTick.SetActive(true);
-        else
-            iyTick.SetActive(false);
-
-        if (vibOn)
-            vibTick.SetActive(true);
-        else
-            vibTick.SetActive(false);
-
-        if (aaIsOn)
-            aaTick.SetActive(true);
-        else
-            aaTick.SetActive(false);
-
-        //    sensitivity.value = camSense;
-
         musicSlider.value = music;
         effectsSlider.value = effects;
     }
@@ -670,6 +611,48 @@ public class StartScreen : MonoBehaviour
         PlaySound(selectSound);
     }
 
+
+    #region NEW OPTIONS METHODS
+    public void ToogleInvertX()
+    {
+        Debug.Log("Invert X");
+        optionsNew.ToggleInvertX();
+    }
+    public void ToogleInvertY()
+    {
+        optionsNew.ToggleInvertY();
+    }
+    public void ToogleVibrations()
+    {
+        optionsNew.ToggleVibrations();
+    }
+    public void ToggleAntiAliasing()
+    {
+        optionsNew.ToggleAntiAliasing();
+    }
+    public void ToggleVSync()
+    {
+        optionsNew.ToggleVsync();
+    }
+    public void ToogleRunByDefault()
+    {
+        optionsNew.ToggleRunByDefault();
+    }
+    public void ToggleBloom()
+    {
+        optionsNew.ToggleBloom();
+    }
+    public void ToggleAmbientOcclusion()
+    {
+        optionsNew.ToggleAmbientOcclusion();
+    }
+    public void ResetOptionsToDefault()
+    {
+        optionsNew.RestoreDefaults();
+    }
+    #endregion
+
+
     public void Credits()
     {
         CloseOptions();
@@ -682,23 +665,23 @@ public class StartScreen : MonoBehaviour
 
     public void MouseOverButton(GameObject selected)
     {
-        if (selected != null)
-        {
-            if (notMouseOver || Cursor.visible)
-            {
-                notMouseOver = false;
-                es.SetSelectedGameObject(selected);
-                if (prevSelected.gameObject.transform.position.y < selected.transform.position.y)
-                    PlaySound(highlightDownSound);
-                else
-                    PlaySound(highlightSound);
-                //    Vibrate(0.05f, 0.2f);
-                prevSelected = selected;
+        //if (selected != null)
+        //{
+        //    if (notMouseOver || Cursor.visible)
+        //    {
+        //        notMouseOver = false;
+        //        es.SetSelectedGameObject(selected);
+        //        if (prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+        //            PlaySound(highlightDownSound);
+        //        else
+        //            PlaySound(highlightSound);
+        //        //    Vibrate(0.05f, 0.2f);
+        //        prevSelected = selected;
 
-                if (inMain)
-                    MainButtonSelect();
-            }
-        }
+        //        if (inMain)
+        //            MainButtonSelect();
+        //    }
+        //}
     }
 
     void MainButtonSelect()
@@ -722,90 +705,33 @@ public class StartScreen : MonoBehaviour
     }
 
     //OPTIONS
-    public void InvertX()
+    public void ToggleInvertX()
     {
-        invertX = !invertX;
-        if (invertX)
-        {
-            ixTick.SetActive(true);
+        optionsNew.ToggleInvertX();
+
+        if(optionsNew.isXInverted)
             PlaySound(toggleOnSound);
-            PlayerPrefs.SetInt("InvertX", 1);
-        }
         else
-        {
-            ixTick.SetActive(false);
             PlaySound(toggleOffSound);
-            PlayerPrefs.SetInt("InvertX", 0);
-        }
-        cam.freeInvertXAxis = invertX;
+
+        cam.freeInvertXAxis = optionsNew.isXInverted;
     }
 
-    public void InvertY()
+    public void ToggleInvertY()
     {
-        invertY = !invertY;
-        if (invertY)
-        {
-            iyTick.SetActive(true);
+        optionsNew.ToggleInvertY();
+
+        if (optionsNew.isYInverted)
             PlaySound(toggleOnSound);
-            PlayerPrefs.SetInt("InvertY", 1);
-        }
         else
-        {
-            iyTick.SetActive(false);
             PlaySound(toggleOffSound);
-            PlayerPrefs.SetInt("InvertY", 0);
-        }
-        cam.freeInvertYAxis = invertY;
+
+        cam.freeInvertYAxis = optionsNew.isYInverted;
+
         PlaySound(selectSound);
     }
 
-    public void Vibration()
-    {
-        vibOn = !vibOn;
-        if (vibOn)
-        {
-            vibTick.SetActive(true);
-            PlaySound(toggleOnSound);
-        }
-        else
-        {
-            vibTick.SetActive(false);
-            PlaySound(toggleOffSound);
-        }
-        if (vibOn)
-            PlayerPrefs.SetInt("Vibration", 1);
-        else
-            PlayerPrefs.SetInt("Vibration", 0);
-        PlaySound(selectSound);
-    }
 
-    public void AAToggle()
-    {
-        if (!aaIsOn)
-        {
-            aaIsOn = true;
-            aaTick.SetActive(true);
-            PlaySound(toggleOnSound);
-            foreach (Antialiasing aa in ps.antialiasing)
-                aa.enabled = true;
-            PlayerPrefs.SetInt("AA", 1);
-        }
-        else
-        {
-            aaIsOn = false;
-            aaTick.SetActive(false);
-            PlaySound(toggleOffSound);
-            foreach (Antialiasing aa in ps.antialiasing)
-                aa.enabled = false;
-            PlayerPrefs.SetInt("AA", 0);
-        }
-    }
-
-    /*   public void Sensitivity(){
-           camSense = sensitivity.value;
-           cam.freeRotateSpeed = camSense;
-           PlaySound (highlightSound);
-       }*/
 
     public void SetEffects()
     {

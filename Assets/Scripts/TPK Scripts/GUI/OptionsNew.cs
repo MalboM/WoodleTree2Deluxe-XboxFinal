@@ -11,7 +11,7 @@ public class OptionsNew : MonoBehaviour
 {
     public StartScreen startScreen;
     public PauseScreen pauseScreen;
-    public ControlRemappingDemo1 controlRemapping;
+    //public ControlRemappingDemo1 controlRemapping;
     TPC tpc;
     EventSystem es;
     public PostProcessLayer ppLayer;
@@ -47,7 +47,7 @@ public class OptionsNew : MonoBehaviour
     BoolParameter aoOn;
     BoolParameter dofOn;
 
-    public List<GameObject> bloomTicks;
+    //public List<GameObject> bloomTicks;
     public List<GameObject> aoTicks;
     public List<GameObject> dofTicks;
 
@@ -71,27 +71,35 @@ public class OptionsNew : MonoBehaviour
     [Header("Options GUI", order = 0)]
 
     [Header("Ivert X", order = 1)]
+    [SerializeField] public bool isXInverted;
     [SerializeField] List<GameObject> invertXTicks;
 
     [Header("Ivert Y")]
+    [SerializeField] public bool isYInverted;
     [SerializeField] List<GameObject> invertYTicks;
 
     [Header("Vibration")]
+    [SerializeField] public bool isVibrationsActive;
     [SerializeField] List<GameObject> vibrationTicks;
 
     [Header("Anti-Aliasing")]
-    [SerializeField] List<GameObject> aATicks;
+    [SerializeField] public bool isAnitAliasingActive;
+    [SerializeField] List<GameObject> anitAlisingTicks;
 
     [Header("V-Sync")]
+    [SerializeField] public bool isVSyncActive;
     [SerializeField] List<GameObject> vSyncTicks;
 
     [Header("Run by Default")]
-    [SerializeField] List<GameObject> runTicks;
+    [SerializeField] public bool isRunByDefaultActive;
+    [SerializeField] List<GameObject> runByDefaultTicks;
 
     [Header("Bloom")]
-    [SerializeField] List<GameObject> bloomTicks2;
+    [SerializeField] public bool isBloomActive;
+    [SerializeField] List<GameObject> bloomTicks;
 
     [Header("Ambient Occlusion")]
+    [SerializeField] public bool isAmbientOcclusionActive;
     [SerializeField] List<GameObject> ambientOcclusionTicks;
 
     void Start()
@@ -114,7 +122,7 @@ public class OptionsNew : MonoBehaviour
 
         InitializeValues();
 
-        controlRemapping.enabled = false;
+        //controlRemapping.enabled = false;
         
         applySource.clip = applySound;
 
@@ -123,93 +131,263 @@ public class OptionsNew : MonoBehaviour
     
     void InitializeValues()
     {
-        if (PlayerPrefs.GetInt("RunByDefault", 1) == 0)
-            tpc.runByDefault = false;
-        else
-            tpc.runByDefault = true;
-        foreach (GameObject g in runToggleTicks)
-            g.SetActive(tpc.runByDefault);
-
-        if (PlayerPrefs.GetInt("Player1KeyboardOnly", 0) == 0)
-        {
-            PlayerManager.singleton.testingWithKeyboard = false;
-            KeyboardOnlyOff();
-        }
-        else
-        {
-            PlayerManager.singleton.testingWithKeyboard = true;
-            KeyboardOnlyOn();
-        }
-        foreach (GameObject g in keyboardToggleTicks)
-            g.SetActive(PlayerManager.singleton.testingWithKeyboard);
-
-        if (PlayerPrefs.GetInt("Bloom", 1) == 0)
-            bloomOn.value = false;
-        else
-            bloomOn.value = true;
-        SetBloom();
-        if (PlayerPrefs.GetInt("AO", 1) == 0)
-            aoOn.value = false;
-        else
-            aoOn.value = true;
-        SetAO();
+        //WE GET THE PREFS VALUE AND CONVERT THEM IN TO BOOLS
+        UpdateOptionsBoolWithPlayerPrefs();
+        //WE UPDATE EACH UI ELEMENT USING THOSE BOOLS
+        UpdateOptionsUIToggles();
+        //WE APPLAY THE VALUE OF THOSE BOOLS IN THE OPTIONS
+        ApplyOptions();
 
 
-        //DIsable DoF
-        PlayerPrefs.SetInt("DoF", 0);
-        if (PlayerPrefs.GetInt("DoF", 0) == 0)
-            dofOn.value = false;
-        else
-            dofOn.value = true;
-        SetDoF();
-
-        aaMode = PlayerPrefs.GetInt("AAMode", 1);
-        AAApply();
-
-        SetInitialTextValues();
-
-        if (PlayerPrefs.GetInt("LockFPS", 1) == 0)
-        {
-            locked = false;
-            Application.targetFrameRate = 999;
-        }
-        else
-        {
-            locked = true;
-            Application.targetFrameRate = Screen.currentResolution.refreshRate;
-        }
-        foreach (GameObject g in lockFPSTicks)
-            g.SetActive(locked);
+        PlayerManager.singleton.testingWithKeyboard = false;
+        KeyboardOnlyOff();
     }
 
-    public void SetInitialTextValues()
+
+    public void RestoreDefaults()
     {
-        currentResolution = PlayerPrefs.GetInt("Resolution", Screen.resolutions.Length - 1);
-        if (currentResolution >= Screen.resolutions.Length)
-        {
-            currentResolution = Screen.resolutions.Length - 1;
-        }
-        SetResolutionValues();
+        //VALUES
+        PlayerPrefs.SetInt("InvertX", 0);
+        PlayerPrefs.SetInt("InvertY", 0);
+        PlayerPrefs.SetInt("Vibration", 1);
+        PlayerPrefs.SetFloat("musicVolume", 8f);
+        PlayerPrefs.SetFloat("effectsVolume", 8f);
+        PlayerPrefs.SetInt("Sensitivity", 4);
+        PlayerPrefs.SetInt("RunByDefault", 0);
+        PlayerPrefs.SetInt("Bloom", 1);
+        PlayerPrefs.SetInt("AO", 1);
+        PlayerPrefs.SetInt("AAMode", 1);
+        PlayerPrefs.SetInt("VSync", 1);
 
-        currentFSMode = PlayerPrefs.GetInt("ScreenMode", 0);
-        SetWindowValues();
-        dontPlaySound = true;
-        WindowApply();
+        //THIS
+        InitializeValues();
 
-        currentVSync = PlayerPrefs.GetInt("VSync", 1);
-        SetVSyncValues();
-        dontPlaySound = true;
-        VSyncApply();
-        
-        aaMode = PlayerPrefs.GetInt("AAMode", 1);
-        SetAATexts();
+        //START
+        startScreen.InitializeValues();
 
-        foreach (Slider s in objectSliders)
-            s.value = PlayerPrefs.GetInt("ObjectDetails", 4);
+        //PAUSE
+        pauseScreen.InitializeValues();
 
-        foreach (Slider s in distanceSliders)
-            s.value = PlayerPrefs.GetInt("AddedDistance", 4);
+       
+
+        //CLOSE AYS OVERLAYS
+        if (pauseScreen.optionsTab.activeInHierarchy)
+            pauseScreen.CloseDefaultsAYS();
+        if (startScreen.optionsScreen.activeInHierarchy)
+            startScreen.CloseDefaultsAYS();
     }
+
+
+
+    #region PUBLIC METHODS FOR OPTIONS
+    public void ToggleInvertX()
+    {
+        isXInverted = !isXInverted;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleInvertY()
+    {
+        isYInverted = !isYInverted;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleVibrations()
+    {
+        isVibrationsActive = !isVibrationsActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleAntiAliasing()
+    {
+        isAnitAliasingActive = !isAnitAliasingActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleVsync()
+    {
+        isVSyncActive = !isVSyncActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleRunByDefault()
+    {
+        isRunByDefaultActive = !isRunByDefaultActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleBloom()
+    {
+        isBloomActive = !isBloomActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+
+    public void ToggleAmbientOcclusion()
+    {
+        isAmbientOcclusionActive = !isAmbientOcclusionActive;
+
+        UpdateOptionsPlayerPrefsAndUIAndApply();
+    }
+    #endregion
+
+    #region UI - PLAYERPREFS - OPTIONS UPDATES
+    void UpdateOptionsPlayerPrefsAndUIAndApply()
+    {
+        UpdateOptionsUIToggles();
+
+        ApplyOptions();
+
+        UpdateOptionsPlayerPrefsWithBool();
+    }
+
+    void UpdateOptionsUIToggles()
+    {
+        foreach (GameObject tick in invertXTicks)
+        {
+            tick.SetActive(isXInverted);
+        }
+
+        foreach (GameObject tick in invertYTicks)
+        {
+            tick.SetActive(isYInverted);
+        }
+
+        foreach (GameObject tick in vibrationTicks)
+        {
+            tick.SetActive(isVibrationsActive);
+        }
+
+        foreach (GameObject tick in anitAlisingTicks)
+        {
+            tick.SetActive(isAnitAliasingActive);
+        }
+
+        foreach (GameObject tick in vSyncTicks)
+        {
+            tick.SetActive(isVSyncActive);
+        }
+
+        foreach (GameObject tick in runByDefaultTicks)
+        {
+            tick.SetActive(isRunByDefaultActive);
+        }
+
+        foreach (GameObject tick in bloomTicks)
+        {
+            tick.SetActive(isBloomActive);
+        }
+
+        foreach (GameObject tick in ambientOcclusionTicks)
+        {
+            tick.SetActive(isAmbientOcclusionActive);
+        }
+    }
+
+    void UpdateOptionsPlayerPrefsWithBool()
+    {
+        PlayerPrefs.SetInt("InvertX", isXInverted.GetHashCode());
+        PlayerPrefs.SetInt("InvertY", isYInverted.GetHashCode());
+        PlayerPrefs.SetInt("Vibration", isVibrationsActive.GetHashCode());
+        PlayerPrefs.SetInt("AAMode", isAnitAliasingActive.GetHashCode());
+        PlayerPrefs.SetInt("VSync", isVSyncActive.GetHashCode());
+        PlayerPrefs.SetInt("RunByDefault", isRunByDefaultActive.GetHashCode()); ;
+        PlayerPrefs.SetInt("Bloom", isBloomActive.GetHashCode());
+        PlayerPrefs.SetInt("AO", isAmbientOcclusionActive.GetHashCode());
+
+
+        PlayerPrefs.SetFloat("musicVolume", 8f);
+        PlayerPrefs.SetFloat("effectsVolume", 8f);
+        PlayerPrefs.SetInt("Sensitivity", 4);
+    }
+
+    void UpdateOptionsBoolWithPlayerPrefs()
+    {
+        //WE GET THE VALUES FROM THE PLAYERPREFS
+        isXInverted = PlayerPrefs.GetInt("InvertX") > 0;
+        isYInverted = PlayerPrefs.GetInt("InvertY") > 0;
+        isVibrationsActive = PlayerPrefs.GetInt("Vibration") > 0;
+        isAnitAliasingActive = PlayerPrefs.GetInt("AAMode") > 0;
+        isVSyncActive = PlayerPrefs.GetInt("VSync") > 0;
+        isRunByDefaultActive = PlayerPrefs.GetInt("RunByDefault") > 0;
+        isBloomActive = PlayerPrefs.GetInt("Bloom") > 0;
+        isAmbientOcclusionActive = PlayerPrefs.GetInt("AO") > 0;
+    }
+    #endregion
+
+    #region APPLY OPTIONS
+    void ApplyOptions()
+    {
+        ApplyBloom();
+        ApplyAmbientOcclusion();
+        ApplyAntiAliasing();
+        ApplyRunByDefault();
+        ApplyVSync();
+    }
+
+    void ApplyBloom()
+    {
+        BoolParameter boolParameter = new BoolParameter();
+
+        boolParameter.value = isBloomActive;
+
+        ppVolume.profile.GetSetting<Bloom>().enabled = boolParameter;
+
+        foreach (PostProcessVolume ppv in cutscenePPVolumes)
+            ppv.profile.GetSetting<Bloom>().enabled = boolParameter;
+    }
+    
+    void ApplyAmbientOcclusion()
+    {
+        BoolParameter boolParameter = new BoolParameter();
+
+        boolParameter.value = isAmbientOcclusionActive;
+
+        ppVolume.profile.GetSetting<AmbientOcclusion>().enabled = boolParameter;
+
+        foreach (PostProcessVolume ppv in cutscenePPVolumes)
+            ppv.profile.GetSetting<AmbientOcclusion>().enabled = boolParameter;
+    }
+    
+    void ApplyAntiAliasing()
+    {
+        if (isAnitAliasingActive)
+        {
+             ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.FastApproximateAntialiasing;
+
+            foreach (PostProcessLayer ppl in cutscenePPLayers)
+                ppl.antialiasingMode = PostProcessLayer.Antialiasing.FastApproximateAntialiasing;
+        }
+        else
+        {
+            ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
+
+            foreach (PostProcessLayer ppl in cutscenePPLayers)
+                ppl.antialiasingMode = PostProcessLayer.Antialiasing.None;
+        }
+    }
+
+    void ApplyRunByDefault()
+    {
+        tpc.runByDefault = isRunByDefaultActive;
+    }
+
+    void ApplyVSync()
+    {
+        if(QualitySettings.vSyncCount != isVSyncActive.GetHashCode())
+        {
+            QualitySettings.vSyncCount = isVSyncActive.GetHashCode();
+            PlayApplySound();
+        }
+    }
+    #endregion
+
 
     private void Update()
     {
@@ -218,9 +396,9 @@ public class OptionsNew : MonoBehaviour
             if (PlayerPrefs.GetInt("Language",0) != curLanguage)
             {
                 curLanguage = PlayerPrefs.GetInt("Language", 0);
-                SetWindowValues();
-                SetVSyncValues();
-                SetAATexts();
+                //SetWindowValues();
+                //SetVSyncValues();
+                //SetAATexts();
             }
 
             if (es.currentSelectedGameObject != null)
@@ -271,17 +449,35 @@ public class OptionsNew : MonoBehaviour
         }
     }
 
-    public void ToggleRunDefault()
+    public void SetInitialTextValues()
     {
-        tpc.runByDefault = !tpc.runByDefault;
+        /*
+        currentResolution = PlayerPrefs.GetInt("Resolution", Screen.resolutions.Length - 1);
+        if (currentResolution >= Screen.resolutions.Length)
+        {
+            currentResolution = Screen.resolutions.Length - 1;
+        }
+        SetResolutionValues();
 
-        if (tpc.runByDefault)
-            PlayerPrefs.SetInt("RunByDefault", 1);
-        else
-            PlayerPrefs.SetInt("RunByDefault", 0);
+        currentFSMode = PlayerPrefs.GetInt("ScreenMode", 0);
+        SetWindowValues();
+        dontPlaySound = true;
+        WindowApply();
 
-        foreach (GameObject g in runToggleTicks)
-            g.SetActive(tpc.runByDefault);
+        currentVSync = PlayerPrefs.GetInt("VSync", 1);
+        SetVSyncValues();
+        dontPlaySound = true;
+        VSyncApply();
+        
+        aaMode = PlayerPrefs.GetInt("AAMode", 1);
+        SetAATexts();
+
+        foreach (Slider s in objectSliders)
+            s.value = PlayerPrefs.GetInt("ObjectDetails", 4);
+
+        foreach (Slider s in distanceSliders)
+            s.value = PlayerPrefs.GetInt("AddedDistance", 4);
+        */
     }
 
     public void ToggleKeyboard()
@@ -322,175 +518,6 @@ public class OptionsNew : MonoBehaviour
         ReInput.players.GetPlayer(0).controllers.AddController(ReInput.controllers.GetController(ControllerType.Joystick, 0), true);
     }
 
-    public void ToggleLockFPS()
-    {
-        locked = !locked;
-        if (!locked)
-        {
-            PlayerPrefs.SetInt("LockFPS", 0);
-            Application.targetFrameRate = 999;
-        }
-        else
-        {
-            PlayerPrefs.SetInt("LockFPS", 1);
-            Application.targetFrameRate = Screen.currentResolution.refreshRate;
-        }
-
-        foreach (GameObject g in lockFPSTicks)
-            g.SetActive(locked);
-    }
-
-    public void OpenButtonRemapper()
-    {
-        startScreen.remapperOpen = true;
-        pauseScreen.remapperOpen = true;
-        controlRemapping.enabled = true;
-        controlRemapping.Open();
-        foreach (GameObject g in remapperBGs)
-            g.SetActive(true);
-    }
-
-    public void CloseButtonRemapper()
-    {
-        pauseScreen.remapperOpen = false;
-        startScreen.remapperOpen = false;
-        controlRemapping.Close();
-        controlRemapping.enabled = false;
-        foreach (GameObject g in remapperBGs)
-            g.SetActive(false);
-    }
-
-    public void ResolutionLeft()
-    {
-        currentResolution--;
-        if (currentResolution < 0)
-            currentResolution = Screen.resolutions.Length - 1;
-
-        SetResolutionValues();
-    }
-
-    public void ResolutionRight()
-    {
-        currentResolution++;
-        if (currentResolution >= Screen.resolutions.Length)
-            currentResolution = 0;
-
-        SetResolutionValues();
-    }
-
-    void SetResolutionValues()
-    {
-        curRes = Screen.resolutions[currentResolution];
-        foreach (Text t in resolutionTexts)
-            t.text = curRes.width + " x " + curRes.height + " " + curRes.refreshRate + "Hz";
-
-        ResolutionApply();
-    }
-
-    public void ResolutionApply()
-    {
-        PlayerPrefs.SetInt("Resolution", currentResolution);
-        PlayerPrefs.SetInt("ScreenMode", currentFSMode);
-        Screen.SetResolution(curRes.width, curRes.height, screenMode);
-        if(locked)
-            Application.targetFrameRate = Screen.currentResolution.refreshRate;
-        PlayApplySound();
-    }
-
-    public void WindowLeft()
-    {
-        currentFSMode--;
-        if (currentFSMode < 0)
-            currentFSMode = 2;
-
-        SetWindowValues();
-    }
-
-    public void WindowRight()
-    {
-        currentFSMode++;
-        if (currentFSMode > 2)
-            currentFSMode = 0;
-
-        SetWindowValues();
-    }
-
-    void SetWindowValues()
-    {
-        if (currentFSMode == 0)
-        {
-            screenMode = FullScreenMode.FullScreenWindow;
-            foreach (Text t in windowTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 19, curLanguage);
-        }
-        if (currentFSMode == 1)
-        {
-            screenMode = FullScreenMode.MaximizedWindow;
-            foreach (Text t in windowTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 20, curLanguage);
-        }
-        if (currentFSMode == 2)
-        {
-            screenMode = FullScreenMode.Windowed;
-            foreach (Text t in windowTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 21, curLanguage);
-        }
-
-        WindowApply();
-    }
-
-    public void WindowApply()
-    {
-    //    PlayerPrefs.SetInt("ScreenMode", currentFSMode);
-    //    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, screenMode);
-        ResolutionApply();
-    }
-
-    public void VSyncLeft()
-    {
-        currentVSync--;
-        if (currentVSync < 0)
-            currentVSync = 2;
-
-        SetVSyncValues();
-    }
-
-    public void VSyncRight()
-    {
-        currentVSync++;
-        if (currentVSync > 2)
-            currentVSync = 0;
-
-        SetVSyncValues();
-    }
-
-    void SetVSyncValues()
-    {
-        if (currentVSync == 0)
-        {
-            foreach (Text t in vsyncTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 22, curLanguage);
-        }
-        if (currentVSync == 1)
-        {
-            foreach (Text t in vsyncTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 23, curLanguage);
-        }
-        if (currentVSync == 2)
-        {
-            foreach (Text t in vsyncTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 24, curLanguage);
-        }
-
-        VSyncApply();
-    }
-
-    public void VSyncApply()
-    {
-        PlayerPrefs.SetInt("VSync", currentVSync);
-        QualitySettings.vSyncCount = currentVSync;
-        PlayApplySound();
-    }
 
     void PlayApplySound()
     {/*
@@ -503,127 +530,17 @@ public class OptionsNew : MonoBehaviour
             dontPlaySound = false;*/
     }
 
-    public void ObjectSlider(Slider slider)
-    {
-        PlayerPrefs.SetInt("ObjectDetails", Mathf.RoundToInt(slider.value));
-    }
 
-    public void DistanceSlider(Slider slider)
-    {
-        PlayerPrefs.SetInt("AddedDistance", Mathf.RoundToInt(slider.value));
-    }
+    /* public void ObjectSlider(Slider slider)
+     {
+         PlayerPrefs.SetInt("ObjectDetails", Mathf.RoundToInt(slider.value));
+     }
 
-    public void AALeft()
-    {
-        aaMode--;
-        if (aaMode < 0)
-            aaMode = 3;
-
-        SetAATexts();
-    }
-
-    public void AARight()
-    {
-        aaMode++;
-        if (aaMode > 3)
-            aaMode = 0;
-
-        SetAATexts();
-    }
-
-    void SetAATexts()
-    {
-        if (aaMode == 0)
-        {
-            foreach (Text t in aaTexts)
-                t.text = TextTranslationManager.GetText(TextTranslationManager.TextCollection.startMenu, 25, curLanguage);
-        }
-        if (aaMode == 1)
-        {
-            foreach (Text t in aaTexts)
-                t.text = "FXAA";
-        }
-        if (aaMode == 2)
-        {
-            foreach (Text t in aaTexts)
-                t.text = "SMAA";
-        }
-        if (aaMode == 3)
-        {
-            foreach (Text t in aaTexts)
-                t.text = "TAA";
-        }
-
-        AAApply();
-    }
-
-    public void AAApply()
-    {
-        PlayerPrefs.SetInt("AAMode", aaMode);
-
-        if (aaMode == 0)
-        {
-            ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
-            foreach (PostProcessLayer ppl in cutscenePPLayers)
-                ppl.antialiasingMode = PostProcessLayer.Antialiasing.None;
-        }
-        if (aaMode == 1)
-        {
-            ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.FastApproximateAntialiasing;
-            foreach (PostProcessLayer ppl in cutscenePPLayers)
-                ppl.antialiasingMode = PostProcessLayer.Antialiasing.FastApproximateAntialiasing;
-        }
-        if (aaMode == 2)
-        {
-            ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
-            foreach (PostProcessLayer ppl in cutscenePPLayers)
-                ppl.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
-        }
-        if (aaMode == 3)
-        {
-            ppLayer.antialiasingMode = PostProcessLayer.Antialiasing.TemporalAntialiasing;
-            foreach (PostProcessLayer ppl in cutscenePPLayers)
-                ppl.antialiasingMode = PostProcessLayer.Antialiasing.TemporalAntialiasing;
-        }
-    }
-
-    public void BloomToggle()
-    {
-        bloomOn.value = !bloomOn.value;
-        if (bloomOn.value)
-            PlayerPrefs.SetInt("Bloom", 1);
-        else
-            PlayerPrefs.SetInt("Bloom", 0);
-        SetBloom();
-    }
-
-    void SetBloom()
-    {
-        ppVolume.profile.GetSetting<Bloom>().enabled = bloomOn;
-        foreach (PostProcessVolume ppv in cutscenePPVolumes)
-            ppv.profile.GetSetting<Bloom>().enabled = bloomOn;
-        foreach (GameObject g in bloomTicks)
-            g.SetActive(bloomOn.value);
-    }
-
-    public void AOToggle()
-    {
-        aoOn.value = !aoOn.value;
-        if (aoOn.value)
-            PlayerPrefs.SetInt("AO", 1);
-        else
-            PlayerPrefs.SetInt("AO", 0);
-        SetAO();
-    }
-
-    void SetAO()
-    {
-        ppVolume.profile.GetSetting<AmbientOcclusion>().enabled = aoOn;
-        foreach (PostProcessVolume ppv in cutscenePPVolumes)
-            ppv.profile.GetSetting<AmbientOcclusion>().enabled = aoOn;
-        foreach (GameObject g in aoTicks)
-            g.SetActive(aoOn.value);
-    }
+     public void DistanceSlider(Slider slider)
+     {
+         PlayerPrefs.SetInt("AddedDistance", Mathf.RoundToInt(slider.value));
+     }
+ */
 
     public void DoFToggle()
     {
@@ -644,41 +561,7 @@ public class OptionsNew : MonoBehaviour
             g.SetActive(dofOn.value);
     }
     
-    public void RestoreDefaults()
-    {
-        //VALUES
-        PlayerPrefs.SetInt("InvertX", 0);
-        PlayerPrefs.SetInt("InvertY", 0);
-        PlayerPrefs.SetInt("Vibration", 1);
-        PlayerPrefs.SetFloat("musicVolume", 8f);
-        PlayerPrefs.SetFloat("effectsVolume", 8f);
-        PlayerPrefs.SetInt("Sensitivity", 4);
-        PlayerPrefs.SetInt("RunByDefault", 1);
-        PlayerPrefs.SetInt("Player1KeyboardOnly", 0);
-        PlayerPrefs.SetInt("Bloom", 1);
-        PlayerPrefs.SetInt("AO", 1);
-        PlayerPrefs.SetInt("DoF", 0);
-        PlayerPrefs.SetInt("AAMode", 1);
-        PlayerPrefs.SetInt("LockFPS", 1);
-        PlayerPrefs.SetInt("VSync", 1);
-        PlayerPrefs.SetInt("ObjectDetails", 4);
-        PlayerPrefs.SetInt("AddedDistance", 4);
-
-        //START
-        startScreen.InitializeValues();
-
-        //PAUSE
-        pauseScreen.InitializeValues();
-
-        //THIS
-        InitializeValues();
-
-        //CLOSE AYS OVERLAYS
-        if (pauseScreen.optionsTab.activeInHierarchy)
-            pauseScreen.CloseDefaultsAYS();
-        if (startScreen.optionsScreen.activeInHierarchy)
-            startScreen.CloseDefaultsAYS();
-    }
+   
 
     public void OptionsScroll(Slider slider)
     {

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using Rewired;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
-using UnityStandardAssets.ImageEffects;
+
 //using nn.hid;
 using Beffio.Dithering;
 using System.Linq;
@@ -102,13 +102,13 @@ public class PauseScreen : MonoBehaviour
     public GameObject debugCPTick;
     bool aaIsOn;
     public GameObject aaTick;
-    public Antialiasing[] antialiasing;
+
     bool dguiIsOn;
     public GameObject dguiTick;
     public GameObject fpsObj;
     bool expandIsOn;
     public GameObject expandTick;
-    public IngameDebugConsole.DebugLogPopup popupManager;
+
     bool playThreeTears;
     bool playAllTears;
 
@@ -543,7 +543,7 @@ public class PauseScreen : MonoBehaviour
                     else
                     {
                         if (remapperOpen)
-                            optionsNew.CloseButtonRemapper();
+                            Debug.Log("");
                         else
                         {
                             if (defaultsAYS.activeInHierarchy)
@@ -656,26 +656,26 @@ public class PauseScreen : MonoBehaviour
 
     public void MouseOverButton(GameObject selected)
     {
-        if (selected != null)
-        {
-            if (notMouseOver || Cursor.visible)
-            {
-                notMouseOver = false;
-                es.SetSelectedGameObject(selected);
-                if (!justOpenedMap)
-                {
-                    if (prevSelected != null &&
-                        prevSelected.gameObject.transform.position.y < selected.transform.position.y)
-                        PlaySound(highlightDownSound);
-                    else
-                        PlaySound(highlightSound);
-                    //    Vibrate(0.05f, 0.2f);
-                }
-                else
-                    justOpenedMap = false;
-                prevSelected = selected;
-            }
-        }
+        //if (selected != null)
+        //{
+        //    if (notMouseOver || Cursor.visible)
+        //    {
+        //        notMouseOver = false;
+        //        es.SetSelectedGameObject(selected);
+        //        if (!justOpenedMap)
+        //        {
+        //            if (prevSelected != null &&
+        //                prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+        //                PlaySound(highlightDownSound);
+        //            else
+        //                PlaySound(highlightSound);
+        //            //    Vibrate(0.05f, 0.2f);
+        //        }
+        //        else
+        //            justOpenedMap = false;
+        //        prevSelected = selected;
+        //    }
+        //}
     }
 
     public void InitializeValues()
@@ -1533,6 +1533,7 @@ public class PauseScreen : MonoBehaviour
 
     public void Sensitivity()
     {
+        
         cam.freeRotateSpeed = sensitivity.value;
         PlayerPrefs.SetInt("Sensitivity", Mathf.RoundToInt(sensitivity.value));
         PlaySound(highlightSound);
@@ -1616,27 +1617,45 @@ public class PauseScreen : MonoBehaviour
         }
     }
 
-    public void AAToggle()
+
+    #region NEW OPTIONS METHODS
+    public void ToogleInvertX()
     {
-        if (!aaIsOn)
-        {
-            aaIsOn = true;
-            aaTick.SetActive(true);
-            PlaySound(toggleOnSound);
-            foreach (Antialiasing aa in antialiasing)
-                aa.enabled = true;
-            PlayerPrefs.SetInt("AA", 1);
-        }
-        else
-        {
-            aaIsOn = false;
-            aaTick.SetActive(false);
-            PlaySound(toggleOffSound);
-            foreach (Antialiasing aa in antialiasing)
-                aa.enabled = false;
-            PlayerPrefs.SetInt("AA", 1);
-        }
+        optionsNew.ToggleInvertX();
     }
+    public void ToogleInvertY()
+    {
+        optionsNew.ToggleInvertY();
+    }
+    public void ToogleVibrations()
+    {
+        optionsNew.ToggleVibrations();
+    }
+    public void ToggleAntiAlising()
+    {
+        optionsNew.ToggleAntiAliasing();
+    }
+    public void ToggleVSync()
+    {
+        optionsNew.ToggleVsync();
+    }
+    public void ToogleRunByDefault()
+    {
+        optionsNew.ToggleRunByDefault();
+    }
+    public void ToggleBloom()
+    {
+        optionsNew.ToggleBloom();
+    }
+    public void ToggleAmbientOcclusion()
+    {
+        optionsNew.ToggleAmbientOcclusion();
+    }
+    public void ResetOptionsToDefault()
+    {
+        optionsNew.RestoreDefaults();
+    }
+    #endregion
 
     public void ToggleLanguagesList()
     {
