@@ -16,19 +16,27 @@ public class BlueBerryIDCreator : MonoBehaviour
         bool checking = false;
         bool collected = false;
         berries.Clear();
+
+        int amountCollected = 0;
+        Debug.LogError("YAN: BlueBerryIDCreator in " + this.gameObject.scene.name +". HasKey(MainPlaza7NewBlueBerry)? " + PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"));
         foreach (Transform t in this.GetComponentsInChildren<Transform>(true))
         {
             if (t.transform.parent == this.transform)
             {
                 checking = false;
                 collected = false;
-                foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true)) {
+                foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true))
+                {
                     if (t1.GetComponentInChildren<BerryCollect>() != null)
                         t1.GetComponentInChildren<BerryCollect>().id = counter;
+
                     if (!checking && PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
                     {
-                        if(PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry")[counter].ToString() == "1")
+                        if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry")[counter].ToString() == "1")
+                        {
                             collected = true;
+                            amountCollected++;
+                        }
                     }
                     checking = true;
                     if (collected)
@@ -38,6 +46,7 @@ public class BlueBerryIDCreator : MonoBehaviour
                 counter++;
             }
         }
+        Debug.LogError("YAN: BlueBerryIDCreator in " + this.gameObject.scene.name + ". BlueBerries collected: " + amountCollected.ToString());
     }
 
     private void Update()

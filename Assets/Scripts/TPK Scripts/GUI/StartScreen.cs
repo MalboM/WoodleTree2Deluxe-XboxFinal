@@ -139,7 +139,7 @@ public class StartScreen : MonoBehaviour
 
     bool notMouseOver = false;
 
-    void Start()
+    void OnEnable()
     {
         //    Application.targetFrameRate = 60;
 
@@ -149,7 +149,7 @@ public class StartScreen : MonoBehaviour
 
         if (loadOneAndSeven)
         {
-         //   SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+            //   SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
             //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
 
         }
@@ -179,6 +179,8 @@ public class StartScreen : MonoBehaviour
         Debug.LogError("YAN: StartScreen. Initialise BB Prefs? " + needToInit);
         if (needToInit)
         {
+            Debug.LogError("YAN: StartScreen. Initialising BB Prefs because MainPlaza7NewBlueBerry has a value of: " + PlayerPrefs.GetString("MainPlaza7NewBlueBerry", ""));
+
             foreach (string s in levelNames)
             {
                 int total = 140;
@@ -208,12 +210,12 @@ public class StartScreen : MonoBehaviour
                     newString = newString.Insert(0, "0");
                 }
                 PlayerPrefs.SetString(s + "BlueBerry", newString);
-                Debug.LogError("YAN: Initialised BB Pref for " + s +" : "+ newString);
+                //    Debug.LogError("YAN: Initialised BB Pref for " + s +" : "+ newString);
             }
             PlayerPrefs.Save();
         }
 
-        if (!PlayerPrefs.HasKey("BlueBerryTotal"))
+        //    if (!PlayerPrefs.HasKey("BlueBerryTotal"))
         {
             ps.CheckBlues();
             PlayerPrefs.Save();
