@@ -798,6 +798,8 @@ public class StartScreen : MonoBehaviour
 
     IEnumerator DeleteCoRo()
     {
+        PlayerPrefs.DeleteAll();
+
         deleteButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
 

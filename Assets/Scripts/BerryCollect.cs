@@ -24,12 +24,12 @@ public class BerryCollect : MonoBehaviour {
         if(berryType == BerryManagerTrigger.BerryType.blue)
         {
             //IF IN ANY CASE THE PREF HAS VALUE THE BERRY SHUOLDN'T BE ACTIVE
-            if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "" &&
-                PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "0" &&
-                PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != null)
-                {
-                    transform.root.gameObject.SetActive(false);
-                }
+            //if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "" &&
+            //    PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "0" &&
+            //    PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != null)
+            //    {
+            //        transform.root.gameObject.SetActive(false);
+            //    }
         }
         
 
