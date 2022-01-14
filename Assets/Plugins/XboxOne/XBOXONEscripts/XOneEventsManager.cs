@@ -615,7 +615,7 @@ public class XOneEventsManager : MonoBehaviour
             Debug.LogError("!!!!!!!!!!!!!! BLOB FOUND !!!!!!!");
             Debug.LogError("         BUFFERINFO: LENGTH: [" + buffer.Length + "] ");
             //
-            LoadProgs(buffer, view);
+           StartCoroutine(LoadProgsCo(buffer, view));
         }
         else
         {
@@ -907,6 +907,7 @@ public class XOneEventsManager : MonoBehaviour
 
     public void SaveBlueBerry(string BerryID, string BerryValue)
     {
+        Debug.LogError("SAVING " + BerryID);
         StartCoroutine(SaveBlueBerryCo(BerryID, BerryValue));
     }
 
@@ -1221,7 +1222,7 @@ public class XOneEventsManager : MonoBehaviour
     }
 
     //
-    public void LoadProgs(byte[] byteArr, DataMapView view)
+    public IEnumerator LoadProgsCo(byte[] byteArr, DataMapView view)
     {
         //
         Debug.LogError("READING SAVED VALUES ...");
@@ -1250,9 +1251,13 @@ public class XOneEventsManager : MonoBehaviour
         LoadIntPref(view, "LastCheckpoint");
         LoadIntPref(view, "FirstCheckpoint");
 
+        yield return null;
+
         // COUNTERS
         LoadIntPref(view, "Berries");
         LoadIntPref(view, "BlueBerries");
+
+        yield return null;
 
         //
         LoadIntPref(view, "AllBlueBerries");
@@ -1263,7 +1268,7 @@ public class XOneEventsManager : MonoBehaviour
         LoadIntPref(view, "IsThere");
         LoadIntPref(view, "Top");
 
-        // test save
+        yield return null;
 
 
         foreach (string s in levelNames)
@@ -1271,10 +1276,11 @@ public class XOneEventsManager : MonoBehaviour
             LoadStringPref(view, s + "BlueBerry");
         }
 
-        //
-        //YAN MODIFIC 2
-        /*foreach (string s in levelNames) {
+
+        foreach (string s in levelNames) {
             //        LoadStringPref(view, s + "BlueBerry");
+            Debug.LogError("--- LOADING BERRIES ---");
+
             int total = 140;
             if (s == "ExternalWorld")
                 total = 100;
@@ -1297,8 +1303,13 @@ public class XOneEventsManager : MonoBehaviour
 
             //LOAD ALL BLUE BERRIES COLLECTED
             for (int bb = 0; bb < total; bb++)
-                LoadIntPref(view, s + "BlueBerry" + bb.ToString());
-        }*/
+                LoadStringPref(view, s + "BlueBerry" + bb.ToString());
+        }
+
+        Debug.LogError("--- BERRIES LOADED ---");
+
+        yield return null;
+
 
         //TEARS
         for (int lvl = 1; lvl <= 8; lvl++)

@@ -51,6 +51,7 @@ public class BlueBerryIDCreator : MonoBehaviour
 
     private void Update()
     {
+        //I DO NOT UNDERSTAND WHAT DOES THIS DO
         if (collectAll)
         {
             collectAll = false;

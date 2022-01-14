@@ -20,6 +20,19 @@ public class BerryCollect : MonoBehaviour {
         initAmount = amount;
 
         tpc = PlayerManager.GetMainPlayer();
+
+        if(berryType == BerryManagerTrigger.BerryType.blue)
+        {
+            //IF IN ANY CASE THE PREF HAS VALUE THE BERRY SHUOLDN'T BE ACTIVE
+            if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "" &&
+                PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "0" &&
+                PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != null)
+                {
+                    transform.root.gameObject.SetActive(false);
+                }
+        }
+        
+
         /*
         if (tpc.ps.enableDebugTab && berryType == BerryManagerTrigger.BerryType.blue)
         {
@@ -57,21 +70,25 @@ public class BerryCollect : MonoBehaviour {
             {
                 Debug.LogError("YAN: BerryCollect in scene " + this.gameObject.scene.name +". Collect BB ID: " + id.ToString());
 
-                string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry");
+                string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id);
 
                 Debug.LogError("YAN: BB Pref orig value: " + temp1);
 
-                string temp2 = temp1.Remove(id, 1);
-                string temp3 = temp2.Insert(id, "1");
+                temp1 = "1";
 
-                Debug.LogError("YAN: BB Pref new value: " + temp3);
-                PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry", temp3);
+                Debug.LogError("YAN: BB Pref new value: " + temp1);
+
+                PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry" + id, temp1);
+
+                //string temp2 = temp1.Remove(id, 1);
+                //string temp3 = temp2.Insert(id, "1");
+
 
 #if UNITY_XBOXONE && !UNITY_EDITOR
 
                 DataManager.xOneEventsManager.SaveBlueBerry
                     (
-                        (this.gameObject.scene.name + "BlueBerry"), temp3)
+                        (this.gameObject.scene.name + "BlueBerry"+ id), temp1
                     );
 #endif
 
