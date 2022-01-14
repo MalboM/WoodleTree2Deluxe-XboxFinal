@@ -202,9 +202,11 @@ public class StartScreen : MonoBehaviour
                     total = 80;
                 if (s == "Level8")
                     total = 80;
+
                 PlayerPrefs.SetInt(s + "BlueBerryTotal", total);
 
                 string newString = "";
+
                 for (int i = 0; i < total; i++)
                 {
                     newString = newString.Insert(0, "0");
@@ -667,23 +669,23 @@ public class StartScreen : MonoBehaviour
 
     public void MouseOverButton(GameObject selected)
     {
-        //if (selected != null)
-        //{
-        //    if (notMouseOver || Cursor.visible)
-        //    {
-        //        notMouseOver = false;
-        //        es.SetSelectedGameObject(selected);
-        //        if (prevSelected.gameObject.transform.position.y < selected.transform.position.y)
-        //            PlaySound(highlightDownSound);
-        //        else
-        //            PlaySound(highlightSound);
-        //        //    Vibrate(0.05f, 0.2f);
-        //        prevSelected = selected;
+        if (selected != null)
+        {
+            if (notMouseOver || Cursor.visible)
+            {
+                notMouseOver = false;
+                es.SetSelectedGameObject(selected);
+                if (prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+                    PlaySound(highlightDownSound);
+                else
+                    PlaySound(highlightSound);
+                //    Vibrate(0.05f, 0.2f);
+                prevSelected = selected;
 
-        //        if (inMain)
-        //            MainButtonSelect();
-        //    }
-        //}
+                if (inMain)
+                    MainButtonSelect();
+            }
+        }
     }
 
     void MainButtonSelect()
@@ -1444,17 +1446,22 @@ public class StartScreen : MonoBehaviour
         {
             int totalBB = 0;
             int counter = 0;
+
             foreach (string s in levelNames)
             {
                 string newString = "";
+
                 for (int i = 0; i < PlayerPrefs.GetInt(s + "BlueBerryTotal"); i++)
                 {
                     newString = newString.Insert(newString.Length, PlayerPrefs.GetInt(s + "BlueBerry" + i.ToString(), 0).ToString());
 
-                    if (PlayerPrefs.GetInt(s + "BlueBerry" + i.ToString()) == 1)
+                    //ASSUMPTION: IF THE PREFS HAS VALUE, THE BERRY IS ADDED TO THE TOTAL BERRY COUNT, IS IT CORRRECT?
+                    if (PlayerPrefs.GetString(s + "BlueBerry" + i.ToString()) != "" && PlayerPrefs.GetString(s + "BlueBerry" + i.ToString()) != null)
                         totalBB++;
 
-                    PlayerPrefs.DeleteKey(s + "BlueBerry" + i.ToString());
+
+                    //WHY ARE WE DELETEING THE PREFS? 
+                    //PlayerPrefs.DeleteKey(s + "BlueBerry" + i.ToString());
 
                     counter++;
 

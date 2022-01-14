@@ -11,6 +11,7 @@ using UnityEngine.Playables;
 //using nn.hid;
 using Beffio.Dithering;
 using System.Linq;
+using UnityStandardAssets.ImageEffects;
 
 public class PauseScreen : MonoBehaviour
 {

@@ -80,10 +80,13 @@ public class Checkpoint : MonoBehaviour {
 
 		PlayerPrefs.SetInt ("Checkpoint" + checkpointID.ToString (), 1);
 		PlayerPrefs.SetInt ("Checkpoint" + checkpointID.ToString () + "Scene", this.gameObject.scene.buildIndex);
-	//	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "X", positionx);
-	//	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "Y", positiony);
-	//	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "Z", positionz);
-            
+        //	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "X", positionx);
+        //	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "Y", positiony);
+        //	PlayerPrefs.SetFloat ("Checkpoint" + checkpointID.ToString () + "Z", positionz);
+
+#if PLATFORM_XBOXONE
+        DataManager.xOneEventsManager.SaveProgs();
+#endif
         PlayerPrefs.Save();
 	}
 }
