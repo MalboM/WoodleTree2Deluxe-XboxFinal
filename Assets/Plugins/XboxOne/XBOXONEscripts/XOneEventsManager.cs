@@ -904,14 +904,35 @@ public class XOneEventsManager : MonoBehaviour
              StartCoroutine(SavingCoRo());
     }
 
-
-    public void SaveBlueBerry(string BerryID, string BerryValue)
+    #region SAVE BLUE BERRIES
+    //ADD QUEQUE
+    private Queue<string> blueBerriesToSave = new Queue<string>();
+    public void SaveBlueBerry(string blueBerryPref)
     {
-        Debug.LogError("SAVING " + BerryID);
-        StartCoroutine(SaveBlueBerryCo(BerryID, BerryValue));
+        //WE TAKE NOTE OF THE BLUE BERRY WE ARE GOING TO SAVE
+        blueBerriesToSave.Enqueue(blueBerryPref);
+
+        //WE START THE COROUTINE TO CHECK THE QUEQUE
+        StartCoroutine(CheckBlueBerriesQueque());
     }
 
-    IEnumerator SaveBlueBerryCo(string BerryID, string BerryValue)
+    IEnumerator CheckBlueBerriesQueque()
+    {
+        //ARE THERE ANY ELEMENTS INSIDE THE QUEQUE
+        while (blueBerriesToSave.Count > 0 )
+        {
+            //ARE WE ALREADY SAVING ONE OF THOSE ELEMENTS
+            while (isSaving)
+            {
+                yield return null;
+            }
+
+            //SAVE THE LAST ELEMENT IN THE QUEQUE AND REMOVE IT
+            StartCoroutine(SaveBlueBerryCo(blueBerriesToSave.Dequeue()));
+        }
+    }
+
+    IEnumerator SaveBlueBerryCo(string blueBerryPref)
     {
         isSaving = true;
 
@@ -923,18 +944,18 @@ public class XOneEventsManager : MonoBehaviour
 
         SetStorageString(dataMap, "Berries", PlayerPrefs.GetInt("Berries"));
         SetStorageString(dataMap, "BlueBerries", PlayerPrefs.GetInt("BlueBerries"));
-        
+
         SetStorageString(dataMap, "AllBlueBerries", PlayerPrefs.GetInt("AllBlueBerries"));
         SetStorageString(dataMap, "BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal"));
 
-        SetStorageString(dataMap, BerryID, BerryValue);
+        SetStorageString(dataMap, prefName: blueBerryPref, val: PlayerPrefs.GetString(blueBerryPref));
 
         yield return null;
 
         byte[] byteArr = new byte[0];
 
         XmlSerializer serializer = new XmlSerializer(typeof(XONESavedItems), new XmlRootAttribute("prefs"));
-        
+
         try
         {
             using (var ms = new System.IO.MemoryStream())
@@ -955,9 +976,11 @@ public class XOneEventsManager : MonoBehaviour
         }
 
         dataMap.AddOrReplaceBuffer("WoodleTree2", byteArr);
-        
+
         SaveStorage(dataMap);
     }
+
+    #endregion
 
     IEnumerator SavingCoRo()
     {
@@ -1276,6 +1299,7 @@ public class XOneEventsManager : MonoBehaviour
             LoadStringPref(view, s + "BlueBerry");
         }
 
+        int blueBerriesTotal = 0;
 
         foreach (string s in levelNames) {
             //        LoadStringPref(view, s + "BlueBerry");
@@ -1303,7 +1327,27 @@ public class XOneEventsManager : MonoBehaviour
 
             //LOAD ALL BLUE BERRIES COLLECTED
             for (int bb = 0; bb < total; bb++)
+            {
                 LoadStringPref(view, s + "BlueBerry" + bb.ToString());
+
+                if (PlayerPrefs.GetString(s + "BlueBerry" + bb.ToString()).Contains("1"))
+                    blueBerriesTotal++;
+            }
+        }
+
+        PlayerPrefs.SetInt("BlueBerryTotal", blueBerriesTotal);
+
+        Debug.LogError("BlueBerryTotal : " + blueBerriesTotal);
+
+        int blueBerriesCurrentlyOwned = PlayerPrefs.GetInt("BlueBerries");
+
+        Debug.LogError("Blue Berries Currently Owned : " + blueBerriesCurrentlyOwned);
+
+        if (blueBerriesCurrentlyOwned > blueBerriesTotal)
+        {
+            blueBerriesCurrentlyOwned = blueBerriesTotal;
+            Debug.LogError("--- WE HAD MORE BERRIES THEN THE ONES WE COLLECTED ---");
+            Debug.LogError("Blue Berries Currently Owned : " + blueBerriesCurrentlyOwned);
         }
 
         Debug.LogError("--- BERRIES LOADED ---");

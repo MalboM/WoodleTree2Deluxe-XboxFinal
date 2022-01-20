@@ -32,8 +32,9 @@ public class BlueBerryIDCreator : MonoBehaviour
 
                     if (!checking && PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
                     {
-                        if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry")[counter].ToString() == "1")
+                        if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + counter).Contains("1"))
                         {
+                            PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry" + counter, "1");
                             collected = true;
                             amountCollected++;
                         }

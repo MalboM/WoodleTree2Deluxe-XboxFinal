@@ -103,6 +103,60 @@ public class ItemPromptManager : MonoBehaviour
         singleton._UpdateAllStatuses();
     }
 
+    int CheckForPurchasedAblities()
+    {
+        int blueBerriesSpent = 0;
+
+        if (PlayerPrefs.GetInt("PaidForItem" + 18) == 1)
+        {
+            blueBerriesSpent += 290;
+        }
+
+        if (PlayerPrefs.GetInt("PaidForItem" + 19) == 1)
+        {
+            blueBerriesSpent += 110;
+        }
+
+        if (PlayerPrefs.GetInt("PaidForItem" + 20) == 1)
+        {
+            blueBerriesSpent += 70;
+        }
+
+        if (PlayerPrefs.GetInt("PaidForItem" + 21) == 1)
+        {
+            blueBerriesSpent += 350;
+        }
+
+        Debug.Log("Blue Berries spent by the player are : " + blueBerriesSpent);
+
+        return blueBerriesSpent;
+    }
+
+    public int CheckBlueBerriesCount()
+    {
+        //CONTROLLA SE LE ABILTA' SONO STATE COMPRATE
+        int blueBerriesSpent = CheckForPurchasedAblities();
+
+        int blueBerriesTotal = PlayerPrefs.GetInt("BlueBerryTotal");
+
+        int blueBerriesOwnedByThePlayer = PlayerPrefs.GetInt("BlueBerries");
+
+        int blueBerriesTotalLessSpent = blueBerriesTotal - blueBerriesSpent;
+
+        if (blueBerriesOwnedByThePlayer > blueBerriesTotalLessSpent)
+        {
+            blueBerriesOwnedByThePlayer = blueBerriesTotalLessSpent;
+            PlayerPrefs.SetInt("BlueBerries", blueBerriesOwnedByThePlayer);
+        }
+
+        return blueBerriesOwnedByThePlayer;
+    }
+
+    public static ItemPromptManager GetItemPromptManager()
+    {
+        return singleton;
+    }
+
     private void Update()
     {
         if (delay)

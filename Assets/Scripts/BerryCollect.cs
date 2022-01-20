@@ -28,7 +28,7 @@ public class BerryCollect : MonoBehaviour {
             //    PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != "0" &&
             //    PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id) != null)
             //    {
-            //        transform.root.gameObject.SetActive(false);
+            //        transform.parent.gameObject.SetActive(false);
             //    }
         }
         
@@ -68,9 +68,12 @@ public class BerryCollect : MonoBehaviour {
 
             if (berryType == BerryManagerTrigger.BerryType.blue)
             {
+
+                string playerPrefName = gameObject.scene.name + "BlueBerry" + id.ToString();
+
                 Debug.LogError("YAN: BerryCollect in scene " + this.gameObject.scene.name +". Collect BB ID: " + id.ToString());
 
-                string temp1 = PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + id);
+                string temp1 = PlayerPrefs.GetString(playerPrefName);
 
                 Debug.LogError("YAN: BB Pref orig value: " + temp1);
 
@@ -78,7 +81,7 @@ public class BerryCollect : MonoBehaviour {
 
                 Debug.LogError("YAN: BB Pref new value: " + temp1);
 
-                PlayerPrefs.SetString(this.gameObject.scene.name + "BlueBerry" + id, temp1);
+                PlayerPrefs.SetString(playerPrefName, temp1);
 
                 //string temp2 = temp1.Remove(id, 1);
                 //string temp3 = temp2.Insert(id, "1");
@@ -86,10 +89,7 @@ public class BerryCollect : MonoBehaviour {
 
 #if UNITY_XBOXONE && !UNITY_EDITOR
 
-                DataManager.xOneEventsManager.SaveBlueBerry
-                    (
-                        (this.gameObject.scene.name + "BlueBerry"+ id), temp1
-                    );
+                DataManager.xOneEventsManager.SaveBlueBerry(playerPrefName);
 #endif
 
             }

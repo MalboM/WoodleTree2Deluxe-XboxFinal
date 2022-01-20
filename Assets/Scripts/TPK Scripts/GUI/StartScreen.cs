@@ -147,12 +147,11 @@ public class StartScreen : MonoBehaviour
         titleText.SetActive(false);
         loadFS.color = Color.black;
 
-        if (loadOneAndSeven)
-        {
-            //   SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
-            //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
-
-        }
+        //if (loadOneAndSeven)
+        //{
+        //    //   SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+        //    //    SceneManager.LoadSceneAsync(9, LoadSceneMode.Additive);
+        //}
 
         inStart = true;
         cam.disableControl = true;
@@ -214,12 +213,7 @@ public class StartScreen : MonoBehaviour
                 PlayerPrefs.SetString(s + "BlueBerry", newString);
                 //    Debug.LogError("YAN: Initialised BB Pref for " + s +" : "+ newString);
             }
-            PlayerPrefs.Save();
-        }
 
-        //    if (!PlayerPrefs.HasKey("BlueBerryTotal"))
-        {
-            ps.CheckBlues();
             PlayerPrefs.Save();
         }
 
@@ -310,6 +304,7 @@ public class StartScreen : MonoBehaviour
 
             PlayerPrefs.SetInt("SteamCheckedLanguage", 1);
         }
+
         if (!PlayerPrefs.HasKey("BlueBerryTotal"))
         {
             ps.CheckBlues();

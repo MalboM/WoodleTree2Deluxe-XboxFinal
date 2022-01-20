@@ -597,6 +597,7 @@ public class TPC : MonoBehaviour
     void Start()
     {
         input = ReInput.players.GetPlayer(playerID);
+
         pID = int.Parse(playerID);
 
         if (pID != 0)
@@ -625,8 +626,13 @@ public class TPC : MonoBehaviour
 
         berryCount = PlayerPrefs.GetInt("Berries", 0);
         berryText.text = berryCount.ToString();
-        blueberryCount = PlayerPrefs.GetInt("BlueBerries", 0);
+
+
+        //BLUE BERRIES 
+        blueberryCount = ItemPromptManager.GetItemPromptManager().CheckBlueBerriesCount();
         blueberryText.text = blueberryCount.ToString();
+        //
+
         if (tearText != null)
         {
             ps.CheckTears();
@@ -3317,8 +3323,12 @@ public class TPC : MonoBehaviour
     public void UpdateBerryHUDBlue()
     {
         PlayerPrefs.SetInt("BlueBerries", blueberryCount);
+
         if (blueberryCount >= 100)
         {
+            //DO WE NEED AN ACHIEVEMENT HERE?
+            //ASK FABIO...
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
 #if !UNITY_EDITOR
         //    if (SteamManager.Initialized) {                
         //        SteamUserStats.SetAchievement("Blue Berry Lover");
@@ -3326,8 +3336,9 @@ public class TPC : MonoBehaviour
         //    }
 #endif
         }
-        //    PlayerPrefs.Save();
+
         blueberryText.text = blueberryCount.ToString();
+
         if (blueberryHUD.GetBool("function") == false)
         {
             blueberryHUD.SetBool("function", true);
@@ -3338,6 +3349,7 @@ public class TPC : MonoBehaviour
             StopCoroutine("HUDWait");
             StartCoroutine("HUDWait");
         }
+
         blueberryHUD.SetTrigger("bounceText");
     }
 

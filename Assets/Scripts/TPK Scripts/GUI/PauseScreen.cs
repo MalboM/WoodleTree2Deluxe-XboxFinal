@@ -1015,15 +1015,22 @@ public class PauseScreen : MonoBehaviour
 
     public void SetBlueBerries()
     {
-        int amount = PlayerPrefs.GetInt("BlueBerryTotal", 0);
+        int amount = PlayerPrefs.GetInt("BlueBerryTotal");
+
         if (amount < 10)
+        {
             blueBerries.text = "00" + amount.ToString();
+        }
         else
         {
             if (amount < 100)
+            {
                 blueBerries.text = "0" + amount.ToString();
+            }
             else
+            {
                 blueBerries.text = amount.ToString();
+            }
         }
     }
 
@@ -1240,18 +1247,23 @@ public class PauseScreen : MonoBehaviour
     public void CheckBlues()
     {
         currentBBCount = 0;
+
         int lvlCount = 0;
+
         PlayerPrefs.SetInt("BlueBerryTotal", 0);
+
         foreach (string s in sS.levelNames)
         {
             currentBBCount = 0;
+
             for (int bb = 0; bb < PlayerPrefs.GetInt(s + "BlueBerryTotal"); bb++)
             {
-                if (PlayerPrefs.GetString(s + "BlueBerry")[bb].ToString() == "1")
+                if (PlayerPrefs.GetString(s + "BlueBerry" + bb.ToString()).Contains("1"))
                     currentBBCount++;
             }
 
             blueCounters[lvlCount].text = "";
+
             if (currentBBCount < 10)
             {
                 if (lvlCount == 0 || lvlCount == 1 || lvlCount == 7)
@@ -1267,13 +1279,17 @@ public class PauseScreen : MonoBehaviour
                         blueCounters[lvlCount].text = "0";
                 }
             }
+
             blueCounters[lvlCount].text += currentBBCount.ToString();
+
             lvlCount++;
-            PlayerPrefs.SetInt("BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal") + currentBBCount);
+
+            int finalBlueBerryTotal = PlayerPrefs.GetInt("BlueBerryTotal") + currentBBCount;
+
+            PlayerPrefs.SetInt("BlueBerryTotal", finalBlueBerryTotal);
+
         }
 
-        //   if(enableDebugTab)
-        //       currentBBCount = 930;
     }
 
 

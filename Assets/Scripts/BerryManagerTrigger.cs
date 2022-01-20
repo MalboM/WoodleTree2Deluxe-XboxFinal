@@ -49,6 +49,7 @@ public class BerryManagerTrigger : MonoBehaviour
             amount = 1;
             initAmount = 1;
         }
+
         if (berryType == BerryType.red || berryType == BerryType.redCircle)
         {
             if (playFX)
@@ -65,14 +66,18 @@ public class BerryManagerTrigger : MonoBehaviour
                 else
                     BerrySpawnManager.PlayBerryNoise(true);
             }
+
             int valueToAdd = 1;
+
             if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
                 valueToAdd = 2;
+
             tpc.berryCount += valueToAdd;
             tpc.UpdateBerryHUDRed();
 
             int totalRedBerries = PlayerPrefs.GetInt("TotalRedBerries", tpc.berryCount);
             totalRedBerries += valueToAdd;
+
             PlayerPrefs.SetInt("TotalRedBerries", totalRedBerries);
 
 #if UNITY_PS4
