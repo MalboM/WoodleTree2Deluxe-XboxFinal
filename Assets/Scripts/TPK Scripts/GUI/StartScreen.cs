@@ -1584,26 +1584,31 @@ public class StartScreen : MonoBehaviour
         if (PlayerPrefs.GetInt("First3Tears", 0) == 1)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.FIRST_TREE_SAGE_RESTORED);
 
-        int totalRBCount = PlayerPrefs.GetInt("FirstCheckpoint", 0);
-        if (totalRBCount >= 100)
+        int totalRBCount = PlayerPrefs.GetInt("TotalRedBerries");
+        if (totalRBCount >= 100 && totalRBCount < 1000)
+        {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
-        //
-        if (totalRBCount >= 1000)
+        }
+        if (totalRBCount >= 1000 && totalRBCount < 2000)
+        {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
-        //
+        }
         if (totalRBCount >= 3000)
+        {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
-        //
+        }
+
         int totalBBCount = PlayerPrefs.GetInt("BlueBerryTotal", 0);
         if (totalBBCount >= 100)
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
-        //
-        if (totalBBCount >= 100)
+        {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
-        //
+        }
         if (totalBBCount >= 930)
+        {
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
-        //
+        }
+        
+
         int counted = PlayerPrefs.GetInt("marmellade1", 0) +
        PlayerPrefs.GetInt("marmellade2", 0) +
        PlayerPrefs.GetInt("marmellade3", 0) +

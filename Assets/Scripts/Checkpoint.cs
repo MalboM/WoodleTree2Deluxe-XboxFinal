@@ -56,6 +56,9 @@ public class Checkpoint : MonoBehaviour {
         if (PlayerPrefs.GetInt("FirstCheckpoint", 0) == 0)
         {
             PlayerPrefs.SetInt("FirstCheckpoint", 1);
+            //CALL ACHIEVEMENT
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.THE_BASICS);
+
             GameObject.FindWithTag("Pause").transform.Find("Event Text").gameObject.GetComponent<TextTriggerMain>().SetText(2);
         }
 

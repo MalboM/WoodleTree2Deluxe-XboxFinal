@@ -11,6 +11,7 @@ using System.Text;
 
 public enum XONEACHIEVS
 {
+    NONE = 0,
     THE_BASICS = 1,
     FIRST_TREE_SAGE_RESTORED,
     RED_BERRIES_LOVER,
@@ -209,22 +210,46 @@ static public class XONEAchievements
        //AddToStat("S_FRAG_COUNTER");
     }
     //
+
+    private static Queue<int> _achievementsIdsToSubmit = new Queue<int>();
+    
     static public void SubmitAchievement(int id)
     {
         if (CurrentUser != null)
         {
-            AchievementsManager.UpdateAchievementAsync(CurrentUser.Id, CurrentUser.UID, id.ToString(), 100, UpdateAchievementCallback);
+            _achievementsIdsToSubmit.Enqueue(id);
+
+            ProcessAchievementsSubmitted();
         }
     }
-    //
+
+
+    static bool _isSubmittingAnAchievement;
+    static void ProcessAchievementsSubmitted()
+    {
+        if (_achievementsIdsToSubmit.Count > 0 && !_isSubmittingAnAchievement)
+        {
+            _isSubmittingAnAchievement = true;
+            AchievementsManager.UpdateAchievementAsync(CurrentUser.Id, CurrentUser.UID, _achievementsIdsToSubmit.Dequeue().ToString(), 100, UpdateAchievementCallback);
+        }
+    }
+
+
     static void UpdateAchievementCallback(UnityPlugin.AsyncStatus status, UnityAOT.ActionAsyncOp op)
     {
         DebugLog("UpdateAchievementAsync call complete: " + op.IsComplete);
         DebugLog("UpdateAchievementAsync success: " + op.Success);
         DebugLog("UpdateAchievementAsync HRESULT:  0x" + op.Result.ToString("X8"));
         DebugLog("UpdateAchievementAsync returned status: " + status.GetHashCode());
+        
+        _isSubmittingAnAchievement = false;
+        
+        if(_achievementsIdsToSubmit.Count > 0)
+        {
+            ProcessAchievementsSubmitted();
+        }
     }
-    //
+
     static public void hAchievementUnlocked(AchievementUnlockedEventArgs payload)
     {
         // When an achievement comes in we don't get much information about it. You have to compare the achievement against

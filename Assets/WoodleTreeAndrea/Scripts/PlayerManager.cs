@@ -16,8 +16,12 @@ public class PlayerManager : MonoBehaviour
 
     PauseScreen ps;
 
+
+
     public bool testingWithKeyboard;
     int connectedControllers;
+
+    [SerializeField] bool areWoodleFriendsActive;
 
     void Awake()
     {
@@ -40,6 +44,7 @@ public class PlayerManager : MonoBehaviour
         players[1].gameObject.SetActive(false);
         players[2].gameObject.SetActive(false);
         players[3].gameObject.SetActive(false);
+        areWoodleFriendsActive = false;
         //    player = new Dictionary<int, TPC>();
     }
 
@@ -48,6 +53,7 @@ public class PlayerManager : MonoBehaviour
         //   if (!ps.inPause && !ps.sS.inStart)
         {
             connectedControllers = ReInput.controllers.GetControllerCount(ControllerType.Joystick);
+
             if (testingWithKeyboard)
                 connectedControllers += 1;
 
@@ -61,6 +67,9 @@ public class PlayerManager : MonoBehaviour
                 players[1].gameObject.SetActive(true);
                 StartCoroutine(players[1].Invincibility());
                 ps.foxAnim.SetBool("activated", true);
+
+                CheckWoodleFriends();
+
             }
             if (!ps.foxAnim.GetBool("activated") && players[1].gameObject.activeInHierarchy && (connectedControllers >= 2))
                 ps.foxAnim.SetBool("activated", true);
@@ -76,6 +85,9 @@ public class PlayerManager : MonoBehaviour
                 players[2].gameObject.SetActive(true);
                 StartCoroutine(players[2].Invincibility());
                 ps.beaverAnim.SetBool("activated", true);
+
+                CheckWoodleFriends();
+
             }
             if (!ps.beaverAnim.GetBool("activated") && players[2].gameObject.activeInHierarchy && (connectedControllers >= 3))
                 ps.beaverAnim.SetBool("activated", true);
@@ -88,9 +100,14 @@ public class PlayerManager : MonoBehaviour
 
             if (!players[3].gameObject.activeInHierarchy && (inputPlayer4.GetAnyButtonDown()) && (connectedControllers == 4))
             {
+
                 players[3].gameObject.SetActive(true);
                 StartCoroutine(players[3].Invincibility());
                 ps.bushAnim.SetBool("activated", true);
+
+                CheckWoodleFriends();
+
+
             }
             if (!ps.bushAnim.GetBool("activated") && players[3].gameObject.activeInHierarchy && (connectedControllers >= 4))
                 ps.bushAnim.SetBool("activated", true);
@@ -201,6 +218,8 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         singleton._DeactivateCharacter(charaID);
+        
+       
     }
 
     void _DeactivateCharacter(int charaID)
@@ -219,5 +238,36 @@ public class PlayerManager : MonoBehaviour
             ps.foxAnim.SetBool("activated", false);
         }
         yield return null;
+
+        CheckWoodleFriends();
+    }
+
+
+    void CheckWoodleFriends()
+    {
+        int woodleFriendsActive = 0;
+
+        for (int i = 1; i < players.Length; i++)
+        {
+            if(i > 0)
+            {
+                if (players[i].gameObject.active)
+                {
+                    woodleFriendsActive++;
+                }
+            }
+        }
+
+        if (woodleFriendsActive > 0 && !areWoodleFriendsActive)
+        {
+            areWoodleFriendsActive = true;
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_FRIENDS);
+            Debug.LogError("YOU ARE PLAYING WITH A FRIEND");
+        }
+        else if (woodleFriendsActive < 1 && areWoodleFriendsActive)
+        {
+            areWoodleFriendsActive = false;
+            Debug.LogError("YOU ARE PLAYING ALONE");
+        }
     }
 }

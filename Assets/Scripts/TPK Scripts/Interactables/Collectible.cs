@@ -126,20 +126,20 @@ public class Collectible : MonoBehaviour
 #if UNITY_XBOXONE
         //
         // check trophy
-        if (totalRBCount >= 100)
-        {
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
-        }
-        //
-        if (totalRBCount >= 1000)
-        {
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
-        }
-        //
-        if (totalRBCount >= 3000)
-        {
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
-        }
+        //if (totalRedBerries >= 100)
+        //{
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
+        //}
+        ////
+        //if (totalRedBerries >= 1000)
+        //{
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
+        //}
+        ////
+        //if (totalRedBerries >= 3000)
+        //{
+        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
+        //}
 #endif
     }
 

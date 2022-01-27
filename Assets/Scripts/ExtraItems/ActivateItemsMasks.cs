@@ -162,20 +162,20 @@ public class ActivateItemsMasks : MonoBehaviour
 
 
 #if UNITY_XBOXONE
-        //
-        // check trophy : items >= 3 and items = all 
-        //
-        if (itemsBoughtCount >= 3 && !threeItemsTrophy)
-        {
-            threeItemsTrophy = true;
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING);
-        }
+                    //
+                    // check trophy : items >= 3 and items = all 
+                    //
+                    if (itemsBoughtCount >= 3)
+                    {
+                        threeItemsTrophy = true;
+                        XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING);
+                    }
 
-        if (itemsBoughtCount >= 17 && !allItemsTrophy)
-        {
-            allItemsTrophy = true;
-            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING_FOR_EVERYTHING);
-        }
+                    if (itemsBoughtCount >= 17)
+                    {
+                        allItemsTrophy = true;
+                        XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING_FOR_EVERYTHING);
+                    }
 #endif
                 }
             }

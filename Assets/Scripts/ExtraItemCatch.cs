@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExtraItemCatch : MonoBehaviour {
+public class ExtraItemCatch : MonoBehaviour
+{
 
     public GameObject animatorobject;
     Animator animator;
 
     public string nameobj;
-    
+
     public ActivateItemsExtra scriptcollectables;
-    
+
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
 
         {
-        //    if (PlayerPrefs.GetInt("FirstCollectable", 0) == 0)
-        //    {
-        //        PlayerPrefs.SetInt("FirstCollectable", 1);
-                ItemPromptManager.DisplayPrompt(18, -1, null, null, null, false, false);
+            //    if (PlayerPrefs.GetInt("FirstCollectable", 0) == 0)
+            //    {
+            //        PlayerPrefs.SetInt("FirstCollectable", 1);
+            ItemPromptManager.DisplayPrompt(18, -1, null, null, null, false, false);
             //    }
 
             this.gameObject.GetComponent<Collider>().enabled = false;
@@ -200,11 +201,15 @@ public class ExtraItemCatch : MonoBehaviour {
                     PlayerPrefs.SetInt("inbox", 1);
 
                 }
+
+
                 if (!PlayerPrefs.HasKey("CollectablesTotal"))
                     PlayerPrefs.SetInt("CollectablesTotal", 0);
+
                 PlayerPrefs.SetInt("CollectablesTotal", PlayerPrefs.GetInt("CollectablesTotal", 0) + 1);
+
                 other.gameObject.GetComponent<TPC>().itemText.text = PlayerPrefs.GetInt("CollectablesTotal").ToString();
-            //    PlayerPrefs.Save();
+                //    PlayerPrefs.Save();
 
                 StartCoroutine(WaitToDeact());
             }
@@ -216,5 +221,52 @@ public class ExtraItemCatch : MonoBehaviour {
     {
         yield return new WaitForSeconds(2f);
         this.transform.parent.gameObject.SetActive(false);
+        CheckCollectedItems();
+    }
+
+
+    //CHECK HOW MANY ITEMS HAVE BEEN COLLECTED AND CALL ACHIEVEMENTS
+    void CheckCollectedItems()
+    {
+        Debug.LogError("CHECKING FOR COLLECTED ITMES NUMBER");
+
+        int counted =
+        PlayerPrefs.GetInt("marmellade1") +
+        PlayerPrefs.GetInt("marmellade2") +
+        PlayerPrefs.GetInt("marmellade3") +
+        PlayerPrefs.GetInt("plantjar") +
+        PlayerPrefs.GetInt("plantjar2") +
+        PlayerPrefs.GetInt("book1") +
+        PlayerPrefs.GetInt("book2") +
+        PlayerPrefs.GetInt("book3") +
+        PlayerPrefs.GetInt("paint") +
+        PlayerPrefs.GetInt("paint2") +
+        PlayerPrefs.GetInt("gameboy") +
+        PlayerPrefs.GetInt("bell") +
+        PlayerPrefs.GetInt("heater") +
+        PlayerPrefs.GetInt("globe") +
+        PlayerPrefs.GetInt("cupbear") +
+        PlayerPrefs.GetInt("compass") +
+        PlayerPrefs.GetInt("carpet") +
+        PlayerPrefs.GetInt("candle") +
+        PlayerPrefs.GetInt("statue1") +
+        PlayerPrefs.GetInt("statue2") +
+        PlayerPrefs.GetInt("statue3") +
+        PlayerPrefs.GetInt("mask1") +
+        PlayerPrefs.GetInt("mask2") +
+        PlayerPrefs.GetInt("mask3") +
+        PlayerPrefs.GetInt("map") +
+        PlayerPrefs.GetInt("jukebox") +
+        PlayerPrefs.GetInt("inbox");
+
+        if(counted >= 13)
+        {
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BEAUTIFUL_WOODLE_HOUSE);
+        }
+
+        if (counted >= 27)
+        {
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WONDERFUL_WOODLE_HOUSE);
+        }
     }
 }

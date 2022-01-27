@@ -100,23 +100,24 @@ public class BerryManagerTrigger : MonoBehaviour
 #endif
 #if UNITY_XBOXONE
 
-        // check trophy
-    //    if (totalRBCount >= 100)
-        {
-            // check friend trophy
-        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
-        }
-        //
-    //    if (totalRBCount >= 1000)
-        {
-        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
-        }
-        //
-    //    if (totalRBCount >= 3000)
-        {
-        //    XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
-        }
-       
+            int _redBerriesTotalAbs = Mathf.Abs(totalRedBerries);
+
+            // check trophy
+            if (_redBerriesTotalAbs >= 100)
+            {
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_LOVER);
+            }
+
+            if (_redBerriesTotalAbs >= 1000)
+            {
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_PARADE);
+            }
+
+            if (_redBerriesTotalAbs >= 3000)
+            {
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.RED_BERRIES_CHAMPION);
+            }
+
 #endif
 
         }
@@ -172,14 +173,18 @@ public class BerryManagerTrigger : MonoBehaviour
 #endif
 
 #if UNITY_XBOXONE
+            //USED TO SOLVE BLUE BERRIES NEGATIVE COUNTER VALUE BUG
+            int blueBerriesTotalAbs = Mathf.Abs(PlayerPrefs.GetInt("BlueBerryTotal"));
+
+
             // check trophy
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
+            if (blueBerriesTotalAbs >= 100)
             {
                 // check friend trophy
                 XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
             }
             //
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
+            if (blueBerriesTotalAbs >= 930)
             {
                 // check friend trophy
                 XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
