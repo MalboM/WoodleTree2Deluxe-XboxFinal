@@ -5,6 +5,8 @@ using UnityEngine;
 public class BlueBerryIDCreator : MonoBehaviour
 {
     [HideInInspector] public List<Transform> berries = new List<Transform>();
+    [HideInInspector] public List<BerryCollect> berryCollects = new List<BerryCollect>();
+    [HideInInspector] public bool allCollected;
 
     public bool collectAll;
 
@@ -15,10 +17,11 @@ public class BlueBerryIDCreator : MonoBehaviour
         int counter = 0;
         bool checking = false;
         bool collected = false;
+        allCollected = true;
         berries.Clear();
 
         int amountCollected = 0;
-        Debug.LogError("YAN: BlueBerryIDCreator in " + this.gameObject.scene.name +". HasKey(MainPlaza7NewBlueBerry)? " + PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"));
+        Debug.LogError("YAN: BlueBerryIDCreator in " + this.gameObject.scene.name + ". HasKey(MainPlaza7NewBlueBerry)? " + PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"));
         foreach (Transform t in this.GetComponentsInChildren<Transform>(true))
         {
             if (t.transform.parent == this.transform)
@@ -27,9 +30,6 @@ public class BlueBerryIDCreator : MonoBehaviour
                 collected = false;
                 foreach (Transform t1 in t.GetComponentsInChildren<Transform>(true))
                 {
-                    if (t1.GetComponentInChildren<BerryCollect>() != null)
-                        t1.GetComponentInChildren<BerryCollect>().id = counter;
-
                     if (!checking && PlayerPrefs.HasKey("MainPlaza7NewBlueBerry"))
                     {
                         if (PlayerPrefs.GetString(this.gameObject.scene.name + "BlueBerry" + counter).Contains("1"))
@@ -39,9 +39,21 @@ public class BlueBerryIDCreator : MonoBehaviour
                             amountCollected++;
                         }
                     }
+
+                    if (t1.GetComponentInChildren<BerryCollect>() != null)
+                    {
+                        t1.GetComponentInChildren<BerryCollect>().id = counter;
+
+                        if (collected)
+                            t1.GetComponentInChildren<BerryCollect>().collected = true;
+                        berryCollects.Add(t1.GetComponentInChildren<BerryCollect>());
+                    }
+
                     checking = true;
                     if (collected)
                         t1.gameObject.SetActive(false);
+                    else
+                        allCollected = false;
                 }
                 berries.Add(t);
                 counter++;

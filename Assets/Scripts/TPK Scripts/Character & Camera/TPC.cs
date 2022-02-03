@@ -2405,14 +2405,10 @@ public class TPC : MonoBehaviour
         foreach (BlueBerryIDCreator bbidc in FindObjectsOfType<BlueBerryIDCreator>())
         {
             bool useThisOne = false;
-            foreach (string s in ps.sS.levelNames)
-            {
-                if (s == bbidc.gameObject.scene.name)
-                {
-                    if (PlayerPrefs.GetString(s + "BlueBerry").Contains("0"))
-                        useThisOne = true;
-                }
-            }
+
+            if (!bbidc.allCollected)
+                useThisOne = true;
+
             if (useThisOne)
                 blueBerryIDCreators.Add(bbidc);
         }
@@ -2424,15 +2420,14 @@ public class TPC : MonoBehaviour
             foreach (BlueBerryIDCreator bbidc in blueBerryIDCreators)
             {
                 int berryIndex = 0;
-                string prefToCheck = PlayerPrefs.GetString(bbidc.gameObject.scene.name + "BlueBerry");
-                foreach (Transform t in bbidc.berries)
+                foreach (BerryCollect bc in bbidc.berryCollects)
                 {
-                    if (prefToCheck[berryIndex].ToString() == "0")
+                    if (!bc.collected)
                     {
-                        if ((t.position - this.transform.position).sqrMagnitude < smallestDistance)
+                        if ((bc.transform.position - transform.position).sqrMagnitude < smallestDistance)
                         {
-                            smallestDistance = (t.position - this.transform.position).sqrMagnitude;
-                            closestPosition = t.position;
+                            smallestDistance = (bc.transform.position - transform.position).sqrMagnitude;
+                            closestPosition = bc.transform.position;
                         }
                     }
                     berryIndex++;
@@ -2440,35 +2435,7 @@ public class TPC : MonoBehaviour
             }
             isABerry = true;
         }
-        else
-        {
-            /*    bool useThisOne = false;
-                int sceneToCheck = 0;
-                int sceneCounter = 0;
-                foreach (string s in ps.sS.levelNames)
-                {
-                    if (!useThisOne)
-                    {
-                        if (s != "MainPlaza7New" && s != "ExternalWorld")
-                        {
-                            int total = 80;
-                            if (s == "Level2")
-                                total = 90;
-                            if (s == "Level6")
-                                total = 120;
 
-                            if (PlayerPrefs.GetString(s + "BlueBerry").Contains("0"))
-                            {
-                                useThisOne = true;
-                                sceneToCheck = sceneCounter;
-                                smallestDistance = (ps.sS.loadLevelAdditives[sceneToCheck].transform.position - this.transform.position).sqrMagnitude;
-                            }
-
-                            sceneCounter++;
-                        }
-                    }
-                }*/
-        }
         if (!isABerry)
             bbFinderIntensity = Mathf.Lerp(1f, 0f, smallestDistance / 700000f);
         else
