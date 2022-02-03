@@ -994,9 +994,9 @@ public class PauseScreen : MonoBehaviour
 
     public void QuitGameAYS()
     {
-        quitAYS.SetActive(true);
+    /*    quitAYS.SetActive(true);
         es.SetSelectedGameObject(quitFirst);
-        quitSelector.transform.position = es.currentSelectedGameObject.transform.position;
+        quitSelector.transform.position = es.currentSelectedGameObject.transform.position;*/
     }
 
     public void QuitGame()
