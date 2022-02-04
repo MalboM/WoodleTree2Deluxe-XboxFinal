@@ -53,12 +53,6 @@ public class WaterAltairActivate : MonoBehaviour
 
                         if (ps.tearCount == 24)
                         {
-#if UNITY_PS4
-                            //
-                            // check trophy
-                            PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.FIND_ALL_WATER_TEARS);
-#endif
-
 #if UNITY_XBOXONE
                             //
                             // check trophy : items >= 3 and items = all 
