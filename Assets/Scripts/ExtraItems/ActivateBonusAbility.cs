@@ -109,21 +109,11 @@ public class ActivateBonusAbility : MonoBehaviour
             PlayerPrefs.SetInt("BoughtPowers", amountBought);
             if (amountBought >= 4)
             {
-#if UNITY_PS4
-
-        //
-        // check trophy : powerUps == 4
-        if (abiliesCount >= 4 && !allPowerupsTrophy)
-        {
-            allPowerupsTrophy = true;
-            PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.GET_ALL_POWER_UPS);
-        }
-#endif
 
 #if UNITY_XBOXONE
         //
         // check trophy musicians if all cages are 1 countedPrefs = 4
-        if (abiliesCount >= 4 && !allPowerupsTrophy)
+        if (!allPowerupsTrophy)
         {
             allPowerupsTrophy = true;
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_POWER);
