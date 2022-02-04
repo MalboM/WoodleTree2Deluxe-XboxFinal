@@ -1659,10 +1659,10 @@ public class StartScreen : MonoBehaviour
         if (PlayerPrefs.GetInt("AllFlowers", 0) == 1)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.AWAKING_FROM_A_LONG_SLEEP);
 
-        if (PlayerPrefs.GetInt("PaidItemsCount", 0) >= 3)
+        if (PlayerPrefs.GetInt("BoughtItems", 0) >= 3)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING);
 
-        if (PlayerPrefs.GetInt("PaidItemsCount", 0) >= 17)
+        if (PlayerPrefs.GetInt("BoughtItems", 0) >= 17)
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING_FOR_EVERYTHING);
 
         if (PlayerPrefs.GetInt("WoodleFriends", 0) == 1)

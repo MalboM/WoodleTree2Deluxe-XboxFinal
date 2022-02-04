@@ -128,42 +128,24 @@ public class ActivateItemsLeafs : MonoBehaviour
 
             int amountBought = PlayerPrefs.GetInt("BoughtItems", 0) + 1;
             PlayerPrefs.SetInt("BoughtItems", amountBought);
-            if (amountBought >= 3)
-            {
-#if UNITY_PS4
-        //
-        // check trophy : items >= 3 and items = all 
-        //
-        if (itemsBoughtCount >= 3 && !threeItemsTrophy)
-        {
-            threeItemsTrophy = true;
-            PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.BUY_3_ITEMS_AT_THE_SHOP);
-        }
-
-        if (itemsBoughtCount >= 17 && !allItemsTrophy)
-        {
-            allItemsTrophy = true;
-            PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.BUY_ALL_ITEMS_AT_THE_SHOP);
-        }
-#endif
+            
 
 #if UNITY_XBOXONE
         //
         // check trophy : items >= 3 and items = all 
         //
-        if (itemsBoughtCount >= 3 && !threeItemsTrophy)
+        if (amountBought >= 3 && !threeItemsTrophy)
         {
             threeItemsTrophy = true;
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING);
         }
 
-        if (itemsBoughtCount >= 17 && !allItemsTrophy)
+        if (amountBought >= 17 && !allItemsTrophy)
         {
             allItemsTrophy = true;
             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.GO_SHOPPING_FOR_EVERYTHING);
         }
 #endif
-            }
 
             SetPriceText();
             Transform t = this.transform;
