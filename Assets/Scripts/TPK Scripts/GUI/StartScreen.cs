@@ -96,8 +96,8 @@ public class StartScreen : MonoBehaviour
     public GameObject deleteButton;
     public Text deleteText;
     //	float camSense;
-    float effects;
-    float music;
+    float effects = 8f;
+    float music = 8f;
     bool deletingFile;
     public GameObject defaultsAYS;
     public GameObject defaultsNo;
@@ -537,8 +537,8 @@ public class StartScreen : MonoBehaviour
 
     public void InitializeValues()
     {
-        musicSlider.value = music;
-        effectsSlider.value = effects;
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 8f);
+        effectsSlider.value = PlayerPrefs.GetFloat("effectsVolume", 8f);
     }
 
     void OpenMain()
