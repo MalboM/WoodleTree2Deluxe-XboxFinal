@@ -697,8 +697,8 @@ public class PauseScreen : MonoBehaviour
             cam.freeInvertYAxis = invertY;
             iyTick.SetActive(invertX);
 
-            sensitivity.value = (float)PlayerPrefs.GetInt("Sensitivity", 4);
-            cam.freeRotateSpeed = sensitivity.value;
+        //    sensitivity.value = (float)PlayerPrefs.GetInt("Sensitivity", 4);
+         //   cam.freeRotateSpeed = sensitivity.value;
 
             clip = 40f;
         }
@@ -735,10 +735,10 @@ public class PauseScreen : MonoBehaviour
         else
             vibTick.SetActive(false);
 
-        if (stying)
+     /*   if (stying)
             styTick.SetActive(true);
         else
-            styTick.SetActive(false);
+            styTick.SetActive(false);*/
 
         if (deactivatedAll)
             actTick.SetActive(true);
@@ -900,11 +900,11 @@ public class PauseScreen : MonoBehaviour
         optionsNew.ResetOptionsScroll();
         dotWhite.transform.position = dots[2].transform.position;
         inOptions = true;
-        //	selectIcon.transform.SetParent (selectPos [2].transform);
-        //	selectIcon.transform.localPosition = Vector3.zero;
 
+        /*
         if (PlayerPrefs.GetInt("FinalBossDefeated", 0) == 0)
         {
+            if(filterButton != null)
             filterButton.transform.parent.gameObject.SetActive(false);
 
             Navigation nav = sensitivity.navigation;
@@ -929,7 +929,8 @@ public class PauseScreen : MonoBehaviour
         }
         else
         {
-            filterButton.transform.parent.gameObject.SetActive(true);
+            if (filterButton != null)
+                filterButton.transform.parent.gameObject.SetActive(true);
 
             Navigation nav = sensitivity.navigation;
             nav.mode = Navigation.Mode.Explicit;
@@ -950,7 +951,7 @@ public class PauseScreen : MonoBehaviour
             nav4.mode = Navigation.Mode.Explicit;
             nav4.selectOnDown = filterButton;
             aaAButton.navigation = nav4;
-        }
+        }*/
 
         InitializeValues();
         es.SetSelectedGameObject(firstOptions);

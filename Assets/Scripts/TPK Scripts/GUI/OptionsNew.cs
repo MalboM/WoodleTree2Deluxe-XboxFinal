@@ -47,6 +47,8 @@ public class OptionsNew : MonoBehaviour
     BoolParameter aoOn;
     BoolParameter dofOn;
 
+    public List<GameObject> noAutoScrollObjs = new List<GameObject>();
+
     //public List<GameObject> bloomTicks;
     public List<GameObject> aoTicks;
     public List<GameObject> dofTicks;
@@ -55,6 +57,15 @@ public class OptionsNew : MonoBehaviour
     int aaMode = 0;
 
     public List<RectTransform> optionsContents;
+    public ScrollRect optionsListScrollRect;
+    public RectTransform optionsListScrollRectTransform;
+    public RectTransform optionsListContentRect;
+
+    public List<RectTransform> pauseContents;
+    public ScrollRect pauseListScrollRect;
+    public RectTransform pauseListScrollRectTransform;
+    public RectTransform pauseListContentRect;
+
     public List<GameObject> pauseOptions;
     public Slider pauseOptionScroll;
     public List<GameObject> startOptions;
@@ -127,6 +138,9 @@ public class OptionsNew : MonoBehaviour
         applySource.clip = applySound;
 
         curLanguage = PlayerPrefs.GetInt("Language", 0);
+
+        optionsListScrollRectTransform = optionsListScrollRect.GetComponent<RectTransform>();
+        pauseListScrollRectTransform = pauseListScrollRect.GetComponent<RectTransform>();
     }
     
     void InitializeValues()
@@ -278,16 +292,16 @@ public class OptionsNew : MonoBehaviour
         {
             tick.SetActive(isRunByDefaultActive);
         }
-
+        /*
         foreach (GameObject tick in bloomTicks)
         {
             tick.SetActive(isBloomActive);
-        }
-
+        }*/
+        /*
         foreach (GameObject tick in ambientOcclusionTicks)
         {
             tick.SetActive(isAmbientOcclusionActive);
-        }
+        }*/
     }
 
     void UpdateOptionsPlayerPrefsWithBool()
@@ -393,7 +407,7 @@ public class OptionsNew : MonoBehaviour
     {
         if (pauseScreen.optionsTab.activeInHierarchy || startScreen.optionsScreen.activeInHierarchy)
         {
-            if (PlayerPrefs.GetInt("Language",0) != curLanguage)
+            if (PlayerPrefs.GetInt("Language", 0) != curLanguage)
             {
                 curLanguage = PlayerPrefs.GetInt("Language", 0);
                 //SetWindowValues();
@@ -429,24 +443,41 @@ public class OptionsNew : MonoBehaviour
                             }
                         }
                     }
-                 /*   else
-                    {
-                        if (pauseScreen.optionsTab.activeInHierarchy)
-                            Debug.Log(pauseScreen.notMouseOver);
-                        scrollResult = -1f;
-                    }*/
                 }
-                else
+
+                if (NoAutoScrollObjActive())
                 {
-                    if (tpc.input.GetAxis("MapZoom") != 0f)
-                        scrollResult -= tpc.input.GetAxis("MapZoom");
+                    if (Camera.main.ScreenToViewportPoint(es.currentSelectedGameObject.transform.position).y > 0.6f)
+                        pauseListContentRect.anchoredPosition -= Vector2.up * Time.unscaledDeltaTime * 1000f;
+                    if (Camera.main.ScreenToViewportPoint(es.currentSelectedGameObject.transform.position).y < 0.6f)
+                        pauseListContentRect.anchoredPosition += Vector2.up * Time.unscaledDeltaTime * 1000f;
+
+                    if (Camera.main.ScreenToViewportPoint(es.currentSelectedGameObject.transform.position).y > 0.6f)
+                        optionsListContentRect.anchoredPosition -= Vector2.up * Time.unscaledDeltaTime * 1000f;
+                    if (Camera.main.ScreenToViewportPoint(es.currentSelectedGameObject.transform.position).y < 0.6f)
+                        optionsListContentRect.anchoredPosition += Vector2.up * Time.unscaledDeltaTime * 1000f;
+
+                    pauseListContentRect.anchoredPosition = new Vector2(pauseListContentRect.anchoredPosition.x, Mathf.Clamp(pauseListContentRect.anchoredPosition.y, -270f, 152f));
+                    optionsListContentRect.anchoredPosition = new Vector2(optionsListContentRect.anchoredPosition.x, Mathf.Clamp(optionsListContentRect.anchoredPosition.y, -270f, 152f));
                 }
             }
+
             if (scrollResult != -1f && pauseScreen.optionsTab.activeInHierarchy)
                 pauseOptionScroll.value = Mathf.Lerp(pauseOptionScroll.value, scrollResult, 1f/12f);
             if (scrollResult != -1f && startScreen.optionsScreen.activeInHierarchy)
                 startOptionScroll.value = Mathf.Lerp(startOptionScroll.value, scrollResult, 1f / 12f);
         }
+    }
+
+    bool NoAutoScrollObjActive()
+    {
+        foreach(GameObject g in noAutoScrollObjs)
+        {
+            if (g.activeInHierarchy)
+                return false;
+        }
+
+        return true;
     }
 
     public void SetInitialTextValues()
@@ -579,6 +610,7 @@ public class OptionsNew : MonoBehaviour
         pauseOptionScroll.value = 0f;
         foreach (RectTransform rt in optionsContents)
             rt.anchoredPosition = Vector2.zero;
-        //    startOptionScroll.value = 0f;
+        optionsListContentRect.anchoredPosition = new Vector2(optionsListContentRect.anchoredPosition.x, -270f);
+        pauseListContentRect.anchoredPosition = new Vector2(pauseListContentRect.anchoredPosition.x, -270f);
     }
 }

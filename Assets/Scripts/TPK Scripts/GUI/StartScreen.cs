@@ -685,14 +685,17 @@ public class StartScreen : MonoBehaviour
 
     void MainButtonSelect()
     {
-        arrowIcon.transform.position = new Vector3(arrowIcon.transform.position.x, es.currentSelectedGameObject.transform.position.y, arrowIcon.transform.position.z);
-        arrowIcon.transform.localPosition = new Vector3(Mathf.Clamp((-25f * (float)es.currentSelectedGameObject.GetComponentInChildren<Text>().text.Length), -2000f, -200f), arrowIcon.transform.localPosition.y, arrowIcon.transform.localPosition.z);
-        foreach (GameObject g in startButtons)
-        {
-            if (g == es.currentSelectedGameObject)
-                g.transform.GetChild(0).GetComponent<Text>().color = Color.white;
-            else
-                g.transform.GetChild(0).GetComponent<Text>().color = Color.gray;
+        if(es.currentSelectedGameObject != null && es.currentSelectedGameObject.GetComponentInChildren<Text>() != null)
+        { 
+            arrowIcon.transform.position = new Vector3(arrowIcon.transform.position.x, es.currentSelectedGameObject.transform.position.y, arrowIcon.transform.position.z);
+            arrowIcon.transform.localPosition = new Vector3(Mathf.Clamp((-25f * (float)es.currentSelectedGameObject.GetComponentInChildren<Text>().text.Length), -2000f, -200f), arrowIcon.transform.localPosition.y, arrowIcon.transform.localPosition.z);
+            foreach (GameObject g in startButtons)
+            {
+                if (g == es.currentSelectedGameObject)
+                    g.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+                else
+                    g.transform.GetChild(0).GetComponent<Text>().color = Color.gray;
+            }
         }
     }
 
