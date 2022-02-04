@@ -141,13 +141,21 @@ public class BerryManagerTrigger : MonoBehaviour
             //     tpc.ps.CheckBlues();
             PlayerPrefs.SetInt("BlueBerryTotal", PlayerPrefs.GetInt("BlueBerryTotal") + 1);
 
-            if (PlayerPrefs.GetInt("BlueBerryTotal") == 465)
+
+            if (Mathf.Abs(PlayerPrefs.GetInt("BlueBerryTotal")) == 100)
+            {
+#if UNITY_XBOXONE
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
+#endif
+            }
+
+            if (Mathf.Abs(PlayerPrefs.GetInt("BlueBerryTotal")) == 465)
             {
                 PlayerPrefs.SetInt("HalfBlueBerries", 1);
                 textMain.SetText(15);
             }
 
-            if (PlayerPrefs.GetInt("BlueBerryTotal") == 930)
+            if (Mathf.Abs(PlayerPrefs.GetInt("BlueBerryTotal")) == 930)
             {
                 PlayerPrefs.SetInt("AllBlueBerries", 1);
 
@@ -156,40 +164,12 @@ public class BerryManagerTrigger : MonoBehaviour
 
                 tpc.berryCount += 1000;
                 tpc.UpdateBerryHUDRed();
+#if UNITY_XBOXONE
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
+#endif
             }
             else
                 BerrySpawnManager.PlayBlueBerryNoise(0);
-#if UNITY_PS4
-            // check trophy
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 100)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_100_BLUE_BERRIES);
-            }
-            //
-            if (PlayerPrefs.GetInt("BlueBerryTotal") >= 930)
-            {
-                PS4Manager.ps4TrophyManager.UnlockTrophy((int)PS4_TROPHIES.COLLECT_ALL_BLUE_BERRIES);
-            }
-#endif
-
-#if UNITY_XBOXONE
-            //USED TO SOLVE BLUE BERRIES NEGATIVE COUNTER VALUE BUG
-            int blueBerriesTotalAbs = Mathf.Abs(PlayerPrefs.GetInt("BlueBerryTotal"));
-
-
-            // check trophy
-            if (blueBerriesTotalAbs >= 100)
-            {
-                // check friend trophy
-                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_LOVER);
-            }
-            //
-            if (blueBerriesTotalAbs >= 930)
-            {
-                // check friend trophy
-                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.BLUE_BERRIES_CHAMPION);
-            }
-#endif
 
         }
         if (playFX)
