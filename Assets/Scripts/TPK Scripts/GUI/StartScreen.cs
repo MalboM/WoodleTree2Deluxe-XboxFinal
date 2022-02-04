@@ -940,8 +940,8 @@ public class StartScreen : MonoBehaviour
         PlayerPrefs.SetInt("Checkpoint0Scene", 2);
 
         //ACHIEVEMENTS
-        PlayerPrefs.SetInt("DarkKilled", 0);
-        PlayerPrefs.SetInt("NaturalKilled", 0);
+        PlayerPrefs.SetInt("DarkEnemiesKilledCount", 0);
+        PlayerPrefs.SetInt("NormalEnemiesKilledCount", 0);
         PlayerPrefs.SetInt("BoughtItems", 0);
         PlayerPrefs.SetInt("BoughtPowers", 0);
         PlayerPrefs.GetInt("PTree26", 0);

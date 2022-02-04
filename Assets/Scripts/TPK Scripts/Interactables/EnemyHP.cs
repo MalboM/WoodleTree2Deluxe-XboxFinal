@@ -202,29 +202,23 @@ public class EnemyHP : MonoBehaviour
 
         if (isDark)
         {
-            int amountKilled = PlayerPrefs.GetInt("DarkKilled", 0) + 1;
-            PlayerPrefs.SetInt("DarkKilled", amountKilled);
+            int amountKilled = PlayerPrefs.GetInt("DarkEnemiesKilledCount", 0) + 1;
+            PlayerPrefs.SetInt("DarkEnemiesKilledCount", amountKilled);
             if (amountKilled >= 100)
             {
-#if !UNITY_EDITOR
-            //    if (SteamManager.Initialized) {                
-            //        SteamUserStats.SetAchievement("Woodle Warrior");
-            //        SteamUserStats.StoreStats();
-            //    }
+#if UNITY_XBOXONE
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_WARRIOR);
 #endif
             }
         }
         else
         {
-            int amountKilled = PlayerPrefs.GetInt("NaturalKilled", 0) + 1;
-            PlayerPrefs.SetInt("NaturalKilled", amountKilled);
+            int amountKilled = PlayerPrefs.GetInt("NormalEnemiesKilledCount", 0) + 1;
+            PlayerPrefs.SetInt("NormalEnemiesKilledCount", amountKilled);
             if (amountKilled >= 100)
             {
-#if !UNITY_EDITOR
-            //    if (SteamManager.Initialized) {                
-            //        SteamUserStats.SetAchievement("Woodle Avenger");
-            //        SteamUserStats.StoreStats();
-            //    }
+#if UNITY_XBOXONE
+                XONEAchievements.SubmitAchievement((int)XONEACHIEVS.WOODLE_AVENGER);
 #endif
             }
         }
