@@ -657,26 +657,25 @@ public class PauseScreen : MonoBehaviour
 
     public void MouseOverButton(GameObject selected)
     {
-        //if (selected != null)
-        //{
-        //    if (notMouseOver || Cursor.visible)
-        //    {
-        //        notMouseOver = false;
-        //        es.SetSelectedGameObject(selected);
-        //        if (!justOpenedMap)
-        //        {
-        //            if (prevSelected != null &&
-        //                prevSelected.gameObject.transform.position.y < selected.transform.position.y)
-        //                PlaySound(highlightDownSound);
-        //            else
-        //                PlaySound(highlightSound);
-        //            //    Vibrate(0.05f, 0.2f);
-        //        }
-        //        else
-        //            justOpenedMap = false;
-        //        prevSelected = selected;
-        //    }
-        //}
+        if (selected != null)
+        {
+            if (notMouseOver || Cursor.visible)
+            {
+                notMouseOver = false;
+                es.SetSelectedGameObject(selected);
+                if (!justOpenedMap)
+                {
+                    if (prevSelected != null &&
+                        prevSelected.gameObject.transform.position.y < selected.transform.position.y)
+                        PlaySound(highlightDownSound);
+                    else
+                        PlaySound(highlightSound);
+                }
+                else
+                    justOpenedMap = false;
+                prevSelected = selected;
+            }
+        }
     }
 
     public void InitializeValues()
