@@ -51,12 +51,19 @@ public class WaterAltairActivate : MonoBehaviour
 
                         ps.CheckTears();
 
-                        if (ps.tearCount == 24)
+                        int tearCount = 0;
+                        for(int level = 1; level < 9; level++)
+                        {
+                            for(int tear = 1; tear < 4; tear++)
+                            {
+                                if (PlayerPrefs.GetInt("Vase" + tear.ToString() + "Level" + level.ToString(), 0) == 1)
+                                    tearCount++;
+                            }
+                        }
+
+                        if (tearCount == 24)
                         {
 #if UNITY_XBOXONE
-                            //
-                            // check trophy : items >= 3 and items = all 
-                            //
                             XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);
 #endif
                             WaterTearManager.AllTearsCutscene();

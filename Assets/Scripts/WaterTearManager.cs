@@ -239,6 +239,14 @@ public class WaterTearManager : MonoBehaviour
                 yield return null;
             }
         }
+
+        if(cutsceneToPlay == allTearsCutscene)
+        {
+#if UNITY_XBOXONE
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);
+#endif
+        }
+
         tpc.transform.position = Vector3.up;
         tpc.anim.Play("Idle", 0);
         tpc.rb.velocity = Vector3.zero;
