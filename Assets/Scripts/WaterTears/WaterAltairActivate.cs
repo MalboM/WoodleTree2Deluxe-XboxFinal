@@ -51,6 +51,8 @@ public class WaterAltairActivate : MonoBehaviour
 
                         ps.CheckTears();
 
+                        ps.SetWaterTears();
+
                         int tearCount = 0;
                         for(int level = 1; level < 9; level++)
                         {
