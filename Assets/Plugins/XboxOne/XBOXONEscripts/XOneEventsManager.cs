@@ -707,6 +707,7 @@ public class XOneEventsManager : MonoBehaviour
             PlayerPrefs.SetInt("UsingItem" + xyz.ToString(), 0);
             PlayerPrefs.SetInt("PaidForItem" + xyz.ToString(), 0);
         }
+        PlayerPrefs.SetInt("BoughtItems", 0);
 
         //BUTTONS
         for (int ab = 0; ab <= 124; ab++)
@@ -748,6 +749,7 @@ public class XOneEventsManager : MonoBehaviour
         
         // ITEMS TAKEN
         PlayerPrefs.SetInt("PaidForItem", 0);
+        PlayerPrefs.SetInt("BoughtItems", 0);
 
         // ITEMS TAKEN
         PlayerPrefs.SetInt("PaidItemsCount", 0);
@@ -1059,6 +1061,7 @@ public class XOneEventsManager : MonoBehaviour
             //if((xyz % 10) == 0)
             //yield return null;
         }
+        SetStorageString(map, "BoughtItems", PlayerPrefs.GetInt("BoughtItems"));
 
         //BUTTONS
         for (int ab = 0; ab <= 124; ab++)
@@ -1386,6 +1389,7 @@ public class XOneEventsManager : MonoBehaviour
             LoadIntPref(view, "UsingItem" + xyz.ToString());
             LoadIntPref(view, "PaidForItem" + xyz.ToString());
         }
+            LoadIntPref(view, "BoughtItems");
 
         //BUTTONS
         for (int ab = 0; ab <= 124; ab++)
