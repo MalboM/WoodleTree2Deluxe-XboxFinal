@@ -1034,6 +1034,7 @@ public class PauseScreen : MonoBehaviour
         }
     }
 
+    bool tearCheckB;
     public void SetWaterTears()
     {
         int tearsCollected = 0;
@@ -1042,6 +1043,15 @@ public class PauseScreen : MonoBehaviour
             for (int tearNo = 1; tearNo <= 3; tearNo++)
                 tearsCollected += PlayerPrefs.GetInt("Vase" + tearNo.ToString() + "Level" + lvl.ToString(), 0);
         }
+
+        if(tearsCollected == 24 && !tearCheckB)
+        {
+            tearCheckB = true;
+#if UNITY_XBOXONE
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);
+#endif
+        }
+
         if (tearsCollected < 10)
             waterTears.text = "0" + tearsCollected.ToString();
         else
@@ -1292,7 +1302,7 @@ public class PauseScreen : MonoBehaviour
 
     }
 
-
+    bool tearCheckA;
     public void CheckTears()
     {
         tearCount = 0;
@@ -1471,6 +1481,14 @@ public class PauseScreen : MonoBehaviour
         {
             tearCount++;
             waterTearsParent.transform.GetChild(23).GetChild(0).gameObject.SetActive(true);
+        }
+
+        if(tearCount == 24 && !tearCheckA)
+        {
+            tearCheckA = true;
+#if UNITY_XBOXONE
+            XONEAchievements.SubmitAchievement((int)XONEACHIEVS.ALL_TREE_SAGE_RESTORED);
+#endif
         }
     }
 
